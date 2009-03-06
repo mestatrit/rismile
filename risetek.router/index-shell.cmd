@@ -1,0 +1,1 @@
+@java -Xmx256M -cp "%~dp0\src;%~dp0\bin;F:/program/web/eclipse/workspace/rismile/rismile.base/gwtools/gwt-user.jar;F:/program/web/eclipse/workspace/rismile/rismile.base/gwtools/gwt-dev-windows.jar" com.google.gwt.dev.GWTShell -out "%~dp0\www" %* com.risetek.router.index/index.html

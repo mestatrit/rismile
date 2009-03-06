@@ -1,0 +1,160 @@
+/** Add css rules here for your application. */
+
+
+.radiotype {
+	border:0px;
+}
+.router-table tr{
+	background-color: #ECF7FF;
+}
+.short-button {
+	width: 50px;
+}
+.outer-panel{
+	background: white;
+	width: 100%;
+}
+.horizontal-layout {
+	margin: 3px;
+	padding: 5px;
+	width: 100%;
+}
+.vertical-layout {
+	margin-top: 5px;
+	padding-top: 5px;
+	width: 100%;
+}
+.group-field-ralign {
+	color:#007EBB;
+	text-align: right;
+	padding: 5px;
+	width: 95%;
+}
+.group-field-lalign {
+	color:#007EBB;
+	text-align: left;
+	padding: 5px;
+	width: 95%;
+}
+.router-table {
+	color:#007EBB;
+	width: 100%;
+}
+.eth-layout {
+	margin-top: 10mm;
+	margin-bottom: 50mm;
+	margin-left: 10px;
+	width: 100%;
+}
+.eth-Grid {
+	margin-top: 5mm;
+	width: 90%;
+	cellspacing:2px;
+	cellpading:2px;
+	border: 1px solid #999;
+	background-color: white;
+	border-collapse: collapse;
+}
+.eth-Grid td {
+	border:solid #999;
+	border-width:1px 1px 1px 1px;
+	padding:3px;
+}
+.eth-Grid-Head {
+	background: #F4F7FB;
+}
+.dialer-layout {
+	padding-top: 10px;
+
+	padding-left: 10px;
+	width: 100%;
+}
+.dialer-Grid {
+	margin-top: 2mm;
+	width: 80%;
+	cellspacing:2px;
+	cellpading:2px;
+	border: 1px solid #999;
+	background-color: white;
+	border-collapse: collapse;
+}
+.dialer-Grid td {
+	border:solid #999;
+	border-width:1px 1px 1px 1px;
+	padding:3px;
+}
+.if-Grid {
+	margin-top: 2mm;
+	margin-bottom: 2mm;
+	width: 80%;
+	cellspacing:2px;
+	cellpading:2px;
+	border: 1px solid #999;
+	background-color: white;
+	border-collapse: collapse;
+}
+.head{
+	background: #F4F7FB;
+}
+}
+.if-Grid .gwt-Label{
+	color: crimson;
+}
+/*
+.if-Grid td {
+	border:solid #999;
+	border-width:1px 1px 1px 1px;
+	padding:3px;
+}
+*/
+.ifdialog-Grid {
+	width: 100%;
+	cellspacing:2px;
+	cellpading:2px;
+	background-color: white;
+	border-collapse: collapse;
+}
+
+.ifdialog-ppp-layout {
+	margin-top: 5mm;
+}
+.ifdialog-ppp-layout .gwt-Label{
+	font-weight: bold;
+}
+.ifdialog-auth-layout{
+	margin: 3mm;
+}
+.if-layout {
+	
+	margin-left: 10px;
+	width: 100%;
+}
+.if-layout .gwt-Label{
+	font-weight: bold;
+	margin-top: 1mm;
+	margin-bottom: 1mm;
+}
+.if-info{
+	margin-left: 1cm;
+	margin-top: 3cm;
+	margin-bottom: 11cm;
+}
+.if-horizontal{
+	margin-top: 2mm;
+	width: 100%;
+}
+.gwt-TextBox {
+	border-right:black 1px solid; 
+	border-top:black 1px solid; 
+	font-size:9pt; 
+	padding-bottom:4px; 
+	border-left:black 1px solid; 
+	padding-top:4px; 
+	border-bottom:black 1px solid; 
+	height: 22px;
+	width: 100%;
+}
+
+.ifdialog-info {
+	color: crimson;
+}
