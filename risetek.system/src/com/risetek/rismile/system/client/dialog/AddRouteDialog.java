@@ -1,0 +1,148 @@
+package com.risetek.rismile.system.client.dialog;
+
+import com.google.gwt.user.client.Window;
+import com.google.gwt.user.client.ui.Button;
+import com.google.gwt.user.client.ui.ClickListener;
+import com.google.gwt.user.client.ui.DockPanel;
+import com.google.gwt.user.client.ui.Grid;
+import com.google.gwt.user.client.ui.HasHorizontalAlignment;
+import com.google.gwt.user.client.ui.Label;
+import com.google.gwt.user.client.ui.TextBox;
+import com.google.gwt.user.client.ui.Widget;
+import com.risetek.rismile.client.control.DialogAction;
+import com.risetek.rismile.client.dialog.CustomDialog;
+import com.risetek.rismile.client.utils.IPConvert;
+import com.risetek.rismile.client.utils.Validity;
+import com.risetek.rismile.system.client.view.SystemView;
+
+public class AddRouteDialog extends CustomDialog {
+	
+	private DockPanel panel = new DockPanel();
+
+	SystemView parent;
+	Widget widget;
+	
+	private final TextBox destBox = new TextBox();
+	private final TextBox maskBox = new TextBox();
+	//private final TextBox interfaceBox = new TextBox();
+	private final TextBox gateBox = new TextBox();
+	
+	private final Label destLabel = new Label("目的地址：",false);
+	private final Label maskLabel = new Label("掩码：",false);
+	//private final Label interfaceLabel = new Label("接口：", false);
+	private final Label gateLabel = new Label("网关：", false);
+
+	private final Grid gridFrame = new Grid(3, 2);
+
+	public AddRouteDialog(final SystemView parent, final Widget widget){
+		
+		addStyleName("dialog");
+		this.parent = parent;
+		this.widget = widget;
+		
+		panel.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_CENTER);
+		
+		panel.add(new Label("请在下面输入路由："),DockPanel.NORTH);
+		
+		gridFrame.setWidget(0, 0, destLabel);
+		gridFrame.setWidget(1, 0, maskLabel);
+		//gridFrame.setWidget(2, 0, interfaceLabel);
+		gridFrame.setWidget(2, 0, gateLabel);
+		
+		gridFrame.setWidget(0, 1, destBox);
+		gridFrame.setWidget(1, 1, maskBox);
+		//gridFrame.setWidget(2, 1, interfaceBox);
+		gridFrame.setWidget(2, 1, gateBox);
+		
+		destBox.setTabIndex(1);
+		maskBox.setTabIndex(2);
+		gateBox.setTabIndex(3);
+		
+		panel.add(gridFrame, DockPanel.CENTER);
+		
+		panel.setSpacing(10);
+		panel.setBorderWidth(0);
+		
+		add(panel,DockPanel.CENTER);
+
+		confirm.addClickListener(new ClickListener(){
+
+			public void onClick(Widget sender) {
+				// TODO Auto-generated method stub
+				String text = destBox.getText();
+				String check = Validity.validIpAddress(text);
+				if (null != check){
+					destBox.setFocus(true);
+					Window.alert("目的IP"+check);
+					return;
+				}
+				text = maskBox.getText();
+				check = Validity.validIpAddress(text);
+				if (null != check){
+					maskBox.setFocus(true);
+					Window.alert("掩码"+check);
+					return;
+				}
+				/*text = interfaceBox.getText();
+				check = Validity.validRouteInterface(text);
+				if (null != check){
+					Window.alert(check);
+					return;
+				}*/
+				text = gateBox.getText();
+				check = Validity.validIpAddress(text);
+				if (null != check){
+					gateBox.setFocus(true);
+					Window.alert("网关"+check);
+					return;
+				}
+				
+				sendAddRoute(IPConvert.long2IPString(destBox.getText()), 
+						IPConvert.long2IPString(maskBox.getText()),  
+						IPConvert.long2IPString(gateBox.getText()),confirm);
+				//unmask();
+				//hide();
+			}
+			
+		});
+
+		setSize("280","200");
+	}
+	public void sendAddRoute(String dest, String mask, String gate, Widget widget){
+		
+		setMessage("发送添加路由的请求...");
+		parent.systemAllController.addRouter(dest, mask, gate, new DialogAction(this, parent));
+		((Button)widget).setEnabled(false);
+		
+	}
+
+	public void show(){
+		setText("添加路由");
+		super.show();
+		
+		destBox.setFocus(true);
+		center();
+	}
+	
+	public void show(String tips){
+		setText(tips);
+		super.show();
+		center();
+	}
+
+	public Widget getFirstTabIndex() {
+		// TODO Auto-generated method stub
+		return destBox;
+	}
+
+	public int getParentHeihgt() {
+		// TODO Auto-generated method stub
+		return parent.getHeight();
+	}
+
+	public void setFirstFocus() {
+		// TODO Auto-generated method stub
+		destBox.setFocus(true);
+	}
+
+}
