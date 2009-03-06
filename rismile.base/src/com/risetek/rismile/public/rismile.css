@@ -1,0 +1,199 @@
+body {
+  background-color: white;
+  color: black;
+  font-family: GB2312, Helvetica, Arial, sans-serif;
+  margin: 20px 20px 20px 20px;
+}
+
+.rismile-copyright {
+  background: #2a8ebf;
+  color: yellow;
+  padding: 4px;
+  padding-left: 16px;
+  padding-right: 16px;
+  margin-right: 3px;
+  border: 1px solid #2a8ebf;
+}
+
+.rismile-mask{
+  z-index:20000;
+  position:absolute;
+  top:0;
+  left:0;
+  -moz-opacity:0.5;
+  opacity:.50;
+  filter:alpha(opacity=50);
+  background-color:#CCC;
+  width:100%;
+  height:auto;
+  zoom:1;
+}
+.rismile-Sink {
+  width: 100%;
+  border: 1px solid #2a8ebf;
+  background: url(images/top-bottom.gif) repeat 0 0;
+  position: relative;
+}
+
+.rismile-Info {
+	padding: 10px 0px 10px 0px;
+	margin-bottom: 0px;
+	color: yellow;
+	font-size: 10pt;
+	width: 100%
+}
+
+.rismile-SinkList {
+  font-size: 10pt;
+  color: white;
+}
+
+.rismile-SinkList .gwt-Image {
+  position: relative;
+  top: 0px;
+}
+
+.rismile-SinkList .ks-SinkItem a {
+  text-decoration: none;
+  color: white;
+}
+
+.rismile-SinkList .ks-SinkItem-selected a {
+  text-decoration: none;
+  color: white;
+}
+
+.rismile-SinkList .ks-FirstSinkItem a {
+  text-decoration: none;
+  color: white;
+}
+
+.rismile-SinkList .ks-FirstSinkItem-selected a {
+  text-decoration: none;
+  color: white;
+}
+
+.rismile-SinkList .ks-SinkItem {
+  background: #c6cab7;
+  padding: 4px;
+  padding-left: 16px;
+  padding-right: 16px;
+  margin-right: 3px;
+  border-bottom: 3px solid white;
+  cursor: pointer;
+  cursor: hand;
+}
+
+.rismile-SinkList .ks-SinkItem-selected {
+  background: #c6cab7;
+  padding: 4px;
+  padding-left: 16px;
+  padding-right: 16px;
+  margin-right: 3px;
+  padding-bottom: 7px;
+}
+
+.rismile-SinkList .ks-FirstSinkItem {
+  background: #c6cab7 url(images/corner.gif) no-repeat top left;
+  padding: 4px;
+  padding-left: 16px;
+  padding-right: 16px;
+  margin-right: 3px;
+  border-bottom: 3px solid white;
+  cursor: pointer;
+  cursor: hand;
+}
+
+.rismile-SinkList .ks-FirstSinkItem-selected {
+  background: #c3d9ff url(images/corner.gif) no-repeat top left;
+  padding: 4px;
+  padding-left: 16px;
+  padding-right: 16px;
+  margin-right: 3px;
+  padding-bottom: 7px;
+}
+
+.rismile-DialogBox {
+  z-index:20002;
+  border: 2px outset;
+  background-color: white;
+}
+
+.rismile-dialog-caption {
+  /*background-color: #C3D9FF;*/
+  background: url(images/dialog_blue_gradient.gif) repeat-x top left;
+  padding: 2px 2px;
+  font-weight: bold;
+  cursor: default;
+  border-bottom: 1px solid #2a8ebf;
+  /*border-top: 1px solid #2a8ebf;*/
+}
+.rismile-dialog {
+  z-index:20003;
+	background-color: white;
+	border: 1px solid #2a8ebf;
+}
+.rismile-dialog-button {
+	height: 25px;
+	width: 4em;
+	padding-top:3px;
+	background-color: #E2EAF5;
+	border-top: #FFFFFF 1px solid;
+	border-right: #797979 2px solid;
+	border-bottom: #797979 2px solid;
+	border-left: #FFFFFF 1px solid;
+	cursor: pointer;
+    cursor: hand;
+}
+.rismile-dialog-label {
+	color: crimson;
+}
+.rismile-dialog-close {
+	height: 20px;
+	width: 20px;
+ 	background: url(images/dialog_close.gif) repeat-x center center;
+ 	cursor: pointer;
+    cursor: hand;
+}
+.rismile-Nav-Button {
+	font-weight: bold;
+	cursor: pointer;
+    cursor: hand;
+}
+.rismile-Nav-Label {
+	padding-top: 3px;
+	text-align: right;
+	vertical-align: middle;
+}
+
+.rismile-Tool-Button {
+    height: 24px;
+	cursor: pointer;
+    cursor: hand;
+}
+
+
+.rismile-hb-message {
+	color: crimson;
+	font-size: 10pt;
+	position: absolute;
+	text-align: right;
+	top: -20px;
+	width: 100%;
+	height: 20px;
+}
+.rismile-http-message {
+	color: crimson;
+	font-size: 10pt;
+	position: absolute;
+	text-align: right;
+	top: 0;
+	width: 100%;
+}
+
+.rismile-search-bar {
+	width: 100%;
+	background-color: #E8EEF7;
+	vertical-align: middle;
+	border-top: 1px solid #ACA899;
+}
