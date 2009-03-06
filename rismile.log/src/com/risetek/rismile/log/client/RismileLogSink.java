@@ -19,7 +19,7 @@ public class RismileLogSink extends Sink {
 		        }
 		};
 	}
-	
+
 	public RismileLogSink() {
 		initWidget(logView);
 	}
