@@ -1,0 +1,146 @@
+.radius-conf-table {
+	margin-top: 1cm;
+	margin-bottom: 5mm;
+	background-color: white;
+	cellspacing:2px;
+	cellpading:2px;
+	border-collapse: collapse;
+	border:1px solid #999;
+}
+.radius-conf-table td {
+	border:solid #999;
+	border-width:1px 1px 1px 1px;
+	padding-top:4px;
+	padding-left: 3px;
+    padding-bottom: 2px;
+	vertical-align: middle;
+}
+.radius-conf-Button {
+	height: 25px;
+	width: 4em;
+	margin-top: 1cm;
+	margin-bottom: 5mm;
+	padding-top:1px;
+	background-color: #E2EAF5;
+	border-top: #FFFFFF 1px solid;
+	border-right: #797979 2px solid;
+	border-bottom: #797979 2px solid;
+	border-left: #FFFFFF 1px solid;
+	cursor: pointer;
+    cursor: hand;
+}
+.radius-conf-version{
+	margin-top: 5mm;
+	margin-bottom: 1mm;
+}
+.radius-table-title {
+	text-indent: 1em;
+	padding-top: 4px;
+	padding-bottom: 4px;
+	font-size: larger;
+	font-weight: bold;
+	border:1px solid #2a8ebf;
+	background: url(images/radius_blue_gradient.gif) repeat-x top left;
+	/*background-color: #7EACD6;*/
+}
+.radius-page-container {
+  position:relative;
+}
+.radius {
+	width: 100%;
+	border: 1px solid #ACA899;
+}
+
+
+.radius .navbar {
+	width: 100%;
+	background-color: #E8EEF7;
+	vertical-align: middle;
+	border-bottom: 1px solid #ACA899;
+}
+
+.radius .navbar button {
+	width: 6em;
+	text-align: center;
+	vertical-align: middle;
+  	cursor: pointer;
+  	cursor: hand;
+}
+
+.radius .navbar .status {
+	vertical-align: middle;
+	padding-right: 10px;
+}
+
+.radius .table {
+	margin: 1px;
+	cellspacing:0;
+	width: 100%;
+	align: center;
+}
+
+.radius .table td {
+	text-align: center;
+	margin:1px;
+	pading:0;
+	cellspacing:0;
+	vertical-align: bottom;
+}
+
+.radius .table td.header {
+	font-weight: bold;
+	text-decoration: underline;
+	text-align: center;
+	font-size: 11pt;
+}
+
+.radius .table td.name {
+	width: 10em;
+}
+
+.radius .table td.desc {
+	width: 20em;
+}
+
+.radius .table td.sched {
+	width: 20em;
+}
+
+.radius .table td.id {
+	width: 4em;
+}
+
+.radius .table td.datetime {
+	width: 20em;
+}
+
+.radius .table td.record {
+	width: 35em;
+	text-align: left;
+}
+
+
+.radius .table td.operator {
+	width: 1em;
+}
+
+.radius .table td.imsi {
+	width: 8em;
+}
+
+.radius .table td.username {
+	width: 15em;
+}
+
+.radius .table tr.normal {
+}
+
+
+.radius .table tr.light {
+	background-color:#CCCCFC;
+}
+
+.radius-info-Label {
+	color: crimson;
+}
+
