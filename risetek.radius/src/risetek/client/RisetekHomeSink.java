@@ -1,7 +1,8 @@
 package risetek.client;
 
+import risetek.client.view.SystemHomeView;
+
 import com.risetek.rismile.client.sink.Sink;
-import com.risetek.rismile.system.client.view.SystemView;
 
 
 public class RisetekHomeSink extends Sink {
@@ -14,7 +15,7 @@ public class RisetekHomeSink extends Sink {
 		};
 	}
 	public RisetekHomeSink(){
-		initWidget(new SystemView());
+		initWidget(new SystemHomeView());
 	}
 	public void onShow() {
 		
