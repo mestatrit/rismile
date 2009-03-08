@@ -2,8 +2,6 @@ package risetek.client.dialog;
 
 import risetek.client.view.UserView;
 
-import com.google.gwt.user.client.Window;
-import com.google.gwt.user.client.ui.ClickListener;
 import com.google.gwt.user.client.ui.DockPanel;
 import com.google.gwt.user.client.ui.FocusPanel;
 import com.google.gwt.user.client.ui.Grid;
@@ -11,9 +9,7 @@ import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.PasswordTextBox;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.Widget;
-import com.risetek.rismile.client.control.DialogAction;
 import com.risetek.rismile.client.dialog.CustomDialog;
-import com.risetek.rismile.client.utils.Validity;
 
 public class UserAddDialog extends CustomDialog {
 	public final PasswordTextBox passwordbox = new PasswordTextBox();

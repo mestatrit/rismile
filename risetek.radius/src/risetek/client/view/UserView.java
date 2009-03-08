@@ -1,7 +1,6 @@
 package risetek.client.view;
 
 import risetek.client.control.RadiusUserController;
-import risetek.client.dialog.UserAddDialog;
 
 import com.google.gwt.user.client.DOM;
 import com.google.gwt.user.client.Element;
@@ -10,7 +9,6 @@ import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.ClickListener;
 import com.google.gwt.user.client.ui.Grid;
 import com.google.gwt.user.client.ui.Widget;
-import com.risetek.rismile.client.control.ViewAction;
 import com.risetek.rismile.client.view.MouseEventGrid;
 import com.risetek.rismile.client.view.RismileTableView;
 

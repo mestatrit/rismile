@@ -2,7 +2,6 @@ package com.risetek.rismile.client.control;
 
 import com.google.gwt.http.client.RequestCallback;
 import com.risetek.rismile.client.http.RequestFactory;
-import com.risetek.rismile.client.model.RismileTable;
 
 public abstract class RismileTableController implements RequestCallback {
 

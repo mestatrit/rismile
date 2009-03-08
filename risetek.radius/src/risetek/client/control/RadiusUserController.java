@@ -17,7 +17,6 @@ import com.google.gwt.user.client.ui.ClickListener;
 import com.google.gwt.user.client.ui.SourcesTableEvents;
 import com.google.gwt.user.client.ui.TableListener;
 import com.google.gwt.user.client.ui.Widget;
-import com.risetek.rismile.client.control.DialogAction;
 import com.risetek.rismile.client.control.IAction;
 import com.risetek.rismile.client.control.RismileTableController;
 import com.risetek.rismile.client.control.SysLog;

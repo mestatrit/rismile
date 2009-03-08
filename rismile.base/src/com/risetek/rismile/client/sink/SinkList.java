@@ -1,5 +1,7 @@
 package com.risetek.rismile.client.sink;
 
+import java.util.ArrayList;
+
 import com.google.gwt.user.client.DOM;
 import com.google.gwt.user.client.Event;
 import com.google.gwt.user.client.ui.Composite;
@@ -8,8 +10,6 @@ import com.google.gwt.user.client.ui.Hyperlink;
 import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Widget;
 import com.risetek.rismile.client.sink.Sink.SinkInfo;
-
-import java.util.ArrayList;
 
 /**
  * The top panel that contains all of the sinks, along with a short description
