@@ -1,25 +1,26 @@
 package com.risetek.rismile.system.client.control;
 
-import java.util.ArrayList;
-import java.util.List;
-
+import com.google.gwt.http.client.Request;
+import com.google.gwt.http.client.RequestCallback;
 import com.google.gwt.http.client.Response;
-import com.google.gwt.xml.client.Document;
-import com.google.gwt.xml.client.Element;
-import com.google.gwt.xml.client.NodeList;
-import com.google.gwt.xml.client.XMLParser;
-import com.risetek.rismile.client.control.IAction;
-import com.risetek.rismile.client.control.ModelCallback;
-import com.risetek.rismile.client.control.PlainCallback;
+import com.google.gwt.user.client.Window;
+import com.google.gwt.user.client.ui.Button;
+import com.google.gwt.user.client.ui.ClickListener;
+import com.google.gwt.user.client.ui.Widget;
+import com.risetek.rismile.client.control.SysLog;
 import com.risetek.rismile.client.http.RequestFactory;
-import com.risetek.rismile.system.client.model.InterfEntry;
-import com.risetek.rismile.system.client.model.RouterEntry;
-import com.risetek.rismile.system.client.model.Service;
-import com.risetek.rismile.system.client.model.SystemAll;
+import com.risetek.rismile.client.utils.IPConvert;
+import com.risetek.rismile.client.utils.Validity;
+import com.risetek.rismile.system.client.dialog.AddOrModifyIpDialog;
+import com.risetek.rismile.system.client.dialog.AddRouteDialog;
+import com.risetek.rismile.system.client.dialog.AdminDialog;
+import com.risetek.rismile.system.client.dialog.UpfileDialog;
+import com.risetek.rismile.system.client.model.SystemDataModel;
+import com.risetek.rismile.system.client.view.SystemView;
 
-public class SystemAllController {
+public class SystemAllController implements RequestCallback {
 
-	private RequestFactory objectFactory;
+	private RequestFactory remoteRequest = new RequestFactory();
 	private String systemAllPath = "SysStateXML";
 	private String addIpPath = "config_ip_second";
 	private String modifyIpPath = "config_ip";
@@ -31,185 +32,409 @@ public class SystemAllController {
 	private String restoreParaPath = "restore";
 	private String resetPath = "restart";
 	
+	private SystemDataModel data = new SystemDataModel();
+	
+	public SystemView view;
+	
 	public SystemAllController(){
-		
-		objectFactory = RequestFactory.getInstance();
+		view = new SystemView(this);
+	}
+	
+	public void getSystemAll(){
+	
+		remoteRequest.get(systemAllPath, null, this);
 	
 	}
 	
-	public void getSystemAll(IAction action){
-	
-		objectFactory.get(systemAllPath, null, new SystemAllCallback(action));
-	
-	}
-	
-	public void addIp(String ip, String mask, IAction action){
+	public void addIp(String ip, String mask){
 		
 		String requestData = "ip_address="+ip;
 		requestData += "&mask_address="+mask;
-		objectFactory.get(addIpPath, requestData, new PlainCallback(action));
+		remoteRequest.get(addIpPath, requestData, this);
 	
 	}
-	public void modifyIp(String ip, String mask, IAction action){
+	public void modifyIp(String ip, String mask){
 		
 		String requestData = "ip_address="+ip;
 		requestData += "&mask_address="+mask;
-		objectFactory.get(modifyIpPath, requestData, new PlainCallback(action));
+		remoteRequest.get(modifyIpPath, requestData, this);
 	
 	}
-	public void delIp(String ip, IAction action){
+	public void delIp(String ip){
 		
 		String requestData = "ip_address="+ip;
-		objectFactory.get(delIpPath, requestData, new PlainCallback(action));
+		remoteRequest.get(delIpPath, requestData, this);
 	
 	}
 	
-	public void addRouter(String dest, String mask, String gate, IAction action){
+	public void addRouter(String dest, String mask, String gate){
 		
 		String requestData = "ip_address="+dest;
 		requestData += "&mask_address="+mask;
 		requestData += "&router_address="+gate;
-		objectFactory.get(addRouterPath, requestData, new PlainCallback(action));
+		remoteRequest.get(addRouterPath, requestData, this);
 		
 	}
-	public void delRouter(String ip, String mask, IAction action){
+	public void delRouter(String ip, String mask){
 		
 		String requestData = "ip_address="+ip+"&mask_address="+mask;
-		objectFactory.get(delRouterPath, requestData, new PlainCallback(action));
+		remoteRequest.get(delRouterPath, requestData, this);
 	
 	}
-	public void addAdmin(String name, String password, String password2, IAction action){
+	public void addAdmin(String name, String password, String password2){
 		
 		String requestData = "new_username="+name;
 		requestData += "&new_password="+password;
 		requestData += "&new_password2="+password2;
-		objectFactory.get(addAdminPath, requestData, new PlainCallback(action));
+		remoteRequest.get(addAdminPath, requestData, this);
 	}
-	public void delAdmin(String name, String password, IAction action){
+	public void delAdmin(String name, String password){
 		
 		String requestData = "username="+name;
 		requestData += "&old_password="+password;
-		objectFactory.get(delAdminPath, requestData, new PlainCallback(action));
+		remoteRequest.get(delAdminPath, requestData, this);
 		
 	}
-	public void restorePara(IAction action){
+	public void restorePara(){
 		
-		objectFactory.get(restoreParaPath, null, new PlainCallback(action));
+		remoteRequest.get(restoreParaPath, null, this);
 		
 	}
-	public void reset(IAction action){
-		objectFactory.get(resetPath, null, new PlainCallback(action));
+	public void reset(){
+		remoteRequest.get(resetPath, null, this);
 	}
 	
-	class SystemAllCallback extends ModelCallback{
+	public void onError(Request request, Throwable exception) {
+		// TODO Auto-generated method stub
+		
+	}
 
-		public SystemAllCallback(IAction action) {
-			super(action);
-			// TODO Auto-generated constructor stub
+	public void onResponseReceived(Request request, Response response) {
+		String text = response.getText();
+		data.parseXML(text);
+		view.render(data);
+	}
+
+	public class RouteClickListener implements ClickListener {
+		private String ip;
+		private String mask;
+
+		public RouteClickListener(String ip, String mask) {
+			this.ip = ip;
+			this.mask = mask;
 		}
 
-		public void onResponse(Response response) {
+		public void onClick(Widget sender) {
+			if (Window.confirm("是否要删除?\n" + "IP地址:" + ip + "\n" + "掩码:" + mask)) {
+				delRouter(ip, mask );
+				((Button) sender).setEnabled(false);
+			}
+		}
+
+	}
+
+	public class IpClickListener implements ClickListener {
+		private String ip;
+
+		public IpClickListener(String ip) {
+			this.ip = ip;
+		}
+
+		public void onClick(Widget sender) {
 			// TODO Auto-generated method stub
-			if(response.getStatusCode() == 200){
-				
-				Document customerDom = XMLParser.parse(response.getText());
-				Element customerElement = customerDom.getDocumentElement();
 
-				XMLParser.removeWhitespace(customerElement);
+			if (Window.confirm("是否要删除?\n" + "IP地址:" + ip)) {
 
-				NodeList error = customerElement.getElementsByTagName("ERROR");
-
-				if (error.getLength() > 0
-						&& error.item(0).getNodeName().equals("ERROR")) {
-				
-					action.onFailure(error.item(0).getFirstChild().getNodeValue());
-				}else {
-					SystemAll systemAll = parseSystemAll(customerElement);
-					action.onSuccess(systemAll);
-				}
-			}else{
-				action.onUnreach("请求失败！返回："+response.getStatusText()+"。");
+				delIp(ip );
+				((Button) sender).setEnabled(false);
 			}
 		}
-		
-	}
-	private SystemAll parseSystemAll(Element systemAllXml) {
-		
-		String date = ((Element) systemAllXml.getElementsByTagName(
-				"currnet_date").item(0)).getFirstChild().getNodeValue();
-		String time = ((Element) systemAllXml.getElementsByTagName(
-				"currnet_time").item(0)).getFirstChild().getNodeValue();
 
-		Element serviceXml = (Element) systemAllXml.getElementsByTagName(
-				"service").item(0);
-		Service service = parseService(serviceXml);
-
-		Element networksXml = (Element) systemAllXml.getElementsByTagName(
-				"networks").item(0);
-		
-		List<InterfEntry> interfList = parseInterf(networksXml);
-
-		Element routerXml = (Element) systemAllXml.getElementsByTagName(
-				"ROUTER").item(0);
-		List<RouterEntry> routerList = parseRouter(routerXml);
-		
-		SystemAll systemAll = new SystemAll(date, time, service, interfList, routerList);
-		return systemAll;
 	}
 
-	private Service parseService(Element serviceXml) {
-		Element radius = (Element) serviceXml.getElementsByTagName("radius").item(
-				0);
-		
-		String name = "认证服务";
-		String status = ((Element) radius.getElementsByTagName(
-				"status").item(0)).getFirstChild().getNodeValue();
-		String version = ((Element) radius.getElementsByTagName(
-				"version").item(0)).getFirstChild().getNodeValue();
-		Service service = new Service(name, status, version);
-		return service;
-	}
+	public class resotreClickListener implements ClickListener {
+	
+		public void onClick(Widget sender) {
+			// TODO Auto-generated method stub
+			// Window.open("forms/restart", "_blank", "");
 
-	private List<InterfEntry> parseInterf(Element networksXml) {
-
-		NodeList interfaces = networksXml.getElementsByTagName("interface");
-		List<InterfEntry> interfList = new ArrayList<InterfEntry>();
-		
-		for (int i = 0; i < interfaces.getLength(); i++) {
-			Element e = (Element) interfaces.item(i);
-			if (e.getAttribute("name").equals("lo0")) {
-				continue;
+			if (Window.confirm("是否要恢复出厂参数？\n"
+					+ "恢复出厂参数后，IP地址为192.168.0.1 。")) {
+				//view.paraButton.setEnabled(false);
+				restorePara();
 			}
-			String interf = e.getAttribute("name");
-			String address = ((Element) e.getElementsByTagName("ip_address")
-					.item(0)).getFirstChild().getNodeValue();
-			String mask = ((Element) e.getElementsByTagName("ip_mask")
-					.item(0)).getFirstChild().getNodeValue();
-			
-			InterfEntry interfEntry = new InterfEntry(interf, address, mask);
-			interfList.add(interfEntry);
+
 		}
-		return interfList;
 	}
 
-	private List<RouterEntry> parseRouter(Element routerXml) {
-		
-		List<RouterEntry> routerList = new ArrayList<RouterEntry>();
-		NodeList items = routerXml.getElementsByTagName("ITEM");
-		for (int i = 0; i < items.getLength(); i++) {
-			Element e = (Element) items.item(i);
-			String dest = ((Element) e.getElementsByTagName("dst_addr").item(0))
-					.getFirstChild().getNodeValue();
-			String mask = ((Element) e.getElementsByTagName("msk_addr").item(0))
-					.getFirstChild().getNodeValue();
-			String interf = ((Element) e.getElementsByTagName("interface").item(0)).getFirstChild().getNodeValue();
-			
-			String gateway = ((Element) e.getElementsByTagName("gate").item(0)).getFirstChild().getNodeValue();
-			
-			RouterEntry routerEntry = new RouterEntry(dest, mask, interf, gateway);
-			routerList.add(routerEntry);
+	public class resetClickListener implements ClickListener {
+		public void onClick(Widget sender) {
+			if (Window.confirm("是否要重启设备？")) {
+				//view.restartButton.setEnabled(false);
+				reset();
+			}
+		}
+	}
+	
+	public class uploadClickListener implements ClickListener {
+
+		public void onClick(Widget sender) {
+			// TODO Auto-generated method stub
+			(new UpfileDialog(view)).show();
+		}
+	}
+	
+	
+	
+	//----------------- 增加、修改IP地址
+	public class addIPClickListener implements ClickListener {
+
+		public void onClick(Widget sender) {
+			AddIpControl control = new AddIpControl();
+			control.dialog.confirm.addClickListener(control);
+			control.dialog.show();
+		}
+
+	}
+	
+	public class AddIpControl implements ClickListener, RequestCallback {
+		public AddOrModifyIpDialog dialog = new AddOrModifyIpDialog(view, AddOrModifyIpDialog.ADD);
+		public void onClick(Widget sender) {
+			String text = dialog.ipBox.getText();
+			String check = Validity.validIpAddress(text);
+			if (null != check){
+				dialog.ipBox.setFocus(true);
+				Window.alert("IP"+check);
+				return;
+			}
+			text = dialog.maskBox.getText();
+			check = Validity.validIpAddress(text);
+			if (null != check){
+				dialog.maskBox.setFocus(true);
+				Window.alert("子网掩码"+check);
+				return;
+			}
+			addIp(IPConvert.long2IPString(dialog.ipBox.getText()), 
+					IPConvert.long2IPString(dialog.maskBox.getText()));
+			dialog.confirm.setEnabled(false);
+			//unmask();
+			//hide();
+					
+		}
+
+		public void onError(Request request, Throwable exception) {
 			
 		}
-		return routerList;
+
+		public void onResponseReceived(Request request, Response response) {
+			view.unmask();
+			dialog.hide();
+			SysLog.log("remote execute");
+			//load();
+		}
+	}	
+
+	
+	public class modifyIPClickListener implements ClickListener {
+
+		public void onClick(Widget sender) {
+			modifyIpControl control = new modifyIpControl();
+			control.dialog.confirm.addClickListener(control);
+			control.dialog.show();
+		}
+
 	}
+	
+	public class modifyIpControl implements ClickListener, RequestCallback {
+		public AddOrModifyIpDialog dialog = new AddOrModifyIpDialog(view, AddOrModifyIpDialog.MODIFY);
+		public void onClick(Widget sender) {
+			String text = dialog.ipBox.getText();
+			String check = Validity.validIpAddress(text);
+			if (null != check){
+				dialog.ipBox.setFocus(true);
+				Window.alert("IP"+check);
+				return;
+			}
+			text = dialog.maskBox.getText();
+			check = Validity.validIpAddress(text);
+			if (null != check){
+				dialog.maskBox.setFocus(true);
+				Window.alert("子网掩码"+check);
+				return;
+			}
+			modifyIp(IPConvert.long2IPString(dialog.ipBox.getText()), 
+				IPConvert.long2IPString(dialog.maskBox.getText()));
+			dialog.confirm.setEnabled(false);
+			//unmask();
+			//hide();
+					
+		}
+
+		public void onError(Request request, Throwable exception) {
+			
+		}
+
+		public void onResponseReceived(Request request, Response response) {
+			view.unmask();
+			dialog.hide();
+			SysLog.log("remote execute");
+			//load();
+		}
+	}	
+	
+	//----------------- 增加路由 ------------------------------------------
+	public class addRouterClickListener implements ClickListener {
+		public void onClick(Widget sender) {
+			addRouterControl control = new addRouterControl();
+			control.dialog.confirm.addClickListener(control);
+			control.dialog.show();
+		}
+	}
+
+	public class addRouterControl implements ClickListener, RequestCallback {
+		public AddRouteDialog dialog = new AddRouteDialog(view);
+		public void onClick(Widget sender) {
+
+			// TODO Auto-generated method stub
+			String text = dialog.destBox.getText();
+			String check = Validity.validIpAddress(text);
+			if (null != check){
+				dialog.destBox.setFocus(true);
+				Window.alert("目的IP"+check);
+				return;
+			}
+			text = dialog.maskBox.getText();
+			check = Validity.validIpAddress(text);
+			if (null != check){
+				dialog.maskBox.setFocus(true);
+				Window.alert("掩码"+check);
+				return;
+			}
+			/*text = interfaceBox.getText();
+			check = Validity.validRouteInterface(text);
+			if (null != check){
+				Window.alert(check);
+				return;
+			}*/
+			text = dialog.gateBox.getText();
+			check = Validity.validIpAddress(text);
+			if (null != check){
+				dialog.gateBox.setFocus(true);
+				Window.alert("网关"+check);
+				return;
+			}
+			
+			addRouter(IPConvert.long2IPString(dialog.destBox.getText()), 
+					IPConvert.long2IPString(dialog.maskBox.getText()),  
+					IPConvert.long2IPString(dialog.gateBox.getText()));
+			dialog.confirm.setEnabled(false);
+			//unmask();
+			//hide();
+					
+		}
+
+		public void onError(Request request, Throwable exception) {
+			
+		}
+
+		public void onResponseReceived(Request request, Response response) {
+			view.unmask();
+			dialog.hide();
+			SysLog.log("remote execute");
+			//load();
+		}
+	}
+
+	// -- 管理员维护
+	public class delAdminClickListener implements ClickListener {
+
+		public void onClick(Widget sender) {
+			delAdminControl control = new delAdminControl();
+			control.dialog.confirm.addClickListener(control);
+			control.dialog.show();
+		}
+	}
+	
+	
+	public class delAdminControl implements ClickListener, RequestCallback {
+		public AdminDialog dialog = new AdminDialog(view, AdminDialog.DEL);
+		public void onClick(Widget sender) {
+			String text = dialog.nameBox.getText();
+			String check = Validity.validAdminName(text);
+			if (null != check){
+				Window.alert(check);
+				return;
+			}
+			text = dialog.pwdBox.getText();
+			check = Validity.validPassword(text);
+			if (null != check){
+				Window.alert(check);
+				return;
+			}
+			delAdmin(dialog.nameBox.getText(), dialog.pwdBox.getText());
+			dialog.confirm.setEnabled(false);
+			//unmask();
+			//hide();
+					
+		}
+		public void onError(Request request, Throwable exception) {
+			
+		}
+
+		public void onResponseReceived(Request request, Response response) {
+			view.unmask();
+			dialog.hide();
+			SysLog.log("remote execute");
+			//load();
+		}
+	}		
+
+	public class addAdminClickListener implements ClickListener {
+
+		public void onClick(Widget sender) {
+			addAdminControl control = new addAdminControl();
+			control.dialog.confirm.addClickListener(control);
+			control.dialog.show();
+		}
+	}
+	
+	public class addAdminControl implements ClickListener, RequestCallback {
+		public AdminDialog dialog = new AdminDialog(view, AdminDialog.DEL);
+		public void onClick(Widget sender) {
+			String text = dialog.nameBox.getText();
+			String check = Validity.validAdminName(text);
+			if (null != check){
+				Window.alert(check);
+				return;
+			}
+			text = dialog.pwdBox.getText();
+			check = Validity.validPassword(text);
+			if (null != check){
+				Window.alert(check);
+				return;
+			}
+			if( !dialog.pwdBox.getText().equals(dialog.pwdBoxSe.getText())){
+				dialog.pwdBox.setText("");
+				dialog.pwdBoxSe.setText("");
+				dialog.pwdBox.setFocus(true);
+				Window.alert("两次输入的密码不符,请重新输入!");
+				return;
+			}
+			addAdmin(dialog.nameBox.getText(), dialog.pwdBox.getText(), dialog.pwdBoxSe.getText());
+			dialog.confirm.setEnabled(false);
+			//unmask();
+			//hide();
+		}
+		public void onError(Request request, Throwable exception) {
+			
+		}
+
+		public void onResponseReceived(Request request, Response response) {
+			view.unmask();
+			dialog.hide();
+			SysLog.log("remote execute");
+			//load();
+		}
+	}		
+	
 }

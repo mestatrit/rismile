@@ -16,10 +16,10 @@ import com.risetek.rismile.client.dialog.CustomDialog;
 import com.risetek.rismile.client.utils.Validity;
 
 public class UserAddDialog extends CustomDialog {
-	private final PasswordTextBox passwordbox = new PasswordTextBox();
-	private final TextBox usernamebox = new TextBox();
-	private final TextBox ipaddress = new TextBox();
-	private final TextBox IMSI = new TextBox();
+	public final PasswordTextBox passwordbox = new PasswordTextBox();
+	public final TextBox usernamebox = new TextBox();
+	public final TextBox ipaddress = new TextBox();
+	public final TextBox IMSI = new TextBox();
 	
 	private final Label usernameboxLable = new Label("用户名称：",false);
 	private final Label IMSILable = new Label("IMSI号码：",false);
@@ -30,6 +30,7 @@ public class UserAddDialog extends CustomDialog {
 	
 	private UserView parent;
 	public UserAddDialog(UserView parent){
+		super(parent);
 		this.parent = parent;
 		add(new Label("请输入用户信息："),DockPanel.NORTH);
 		
@@ -52,8 +53,6 @@ public class UserAddDialog extends CustomDialog {
 		focusPanel.add(gridFrame);
 		add(focusPanel,DockPanel.CENTER);
 
-		confirm.addClickListener(new mClickListener());
-		
 		setSize("280","200");
 	}
 	
@@ -61,54 +60,6 @@ public class UserAddDialog extends CustomDialog {
 		super.show("新加一个用户");
 		IMSI.setFocus(true);
 		super.center();
-	}
-
-	class mClickListener implements ClickListener {
-        public void onClick(Widget sender) {
-			String text; 
-			String check; 
-			text = IMSI.getText();
-			check = Validity.validIMSI(text);
-			if (null != check){
-				IMSI.setFocus(true);
-				Window.alert(check);
-				return;
-			}
-			String imsicode = text;
-			
-			text = usernamebox.getText();
-			check = text;//Validity.validUserName(text);
-			if (null == check){
-				usernamebox.setFocus(true);
-				Window.alert("用户名不能为空！");
-				return;
-			}
-			String username = text;
-			
-			text = passwordbox.getText();
-			check = Validity.validPassword(text);
-			if (null != check){
-				passwordbox.setFocus(true);
-				Window.alert(check);
-				return;
-			}
-			String password = text;
-			
-			text = ipaddress.getText();
-			check = Validity.validIpAddress(text);
-			if (null != check){
-				ipaddress.setFocus(true);
-				Window.alert(check);
-				return;
-			}
-			String ipaddress = text;
-			//String ipaddress = IPConvert.long2IPString(text);
-			//String values = "('"+ imsicode +"','"+username+"','"+password+"',"+ipaddress+",0)";
-			//parent.userController.addRecord(null, values, new DialogAction(UserAddDialog.this, parent));
-			parent.userController.add(username, imsicode, password, ipaddress, new DialogAction(UserAddDialog.this, parent));
-			confirm.setEnabled(false);
-			
-        }
 	}
 
 	public Widget getFirstTabIndex() {

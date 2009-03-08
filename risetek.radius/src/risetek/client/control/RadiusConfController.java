@@ -1,64 +1,148 @@
 package risetek.client.control;
 
+import risetek.client.dialog.RadiusConfigAcctDialog;
+import risetek.client.dialog.RadiusConfigAuthDialog;
+import risetek.client.dialog.RadiusConfigSecretDialog;
 import risetek.client.model.RadiusConfModel;
+import risetek.client.view.RadiusConfigView;
 
+import com.google.gwt.http.client.Request;
+import com.google.gwt.http.client.RequestCallback;
 import com.google.gwt.http.client.Response;
-import com.google.gwt.xml.client.Document;
-import com.google.gwt.xml.client.Element;
-import com.google.gwt.xml.client.NodeList;
-import com.google.gwt.xml.client.XMLParser;
-import com.risetek.rismile.client.control.IAction;
-import com.risetek.rismile.client.control.ModelCallback;
-import com.risetek.rismile.client.control.PlainCallback;
+import com.google.gwt.user.client.ui.ClickListener;
+import com.google.gwt.user.client.ui.Widget;
+import com.risetek.rismile.client.control.SysLog;
 import com.risetek.rismile.client.http.RequestFactory;
 
 
-public class RadiusConfController {
-	private RequestFactory objectFactory;
+public class RadiusConfController implements RequestCallback {
+	private RequestFactory remoteRequest = new RequestFactory();
 	private String confPath = "radiuscfg";
+	
+	public RadiusConfigView view;
+	RadiusConfModel radiusConfModel = new RadiusConfModel();
+	
+	
 	public RadiusConfController(){
-		objectFactory = RequestFactory.getInstance();
+		view = new RadiusConfigView(this);
 	}
 	
-	public void getConfAll(IAction action){
-		objectFactory.get(confPath, null, new RadiusConfCallback(action));
+	public void getConfAll(){
+		remoteRequest.get(confPath, null, this);
 	}
-	public void modify(String query, IAction action){
-		objectFactory.get(confPath, query, new PlainCallback(action));
+	public void modify(String query, RequestCallback callback){
+		remoteRequest.get(confPath, query, callback);
 	}
-	class RadiusConfCallback extends ModelCallback{
+	
 
-		public RadiusConfCallback(IAction action) {
-			super(action);
-			// TODO Auto-generated constructor stub
+	public void onError(Request request, Throwable exception) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	public void onResponseReceived(Request request, Response response) {
+		String text = response.getText();
+		radiusConfModel.parseXML(text);
+		view.render(radiusConfModel);
+	}
+	
+	//--------- Auth 修改控制
+	public class authModifyControl implements ClickListener, RequestCallback {
+		public RadiusConfigAuthDialog dialog = new RadiusConfigAuthDialog(view);
+		public void onClick(Widget sender) {
+			String value = dialog.newValueBox.getText();
+			SysLog.log(value);
+			modify("setAuthPort", this);
 		}
 
-		public void onResponse(Response response) {
+		public void onError(Request request, Throwable exception) {
 			// TODO Auto-generated method stub
-			if(response.getStatusCode() == 200){
-				String text = response.getText();
-				Document dom = XMLParser.parse(text);
-				Element customerElement = dom.getDocumentElement();
-				XMLParser.removeWhitespace(customerElement);
-				
-				NodeList error = customerElement.getElementsByTagName("ERROR");
+			
+		}
 
-				if(error.getLength() > 0 && error.item(0).getNodeName().equals("ERROR") ){
-					action.onFailure(error.item(0).getFirstChild().getNodeValue());
-				}else{
-				
-					String secret = customerElement.getElementsByTagName("secret").item(0).getFirstChild().getNodeValue();
-					String auth   = customerElement.getElementsByTagName("auth").item(0).getFirstChild().getNodeValue();
-					String acct   = customerElement.getElementsByTagName("acct").item(0).getFirstChild().getNodeValue();
-					String serial = customerElement.getElementsByTagName("serial").item(0).getFirstChild().getNodeValue();
-					String maxuser = customerElement.getElementsByTagName("maxuser").item(0).getFirstChild().getNodeValue();
-					RadiusConfModel radiusConfModel = new RadiusConfModel(auth, acct, secret, serial, maxuser);
-					action.onSuccess(radiusConfModel);
-				}
-			}else{
-				action.onUnreach("请求失败！返回："+response.getStatusText()+"。");
-			}
+		public void onResponseReceived(Request request, Response response) {
+			view.unmask();
+			dialog.hide();
+			SysLog.log("remote execute");
+			getConfAll();
 		}
 		
+	}
+	
+	public class authModifyClickListen implements ClickListener
+	{
+		public void onClick(Widget sender) {
+			authModifyControl control = new authModifyControl();
+			RadiusConfigAuthDialog dialog = control.dialog;
+			dialog.confirm.addClickListener(control);
+			dialog.show(radiusConfModel.getAuthPort());
+		}
+	}
+	
+	//--------- Acct 修改控制
+	public class acctModifyControl implements ClickListener, RequestCallback {
+		public RadiusConfigAcctDialog dialog = new RadiusConfigAcctDialog(view);
+		public void onClick(Widget sender) {
+			String value = dialog.newValueBox.getText();
+			SysLog.log(value);
+			modify("setAcctPort", this);
+		}
+
+		public void onError(Request request, Throwable exception) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		public void onResponseReceived(Request request, Response response) {
+			view.unmask();
+			dialog.hide();
+			SysLog.log("remote execute");
+			getConfAll();
+		}
+		
+	}
+	
+	public class acctModifyClickListen implements ClickListener
+	{
+		public void onClick(Widget sender) {
+			acctModifyControl control = new acctModifyControl();
+			RadiusConfigAcctDialog dialog = control.dialog;
+			dialog.confirm.addClickListener(control);
+			dialog.show(radiusConfModel.getAcctPort());
+		}
+	}
+	
+	//--------- Secret 修改控制
+	class secretModifyControl implements ClickListener, RequestCallback {
+		public RadiusConfigSecretDialog dialog = new RadiusConfigSecretDialog(view);
+		public void onClick(Widget sender) {
+			String value = dialog.newValueBox.getText();
+			SysLog.log(value);
+			modify("setSecret", this);
+		}
+
+		public void onError(Request request, Throwable exception) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		public void onResponseReceived(Request request, Response response) {
+			view.unmask();
+			dialog.hide();
+			SysLog.log("remote execute");
+			getConfAll();
+		}
+		
+	}
+	
+	public class secretModifyClickListen implements ClickListener
+	{
+		public void onClick(Widget sender) {
+			secretModifyControl control = new secretModifyControl();
+			RadiusConfigSecretDialog dialog = control.dialog;
+			dialog.confirm.addClickListener(control);
+			dialog.show(radiusConfModel.getSecretKey());
+		}
 	}
 }

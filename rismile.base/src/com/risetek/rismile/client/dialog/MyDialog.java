@@ -210,9 +210,9 @@ public abstract class MyDialog extends PopupPanel implements HasHTML, MouseListe
     // (i.e. can't do this in constructor)
     panel.setWidth("100%");
   }
-  public abstract void unmask();
+  //public abstract void unmask();
   public void onClick(Widget sender) {
-	unmask();
+	//unmask();
   	this.hide();
   }
 }

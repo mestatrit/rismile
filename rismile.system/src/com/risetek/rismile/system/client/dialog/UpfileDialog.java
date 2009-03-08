@@ -33,7 +33,7 @@ public class UpfileDialog extends CustomDialog {
 	private final HTML html = new HTML();
 	
 	public UpfileDialog(final SystemView parent){
-		
+		super(parent);
 		this.parent = parent;
 		panel.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_CENTER);
 		
@@ -68,7 +68,7 @@ public class UpfileDialog extends CustomDialog {
 			public void onSubmitComplete(FormSubmitCompleteEvent event) {
 				// TODO Auto-generated method stub
 				html.setHTML(event.getResults());
-				unmask();
+				//unmask();
 				hide();
 			}
 			

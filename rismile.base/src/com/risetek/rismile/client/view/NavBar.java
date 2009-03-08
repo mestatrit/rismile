@@ -52,9 +52,6 @@ public class NavBar extends Composite implements ClickListener {
 
     private class NavBarListenerCollection extends ArrayList<NavBarListener> {
     	
-    	/**
-		 * 
-		 */
 		private static final long serialVersionUID = 1L;
 
 		public void fireClick(Widget sender) {

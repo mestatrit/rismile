@@ -50,7 +50,7 @@ public class DialogAction implements IAction {
 		
 		dialog.setMessage(successMessage);
 		dialog.enableConfirm(true);
-		dialog.unmask();
+		//dialog.unmask();
 		dialog.hide();
 		if(reload){
 			dialogParent.loadModel();

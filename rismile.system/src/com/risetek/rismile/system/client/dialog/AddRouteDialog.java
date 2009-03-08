@@ -1,18 +1,12 @@
 package com.risetek.rismile.system.client.dialog;
 
-import com.google.gwt.user.client.Window;
-import com.google.gwt.user.client.ui.Button;
-import com.google.gwt.user.client.ui.ClickListener;
 import com.google.gwt.user.client.ui.DockPanel;
 import com.google.gwt.user.client.ui.Grid;
 import com.google.gwt.user.client.ui.HasHorizontalAlignment;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.Widget;
-import com.risetek.rismile.client.control.DialogAction;
 import com.risetek.rismile.client.dialog.CustomDialog;
-import com.risetek.rismile.client.utils.IPConvert;
-import com.risetek.rismile.client.utils.Validity;
 import com.risetek.rismile.system.client.view.SystemView;
 
 public class AddRouteDialog extends CustomDialog {
@@ -20,12 +14,12 @@ public class AddRouteDialog extends CustomDialog {
 	private DockPanel panel = new DockPanel();
 
 	SystemView parent;
-	Widget widget;
+	//Widget widget;
 	
-	private final TextBox destBox = new TextBox();
-	private final TextBox maskBox = new TextBox();
+	public final TextBox destBox = new TextBox();
+	public final TextBox maskBox = new TextBox();
 	//private final TextBox interfaceBox = new TextBox();
-	private final TextBox gateBox = new TextBox();
+	public final TextBox gateBox = new TextBox();
 	
 	private final Label destLabel = new Label("目的地址：",false);
 	private final Label maskLabel = new Label("掩码：",false);
@@ -34,11 +28,11 @@ public class AddRouteDialog extends CustomDialog {
 
 	private final Grid gridFrame = new Grid(3, 2);
 
-	public AddRouteDialog(final SystemView parent, final Widget widget){
-		
+	public AddRouteDialog(final SystemView parent){
+		super(parent);
 		addStyleName("dialog");
 		this.parent = parent;
-		this.widget = widget;
+		//this.widget = widget;
 		
 		panel.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_CENTER);
 		
@@ -65,55 +59,7 @@ public class AddRouteDialog extends CustomDialog {
 		
 		add(panel,DockPanel.CENTER);
 
-		confirm.addClickListener(new ClickListener(){
-
-			public void onClick(Widget sender) {
-				// TODO Auto-generated method stub
-				String text = destBox.getText();
-				String check = Validity.validIpAddress(text);
-				if (null != check){
-					destBox.setFocus(true);
-					Window.alert("目的IP"+check);
-					return;
-				}
-				text = maskBox.getText();
-				check = Validity.validIpAddress(text);
-				if (null != check){
-					maskBox.setFocus(true);
-					Window.alert("掩码"+check);
-					return;
-				}
-				/*text = interfaceBox.getText();
-				check = Validity.validRouteInterface(text);
-				if (null != check){
-					Window.alert(check);
-					return;
-				}*/
-				text = gateBox.getText();
-				check = Validity.validIpAddress(text);
-				if (null != check){
-					gateBox.setFocus(true);
-					Window.alert("网关"+check);
-					return;
-				}
-				
-				sendAddRoute(IPConvert.long2IPString(destBox.getText()), 
-						IPConvert.long2IPString(maskBox.getText()),  
-						IPConvert.long2IPString(gateBox.getText()),confirm);
-				//unmask();
-				//hide();
-			}
-			
-		});
-
 		setSize("280","200");
-	}
-	public void sendAddRoute(String dest, String mask, String gate, Widget widget){
-		
-		setMessage("发送添加路由的请求...");
-		parent.systemAllController.addRouter(dest, mask, gate, new DialogAction(this, parent));
-		((Button)widget).setEnabled(false);
-		
 	}
 
 	public void show(){

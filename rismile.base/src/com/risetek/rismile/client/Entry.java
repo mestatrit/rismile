@@ -141,8 +141,7 @@ public abstract class Entry implements EntryPoint, HistoryListener {
 		// Display the new sink.
 		curSink.setVisible(false);
 		sinkContainer.add(curSink, DockPanel.CENTER);
-		sinkContainer.setCellHorizontalAlignment(curSink,
-				VerticalPanel.ALIGN_CENTER);
+		sinkContainer.setCellHorizontalAlignment(curSink,VerticalPanel.ALIGN_CENTER);
 		curSink.setVisible(true);
 		curSink.onShow();
 	}
@@ -154,6 +153,7 @@ public abstract class Entry implements EntryPoint, HistoryListener {
 
 	// 首先显示Home界面。
 	// TODO: Home界面与每个产品相关，是否/怎样实现一个abstract来强制产品实例类来构造实际的Home页面呢？
+	// 目前采用各个项目自己构造自己的Home界面来实现这个要求。by ychun.w
 	private void showInfo() {
 		show(list.find("Home"), false);
 	}

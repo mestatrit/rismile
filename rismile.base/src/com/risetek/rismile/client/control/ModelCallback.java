@@ -14,17 +14,14 @@ public abstract class ModelCallback implements RequestListener {
 	
 	}
 	public void onError(String error) {
-		// TODO Auto-generated method stub
 		action.onUnreach(error);
 	}
 
 	public void onLoadingFinish() {
-		// TODO Auto-generated method stub
 		action.onFinish();
 	}
 
 	public void onLoadingStart() {
-		// TODO Auto-generated method stub
 		action.onStart();
 	}
 

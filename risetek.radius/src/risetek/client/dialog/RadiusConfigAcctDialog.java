@@ -1,0 +1,38 @@
+package risetek.client.dialog;
+
+import risetek.client.view.RadiusConfigView;
+
+import com.google.gwt.user.client.ui.DockPanel;
+import com.google.gwt.user.client.ui.Label;
+import com.google.gwt.user.client.ui.TextBox;
+import com.google.gwt.user.client.ui.Widget;
+import com.risetek.rismile.client.dialog.CustomDialog;
+
+public class RadiusConfigAcctDialog extends CustomDialog {
+	
+	public TextBox newValueBox = new TextBox();
+	
+	public RadiusConfigAcctDialog(RadiusConfigView parent){
+		super(parent);
+		add(new Label("请输入新计费端口："),DockPanel.NORTH);
+		setText("修改计费端口");
+		newValueBox.setTabIndex(1);
+		add(newValueBox, DockPanel.CENTER);
+	}
+
+	public void show(String value) {
+		newValueBox.setText(value);
+		super.show();
+		newValueBox.setFocus(true);
+		center();
+	}
+
+	public Widget getFirstTabIndex() {
+		return newValueBox;
+	}
+
+	public void setFirstFocus() {
+		newValueBox.setFocus(true);
+	}
+
+}

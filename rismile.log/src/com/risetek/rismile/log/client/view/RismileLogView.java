@@ -7,22 +7,31 @@ import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.ClickListener;
 import com.google.gwt.user.client.ui.Grid;
 import com.google.gwt.user.client.ui.Widget;
-import com.risetek.rismile.client.control.ViewAction;
 import com.risetek.rismile.client.view.MouseEventGrid;
 import com.risetek.rismile.client.view.RismileTableView;
 import com.risetek.rismile.log.client.control.RismileLogController;
 
 public class RismileLogView extends RismileTableView {
-
-	private boolean autoRefresh = true;
-	private Button TogAutoRefresh;
-	private Button clearButton = new Button("清除");
+	private final static String[] columns = {"序号","日期时间","运行记录"};
+	private final static String[] columnStyles = {"id","datetime","record"};
+	private final static int rowCount = 20;	
+	
+	public boolean autoRefresh = true;
+	public Button TogAutoRefresh;
+	public Button clearButton = new Button("清除");
 	boolean showing = false;
-	public RismileLogController logController = new RismileLogController();
+	public RismileLogController logController;
 
-	public RismileLogView(String[] columns, String[] columnStyles, int rowCount) {
-		super(columns, columnStyles, rowCount);
-		TogAutoRefresh = new Button("", new AutoRefreshClick());
+	
+	public RismileLogView(RismileLogController control)
+	{
+		this(columns, columnStyles, rowCount, control);
+	}
+	
+	private RismileLogView(String[] columns, String[] columnStyles, int rowCount, RismileLogController control) {
+		super(columns, columnStyles, rowCount, control);
+		logController = control;
+		TogAutoRefresh = new Button("", logController.new AutoRefreshClick());
 		super.addToolButton(TogAutoRefresh);
 		TogAutoRefresh.addStyleName("rismile-Tool-Button");
 
@@ -37,7 +46,7 @@ public class RismileLogView extends RismileTableView {
 		});
 		super.addToolButton(clearButton);
 		clearButton.addStyleName("rismile-Tool-Button");
-		clearButton.addClickListener(new ClearLogAction());
+		clearButton.addClickListener(logController.new ClearLogAction());
 		//searchBar.searchListBox.addItem("主机", "HOST");
 		//searchBar.searchListBox.addItem("类型", "TYPE");
 		//searchBar.searchListBox.setSelectedIndex(0);
@@ -68,7 +77,7 @@ public class RismileLogView extends RismileTableView {
 
 		TogAutoRefresh.setText(autoRefresh ? "查看历史" : "自动更新");
 		if (autoRefresh && showing) {
-			loadModel();
+			logController.load();
 			refreshTimer.schedule(10000);
 		}
 	}
@@ -78,47 +87,26 @@ public class RismileLogView extends RismileTableView {
 	}
 
 	public void replaneNavBar(int total) {
+		/*
 		if (!autoRefresh)
 			super.enabledNavBar(total);
+			*/
 	}
 
 
 	public void loadModel() {
-		logController.load( rowCount, startRow, new LoadTableAction());
+		logController.load();
 	}
-	
-	class AutoRefreshClick implements ClickListener{
 
-		public void onClick(Widget sender) {
-			// TODO Auto-generated method stub
-			autoRefresh = !autoRefresh;
-			if (autoRefresh) {
-				TogAutoRefresh.setText("查看历史");
-				setStartRow(0);
-				update();
-			} else {
-				TogAutoRefresh.setText("自动更新");
-				loadModel();
-			}
-		}	
-	}
-	
-	class ClearLogAction extends ViewAction implements ClickListener {
-
-		public void onClick(Widget sender) {
-			// TODO Auto-generated method stub
-			if (Window.confirm("是否要清除日志?")) {
-				clearButton.setEnabled(false);
-				logController.emptyTable(this);
-			}
-		}
-
-		public void onSuccess(Object object) {
-			// TODO Auto-generated method stub
-			super.onSuccess();
-			clearButton.setEnabled(true);
-			loadModel();
-		}
+	public void mask() {
+		// TODO Auto-generated method stub
 		
 	}
+
+	public void unmask() {
+		// TODO Auto-generated method stub
+		
+	}
+	
+
 }

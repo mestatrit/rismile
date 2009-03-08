@@ -4,7 +4,6 @@ import com.google.gwt.user.client.DOM;
 import com.google.gwt.user.client.Element;
 import com.google.gwt.user.client.Event;
 import com.google.gwt.user.client.ui.Button;
-import com.google.gwt.user.client.ui.ClickListener;
 import com.google.gwt.user.client.ui.DockPanel;
 import com.google.gwt.user.client.ui.HasHorizontalAlignment;
 import com.google.gwt.user.client.ui.HasVerticalAlignment;
@@ -12,23 +11,23 @@ import com.google.gwt.user.client.ui.KeyboardListener;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.gwt.user.client.ui.DockPanel.DockLayoutConstant;
+import com.risetek.rismile.client.view.IView;
 
-public abstract class CustomDialog extends MyDialog implements ClickListener {
+public abstract class CustomDialog extends MyDialog {
 	private final DockPanel panel = new DockPanel();
-	protected final Button confirm = new Button("确定");
+	public final Button confirm = new Button("确定");
 	protected final Button cancel = new Button("取消");
 	private final Label note = new Label();
 	private final Label message = new Label();
-	private  Element mask;
+	//private  Element mask;
+	IView parent;
 	//private final Button close  = new Button(" ");
-	public CustomDialog() {
+	public CustomDialog(IView parent) {
 		super(false,true);
 		setStyleName("rismile-dialog");
-		
+		this.parent = parent;
 		panel.setWidth("100%");
 		panel.add(note, DockPanel.NORTH);
-		
-		
 		
 		final DockPanel toolPanel = new DockPanel();
 		toolPanel.setWidth("100%");
@@ -94,18 +93,19 @@ public abstract class CustomDialog extends MyDialog implements ClickListener {
 		setText(tips);
 		super.show();
 		center();
-		mask();
+		parent.mask();
 	}
 	public void show(){
 		super.show();
 		center();
-		mask();
+		parent.mask();
 	}
 	public void onClick(Widget sender) {
-		unmask();
+		parent.unmask();
     	this.hide();
     	
 	}
+
 	public void add(Widget widget, DockLayoutConstant direction){
 		panel.add(widget,direction);
 	}
@@ -127,26 +127,7 @@ public abstract class CustomDialog extends MyDialog implements ClickListener {
 	    return super.onEventPreview(event);
 	}
 	
-	// 将背景单元（maskPanel ）设定为半透明状态。
-	public void mask(){
-		mask = DOM.createDiv();
-		
-		Element maskElement = DOM.getElementById("mask");
-		if(maskElement != null){
-			DOM.appendChild(maskElement, mask);
-			DOM.setIntStyleAttribute(mask, "height", getParentHeihgt());
-			DOM.setElementProperty(mask, "className", "rismile-mask");
-		}
-	}
-	// 撤销背景单元（maskPanel ）的半透明状态。
-	public void unmask(){
-		Element maskElement = DOM.getElementById("mask");
-		if(maskElement != null){
-			DOM.removeChild(maskElement, mask);
-		}
-	}
-
 	abstract public void setFirstFocus();
-	abstract public int getParentHeihgt();
+//	abstract public int getParentHeihgt();
 	abstract public Widget getFirstTabIndex();
 }

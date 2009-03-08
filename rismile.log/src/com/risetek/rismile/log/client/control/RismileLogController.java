@@ -1,49 +1,85 @@
 package com.risetek.rismile.log.client.control;
 
+import com.google.gwt.http.client.Request;
+import com.google.gwt.http.client.RequestCallback;
 import com.google.gwt.http.client.Response;
-import com.google.gwt.xml.client.Element;
-import com.google.gwt.xml.client.NodeList;
-import com.google.gwt.xml.client.XMLParser;
-import com.risetek.rismile.client.control.IAction;
+import com.google.gwt.user.client.Window;
+import com.google.gwt.user.client.ui.ClickListener;
+import com.google.gwt.user.client.ui.Widget;
 import com.risetek.rismile.client.control.RismileTableController;
 import com.risetek.rismile.client.model.RismileTable;
+import com.risetek.rismile.log.client.model.RismileLogTable;
+import com.risetek.rismile.log.client.view.RismileLogView;
 
-public class RismileLogController extends RismileTableController{
+public class RismileLogController extends RismileTableController implements RequestCallback {
 	private static String loadForm = "SqlLogMessageXML";
 	private static String emptyForm = "clearlog";
+
+	// 视图实体。
+	public RismileLogView logView;
+	// 数据实体
+	public RismileLogTable table = new RismileLogTable();
 	
 	public RismileLogController() {
-		super("logTABLE");
-		// TODO Auto-generated constructor stub
+		// 视图实体。
+		logView = new RismileLogView(this);
 	}
 
-	public void load(int limit, int offset, IAction action){
-		
+	public void load(int limit, int offset){
 		String query = "lpage="+limit+"&offset="+offset;
-		loadTableData(loadForm, query, action);
-	}
-	public void empty(IAction action){
-		changeTableData(emptyForm, null, action);
+		remoteRequest.get(loadForm, query, this);
 	}
 	
-	public void onSuccessResponse(Response response, IAction action) {
-		// TODO Auto-generated method stub
-		RismileTable table = new RismileTable();
-		Element entryElement = XMLParser.parse( response.getText() ).getDocumentElement();
-		String sum = getElementText( entryElement, "TOTAL" );
-		
-		table.setSum(Integer.parseInt(sum));
-		NodeList users = entryElement.getElementsByTagName("rowid");
-		String data[][] = new String[users.getLength()][3];
-		int j = 0;
-		for(;j<users.getLength();j++ ) {
-			Element logElement = (Element)users.item(j);
-			data[j][0] = logElement.getFirstChild().getNodeValue();//getElementText( logElement, "rowid" );
-			data[j][1] = getElementText( logElement, "logTIME" );
-			data[j][2] = getElementText( logElement, "message" );
-			
-		}
-		table.setData(data);
-		action.onSuccess(table);
+	public void load(){
+		String query = "lpage="+table.getLimit()+"&offset="+table.getOffset();
+		remoteRequest.get(loadForm, query, this);
 	}
+
+	
+	public void empty(){
+		remoteRequest.get(emptyForm, null, this);
+	}
+	
+	public class AutoRefreshClick implements ClickListener{
+
+		public void onClick(Widget sender) {
+
+			logView.autoRefresh = !logView.autoRefresh;
+			if (logView.autoRefresh) {
+				logView.TogAutoRefresh.setText("查看历史");
+				setStartRow(0);
+				logView.update();
+			} else {
+				logView.TogAutoRefresh.setText("自动更新");
+				logView.loadModel();
+			}
+		}	
+	}
+
+	public class ClearLogAction implements ClickListener {
+
+		public void onClick(Widget sender) {
+
+			if (Window.confirm("是否要清除日志?")) {
+				logView.clearButton.setEnabled(false);
+				empty();
+			}
+		}
+	}
+	
+	
+	public void onError(Request request, Throwable exception) {
+		
+	}
+
+	public void onResponseReceived(Request request, Response response) {
+		table.parseXML(response.getText());
+		logView.render(table);
+	}
+
+	public void setStartRow(int startRow){
+		table.setOffset(startRow);
+	}
+	
+
 }

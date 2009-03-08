@@ -1,12 +1,13 @@
 package com.risetek.rismile.system.client;
 
 import com.risetek.rismile.client.sink.Sink;
-import com.risetek.rismile.system.client.view.SystemView;
+import com.risetek.rismile.system.client.control.SystemAllController;
 
 public class RisetekSystemSink  extends Sink {
 	public static final String Tag = "SysInfo";
 	
-	private SystemView systemView = new SystemView();
+	public SystemAllController systemAllController = new SystemAllController();
+
 	public static SinkInfo init() {
 		return new SinkInfo(Tag, "系统配置", "系统配置信息.") {
 			public Sink createInstance() {
@@ -16,7 +17,7 @@ public class RisetekSystemSink  extends Sink {
 	}
 
 	public RisetekSystemSink() {
-		initWidget(systemView);
+		initWidget(systemAllController.view);
 		//initTable();
 	}
 	

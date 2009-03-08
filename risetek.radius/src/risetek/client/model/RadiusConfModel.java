@@ -1,5 +1,9 @@
 package risetek.client.model;
 
+import com.google.gwt.xml.client.Document;
+import com.google.gwt.xml.client.Element;
+import com.google.gwt.xml.client.XMLParser;
+
 public class RadiusConfModel {
 
 	private String authPort;
@@ -7,16 +11,7 @@ public class RadiusConfModel {
 	private String secretKey;
 	private String version;
 	private String maxUser;
-	
-	public RadiusConfModel(String authPort, String acctPort, String secretKey,
-			String version, String maxUser){
-		
-		this.authPort = authPort;
-		this.acctPort = acctPort;
-		this.secretKey = secretKey;
-		this.version = version;
-		this.maxUser = maxUser;
-	}
+
 	public String getAuthPort(){
 		return authPort;
 	}
@@ -32,4 +27,19 @@ public class RadiusConfModel {
 	public String getMaxUser(){
 		return maxUser;
 	}
+	
+	public void parseXML( String text )
+	{
+		Document dom = XMLParser.parse(text);
+		Element customerElement = dom.getDocumentElement();
+		XMLParser.removeWhitespace(customerElement);
+		
+		secretKey = customerElement.getElementsByTagName("secret").item(0).getFirstChild().getNodeValue();
+		authPort   = customerElement.getElementsByTagName("auth").item(0).getFirstChild().getNodeValue();
+		acctPort   = customerElement.getElementsByTagName("acct").item(0).getFirstChild().getNodeValue();
+		version = customerElement.getElementsByTagName("serial").item(0).getFirstChild().getNodeValue();
+		maxUser = customerElement.getElementsByTagName("maxuser").item(0).getFirstChild().getNodeValue();
+		
+	}
+	
 }

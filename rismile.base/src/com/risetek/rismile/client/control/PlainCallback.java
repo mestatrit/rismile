@@ -31,7 +31,7 @@ public class PlainCallback implements RequestListener {
 	}
 
 	public void onResponse(Response response) {
-		// TODO Auto-generated method stub
+
 		if(response.getStatusCode() == 200){
 			
 			Document xmldoc = XMLParser.parse(response.getText());

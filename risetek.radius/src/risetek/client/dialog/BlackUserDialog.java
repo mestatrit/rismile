@@ -2,23 +2,19 @@ package risetek.client.dialog;
 
 import risetek.client.view.BlackUserView;
 
-import com.google.gwt.user.client.Window;
-import com.google.gwt.user.client.ui.ClickListener;
 import com.google.gwt.user.client.ui.DockPanel;
 import com.google.gwt.user.client.ui.Grid;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.PasswordTextBox;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.Widget;
-import com.risetek.rismile.client.control.DialogAction;
 import com.risetek.rismile.client.dialog.CustomDialog;
-import com.risetek.rismile.client.utils.Validity;
 
 public class BlackUserDialog extends CustomDialog {
-	private final PasswordTextBox passwordBox = new PasswordTextBox();
-	private final TextBox usernameBox = new TextBox();
-	private final TextBox ipaddressBox = new TextBox();
-	private final TextBox imsiBox = new TextBox();
+	public final PasswordTextBox passwordBox = new PasswordTextBox();
+	public final TextBox usernameBox = new TextBox();
+	public final TextBox ipaddressBox = new TextBox();
+	public final TextBox imsiBox = new TextBox();
 	
 	private final Label usernameboxLable = new Label("用户名称：",false);
 	private final Label IMSILable = new Label("IMSI号码：",false);
@@ -29,9 +25,11 @@ public class BlackUserDialog extends CustomDialog {
 	private Grid gridFrame = new Grid(4, 2);
 
 	public BlackUserDialog(BlackUserView parent, String p_IMSI, String p_username ){
+		super(parent);
 		this.parent = parent;
 		add(new Label("请输入用户信息："),DockPanel.NORTH);
-		
+		// debug format
+		gridFrame.setBorderWidth(1);
 		gridFrame.setWidget(0,0,IMSILable);
 		gridFrame.setWidget(1,0,usernameboxLable);
 		gridFrame.setWidget(2,0,passwordLable);
@@ -56,8 +54,6 @@ public class BlackUserDialog extends CustomDialog {
 		add(gridFrame,DockPanel.CENTER);
 
 		
-		confirm.addClickListener(new mClickListener());
-		
 		setSize("280","200");
 	}
 	
@@ -68,66 +64,15 @@ public class BlackUserDialog extends CustomDialog {
 		super.center();
 	}
 
-	class mClickListener implements ClickListener {
-        public void onClick(Widget sender) {
-			String text; 
-			String check; 
-			
-			text = imsiBox.getText();
-			check = Validity.validIMSI(text);
-			if (null != check){
-				Window.alert(check);
-				return;
-			}
-			String imsicode = text;
-			
-			text = usernameBox.getText();
-			String username = text;
-			
-			text = passwordBox.getText();
-			check = Validity.validPassword(text);
-			if (null != check){
-				passwordBox.setFocus(true);
-				Window.alert(check);
-				return;
-			}
-			String password = text;
-			
-			text = ipaddressBox.getText();
-			check = Validity.validIpAddress(text);
-			if (null != check){
-				ipaddressBox.setFocus(true);
-				Window.alert(check);
-				return;
-			}
-			String ipaddress = text;
-			//String ipaddress = IPConvert.long2IPString(text);
-			//String values = "('"+ imsicode +"','"+username+"','"+password+"',"+ipaddress+",0)";	
-            //String addSql = parent.userController.getAddSql(null, values);
-			
-            //String criteria = "ROWID="+parent.focusID;
-			//String delSql = parent.blackController.getDeleteSql(criteria);
-			
-			//String sqls = addSql + "&" + delSql;
-			//parent.blackController.execteMultiple(sqls, new DialogAction(BlackUserDialog.this, parent));
-			parent.blackController.add(parent.focusID, username, imsicode, password, ipaddress, 
-					new DialogAction(BlackUserDialog.this, parent));
-			confirm.setEnabled(false);
-			
-        }
-	}
 
 	public Widget getFirstTabIndex() {
-		// TODO Auto-generated method stub
 		return passwordBox;
 	}
 	public int getParentHeihgt() {
-		// TODO Auto-generated method stub
 		return parent.getHeight();
 	}
 
 	public void setFirstFocus() {
-		// TODO Auto-generated method stub
 		passwordBox.setFocus(true);
 	}
 	

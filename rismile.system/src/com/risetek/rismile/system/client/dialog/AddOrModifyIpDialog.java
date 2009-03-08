@@ -1,18 +1,12 @@
 package com.risetek.rismile.system.client.dialog;
 
-import com.google.gwt.user.client.Window;
-import com.google.gwt.user.client.ui.Button;
-import com.google.gwt.user.client.ui.ClickListener;
 import com.google.gwt.user.client.ui.DockPanel;
 import com.google.gwt.user.client.ui.Grid;
 import com.google.gwt.user.client.ui.HasHorizontalAlignment;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.Widget;
-import com.risetek.rismile.client.control.DialogAction;
 import com.risetek.rismile.client.dialog.CustomDialog;
-import com.risetek.rismile.client.utils.IPConvert;
-import com.risetek.rismile.client.utils.Validity;
 import com.risetek.rismile.system.client.view.SystemView;
 
 
@@ -24,20 +18,20 @@ public class AddOrModifyIpDialog extends CustomDialog {
 	private DockPanel panel = new DockPanel();
 
 	SystemView parent;
-	Widget widget;
-	private int code = ADD; 
-	private final TextBox ipBox = new TextBox();
-	private final TextBox maskBox = new TextBox();
+	//Widget widget;
+	public int code = ADD; 
+	public final TextBox ipBox = new TextBox();
+	public final TextBox maskBox = new TextBox();
 	
 	private final Label ipLable = new Label("IP地址：",false);
 	private final Label maskLable = new Label("子网掩码：",false);
 	private final Grid gridFrame = new Grid(2, 2);
 
-	public AddOrModifyIpDialog(final SystemView parent, final Widget widget, int code){
-
+	public AddOrModifyIpDialog(final SystemView parent, int code){
+		super(parent);
 		addStyleName("dialog");
 		this.parent = parent;
-		this.widget = widget;
+		//this.widget = widget;
 		
 		this.code = code;
 		panel.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_CENTER);
@@ -62,49 +56,7 @@ public class AddOrModifyIpDialog extends CustomDialog {
 		
 		add(panel,DockPanel.CENTER);
 
-		confirm.addClickListener(new ClickListener(){
-
-			public void onClick(Widget sender) {
-				// TODO Auto-generated method stub
-				String text = ipBox.getText();
-				String check = Validity.validIpAddress(text);
-				if (null != check){
-					ipBox.setFocus(true);
-					Window.alert("IP"+check);
-					return;
-				}
-				text = maskBox.getText();
-				check = Validity.validIpAddress(text);
-				if (null != check){
-					maskBox.setFocus(true);
-					Window.alert("子网掩码"+check);
-					return;
-				}
-				if(AddOrModifyIpDialog.this.code == MODIFY){
-					sendModifyIp(IPConvert.long2IPString(ipBox.getText()), 
-						IPConvert.long2IPString(maskBox.getText()), confirm);
-				}else if(AddOrModifyIpDialog.this.code == ADD){
-					sendAddIp(IPConvert.long2IPString(ipBox.getText()), 
-							IPConvert.long2IPString(maskBox.getText()), confirm);
-				}
-				//unmask();
-				//hide();
-			}
-			
-		});
 		setSize("280","200");
-	}
-	public void sendAddIp(String ip, String mask, Widget widget){
-
-		setMessage("发送添加IP的请求...");
-		parent.systemAllController.addIp(ip, mask, new DialogAction(this, parent));
-		((Button)widget).setEnabled(false);
-	}
-	public void sendModifyIp(String ip, String mask, Widget widget){
-
-		setMessage("发送更改IP的请求...");
-		parent.systemAllController.modifyIp(ip, mask, new DialogAction(this, parent));
-		((Button)widget).setEnabled(false);
 	}
 	
 	public void show(){
