@@ -1,0 +1,12 @@
+.rismiletable .table td.id {
+	width: 4em;
+}
+
+.rismiletable .table td.record {
+	width: 35em;
+	text-align: left;
+}
+
+.rismiletable .table td.datetime {
+	width: 20em;
+}

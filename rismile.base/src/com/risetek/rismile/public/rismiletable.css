@@ -1,0 +1,59 @@
+.rismiletable {
+	width: 100%;
+	border: 1px solid #ACA899;
+}
+
+
+.rismiletable .navbar {
+	width: 100%;
+	background-color: #E8EEF7;
+	vertical-align: middle;
+	border-bottom: 1px solid #ACA899;
+}
+
+.rismiletable .navbar button {
+	width: 6em;
+	text-align: center;
+	vertical-align: middle;
+  	cursor: pointer;
+  	cursor: hand;
+}
+
+.rismiletable .navbar .status {
+	vertical-align: middle;
+	padding-right: 10px;
+}
+
+.rismiletable .table {
+	margin: 1px;
+	cellspacing:0;
+	width: 100%;
+	align: center;
+}
+
+.rismiletable .table td {
+	text-align: center;
+	margin:1px;
+	pading:0;
+	cellspacing:0;
+	vertical-align: bottom;
+}
+
+.rismiletable .table td.header {
+	font-weight: bold;
+	text-decoration: underline;
+	font-size: 11pt;
+	text-align: center;
+}
+
+.rismiletable .table tr.normal {
+}
+
+.rismiletable .table tr.light {
+	background-color:#CCCCFC;
+}
+
+.rismile-info-Label {
+	color: crimson;
+}
+

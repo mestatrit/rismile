@@ -191,6 +191,11 @@ body {
 	width: 100%;
 }
 
+.rismile-page-container {
+  position:relative;
+}
+
+
 .rismile-search-bar {
 	width: 100%;
 	background-color: #E8EEF7;
