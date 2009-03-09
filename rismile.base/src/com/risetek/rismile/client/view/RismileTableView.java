@@ -20,14 +20,16 @@ public abstract class RismileTableView extends Composite implements IView{
 	private final DockPanel outer = new DockPanel();
 	private final DockPanel toolPanel = new DockPanel();
 	private final HorizontalPanel buttonsPanel = new HorizontalPanel();
-	protected final NavBar navbar = new NavBar();
+	public final NavBar navbar;
     private final Label infoLabel = new Label("");
+    
+    private final Label statisticLabel = new Label("");	
     
 	private String[] idArray;
 	protected int tmpStartRow = 0; 
-	//public int startRow = 0;
+	public int startRow = 0;
 	//public int rowCount = 0;
-	private int TotalRecord = 0;
+	public int TotalRecord = 0;
 	public String focusID;
 	public String focusValue;
 	
@@ -51,16 +53,37 @@ public abstract class RismileTableView extends Composite implements IView{
 	    }
 	    this.columnStyles = columnStyles;
 
+	    navbar = new NavBar(control);
+	    
 	    //this.rowCount = rowCount;
 	    
-	    outer.addStyleName("radius-page-container");
+	    outer.addStyleName("rismile-page-container");
 	    initWidget(outer);
+	    
+	    outer.addStyleName("rismiletable");
 	    
 	    toolPanel.setStyleName("navbar");
 	    outer.add(toolPanel, DockPanel.NORTH);
 	    
 	    toolPanel.add(navbar, DockPanel.EAST);
 	    toolPanel.add(new HTML("&nbsp"), DockPanel.EAST);
+	    
+	    // 加一个间隔
+	    Label l = new Label("");
+	    l.setStyleName("rismile-Nav-Label");
+	    l.setWidth("1em");
+	    toolPanel.add(l, DockPanel.EAST);
+
+	    statisticLabel.setStyleName("rismile-Nav-Label");
+	    statisticLabel.setWidth("4em");
+	    toolPanel.add(statisticLabel, DockPanel.EAST);
+	    // 总数提示
+	    l = new Label("总数:", false);
+	    l.setStyleName("rismile-Nav-Label");
+	    l.setWidth("3em");
+	    toolPanel.add(l, DockPanel.EAST);
+
+	    
 		toolPanel.add(buttonsPanel, DockPanel.EAST);
 	    toolPanel.setCellHorizontalAlignment(buttonsPanel, DockPanel.ALIGN_RIGHT);
 	    toolPanel.add(infoLabel, DockPanel.WEST);
@@ -68,18 +91,21 @@ public abstract class RismileTableView extends Composite implements IView{
 		toolPanel.setCellHorizontalAlignment(infoLabel, HasAlignment.ALIGN_LEFT);
 		toolPanel.setCellVerticalAlignment(infoLabel, HasAlignment.ALIGN_MIDDLE);
 	    toolPanel.setCellWidth(infoLabel, "100%");
-	    infoLabel.setStyleName("radius-info-Label");
+	    infoLabel.setStyleName("rismile-info-Label");
 	    
 	    grid.setStyleName("table");
 	    outer.add(grid, DockPanel.CENTER);
 	    
 	    //outer.add(searchBar, DockPanel.SOUTH);
-	    //searchBar.searchButton.addClickListener(new SearchClickListener());
-	    //searchBar.backButton.addClickListener(new SearchClickListener());
-	    initTable(columns, columnStyles, rowCount);
-	    setStyleName("radius");
+	    // 初始化网格的格式
+	    grid.resize(rowCount + 1, columns.length);
+	    for (int i = 0 ; i < columns.length; i++) {
+	        grid.setText(0, i, columns[i]);
+	        if (columnStyles != null) {
+	            grid.getCellFormatter().setStyleName(0, i, columnStyles[i] + " header");
+	        }
+	    }
 	    
-	    //navbar.addNavBarListener(this);
 	}
 	public abstract Grid getGrid();
 	
@@ -97,7 +123,7 @@ public abstract class RismileTableView extends Composite implements IView{
 	    grid.resizeRows(rows);
 	}
 
-	private int getDataRowCount() {
+	public int getDataRowCount() {
 	    return grid.getRowCount() - 1;
 	}
 	public String getRowId(int row){
@@ -108,21 +134,13 @@ public abstract class RismileTableView extends Composite implements IView{
 		return id;
 	}
 
-	private void initTable(String[] columns, String[] columnStyles, int rowCount) {
-	    // Set up the header row. It's one greater than the number of visible rows.
-	    //
-	    grid.resize(rowCount + 1, columns.length);
-	    for (int i = 0, n = columns.length; i < n; i++) {
-	        grid.setText(0, i, columns[i]);
-	        if (columnStyles != null) {
-	            grid.getCellFormatter().setStyleName(0, i, columnStyles[i] + " header");
-	        }
-	    }
-	}
-
 	public int getHeight(){
 		return outer.getOffsetHeight();
 	}
+	
+    public void setStatisticText(String text){
+    	statisticLabel.setText(text);
+    }
 	
 	public void render(RismileTable table)
 	{
@@ -168,50 +186,9 @@ public abstract class RismileTableView extends Composite implements IView{
 		//
 		//setStatusText((startRow + 1) + " - " + (startRow + srcRowCount));
 		
-		navbar.setStatisticText("总数:"+total);
+		setStatisticText("" + total);
 		TotalRecord = total;
 			
 	}
-/*
-	
-	
-	public void gotoFirst() {
-		control.table.setOffset(0);
-        navbar.enabelNavbar(false, false, false, false);
-        loadModel();
-	}
-	public void gotoNext() {
-		int offset = control.table.getOffset() + getDataRowCount();
-		control.table.setOffset(offset);
-		
-		navbar.enabelNavbar(false, false, false, false);
-		loadModel();
-	}
-	
-	public void gotoPrev() {
-		startRow -= getDataRowCount();
-		if (startRow < 0) {
-			startRow = 0;
-		}
-		navbar.enabelNavbar(false, false, false, false);
-		loadModel();
-	}
-	public void gotoLast() {
-		
-		startRow = TotalRecord - getDataRowCount();
-		navbar.enabelNavbar(false, false, false, false);
-		loadModel();
-	}
-	public void enabledNavBar(int total){
-		// Synchronize the nav buttons.
-		
-		boolean firstEnabled = startRow > 0;
-		boolean preEnabled = startRow > 0;
-		boolean nextEnabled = (startRow + getDataRowCount()) < total;
-		boolean lastEnabled = (startRow + getDataRowCount()) < total;
-		
-		navbar.enabelNavbar(firstEnabled, preEnabled, nextEnabled, lastEnabled);
 
-	}	
-*/	
 }

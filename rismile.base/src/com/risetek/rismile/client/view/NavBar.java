@@ -1,87 +1,47 @@
 package com.risetek.rismile.client.view;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-
 import com.google.gwt.user.client.ui.Button;
-import com.google.gwt.user.client.ui.ClickListener;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.HorizontalPanel;
-import com.google.gwt.user.client.ui.Label;
-import com.google.gwt.user.client.ui.Widget;
+import com.risetek.rismile.client.control.RismileTableController;
 
-public class NavBar extends Composite implements ClickListener {
+public class NavBar extends Composite {
 	
-    private final Button gotoFirst = new Button("&lt;&lt;", this);
-	private final Button gotoLast = new Button("&gt;&gt;", this);
-    private final Button gotoNext = new Button("&gt;", this);
-    private final Button gotoPrev = new Button("&lt;", this);
-    private final Label statisticLabel = new Label("");
+    private Button gotoFirst;
+    private Button gotoLast;
+    private Button gotoNext;
+    private Button gotoPrev;
+    
     private final HorizontalPanel buttonsPanel = new HorizontalPanel();
 
-    private NavBarListenerCollection listeners = new NavBarListenerCollection();
     
-    public NavBar() {
+    public NavBar(RismileTableController control) {
       initWidget(buttonsPanel);
       
-      buttonsPanel.add(statisticLabel);
-      statisticLabel.setStyleName("rismile-Nav-Label");
-	  statisticLabel.setWidth("6em");
-	  
+	  // First
+	  gotoFirst = new Button("&lt;&lt;", control.new navigatorFirstClick());
       buttonsPanel.add(gotoFirst);
       gotoFirst.setStyleName("rismile-Nav-Button");
       gotoFirst.setWidth("4em");
+      // Prev
+      gotoPrev = new Button("&lt;", control.new navigatorPrevClick());
       buttonsPanel.add(gotoPrev);
       gotoPrev.setStyleName("rismile-Nav-Button");
       gotoPrev.setWidth("4em");
+      // Next
+      gotoNext = new Button("&gt;", control.new navigatorNextClick());
       buttonsPanel.add(gotoNext);
       gotoNext.setStyleName("rismile-Nav-Button");
       gotoNext.setWidth("4em");
+      // Last
+      gotoLast = new Button("&gt;&gt;", control.new navigatorLastLastClick());
       buttonsPanel.add(gotoLast);
       gotoLast.setStyleName("rismile-Nav-Button");
       gotoLast.setWidth("4em");
 
-
-      // Initialize prev & first button to disabled.
-      //
-      gotoFirst.setEnabled(false);
-	  gotoPrev.setEnabled(false);
-	  gotoNext.setEnabled(false);
-	  gotoLast.setEnabled(false);
+      enabelNavbar(false,false,false,false);
     }
 
-    private class NavBarListenerCollection extends ArrayList<NavBarListener> {
-    	
-		private static final long serialVersionUID = 1L;
-
-		public void fireClick(Widget sender) {
-    	    for (Iterator<NavBarListener> it = iterator(); it.hasNext();) {
-    	    	NavBarListener listener = it.next();
-    	        if (sender == gotoNext) {
-    	            listener.gotoNext();
-    	        } else if (sender == gotoPrev) {
-    	            listener.gotoPrev();
-    	        } else if (sender == gotoFirst) {
-    	            listener.gotoFirst();
-    	        } else if (sender == gotoLast){
-    	        	listener.gotoLast();
-    	        }
-    	    }
-    	}
-    }
-    public void onClick(Widget sender) {
-    	listeners.fireClick(sender);
-    }
-    public void addNavBarListener(NavBarListener listener){
-    	listeners.add(listener);
-    }
-    public void removeNavBarListener(NavBarListener listener){
-    	listeners.remove(listener);
-    }
-
-    public void setStatisticText(String text){
-    	statisticLabel.setText(text);
-    }
     public void enabelNavbar(boolean firstEnabled, boolean preEnabled,
     		boolean nextEnabled, boolean lastEnabled){
     	

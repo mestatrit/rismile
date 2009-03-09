@@ -47,9 +47,6 @@ public class RismileLogView extends RismileTableView {
 		super.addToolButton(clearButton);
 		clearButton.addStyleName("rismile-Tool-Button");
 		clearButton.addClickListener(logController.new ClearLogAction());
-		//searchBar.searchListBox.addItem("主机", "HOST");
-		//searchBar.searchListBox.addItem("类型", "TYPE");
-		//searchBar.searchListBox.setSelectedIndex(0);
 	}
 
 	Timer refreshTimer = new Timer() {

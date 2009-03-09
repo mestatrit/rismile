@@ -7,6 +7,8 @@ import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.ClickListener;
 import com.google.gwt.user.client.ui.Widget;
 import com.risetek.rismile.client.control.RismileTableController;
+import com.risetek.rismile.client.model.RismileTable;
+import com.risetek.rismile.client.view.RismileTableView;
 import com.risetek.rismile.log.client.model.RismileLogTable;
 import com.risetek.rismile.log.client.view.RismileLogView;
 
@@ -78,6 +80,14 @@ public class RismileLogController extends RismileTableController implements Requ
 
 	public void setStartRow(int startRow){
 		table.setOffset(startRow);
+	}
+
+	public RismileTable getTable() {
+		return table;
+	}
+
+	public RismileTableView getView() {
+		return logView;
 	}
 	
 
