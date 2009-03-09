@@ -43,102 +43,6 @@
 	background: url(images/radius_blue_gradient.gif) repeat-x top left;
 	/*background-color: #7EACD6;*/
 }
-.radius-page-container {
-  position:relative;
-}
-.radius {
-	width: 100%;
-	border: 1px solid #ACA899;
-}
-
-
-.radius .navbar {
-	width: 100%;
-	background-color: #E8EEF7;
-	vertical-align: middle;
-	border-bottom: 1px solid #ACA899;
-}
-
-.radius .navbar button {
-	width: 6em;
-	text-align: center;
-	vertical-align: middle;
-  	cursor: pointer;
-  	cursor: hand;
-}
-
-.radius .navbar .status {
-	vertical-align: middle;
-	padding-right: 10px;
-}
-
-.radius .table {
-	margin: 1px;
-	cellspacing:0;
-	width: 100%;
-	align: center;
-}
-
-.radius .table td {
-	text-align: center;
-	margin:1px;
-	pading:0;
-	cellspacing:0;
-	vertical-align: bottom;
-}
-
-.radius .table td.header {
-	font-weight: bold;
-	text-decoration: underline;
-	text-align: center;
-	font-size: 11pt;
-}
-
-.radius .table td.name {
-	width: 10em;
-}
-
-.radius .table td.desc {
-	width: 20em;
-}
-
-.radius .table td.sched {
-	width: 20em;
-}
-
-.radius .table td.id {
-	width: 4em;
-}
-
-.radius .table td.datetime {
-	width: 20em;
-}
-
-.radius .table td.record {
-	width: 35em;
-	text-align: left;
-}
-
-
-.radius .table td.operator {
-	width: 1em;
-}
-
-.radius .table td.imsi {
-	width: 8em;
-}
-
-.radius .table td.username {
-	width: 15em;
-}
-
-.radius .table tr.normal {
-}
-
-
-.radius .table tr.light {
-	background-color:#CCCCFC;
-}
 
 .radius-info-Label {
 	color: crimson;
@@ -161,5 +65,29 @@
   padding-left: 16px;
   padding-right: 16px;
   margin-right: 3px;
+}
+
+.rismiletable .table td.operator {
+	width: 1em;
+}
+
+.rismiletable .table td.imsi {
+	width: 8em;
+}
+
+.rismiletable .table td.username {
+	width: 15em;
+}
+
+.rismiletable .table td.name {
+	width: 10em;
+}
+
+.rismiletable .table td.desc {
+	width: 20em;
+}
+
+.rismiletable .table td.sched {
+	width: 20em;
 }
 
