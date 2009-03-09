@@ -9,8 +9,8 @@ import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.ClickListener;
 import com.google.gwt.user.client.ui.DockPanel;
 import com.google.gwt.user.client.ui.Widget;
-import com.risetek.rismile.client.control.DialogAction;
 import com.risetek.rismile.client.dialog.CustomDialog;
+import com.risetek.rismile.client.view.IView;
 
 public class IfEditDialog  extends CustomDialog {
 	public static final int ADD = 0;
@@ -22,7 +22,8 @@ public class IfEditDialog  extends CustomDialog {
 	Widget widget;
 	private int code = ADD; 
 	
-	public IfEditDialog(){
+	public IfEditDialog(IView parent){
+		super(parent);
 		
 		addStyleName("dialog");
 		setSize("600","200");
@@ -35,7 +36,7 @@ public class IfEditDialog  extends CustomDialog {
 					String infCmd = panel.getInfCmd(); 
 					String commands = panel.getCommands();
 					String text = "interface=" + infCmd + "&commands=" + commands;
-					parent.ifController.setDialer(new DialogAction(IfEditDialog.this, parent), text);
+					//parent.ifController.setDialer(new DialogAction(IfEditDialog.this, parent), text);
 				}else {
 					Window.alert("输入有错误，请修改！");
 				}
@@ -45,8 +46,7 @@ public class IfEditDialog  extends CustomDialog {
 		
 	}
 	public IfEditDialog(final InterfaceView parent, final Widget widget, final List<String> dialerNameList){
-
-		this();
+		this(parent);
 		this.parent = parent;
 		this.widget = widget;
 		panel = new IfInputPanel(dialerNameList);
@@ -55,8 +55,8 @@ public class IfEditDialog  extends CustomDialog {
 	}
 	
 	public IfEditDialog(final InterfaceView parent, final IfModel ifModel, final Widget widget){
+		this(parent);
 
-		this();
 		this.parent = parent;
 		this.ifModel = ifModel;
 		this.widget = widget;

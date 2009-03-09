@@ -20,8 +20,28 @@ import com.risetek.rismile.client.view.IView;
 public class InterfaceView extends Composite implements IView{
 	final Button addIfButton = new Button();
 	final DecoratedStackPanel ifStackPanel = new DecoratedStackPanel();
-	public InterfaceView() {
-
+	
+	IfController control;
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	public InterfaceView(IfController control) {
+		this.control = control;
 		final VerticalPanel verticalPanel = new VerticalPanel();
 		initWidget(verticalPanel);
 		verticalPanel.setWidth("100%");
@@ -55,7 +75,7 @@ public class InterfaceView extends Composite implements IView{
 	}
 	
 	public void loadModel(){
-		ifController.getIf(new IfModelAction());
+		ifController.getIf();
 	}
 	
 	class IfModelAction extends ViewAction{
@@ -99,5 +119,21 @@ public class InterfaceView extends Composite implements IView{
 			new IfEditDialog(InterfaceView.this, ifModel, sender).show("编辑接口");
 		}
 
+	}
+
+	public void mask() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void unmask() {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	public void render(IfModel data)
+	{
+		
 	}
 }

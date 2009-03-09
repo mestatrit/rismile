@@ -47,12 +47,13 @@ public class SystemHomeView extends Composite {
 
 		table2
 				.setHTML(1, 1,
-						"<DIV class='sys-introH'>成都中联信通科技有限公司</DIV><DIV class='sys-introH'>专网认证服务器</DIV>");
-		table2.setHTML(2, 1, "<ul class='sys-intro'>" + "<li class='sys-intro'>行业无线专网中完成认证授权功能</li>"
-				+ "<li class='sys-intro'>实现UIM卡、用户名、密码和固定IP四绑定功能</li>"
-				+ "<li class='sys-intro'>支持PAP，CHAP认证方式</li>" + "<li class='sys-intro'>支持最大10000个用户</li>"
-				+ "<li class='sys-intro'>采用高性能网络专用处理器</li>" + "<li class='sys-intro'>平均认证时间约500毫秒</li>"
-				+ "<li class='sys-intro'>超过一万条日志记录</li>" + "<li class='sys-intro'>快速热备份切换</li>" + "</ul>");
+						"<DIV class='sys-introH'>成都中联信通科技有限公司</DIV><DIV class='sys-introH'>广域无线路由器</DIV>");
+		table2.setHTML(2, 1, "<ul class='sys-intro'>" + "<li class='sys-intro'>性能平滑</li>"
+				+ "<li class='sys-intro'>支持多接口</li>"
+				+ "<li class='sys-intro'>MPPC压缩算法</li>"
+				+ "<li class='sys-intro'>PPTP、PPPoE等协议</li>"
+				+ "<li class='sys-intro'>多重拨号</li>"
+				+ "<li class='sys-intro'>按需拨号</li>" + "</ul>");
 
 		table.setWidget(1, 1, table3);
 		table.setWidget(1, 2, table2);
