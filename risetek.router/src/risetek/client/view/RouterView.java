@@ -22,32 +22,34 @@ public class RouterView {
 	{
 		panel.setBorderWidth(1);
 		panel.setWidth("100%");
-		//final Label routeLabel = new Label("ROUTE");
-		//outerPanel.add(routeLabel);
+
 		panel.addStyleName("if-layout");
 		
+		/*
 		DisclosurePanel disclosurePanel = new DisclosurePanel("ROUTE");
 		outerPanel.add(disclosurePanel);
 		disclosurePanel.setAnimationEnabled(true);
 		disclosurePanel.setContent(panel);
 		disclosurePanel.setWidth("100%");
+		*/
 		
-		panel.add(routeListGrid);
-		routeListGrid.setStyleName("if-Grid");
+//		routeListGrid.setStyleName("if-Grid");
 		
-		
-		final Grid routeGrid = new Grid();
+		final Grid routeGrid = new Grid(3,3);
+		routeGrid.setBorderWidth(1);
+		routeGrid.setWidth("100%");
 		panel.add(routeGrid);
-		routeGrid.resize(3, 3);
+
 		routeGrid.setStyleName("if-Grid");
 		routeGrid.getColumnFormatter().addStyleName(0, "head");
 		routeGrid.getColumnFormatter().setWidth(0, "30%");
 		routeGrid.getColumnFormatter().setWidth(1, "30%");
 		routeGrid.getColumnFormatter().setWidth(2, "40%");
 		routeGrid.setText(0, 0, "目的地址:");
-		routeGrid.setText(1, 0, "掩码:");
+		routeGrid.setText(0, 1, "掩码:");
 
-		routeGrid.setWidget(0, 1, destTextBox);
+		/*
+		routeGrid.setWidget(0, 2, destTextBox);
 		destTextBox.setWidth("100%");
 		//destTextBox.addChangeListener(this);
 
@@ -57,11 +59,12 @@ public class RouterView {
 
 		routeGrid.setWidget(0, 2, destLabel);
 		routeGrid.setWidget(1, 2, maskLabel);
+		*/
 		
-		routeGrid.setWidget(2, 1, addRouteButton);
+		routeGrid.setWidget(0, 2, addRouteButton);
 		//addRouteButton.addClickListener(new AddRouteListener());
 		addRouteButton.setWidth("3cm");
-		
+
 		outerPanel.add(panel);
 
 	}

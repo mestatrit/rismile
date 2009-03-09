@@ -2,7 +2,6 @@
       <inherits name='com.google.gwt.user.User'/>
 	  <inherits name="com.risetek.rismile.base" />
 	  <inherits name="com.risetek.rismile.system.system" />
-      <inherits name="com.risetek.rismile.log.log" />
       <entry-point class='risetek.client.index'/>
 	  <stylesheet src='router.css' />
 </module>

@@ -1,5 +1,6 @@
 package risetek.client.view;
 
+import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.CheckBox;
 import com.google.gwt.user.client.ui.Grid;
 import com.google.gwt.user.client.ui.HorizontalPanel;
@@ -15,8 +16,8 @@ public class LCPView {
 	final TextBox userTextBox = new TextBox();
 	final PasswordTextBox passwordTextBox = new PasswordTextBox();
 	final PasswordTextBox repasswordTextBox = new PasswordTextBox();
-	final Label userLabel = new Label("");
-	final Label passwordLabel = new Label("");
+	final Label userLabel = new Label("未设置");
+	final Label passwordLabel = new Label("未设置");
 	final Label repasswordLabel = new Label("");
 	final CheckBox chapmdCheckBox = new CheckBox();
 	final CheckBox eapCheckBox = new CheckBox();
@@ -34,56 +35,56 @@ public class LCPView {
 		panel.setBorderWidth(1);
 		panel.setWidth("100%");
 		panel.setTitle("LCP");
+
+		final Grid tempGrid = new Grid(1,2);
+		tempGrid.setBorderWidth(1);
+		tempGrid.setWidth("100%");
+		tempGrid.getColumnFormatter().setWidth(0, "50%");
+		tempGrid.getColumnFormatter().setWidth(1, "50%");
 		
-		final Grid pppGrid = new Grid();
-		// DEBUG FORMATRT
+		panel.add(tempGrid);
+		
+		final Grid pppGrid = new Grid(3,2);
 		pppGrid.setBorderWidth(1);
-		panel.add(pppGrid);
+		pppGrid.setWidth("100%");
+		tempGrid.setWidget(0,0, pppGrid);
 	
-		
-		pppGrid.resize(3, 3);
 		pppGrid.setStyleName("if-Grid");
 		pppGrid.getColumnFormatter().setStyleName(0, "head");
-		pppGrid.getColumnFormatter().setWidth(0, "30%");
-		pppGrid.getColumnFormatter().setWidth(1, "30%");
-		pppGrid.getColumnFormatter().setWidth(2, "40%");
+		pppGrid.getColumnFormatter().setWidth(0, "40%");
+		pppGrid.getColumnFormatter().setWidth(1, "60%");
 		pppGrid.setText(0, 0, "用户名:");
+		pppGrid.setWidget(0, 1, userLabel);
 		pppGrid.setText(1, 0, "密码:");
-		pppGrid.setText(2, 0, "重复密码:");
-		
-		pppGrid.setWidget(0, 1, userTextBox);
-		pppGrid.setWidget(1, 1, passwordTextBox);
-		pppGrid.setWidget(2, 1, repasswordTextBox);
-		//repasswordTextBox.addChangeListener(this);
-		
-		pppGrid.setWidget(0, 2, userLabel);
-		pppGrid.setWidget(1, 2, passwordLabel);
-		pppGrid.setWidget(2, 2, repasswordLabel);
+		pppGrid.setWidget(1, 1, passwordLabel);
+		pppGrid.setWidget(2, 1, new Button("修改"));
 
-		final HorizontalPanel authPanel = new HorizontalPanel();
-		panel.add(authPanel);
+		final Grid authGrid = new Grid(3,2);
+		authGrid.setBorderWidth(1);
+		authGrid.setWidth("100%");
+		tempGrid.setWidget(0,1, authGrid);
 		
-		final Label authLabel = new Label("认证方式:");
-		authPanel.add(authLabel);
-		
-		authPanel.add(chapmdCheckBox);
+		authGrid.setText(0,0,"认证方式:");
+		authGrid.setWidget(1,0, chapmdCheckBox);
 		chapmdCheckBox.setText("chapmd5");
 		
-		authPanel.add(eapCheckBox);
+		authGrid.setWidget(1,1, eapCheckBox);
 		eapCheckBox.setText("eap");
 
-		authPanel.add(mschapCheckBox);
+		authGrid.setWidget(2,0, mschapCheckBox);
 		mschapCheckBox.setText("ms-chap");
 
-		authPanel.add(papCheckBox);
+		authGrid.setWidget(2,1, papCheckBox);
 		papCheckBox.setText("pap");
 
+		/*
+		
+		// ---------------------------------------------------------
 		final Label lcpLabel = new Label("LCP");
 		panel.add(lcpLabel);
 
-		final Grid lcpGrid = new Grid();
+		final Grid lcpGrid = new Grid(2,3);
 		panel.add(lcpGrid);
-		lcpGrid.resize(2, 3);
 		lcpGrid.setStyleName("if-Grid");
 		lcpGrid.getColumnFormatter().setStyleName(0, "head");
 		lcpGrid.getColumnFormatter().setWidth(0, "30%");
@@ -92,22 +93,6 @@ public class LCPView {
 		keepaliveCheckBox.setText("keepalive(4-40 seconds):");
 
 		
-		/*		
-		keepaliveCheckBox.addClickListener(new ClickListener(){
-
-			public void onClick(Widget sender) {
-				// TODO Auto-generated method stub
-				if(keepaliveCheckBox.isChecked()){
-					keepaliveTextBox.setEnabled(true);
-				}else{
-					keepaliveTextBox.setText("");
-					keepaliveTextBox.setEnabled(false);
-					keepaliveLabel.setText("");
-				}
-			}
-			
-		});
-*/		
 		lcpGrid.setWidget(0, 0, keepaliveCheckBox);
 		lcpGrid.setText(1, 0, "redial:");
 		
@@ -120,7 +105,7 @@ public class LCPView {
 
 		lcpGrid.setWidget(0, 2, keepaliveLabel);
 		lcpGrid.setWidget(1, 2, redialLabel);
-
+*/
 		outerPanel.add(panel);
 	}
 

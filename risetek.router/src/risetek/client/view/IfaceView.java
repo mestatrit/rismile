@@ -23,13 +23,18 @@ public class IfaceView {
 		panel.setWidth("100%");
 		panel.setTitle("IFACE");
 		
-		final Label ondemandLabel = new Label("ON-DEMAND");
-		panel.add(ondemandLabel);
-
-		panel.add(ondemandCheckBox);
-		ondemandCheckBox.setText("ON-DEMAND");
-
+		final Grid tempGrid = new Grid(1,2);
+		tempGrid.setBorderWidth(1);
+		tempGrid.setWidth("100%");
+		panel.add(tempGrid);
 		
+		tempGrid.setWidget(0,0 ,ondemandCheckBox );
+		ondemandCheckBox.setText("按需拨号");
+
+		tempGrid.setWidget(0,1, natCheckBox);
+		natCheckBox.setText("网络地址转换（NAT）");
+		
+		/*
 		
 		final Label timeoutLabel = new Label("TIMEOUT");
 		panel.add(timeoutLabel);
@@ -56,19 +61,7 @@ public class IfaceView {
 		timeoutGrid.setWidget(0, 2, idleLabel);
 		timeoutGrid.setWidget(1, 2, sessionLabel);
 		
-		
-		final Grid natgrid = new Grid(5,5);
-		natgrid.setBorderWidth(1);
-		natgrid.setWidth("100%");
-		
-		panel.add(natgrid);
-		
-		final Label natLabel = new Label("NAT");
-		natgrid.setWidget(0,0, natLabel);
-
-		natgrid.setWidget(0,1, natCheckBox);
-		natCheckBox.setText("NAT");
-		
+		*/
 		
 		outerPanel.add(panel);
 		
