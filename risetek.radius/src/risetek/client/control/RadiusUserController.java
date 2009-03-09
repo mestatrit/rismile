@@ -21,8 +21,10 @@ import com.risetek.rismile.client.control.IAction;
 import com.risetek.rismile.client.control.RismileTableController;
 import com.risetek.rismile.client.control.SysLog;
 import com.risetek.rismile.client.control.ViewAction;
+import com.risetek.rismile.client.model.RismileTable;
 import com.risetek.rismile.client.utils.IPConvert;
 import com.risetek.rismile.client.utils.Validity;
+import com.risetek.rismile.client.view.RismileTableView;
 
 public class RadiusUserController extends RismileTableController{
 	private static String loadForm = "SqlUserInfoXML";
@@ -346,6 +348,14 @@ public class RadiusUserController extends RismileTableController{
 				empty();
 			}
 		}
+	}
+
+	public RismileTable getTable() {
+		return table;
+	}
+
+	public RismileTableView getView() {
+		return view;
 	}
 
 	

@@ -16,8 +16,10 @@ import com.risetek.rismile.client.control.IAction;
 import com.risetek.rismile.client.control.RismileTableController;
 import com.risetek.rismile.client.control.SysLog;
 import com.risetek.rismile.client.control.ViewAction;
+import com.risetek.rismile.client.model.RismileTable;
 import com.risetek.rismile.client.utils.IPConvert;
 import com.risetek.rismile.client.utils.Validity;
+import com.risetek.rismile.client.view.RismileTableView;
 
 public class RadiusBlackController extends RismileTableController{
 	private static String loadForm = "SqlBlackUserInfoXML";
@@ -193,6 +195,16 @@ public class RadiusBlackController extends RismileTableController{
 			SysLog.log("remote execute");
 			load();
 		}
+	}
+
+
+
+	public RismileTable getTable() {
+		return table;
+	}
+
+	public RismileTableView getView() {
+		return view;
 	}
 	
 		
