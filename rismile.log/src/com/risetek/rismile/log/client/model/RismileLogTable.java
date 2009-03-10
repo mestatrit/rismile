@@ -6,6 +6,8 @@ import com.google.gwt.xml.client.XMLParser;
 import com.risetek.rismile.client.model.RismileTable;
 
 public class RismileLogTable extends RismileTable {
+	// 对应的自动刷新按键。
+	public boolean autoRefresh = true;
 	
 	public void parseXML(String text)
 	{

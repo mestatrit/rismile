@@ -45,8 +45,7 @@ public class SystemHomeView extends Composite {
 		table3.setWidget(4, 1, images.p4().createImage());
 		table3.setWidget(5, 1, images.p3().createImage());
 
-		table2
-				.setHTML(1, 1,
+		table2.setHTML(1, 1,
 						"<DIV class='sys-introH'>成都中联信通科技有限公司</DIV><DIV class='sys-introH'>广域无线路由器</DIV>");
 		table2.setHTML(2, 1, "<ul class='sys-intro'>" + "<li class='sys-intro'>性能平滑</li>"
 				+ "<li class='sys-intro'>支持多接口</li>"
@@ -58,6 +57,7 @@ public class SystemHomeView extends Composite {
 		table.setWidget(1, 1, table3);
 		table.setWidget(1, 2, table2);
 
+		table.setHeight("470px");
 		initWidget(table);
 
 	}

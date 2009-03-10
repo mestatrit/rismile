@@ -19,23 +19,18 @@ public class RismileLogController extends RismileTableController implements Requ
 	// 视图实体。
 	public RismileLogView logView;
 	// 数据实体
-	public RismileLogTable table = new RismileLogTable();
+	public RismileLogTable data = new RismileLogTable();
 	
 	public RismileLogController() {
 		// 视图实体。
 		logView = new RismileLogView(this);
+		data.setLimit(20);
 	}
 
-	public void load(int limit, int offset){
-		String query = "lpage="+limit+"&offset="+offset;
-		remoteRequest.get(loadForm, query, this);
-	}
-	
 	public void load(){
-		String query = "lpage="+table.getLimit()+"&offset="+table.getOffset();
+		String query = "lpage="+data.getLimit()+"&offset="+data.getOffset();
 		remoteRequest.get(loadForm, query, this);
 	}
-
 	
 	public void empty(){
 		remoteRequest.get(emptyForm, null, this);
@@ -44,46 +39,34 @@ public class RismileLogController extends RismileTableController implements Requ
 	public class AutoRefreshClick implements ClickListener{
 
 		public void onClick(Widget sender) {
-
-			logView.autoRefresh = !logView.autoRefresh;
-			if (logView.autoRefresh) {
-				logView.TogAutoRefresh.setText("查看历史");
-				setStartRow(0);
-				logView.update();
-			} else {
-				logView.TogAutoRefresh.setText("自动更新");
-				logView.loadModel();
-			}
+			data.autoRefresh = !data.autoRefresh;
+			load();
 		}	
 	}
 
 	public class ClearLogAction implements ClickListener {
 
 		public void onClick(Widget sender) {
-
+			logView.mask();
 			if (Window.confirm("是否要清除日志?")) {
 				logView.clearButton.setEnabled(false);
 				empty();
 			}
+			logView.unmask();
 		}
 	}
 	
 	
 	public void onError(Request request, Throwable exception) {
-		
 	}
 
 	public void onResponseReceived(Request request, Response response) {
-		table.parseXML(response.getText());
-		logView.render(table);
-	}
-
-	public void setStartRow(int startRow){
-		table.setOffset(startRow);
+		data.parseXML(response.getText());
+		logView.render(data);
 	}
 
 	public RismileTable getTable() {
-		return table;
+		return data;
 	}
 
 	public RismileTableView getView() {

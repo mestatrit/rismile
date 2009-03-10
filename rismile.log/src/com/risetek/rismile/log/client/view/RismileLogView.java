@@ -10,18 +10,23 @@ import com.google.gwt.user.client.ui.Widget;
 import com.risetek.rismile.client.view.MouseEventGrid;
 import com.risetek.rismile.client.view.RismileTableView;
 import com.risetek.rismile.log.client.control.RismileLogController;
+import com.risetek.rismile.log.client.model.RismileLogTable;
 
 public class RismileLogView extends RismileTableView {
 	private final static String[] columns = {"序号","日期时间","运行记录"};
 	private final static String[] columnStyles = {"id","datetime","record"};
 	private final static int rowCount = 20;	
 	
-	public boolean autoRefresh = true;
+	//public boolean autoRefresh = true;
 	public Button TogAutoRefresh;
-	public Button clearButton = new Button("清除");
-	boolean showing = false;
+	public Button clearButton;
 	public RismileLogController logController;
 
+	Timer refreshTimer = new Timer() {
+		public void run() {
+			logController.load();
+		}
+	};
 	
 	public RismileLogView(RismileLogController control)
 	{
@@ -44,16 +49,11 @@ public class RismileLogView extends RismileTableView {
 			}
 
 		});
-		super.addToolButton(clearButton);
+		
+		clearButton = new Button("清除",logController.new ClearLogAction());
 		clearButton.addStyleName("rismile-Tool-Button");
-		clearButton.addClickListener(logController.new ClearLogAction());
+		super.addToolButton(clearButton);
 	}
-
-	Timer refreshTimer = new Timer() {
-		public void run() {
-			update();
-		}
-	};
 
 	public Grid getGrid() {
 		return new MouseEventGrid() {
@@ -66,34 +66,14 @@ public class RismileLogView extends RismileTableView {
 	}
 
 	public void start_refresh() {
-		showing = true;
 		refreshTimer.run();
-	}
-
-	public void update() {
-
-		TogAutoRefresh.setText(autoRefresh ? "查看历史" : "自动更新");
-		if (autoRefresh && showing) {
-			logController.load();
-			refreshTimer.schedule(10000);
-		}
+		refreshTimer.scheduleRepeating(5000);
 	}
 
 	public void stop_refresh() {
-		showing = false;
+		refreshTimer.cancel();
 	}
 
-	public void replaneNavBar(int total) {
-		/*
-		if (!autoRefresh)
-			super.enabledNavBar(total);
-			*/
-	}
-
-
-	public void loadModel() {
-		logController.load();
-	}
 
 	public void mask() {
 		// TODO Auto-generated method stub
@@ -105,5 +85,20 @@ public class RismileLogView extends RismileTableView {
 		
 	}
 	
-
+	public void render(RismileLogTable data)
+	{
+		TogAutoRefresh.setText(data.autoRefresh ? "查看历史" : "自动更新");
+		if(!data.autoRefresh)
+		{
+			refreshTimer.cancel();
+			navbar.enable = true;
+		}
+		else
+		{
+			navbar.enabelNavbar(false, false, false, false);
+			navbar.enable = false;
+		}
+		
+		super.render(data);
+	}
 }

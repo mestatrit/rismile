@@ -91,17 +91,15 @@ public abstract class CustomDialog extends MyDialog {
 	
 	public void show(String tips){
 		setText(tips);
-		super.show();
-		center();
-		parent.mask();
+		show();
 	}
 	public void show(){
+		parent.mask();
 		super.show();
 		center();
-		parent.mask();
 	}
 	public void onClick(Widget sender) {
-		parent.unmask();
+		unmask();
     	this.hide();
     	
 	}
@@ -127,7 +125,14 @@ public abstract class CustomDialog extends MyDialog {
 	    return super.onEventPreview(event);
 	}
 	
-	abstract public void setFirstFocus();
+//	abstract public void setFirstFocus();
 //	abstract public int getParentHeihgt();
 	abstract public Widget getFirstTabIndex();
+
+  public void unmask()
+  {
+	parent.unmask();
+  }
+
+
 }

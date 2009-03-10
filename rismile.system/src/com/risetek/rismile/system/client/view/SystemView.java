@@ -45,6 +45,8 @@ public class SystemView extends Composite implements IView {
 	public SystemView(SystemAllController control) {
 		this.control = control;
 		flexTable.setStyleName("page-container");
+
+		flexTable.setHeight("470px");
 		initWidget(flexTable);
 		flexTable.setWidth("100%");
 		HTML emptyHtml = new HTML("&nbsp;");
@@ -60,7 +62,10 @@ public class SystemView extends Composite implements IView {
 
 		final StackPanel stackPanel = new StackPanel();
 		stackPanel.setWidth("100%");
-		stackPanel.setHeight("433px");
+
+//		stackPanel.setHeight("433px");
+		stackPanel.setHeight("100%");
+		
 		stackPanel.setStyleName("sys-stack-panel");
 		flexTable.setWidget(1, 0, stackPanel);
 		flexTable.getFlexCellFormatter().setColSpan(1, 0, 2);

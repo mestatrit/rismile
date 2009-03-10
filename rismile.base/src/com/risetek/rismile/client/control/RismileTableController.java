@@ -21,57 +21,47 @@ public abstract class RismileTableController implements RequestCallback {
 		remoteRequest.get(formFunction, query, this);
 	}
 
+	// NAVIGATOR 按键的事件处理
 	public class navigatorFirstClick implements ClickListener
 	{
-
 		public void onClick(Widget sender) {
-			getTable().setOffset(0);
-			getView().navbar.enabelNavbar(false, false, false, false);
-			getView().loadModel();
+			getTable().setOffset(getTable().getSum() - getTable().getLimit());
+			load();
 		}
-		
 	}
 	
-	// NAVIGATOR 按键的事件处理
 	public class navigatorNextClick implements ClickListener
 	{
 
 		public void onClick(Widget sender) {
-			int offset = getTable().getOffset() + getView().getDataRowCount();
+			int offset = getTable().getOffset() - getTable().getLimit();
 			getTable().setOffset(offset);
-			getView().navbar.enabelNavbar(false, false, false, false);
-			getView().loadModel();
-		}
-		
-	}
-
-	public class navigatorLastLastClick implements ClickListener
-	{
-
-		public void onClick(Widget sender) {
-			getView().startRow = getView().TotalRecord - getView().getDataRowCount();
-			getView().navbar.enabelNavbar(false, false, false, false);
-			getView().loadModel();
+			load();
 		}
 		
 	}
 
 	public class navigatorPrevClick implements ClickListener
 	{
-
 		public void onClick(Widget sender) {
-			getView().startRow -= getView().getDataRowCount();
-			if (getView().startRow < 0) {
-				getView().startRow = 0;
-			}
-			getView().navbar.enabelNavbar(false, false, false, false);
-			getView().loadModel();
+			int offset = getTable().getOffset() + getTable().getLimit();
+			getTable().setOffset(offset);
+			load();
+		}
+	}
+	
+	public class navigatorLastLastClick implements ClickListener
+	{
+		public void onClick(Widget sender) {
+			getTable().setOffset(0);
+			load();
 		}
 		
 	}
-	
+
 	public abstract RismileTable getTable();
 	public abstract RismileTableView getView();
 	
-	
+	// 载入数据。
+	public abstract void load();
 }

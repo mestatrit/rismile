@@ -188,7 +188,13 @@ public abstract class RismileTableView extends Composite implements IView{
 		
 		setStatisticText("" + total);
 		TotalRecord = total;
-			
+		
+		// 设定导航状态
+		boolean goFirst = table.getOffset() > 0;
+		boolean goPrev = (table.getOffset() - table.getLimit()) > 0;
+		boolean goNext = (table.getOffset() + table.getLimit()) < table.getSum();
+		boolean goLast = table.getOffset() < table.getSum();
+		navbar.enabelNavbar(goFirst, goPrev, goNext, goLast);
 	}
 
 }

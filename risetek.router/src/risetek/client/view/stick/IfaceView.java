@@ -1,4 +1,8 @@
-package risetek.client.view;
+package risetek.client.view.stick;
+
+import risetek.client.model.IfModel;
+import risetek.client.model.ifaceData;
+import risetek.client.model.lcpData;
 
 import com.google.gwt.user.client.ui.CheckBox;
 import com.google.gwt.user.client.ui.Grid;
@@ -64,6 +68,14 @@ public class IfaceView {
 		*/
 		
 		outerPanel.add(panel);
+		
+	}
+	
+	public void render(IfModel data)
+	{
+		ifaceData conf = data.config.ifacedata;
+		ondemandCheckBox.setChecked(conf.dial_on_demand);
+		natCheckBox.setChecked(conf.nat);
 		
 	}
 }

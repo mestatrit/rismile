@@ -1,9 +1,12 @@
-package risetek.client.view;
+package risetek.client.view.stick;
+
+import risetek.client.control.IfController;
+import risetek.client.model.IfModel;
+import risetek.client.model.lcpData;
 
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.CheckBox;
 import com.google.gwt.user.client.ui.Grid;
-import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Panel;
 import com.google.gwt.user.client.ui.PasswordTextBox;
@@ -30,8 +33,10 @@ public class LCPView {
 	final Label keepaliveLabel = new Label("");
 	final Label redialLabel = new Label("");
 	
-	public LCPView(Panel outerPanel)
+	IfController control;
+	public LCPView(Panel outerPanel, IfController control)
 	{
+		this.control = control;
 		panel.setBorderWidth(1);
 		panel.setWidth("100%");
 		panel.setTitle("LCP");
@@ -57,7 +62,7 @@ public class LCPView {
 		pppGrid.setWidget(0, 1, userLabel);
 		pppGrid.setText(1, 0, "密码:");
 		pppGrid.setWidget(1, 1, passwordLabel);
-		pppGrid.setWidget(2, 1, new Button("修改"));
+		pppGrid.setWidget(2, 1, new Button("修改", control.new ModifyLCPUserButtonClick()));
 
 		final Grid authGrid = new Grid(3,2);
 		authGrid.setBorderWidth(1);
@@ -109,8 +114,17 @@ public class LCPView {
 		outerPanel.add(panel);
 	}
 
-	public void render()
+	public void render(IfModel data)
 	{
+		lcpData lcpdata = data.config.lcpdata;
+
+		userLabel.setText(lcpdata.pppusername);
+		passwordLabel.setText(lcpdata.ppppassword);
+		
+		chapmdCheckBox.setChecked(lcpdata.accept_chap != 0);
+		eapCheckBox.setChecked(lcpdata.accept_eap != 0);
+		mschapCheckBox.setChecked(lcpdata.accept_mschap != 0);
+		papCheckBox.setChecked(lcpdata.accept_pap != 0);
 		
 	}
 }

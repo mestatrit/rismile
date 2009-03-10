@@ -12,6 +12,7 @@ public class NavBar extends Composite {
     private Button gotoNext;
     private Button gotoPrev;
     
+    public boolean enable = true;
     private final HorizontalPanel buttonsPanel = new HorizontalPanel();
 
     
@@ -44,7 +45,8 @@ public class NavBar extends Composite {
 
     public void enabelNavbar(boolean firstEnabled, boolean preEnabled,
     		boolean nextEnabled, boolean lastEnabled){
-    	
+    	if( !enable )
+    		return;
     	gotoFirst.setEnabled(firstEnabled);
     	gotoPrev.setEnabled(preEnabled);
     	gotoNext.setEnabled(nextEnabled);

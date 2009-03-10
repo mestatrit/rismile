@@ -1,7 +1,11 @@
-package risetek.client.view;
+package risetek.client.view.stick;
+
+import java.util.ArrayList;
+
+import risetek.client.model.IfModel;
+import risetek.client.model.ifaceData;
 
 import com.google.gwt.user.client.ui.Button;
-import com.google.gwt.user.client.ui.DisclosurePanel;
 import com.google.gwt.user.client.ui.Grid;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Panel;
@@ -17,6 +21,7 @@ public class RouterView {
 	final Label destLabel = new Label("");
 	final Label maskLabel = new Label("");
 	final Button addRouteButton = new Button("添加路由");
+	final Grid routeGrid = new Grid(1,3);
 	
 	public RouterView(Panel outerPanel)
 	{
@@ -35,7 +40,6 @@ public class RouterView {
 		
 //		routeListGrid.setStyleName("if-Grid");
 		
-		final Grid routeGrid = new Grid(3,3);
 		routeGrid.setBorderWidth(1);
 		routeGrid.setWidth("100%");
 		panel.add(routeGrid);
@@ -67,5 +71,19 @@ public class RouterView {
 
 		outerPanel.add(panel);
 
+	}
+	
+	public void render(IfModel data)
+	{
+		ifaceData conf = data.config.ifacedata;
+		ArrayList<ifaceData.router> list = conf.routers;
+		routeGrid.resizeRows(list.size()+1);
+		for( int loop = 1; loop < list.size()+1; loop++)
+		{
+			ifaceData.router r = list.get(loop-1);
+			routeGrid.setText(loop, 0, r.dest);
+			routeGrid.setText(loop, 1, r.mask);
+		}
+		
 	}
 }
