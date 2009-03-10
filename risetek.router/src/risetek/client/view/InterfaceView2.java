@@ -13,6 +13,7 @@ import com.google.gwt.user.client.DOM;
 import com.google.gwt.user.client.Element;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.VerticalPanel;
+import com.risetek.rismile.client.Entry;
 import com.risetek.rismile.client.view.IView;
 
 public class InterfaceView2 extends Composite implements IView {
@@ -39,7 +40,7 @@ public class InterfaceView2 extends Composite implements IView {
 		outerPanel.setStyleName("if-layout");
 		outerPanel.setWidth("100%");
 		outerPanel.setBorderWidth(1);
-		outerPanel.setHeight("470px");
+		outerPanel.setHeight(Entry.SinkHeight);
 		initWidget(outerPanel);
 		//outerPanel.setHeight("100%");
 

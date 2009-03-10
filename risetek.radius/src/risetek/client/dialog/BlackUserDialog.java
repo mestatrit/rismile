@@ -9,6 +9,7 @@ import com.google.gwt.user.client.ui.PasswordTextBox;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.Widget;
 import com.risetek.rismile.client.dialog.CustomDialog;
+import com.risetek.rismile.client.utils.Validity;
 
 public class BlackUserDialog extends CustomDialog {
 	public final PasswordTextBox passwordBox = new PasswordTextBox();
@@ -68,12 +69,42 @@ public class BlackUserDialog extends CustomDialog {
 	public Widget getFirstTabIndex() {
 		return passwordBox;
 	}
-	public int getParentHeihgt() {
-		return parent.getHeight();
-	}
 
-	public void setFirstFocus() {
-		passwordBox.setFocus(true);
+	public boolean valid()
+	{
+		String check;
+
+		check = Validity.validIMSI(imsiBox.getText());
+		if (null != check) {
+			this.setMessage(check);
+			imsiBox.setFocus(true);
+			return false;
+		}
+
+		check = Validity.validUserName(usernameBox.getText());
+		if (null != check) {
+			this.setMessage(check);
+			usernameBox.setFocus(true);
+			return false;
+		}
+
+		
+		
+		check = Validity.validPassword(passwordBox.getText());
+		if (null != check) {
+			this.setMessage(check);
+			passwordBox.setFocus(true);
+			return false;
+		}
+
+		
+		check = Validity.validIpAddress(ipaddressBox.getText());
+		if (null != check) {
+			this.setMessage(check);
+			ipaddressBox.setFocus(true);
+			return false;
+		}
+		
+		return true;
 	}
-	
 }

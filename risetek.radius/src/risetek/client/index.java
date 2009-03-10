@@ -9,6 +9,7 @@ import com.risetek.rismile.system.client.RisetekSystemSink;
 public class index extends  Entry{
 
 	public void loadSinks() {
+		Entry.SinkHeight = "500px";
 		list.addSink(RisetekHomeSink.init());
 		list.addSink(RisetekSystemSink.init());
 		list.addSink(RadiusConfSink.init());

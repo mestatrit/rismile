@@ -10,6 +10,7 @@ import com.google.gwt.user.client.ui.PasswordTextBox;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.Widget;
 import com.risetek.rismile.client.dialog.CustomDialog;
+import com.risetek.rismile.client.utils.Validity;
 
 public class UserAddDialog extends CustomDialog {
 	public final PasswordTextBox passwordbox = new PasswordTextBox();
@@ -24,10 +25,10 @@ public class UserAddDialog extends CustomDialog {
 	private Grid gridFrame = new Grid(4, 2);
 	private final FocusPanel focusPanel = new FocusPanel();
 	
-	private UserView parent;
+	//private UserView parent;
 	public UserAddDialog(UserView parent){
 		super(parent);
-		this.parent = parent;
+		//this.parent = parent;
 		add(new Label("请输入用户信息："),DockPanel.NORTH);
 		
 		gridFrame.setWidget(0,0,IMSILable);
@@ -55,22 +56,48 @@ public class UserAddDialog extends CustomDialog {
 	public void show(){
 		super.show("新加一个用户");
 		IMSI.setFocus(true);
-		super.center();
+		//super.center();
 	}
 
 	public Widget getFirstTabIndex() {
-		// TODO Auto-generated method stub
 		return IMSI;
 	}
 
-	public int getParentHeihgt() {
-		// TODO Auto-generated method stub
-		return parent.getHeight();
-	}
+	public boolean valid()
+	{
+		String check;
+		check = Validity.validIMSI(IMSI.getText());
+		if( null != check )
+		{
+			setMessage(check);
+			IMSI.setFocus(true);
+			return false;
+		}
 
-	public void setFirstFocus() {
-		// TODO Auto-generated method stub
-		IMSI.setFocus(true);
+		check = Validity.validUserName(usernamebox.getText());
+		if( null != check )
+		{
+			usernamebox.setFocus(true);
+			setMessage(check);
+			return false;
+		}
+		
+		check = Validity.validPassword(passwordbox.getText());
+		if( null != check )
+		{
+			passwordbox.setFocus(true);
+			setMessage(check);
+			return false;
+		}
+		
+		check = Validity.validIpAddress(ipaddress.getText());
+		if (null != check) {
+			ipaddress.setFocus(true);
+			setMessage(check);
+			return false;
+		}
+		
+			
+		return true;
 	}
-	
 }

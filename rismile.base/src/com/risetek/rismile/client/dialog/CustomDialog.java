@@ -61,6 +61,11 @@ public abstract class CustomDialog extends MyDialog {
 	public void setNote(String note){
 		this.note.setText(note);
 	}
+	
+	public void setMessage_E(){
+		setMessage("远程执行错误！");
+	}
+
 	public void setMessage(String message){
 		this.message.setText(message);
 	}
@@ -91,7 +96,9 @@ public abstract class CustomDialog extends MyDialog {
 	
 	public void show(String tips){
 		setText(tips);
-		show();
+		parent.mask();
+		super.show();
+		center();
 	}
 	public void show(){
 		parent.mask();
@@ -125,8 +132,6 @@ public abstract class CustomDialog extends MyDialog {
 	    return super.onEventPreview(event);
 	}
 	
-//	abstract public void setFirstFocus();
-//	abstract public int getParentHeihgt();
 	abstract public Widget getFirstTabIndex();
 
   public void unmask()

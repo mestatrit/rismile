@@ -6,6 +6,7 @@ import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.FlexTable;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.ImageBundle;
+import com.risetek.rismile.client.Entry;
 
 public class SystemHomeView extends Composite {
 
@@ -57,7 +58,7 @@ public class SystemHomeView extends Composite {
 		table.setWidget(1, 1, table3);
 		table.setWidget(1, 2, table2);
 
-		table.setHeight("470px");
+		table.setHeight(Entry.SinkHeight);
 		initWidget(table);
 
 	}

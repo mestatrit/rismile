@@ -7,6 +7,7 @@ import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.Widget;
 import com.risetek.rismile.client.dialog.CustomDialog;
+import com.risetek.rismile.client.utils.Validity;
 import com.risetek.rismile.system.client.view.SystemView;
 
 public class AddRouteDialog extends CustomDialog {
@@ -77,18 +78,38 @@ public class AddRouteDialog extends CustomDialog {
 	}
 
 	public Widget getFirstTabIndex() {
-		// TODO Auto-generated method stub
 		return destBox;
 	}
 
-	public int getParentHeihgt() {
-		// TODO Auto-generated method stub
-		return parent.getHeight();
-	}
 
-	public void setFirstFocus() {
-		// TODO Auto-generated method stub
-		destBox.setFocus(true);
-	}
+	public boolean valid()
+	{
 
+		String check = Validity.validIpAddress(destBox.getText());
+		if (null != check) {
+			destBox.setFocus(true);
+			setMessage(check);
+			return false;
+		}
+
+		check = Validity.validIpAddress(maskBox.getText());
+		if (null != check) {
+			maskBox.setFocus(true);
+			setMessage(check);
+			return false;
+		}
+		/*
+		 * text = interfaceBox.getText(); check =
+		 * Validity.validRouteInterface(text); if (null != check){
+		 * Window.alert(check); return; }
+		 */
+
+		check = Validity.validIpAddress(gateBox.getText());
+		if (null != check) {
+			gateBox.setFocus(true);
+			setMessage(check);
+			return false;
+		}
+		return true;
+	}
 }

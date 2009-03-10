@@ -22,7 +22,4 @@ public class RadiusUserSink extends Sink {
 		initWidget(control.view);
 	}
 
-	public void onShow() {
-		control.view.loadModel();
-	}
 }

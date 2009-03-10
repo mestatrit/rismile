@@ -1,12 +1,7 @@
 package risetek.client.model;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import com.google.gwt.xml.client.Document;
 import com.google.gwt.xml.client.Element;
 import com.google.gwt.xml.client.NodeList;
-import com.google.gwt.xml.client.XMLParser;
 
 public class lcpData {
 

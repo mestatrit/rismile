@@ -1,4 +1,23 @@
-.radius-conf-table {
+.radius-config {
+  position:relative;
+}
+
+.radius-config td {
+	text-align: center;
+}
+
+.radius-config .table-title {
+	text-indent: 1em;
+	padding-top: 4px;
+	padding-bottom: 4px;
+	font-size: larger;
+	font-weight: bold;
+	border:1px solid #2a8ebf;
+	background: url(images/radius_blue_gradient.gif) repeat-x top left;
+	/*background-color: #7EACD6;*/
+}
+
+.radius-config .conf-table {
 	margin-top: 1cm;
 	margin-bottom: 5mm;
 	background-color: white;
@@ -7,7 +26,8 @@
 	border-collapse: collapse;
 	border:1px solid #999;
 }
-.radius-conf-table td {
+
+.radius-config .conf-table td {
 	border:solid #999;
 	border-width:1px 1px 1px 1px;
 	padding-top:4px;
@@ -15,9 +35,10 @@
     padding-bottom: 2px;
 	vertical-align: middle;
 }
-.radius-conf-Button {
+
+.radius-config .conf-Button {
 	height: 25px;
-	width: 4em;
+	width: 6em;
 	margin-top: 1cm;
 	margin-bottom: 5mm;
 	padding-top:1px;
@@ -29,23 +50,14 @@
 	cursor: pointer;
     cursor: hand;
 }
-.radius-conf-version{
+.radius-config .conf-version{
 	margin-top: 5mm;
 	margin-bottom: 1mm;
 }
-.radius-table-title {
-	text-indent: 1em;
-	padding-top: 4px;
-	padding-bottom: 4px;
-	font-size: larger;
-	font-weight: bold;
-	border:1px solid #2a8ebf;
-	background: url(images/radius_blue_gradient.gif) repeat-x top left;
-	/*background-color: #7EACD6;*/
-}
 
 .radius-info-Label {
-	color: crimson;
+#	color: crimson;
+	color: red;
 }
 
 

@@ -1,10 +1,15 @@
-
-.sys-date-table {
-	margin-left: 5mm;
-	margin-top: 1cm;
-	margin-bottom: 2mm;
+.rismile-system {
+  background: #E8EEF7;
 }
-.sys-status-table {
+
+.rismile-system .stack-panel {
+  background: #E8EEF7;
+  border-bottom: 1px solid #2a8ebf;
+  border-right: 1px solid #2a8ebf;
+  border-left: 1px solid #2a8ebf;
+}
+
+.rismile-system .status-table {
 	cellspacing:2px;
 	cellpading:2px;
 	margin-top: 1mm;
@@ -14,23 +19,31 @@
 	background-color: white;
 	border-collapse: collapse;
 }
-.sys-status-table td {
+
+.rismile-system .status-table td {
 	border:solid #999;
 	border-width:1px 1px 1px 1px;
 	padding:3px;
 }
 
-.sys-status-table-head {
+.rismile-system .status-table .head {
 	background: #F4F7FB;
 }
-.sys-grid1-table {
+
+.rismile-system .date-table {
+	margin-left: 5mm;
+	margin-top: 1cm;
+	margin-bottom: 2mm;
+}
+
+.rismile-system .grid1-table {
 	cellspacing:2px;
 	cellpading:2px;
 	margin-top: 1mm;
 	margin-bottom: 1mm;
 	margin-left: 3mm;
 }
-.sys-grid2-table {
+.rismile-system .grid2-table {
 	cellspacing:2px;
 	cellpading:2px;
 	margin-bottom: 5mm;
@@ -39,15 +52,14 @@
 	background-color: white;
 	border-collapse: collapse;
 }
-.sys-grid2-table td {
+.rismile-system .grid2-table td {
 	border:solid #999;
 	border-width:1px 1px 1px 1px;
 	padding:3px;
 }
-.sys-admin-note {
-	margin-top: 4mm;
-}
-.sys-big-button {
+
+
+.rismile-system .big-button {
 	height: 25px;
 	width: 7em;
 	margin-top: 1cm;
@@ -61,7 +73,7 @@
 	cursor: pointer;
     cursor: hand;
 }
-.sys-button {
+.rismile-system .sys-button {
     height: 25px;
 	width: 4em;
 	margin-top: 1mm;
@@ -75,7 +87,12 @@
 	cursor: pointer;
     cursor: hand;
 }
-.sys-stack-panel {
+
+.rismile-system .info-Label {
+	color: crimson;
+}
+
+.rismile-system .stack-panel {
 
   background: #E8EEF7;
   border-bottom: 1px solid #2a8ebf;
@@ -83,38 +100,43 @@
   border-left: 1px solid #2a8ebf;
 }
 
-.sys-stack-panel .gwt-StackPanelItem {
+.rismile-system .stack-panel .gwt-StackPanelItem {
   background: url(images/system_blue_gradient.gif) repeat-x top left;
   cursor: pointer;
   cursor: hand;
 }
 
-.sys-stack-panel .gwt-StackPanelItem-selected {
+.rismile-system .stack-panel .gwt-StackPanelItem-selected {
   border-bottom: 1px solid #2a8ebf;
 }
+.rismile-system .stack-panel .gwt-StackPanelItem   .stack-figure {
+  background: url(images/system_plus.gif) no-repeat 0 50%;
+}
+.rismile-system .stack-panel .gwt-StackPanelItem-selected  .stack-figure {
+  background: url(images/system_minus.gif) no-repeat 0 50%;
+}
+.rismile-system .stack-panel .lcaption {
+  width: 1px;
+}
+
+.rismile-system .stack-panel .rcaption {
+
+} 
+
+.rismile-system .stack-panel .box-20 {
+  text-align: right;
+}
+
+.rismile-system .stack-panel .gwt-StackPanelItem table {
+  width: 100%;
+}
+
 .stack-caption {
 
   text-indent: 1em;
 	padding-bottom: 4px;
 	font-size: larger;
 	font-weight: bold;
-}
-.sys-stack-panel .gwt-StackPanelItem   .stack-figure {
-  background: url(images/system_plus.gif) no-repeat 0 50%;
-}
-.sys-stack-panel .gwt-StackPanelItem-selected  .stack-figure {
-  background: url(images/system_minus.gif) no-repeat 0 50%;
-}
-.sys-stack-panel .lcaption {
-  width: 1px;
-}
-
-.sys-stack-panel .rcaption {
-
-} 
-
-.sys-stack-panel .box-20 {
-  text-align: right;
 }
 
 .box-00, .box-20 {
@@ -156,37 +178,6 @@
 .is-top .box-00, .is-top .box-20 {
   border-right: none;
   border-left: none;
-}
-
-.sys-stack-panel .gwt-StackPanelItem table {
-  width: 100%;
-}
-.sys-info-Label {
-	color: crimson;
-}
-
-
-.gwt-Button {
-  background:#f5f5f5;
-  border:1px solid #aaa;
-  border-top:1px solid #ddd;
-  border-left:1px solid #ddd;
-  padding: 2px;
-  width: 12em;
-}
-
-.gwt-Button:active {
-  border:1px solid #aaa;
-  border-bottom:1px solid #ccc;
-  border-right:1px solid #ccc;
-}
-
-.gwt-Button[disabled] {
-  background: #ccc;
-  border:1px solid #999;
-  border-top:1px solid #ccc;
-  border-left:1px solid #ccc;
-  color: #888;
 }
 
 

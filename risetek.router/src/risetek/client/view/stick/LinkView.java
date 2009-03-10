@@ -1,7 +1,6 @@
 package risetek.client.view.stick;
 
 import risetek.client.model.IfModel;
-import risetek.client.model.lcpData;
 import risetek.client.model.linkData;
 
 import com.google.gwt.user.client.ui.Button;

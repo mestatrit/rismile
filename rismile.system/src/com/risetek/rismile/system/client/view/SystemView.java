@@ -13,9 +13,9 @@ import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.HasHorizontalAlignment;
 import com.google.gwt.user.client.ui.HasVerticalAlignment;
 import com.google.gwt.user.client.ui.ImageBundle;
-import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.StackPanel;
 import com.google.gwt.user.client.ui.VerticalPanel;
+import com.risetek.rismile.client.Entry;
 import com.risetek.rismile.client.view.IView;
 import com.risetek.rismile.system.client.control.SystemAllController;
 import com.risetek.rismile.system.client.model.InterfEntry;
@@ -36,7 +36,6 @@ public class SystemView extends Composite implements IView {
 	final Grid netGrid = new Grid();
 	final Grid routeGrid = new Grid();
 
-	final Label infoLabel = new Label("");
 	private int nextHeaderIndex = 0;
 	final FlexTable flexTable = new FlexTable();
 
@@ -44,29 +43,23 @@ public class SystemView extends Composite implements IView {
 	
 	public SystemView(SystemAllController control) {
 		this.control = control;
-		flexTable.setStyleName("page-container");
-
-		flexTable.setHeight("470px");
+		//flexTable.setStyleName("rismile-page-container");
+		flexTable.setHeight(Entry.SinkHeight);
 		initWidget(flexTable);
 		flexTable.setWidth("100%");
+		//flexTable.setBorderWidth(1);
+
+		setStyleName("rismile-system");
+		
 		HTML emptyHtml = new HTML("&nbsp;");
 		flexTable.setWidget(0, 0, emptyHtml);
 		emptyHtml.setHeight("1em");
 
-		flexTable.setWidget(0, 1, infoLabel);
-		flexTable.getCellFormatter().setHorizontalAlignment(0, 1,
-				HasHorizontalAlignment.ALIGN_RIGHT);
-		flexTable.getCellFormatter().setVerticalAlignment(0, 1,
-				HasVerticalAlignment.ALIGN_TOP);
-		infoLabel.setStyleName("sys-info-Label");
-
 		final StackPanel stackPanel = new StackPanel();
 		stackPanel.setWidth("100%");
-
-//		stackPanel.setHeight("433px");
 		stackPanel.setHeight("100%");
 		
-		stackPanel.setStyleName("sys-stack-panel");
+		stackPanel.setStyleName("stack-panel");
 		flexTable.setWidget(1, 0, stackPanel);
 		flexTable.getFlexCellFormatter().setColSpan(1, 0, 2);
 
@@ -77,23 +70,24 @@ public class SystemView extends Composite implements IView {
 		// 产品系统信息界面布局
 		dateGrid.setBorderWidth(1);
 		dateGrid.setWidth("40%");
-		dateGrid.addStyleName("sys-date-table");
+		dateGrid.addStyleName("date-table");
 		dateGrid.resize(1, 2);
 		servicePanel.add(dateGrid);
 
 		// 服务信息界面布局
+		servicePanel.add(serviceGrid);
 		serviceGrid.setBorderWidth(1);
 		serviceGrid.setWidth("90%");
-		serviceGrid.setStyleName("sys-status-table");
+		serviceGrid.setStyleName("status-table");
 		serviceGrid.resize(2, 3);
 		serviceGrid.setBorderWidth(1);
 		serviceGrid.setText(0, 0, "名称");
 		serviceGrid.setText(0, 1, "版本号");
 		serviceGrid.setText(0, 2, "运行状态");
-		serviceGrid.getCellFormatter().setStyleName(0, 0, "sys-status-table-head");
-		serviceGrid.getCellFormatter().setStyleName(0, 1, "sys-status-table-head");
-		serviceGrid.getCellFormatter().setStyleName(0, 2, "sys-status-table-head");
-		servicePanel.add(serviceGrid);
+		serviceGrid.setStyleName("status-table");
+		serviceGrid.getCellFormatter().setStyleName(0, 0, "head");
+		serviceGrid.getCellFormatter().setStyleName(0, 1, "head");
+		serviceGrid.getCellFormatter().setStyleName(0, 2, "head");
 		stackPanel.add(servicePanel, createHeaderHTML(images, "系统服务"), true);
 
 		// 网络配置信息界面布局
@@ -102,22 +96,23 @@ public class SystemView extends Composite implements IView {
 		netPanel.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_LEFT);
 
 		final Button netAddButton = new Button("添加IP", control.new addIPClickListener());
-		netAddButton.setStyleName("sys-big-button");
+		netAddButton.setStyleName("big-button");
 		netPanel.add(netAddButton);
 
 		netGrid.setBorderWidth(1);
 		netGrid.setWidth("90%");
-		netGrid.setStyleName("sys-grid2-table");
+		netGrid.setStyleName("grid2-table");
 		netGrid.resize(2, 4);
 		netGrid.setBorderWidth(1);
 		netGrid.setText(0, 0, "接口");
 		netGrid.setText(0, 1, "IP地址");
 		netGrid.setText(0, 2, "子网掩码");
 		netGrid.setText(0, 3, "操作");
-		netGrid.getCellFormatter().setStyleName(0, 0, "sys-status-table-head");
-		netGrid.getCellFormatter().setStyleName(0, 1, "sys-status-table-head");
-		netGrid.getCellFormatter().setStyleName(0, 2, "sys-status-table-head");
-		netGrid.getCellFormatter().setStyleName(0, 3, "sys-status-table-head");
+		netGrid.setStyleName("status-table");
+		netGrid.getCellFormatter().setStyleName(0, 0, "head");
+		netGrid.getCellFormatter().setStyleName(0, 1, "head");
+		netGrid.getCellFormatter().setStyleName(0, 2, "head");
+		netGrid.getCellFormatter().setStyleName(0, 3, "head");
 		netPanel.add(netGrid);
 		stackPanel.add(netPanel, createHeaderHTML(images, "网络接口"), true);
 
@@ -127,52 +122,53 @@ public class SystemView extends Composite implements IView {
 		routePanel.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_LEFT);
 
 		final Button routeAddButton = new Button("添加路由", control.new addRouterClickListener());
-		routeAddButton.setStyleName("sys-big-button");
+		routeAddButton.setStyleName("big-button");
 		routePanel.add(routeAddButton);
 
 		routeGrid.resize(2, 5);
 		routeGrid.setBorderWidth(1);
 		routeGrid.setWidth("90%");
-		routeGrid.setStyleName("sys-grid2-table");
+		routeGrid.setStyleName("grid2-table");
 		routeGrid.setText(0, 0, "目的地址");
 		routeGrid.setText(0, 1, "掩码");
 		routeGrid.setText(0, 2, "接口");
 		routeGrid.setText(0, 3, "网关");
 		routeGrid.setText(0, 4, "操作");
-		routeGrid.getCellFormatter().setStyleName(0, 0, "sys-status-table-head");
-		routeGrid.getCellFormatter().setStyleName(0, 1, "sys-status-table-head");
-		routeGrid.getCellFormatter().setStyleName(0, 2, "sys-status-table-head");
-		routeGrid.getCellFormatter().setStyleName(0, 3, "sys-status-table-head");
-		routeGrid.getCellFormatter().setStyleName(0, 4, "sys-status-table-head");
+		routeGrid.setStyleName("status-table");
+		routeGrid.getCellFormatter().setStyleName(0, 0, "head");
+		routeGrid.getCellFormatter().setStyleName(0, 1, "head");
+		routeGrid.getCellFormatter().setStyleName(0, 2, "head");
+		routeGrid.getCellFormatter().setStyleName(0, 3, "head");
+		routeGrid.getCellFormatter().setStyleName(0, 4, "head");
 		routePanel.add(routeGrid);
 		stackPanel.add(routePanel, createHeaderHTML(images, "路由"), true);
 
 		// 管理配置界面布局
 		final Grid adminGrid = new Grid(2,5);
 		adminGrid.setWidth("100%");
-		adminGrid.setStyleName("sys-grid1-table");
+		adminGrid.setStyleName("grid1-table");
 
 		stackPanel.add(adminGrid, createHeaderHTML(images, "管理及配置"), true);
 
 		final Button addAdminButton = new Button("添加管理员");
-		addAdminButton.setStyleName("sys-big-button");
+		addAdminButton.setStyleName("big-button");
 		adminGrid.setWidget(0, 0, addAdminButton);
 		addAdminButton.addClickListener(control.new addAdminClickListener());
 		final Button delAdminButton = new Button("删除管理员", control.new delAdminClickListener());
-		delAdminButton.setStyleName("sys-big-button");
+		delAdminButton.setStyleName("big-button");
 		adminGrid.setWidget(0, 1, delAdminButton);
 		
 		final Button paraButton = new Button("恢复出厂参数", control.new resotreClickListener());
 		adminGrid.setWidget(0, 2, paraButton);
-		paraButton.setStyleName("sys-big-button");
+		paraButton.setStyleName("big-button");
 
 		final Button restartButton = new Button("重启设备", control.new resetClickListener());
 		adminGrid.setWidget(0, 3, restartButton);
-		restartButton.setStyleName("sys-big-button");
+		restartButton.setStyleName("big-button");
 
 		final Button upfileButton = new Button("升级程序",control.new uploadClickListener());
 		adminGrid.setWidget(0, 4, upfileButton);
-		upfileButton.setStyleName("sys-big-button");
+		upfileButton.setStyleName("big-button");
 		
 		
 		//----------------------
@@ -183,10 +179,6 @@ public class SystemView extends Composite implements IView {
 
 	public String ip_address;
 	public String ip_mask;
-
-	public int getHeight() {
-		return flexTable.getOffsetHeight();
-	}
 
 	private String createHeaderHTML(Images images, String caption) {
 		Grid captionGrid = new Grid();
@@ -227,19 +219,11 @@ public class SystemView extends Composite implements IView {
 				+ "<td class='box-21'>&nbsp;</td>" + "</tr></tbody></table>";
 	}
 
-	/**
-	* This method is called immediately after a widget becomes attached to the
-	* browser's document.
-	*/
-	protected void onLoad() {
-		control.getSystemAll();
-	}
-	
-	public void loadModel() {
-		control.getSystemAll();
-	}
-	
 
+	protected void onLoad() {
+		control.load();
+	}
+	
 	public void mask() {
 		// TODO Auto-generated method stub
 		

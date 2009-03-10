@@ -2,16 +2,15 @@ package risetek.client.dialog;
 
 import risetek.client.view.UserView;
 
-import com.google.gwt.user.client.ui.ClickListener;
 import com.google.gwt.user.client.ui.DockPanel;
 import com.google.gwt.user.client.ui.Grid;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.Widget;
 import com.risetek.rismile.client.dialog.CustomDialog;
+import com.risetek.rismile.client.utils.Validity;
 
-public class UserNameModifyDialog extends CustomDialog implements
-		ClickListener {
+public class UserNameModifyDialog extends CustomDialog {
 	Label  oldNoteLabel = new Label();
 	Label  oldValueLabel = new Label();
 	public TextBox newValueBox = new TextBox();
@@ -46,19 +45,15 @@ public class UserNameModifyDialog extends CustomDialog implements
 		return newValueBox;
 	}
 
-	public int getParentHeihgt() {
-		// TODO Auto-generated method stub
-		return parent.getHeight();
-	}
-
-	public void setFirstFocus() {
-		// TODO Auto-generated method stub
-		newValueBox.setFocus(true);
-	}
-
-	@Override
-	public void onClick(Widget sender) {
-		// TODO Auto-generated method stub
-		
+	public boolean valid()
+	{
+		String check = Validity.validUserName(newValueBox.getText());
+		if( null != check )
+		{
+			newValueBox.setFocus(true);
+			setMessage(check);
+			return false;
+		}
+		return true;
 	}
 }

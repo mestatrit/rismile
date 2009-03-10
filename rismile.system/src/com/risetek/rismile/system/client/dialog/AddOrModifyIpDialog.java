@@ -7,6 +7,7 @@ import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.Widget;
 import com.risetek.rismile.client.dialog.CustomDialog;
+import com.risetek.rismile.client.utils.Validity;
 import com.risetek.rismile.system.client.view.SystemView;
 
 
@@ -82,13 +83,23 @@ public class AddOrModifyIpDialog extends CustomDialog {
 		return ipBox;
 	}
 
-	public int getParentHeihgt() {
-		// TODO Auto-generated method stub
-		return parent.getHeight();
-	}
-	public void setFirstFocus() {
-		// TODO Auto-generated method stub
-		ipBox.setFocus(true);
-	}
+	public boolean valid()
+	{
 
+		String check = Validity.validIpAddress(ipBox.getText());
+		if (null != check) {
+			ipBox.setFocus(true);
+			this.setMessage(check);
+			return false;
+		}
+
+		check = Validity.validIpAddress(maskBox.getText());
+		if (null != check) {
+			maskBox.setFocus(true);
+			this.setMessage(check);
+			return false;
+		}
+
+		return true;
+	}
 }

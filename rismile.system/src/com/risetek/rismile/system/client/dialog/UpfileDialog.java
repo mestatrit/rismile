@@ -75,7 +75,7 @@ public class UpfileDialog extends CustomDialog {
 		});
 		panel.add(formPanel, DockPanel.NORTH);
 		
-		html.addStyleName("sys-info-Label");
+		html.addStyleName("info-Label");
 		panel.add(html, DockPanel.SOUTH);
 		
 		this.cancel.setVisible(false);
@@ -86,18 +86,7 @@ public class UpfileDialog extends CustomDialog {
 		setSize("320","240");
 	}
 	public Widget getFirstTabIndex() {
-		// TODO Auto-generated method stub
 		return null;
-	}
-
-	public int getParentHeihgt() {
-		// TODO Auto-generated method stub
-		return parent.getHeight();
-	}
-
-	public void setFirstFocus() {
-		// TODO Auto-generated method stub
-
 	}
 
 }

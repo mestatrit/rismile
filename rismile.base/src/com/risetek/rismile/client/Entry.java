@@ -22,6 +22,9 @@ import com.risetek.rismile.client.utils.Heartbeat;
  * Entry point classes define <code>onModuleLoad()</code>.
  */
 public abstract class Entry implements EntryPoint, HistoryListener {
+	
+	public static String SinkHeight = "470px";
+	
 	/**
 	 * An image provider to make available images to Sinks.
 	 */
@@ -104,10 +107,6 @@ public abstract class Entry implements EntryPoint, HistoryListener {
 	}
 
 	public void show(SinkInfo info, boolean affectHistory) {
-		// Don't bother re-displaying the existing sink. This can be an issue
-		// in practice, because when the history context is set, our
-		// onHistoryChanged() handler will attempt to show the currently-visible
-		// sink.
 		if (info == curInfo) {
 			return;
 		}
@@ -125,12 +124,6 @@ public abstract class Entry implements EntryPoint, HistoryListener {
 		list.setSinkSelection(info.getName());
 		description.setHTML(info.getDescription() + "  <<<<");
 
-		// If affectHistory is set, create a new item on the history stack. This
-		// will ultimately result in onHistoryChanged() being called. It will
-		// call
-		// show() again, but nothing will happen because it will request the
-		// exact
-		// same sink we're already showing.
 		if (affectHistory) {
 			History.newItem(info.getName());
 		}

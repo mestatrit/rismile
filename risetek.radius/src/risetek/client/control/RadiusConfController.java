@@ -13,6 +13,7 @@ import com.google.gwt.user.client.ui.ClickListener;
 import com.google.gwt.user.client.ui.Widget;
 import com.risetek.rismile.client.control.SysLog;
 import com.risetek.rismile.client.http.RequestFactory;
+import com.risetek.rismile.client.utils.MessageConsole;
 
 
 public class RadiusConfController implements RequestCallback {
@@ -20,129 +21,126 @@ public class RadiusConfController implements RequestCallback {
 	private String confPath = "radiuscfg";
 	
 	public RadiusConfigView view;
-	RadiusConfModel radiusConfModel = new RadiusConfModel();
+	RadiusConfModel data = new RadiusConfModel();
 	
 	
 	public RadiusConfController(){
 		view = new RadiusConfigView(this);
 	}
 	
-	public void getConfAll(){
+	public void load()
+	{
 		remoteRequest.get(confPath, null, this);
 	}
+	
+
 	public void modify(String query, RequestCallback callback){
 		remoteRequest.get(confPath, query, callback);
 	}
 	
 
 	public void onError(Request request, Throwable exception) {
-		// TODO Auto-generated method stub
-		
+		MessageConsole.setText("RadiusConfController 执行错误");
 	}
 
 
 	public void onResponseReceived(Request request, Response response) {
-		String text = response.getText();
-		radiusConfModel.parseXML(text);
-		view.render(radiusConfModel);
+		data.parseXML(response.getText());
+		view.render(data);
 	}
 	
 	//--------- Auth 修改控制
-	public class authModifyControl implements ClickListener, RequestCallback {
-		public RadiusConfigAuthDialog dialog = new RadiusConfigAuthDialog(view);
-		public void onClick(Widget sender) {
-			String value = dialog.newValueBox.getText();
-			SysLog.log(value);
-			modify("setAuthPort", this);
-		}
-
-		public void onError(Request request, Throwable exception) {
-			// TODO Auto-generated method stub
-			
-		}
-
-		public void onResponseReceived(Request request, Response response) {
-			view.unmask();
-			dialog.hide();
-			SysLog.log("remote execute");
-			getConfAll();
-		}
-		
-	}
-	
 	public class authModifyClickListen implements ClickListener
 	{
 		public void onClick(Widget sender) {
-			authModifyControl control = new authModifyControl();
+			Control control = new Control();
 			RadiusConfigAuthDialog dialog = control.dialog;
 			dialog.confirm.addClickListener(control);
-			dialog.show(radiusConfModel.getAuthPort());
+			dialog.show(data.getAuthPort());
+		}
+
+		public class Control implements ClickListener, RequestCallback {
+			public RadiusConfigAuthDialog dialog = new RadiusConfigAuthDialog(view);
+			public void onClick(Widget sender) {
+				String value = dialog.newValueBox.getText();
+				SysLog.log(value);
+				modify("setAuthPort", this);
+			}
+
+			public void onError(Request request, Throwable exception) {
+				RadiusConfController.this.onError(request, exception);
+			}
+
+			public void onResponseReceived(Request request, Response response) {
+				view.unmask();
+				dialog.hide();
+				SysLog.log("remote execute");
+				load();
+			}
 		}
 	}
 	
 	//--------- Acct 修改控制
-	public class acctModifyControl implements ClickListener, RequestCallback {
-		public RadiusConfigAcctDialog dialog = new RadiusConfigAcctDialog(view);
-		public void onClick(Widget sender) {
-			String value = dialog.newValueBox.getText();
-			SysLog.log(value);
-			modify("setAcctPort", this);
-		}
-
-		public void onError(Request request, Throwable exception) {
-			// TODO Auto-generated method stub
-			
-		}
-
-		public void onResponseReceived(Request request, Response response) {
-			view.unmask();
-			dialog.hide();
-			SysLog.log("remote execute");
-			getConfAll();
-		}
-		
-	}
-	
 	public class acctModifyClickListen implements ClickListener
 	{
 		public void onClick(Widget sender) {
-			acctModifyControl control = new acctModifyControl();
+			Control control = new Control();
 			RadiusConfigAcctDialog dialog = control.dialog;
 			dialog.confirm.addClickListener(control);
-			dialog.show(radiusConfModel.getAcctPort());
+			dialog.show(data.getAcctPort());
+		}
+		public class Control implements ClickListener, RequestCallback {
+			public RadiusConfigAcctDialog dialog = new RadiusConfigAcctDialog(view);
+			public void onClick(Widget sender) {
+				String value = dialog.newValueBox.getText();
+				SysLog.log(value);
+				modify("setAcctPort", this);
+			}
+
+			public void onError(Request request, Throwable exception) {
+				RadiusConfController.this.onError(request, exception);
+			}
+
+			public void onResponseReceived(Request request, Response response) {
+				view.unmask();
+				dialog.hide();
+				SysLog.log("remote execute");
+				load();
+			}
+			
 		}
 	}
 	
 	//--------- Secret 修改控制
-	class secretModifyControl implements ClickListener, RequestCallback {
-		public RadiusConfigSecretDialog dialog = new RadiusConfigSecretDialog(view);
-		public void onClick(Widget sender) {
-			String value = dialog.newValueBox.getText();
-			SysLog.log(value);
-			modify("setSecret", this);
-		}
-
-		public void onError(Request request, Throwable exception) {
-			// TODO Auto-generated method stub
-			
-		}
-
-		public void onResponseReceived(Request request, Response response) {
-			view.unmask();
-			dialog.hide();
-			SysLog.log("remote execute");
-			getConfAll();
-		}
-		
-	}
-	
 	public class secretModifyClickListen implements ClickListener
 	{
 		public void onClick(Widget sender) {
-			secretModifyControl control = new secretModifyControl();
+			Control control = new Control();
 			RadiusConfigSecretDialog dialog = control.dialog;
 			dialog.confirm.addClickListener(control);
-			dialog.show(radiusConfModel.getSecretKey());
+			dialog.show(data.getSecretKey());
 		}
+
+		class Control implements ClickListener, RequestCallback {
+			public RadiusConfigSecretDialog dialog = new RadiusConfigSecretDialog(view);
+			public void onClick(Widget sender) {
+				String value = dialog.newValueBox.getText();
+				SysLog.log(value);
+				modify("setSecret", this);
+			}
+
+			public void onError(Request request, Throwable exception) {
+				RadiusConfController.this.onError(request, exception);
+			}
+
+			public void onResponseReceived(Request request, Response response) {
+				view.unmask();
+				dialog.hide();
+				SysLog.log("remote execute");
+				load();
+			}
+			
+		}
+		
 	}
 }

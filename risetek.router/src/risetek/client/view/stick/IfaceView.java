@@ -2,7 +2,6 @@ package risetek.client.view.stick;
 
 import risetek.client.model.IfModel;
 import risetek.client.model.ifaceData;
-import risetek.client.model.lcpData;
 
 import com.google.gwt.user.client.ui.CheckBox;
 import com.google.gwt.user.client.ui.Grid;

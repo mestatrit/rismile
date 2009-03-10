@@ -27,9 +27,9 @@ public abstract class RismileTableView extends Composite implements IView{
     
 	private String[] idArray;
 	protected int tmpStartRow = 0; 
-	public int startRow = 0;
+	//public int startRow = 0;
 	//public int rowCount = 0;
-	public int TotalRecord = 0;
+	//public int TotalRecord = 0;
 	public String focusID;
 	public String focusValue;
 	
@@ -187,7 +187,6 @@ public abstract class RismileTableView extends Composite implements IView{
 		//setStatusText((startRow + 1) + " - " + (startRow + srcRowCount));
 		
 		setStatisticText("" + total);
-		TotalRecord = total;
 		
 		// 设定导航状态
 		boolean goFirst = table.getOffset() > 0;

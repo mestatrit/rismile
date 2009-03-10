@@ -8,6 +8,7 @@ import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.Widget;
 import com.risetek.rismile.client.dialog.CustomDialog;
+import com.risetek.rismile.client.utils.Validity;
 
 public class UserImsiModifyDialog extends CustomDialog {
 	Label  oldNoteLabel = new Label();
@@ -47,12 +48,14 @@ public class UserImsiModifyDialog extends CustomDialog {
 		return newValueBox;
 	}
 
-	public int getParentHeihgt() {
-		return parent.getHeight();
+	public boolean valid()
+	{
+		String check = Validity.validIMSI(newValueBox.getText());
+		if (null != check) {
+			setMessage(check);
+			newValueBox.setFocus(true);
+			return false;
+		}
+		return true;
 	}
-
-	public void setFirstFocus() {
-		newValueBox.setFocus(true);
-	}
-
 }

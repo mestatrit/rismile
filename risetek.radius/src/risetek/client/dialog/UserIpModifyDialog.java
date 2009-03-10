@@ -8,7 +8,9 @@ import com.google.gwt.user.client.ui.Grid;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.Widget;
+import com.risetek.rismile.client.control.SysLog;
 import com.risetek.rismile.client.dialog.CustomDialog;
+import com.risetek.rismile.client.utils.Validity;
 
 public class UserIpModifyDialog extends CustomDialog implements
 		ClickListener {
@@ -49,14 +51,15 @@ public class UserIpModifyDialog extends CustomDialog implements
 		return newValueBox;
 	}
 
-	public int getParentHeihgt() {
-		// TODO Auto-generated method stub
-		return parent.getHeight();
+	public boolean valid()
+	{
+		String check = Validity.validIpAddress(newValueBox.getText());
+		if (null != check) {
+			SysLog.log(check);
+			setMessage(check);
+			return false;
+		}
+		return true;
 	}
-
-	public void setFirstFocus() {
-		// TODO Auto-generated method stub
-		newValueBox.setFocus(true);
-	}
-
+	
 }

@@ -80,11 +80,12 @@ public class UserView extends RismileTableView {
 
 		return Tgrid;
 	}
-	public void loadModel() {
+	
+	public void onLoad()
+	{
 		control.load();
 	}
-
-
+	
 	public void mask() {
 		// TODO Auto-generated method stub
 		

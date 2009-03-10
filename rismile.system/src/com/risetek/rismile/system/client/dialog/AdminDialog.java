@@ -8,6 +8,7 @@ import com.google.gwt.user.client.ui.PasswordTextBox;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.Widget;
 import com.risetek.rismile.client.dialog.CustomDialog;
+import com.risetek.rismile.client.utils.Validity;
 import com.risetek.rismile.system.client.view.SystemView;
 
 public class AdminDialog extends CustomDialog {
@@ -82,17 +83,32 @@ public class AdminDialog extends CustomDialog {
 	}
 
 	public Widget getFirstTabIndex() {
-		// TODO Auto-generated method stub
 		return nameBox;
 	}
 
-	public int getParentHeihgt() {
-		// TODO Auto-generated method stub
-		return parent.getHeight();
-	}
-
-	public void setFirstFocus() {
-		// TODO Auto-generated method stub
-		nameBox.setFocus(true);
+	public boolean valid()
+	{
+		String check = Validity.validAdminName(nameBox.getText());
+		if (null != check) {
+			nameBox.setFocus(true);
+			setMessage(check);
+			return false;
+		}
+		check = Validity.validPassword(pwdBox.getText());
+		if (null != check) {
+			pwdBox.setFocus(true);
+			setMessage(check);
+			return false;
+		}
+		
+		if (!pwdBox.getText().equals(pwdBoxSe.getText())) {
+			pwdBox.setText("");
+			pwdBoxSe.setText("");
+			pwdBox.setFocus(true);
+			setMessage("两次输入的密码不符,请重新输入!");
+			return false;
+		}
+		
+		return true;
 	}
 }
