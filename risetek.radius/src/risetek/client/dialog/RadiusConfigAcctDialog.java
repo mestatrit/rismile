@@ -31,8 +31,4 @@ public class RadiusConfigAcctDialog extends CustomDialog {
 		return newValueBox;
 	}
 
-	public void setFirstFocus() {
-		newValueBox.setFocus(true);
-	}
-
 }

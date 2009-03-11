@@ -17,14 +17,13 @@ public class RismileLogView extends RismileTableView {
 	private final static String[] columnStyles = {"id","datetime","record"};
 	private final static int rowCount = 20;	
 	
-	//public boolean autoRefresh = true;
 	public Button TogAutoRefresh;
 	public Button clearButton;
-	public RismileLogController logController;
+	public RismileLogController control;
 
 	Timer refreshTimer = new Timer() {
 		public void run() {
-			logController.load();
+			control.load();
 		}
 	};
 	
@@ -35,14 +34,14 @@ public class RismileLogView extends RismileTableView {
 	
 	private RismileLogView(String[] columns, String[] columnStyles, int rowCount, RismileLogController control) {
 		super(columns, columnStyles, rowCount, control);
-		logController = control;
-		TogAutoRefresh = new Button("", logController.new AutoRefreshClick());
-		super.addToolButton(TogAutoRefresh);
-		TogAutoRefresh.addStyleName("rismile-Tool-Button");
+		this.control = control;
+		TogAutoRefresh = new Button("", control.new AutoRefreshClick());
+		addToolButton(TogAutoRefresh);
+		TogAutoRefresh.addStyleName("toolbutton");
 
 		Button downloadButton = new Button("导出文件");
-		super.addToolButton(downloadButton);
-		downloadButton.addStyleName("rismile-Tool-Button");
+		addToolButton(downloadButton);
+		downloadButton.addStyleName("toolbutton");
 		downloadButton.addClickListener(new ClickListener() {
 			public void onClick(Widget sender) {
 				Window.open("forms/exportlog", "_self", "");
@@ -50,12 +49,15 @@ public class RismileLogView extends RismileTableView {
 
 		});
 		
-		clearButton = new Button("清除",logController.new ClearLogAction());
-		clearButton.addStyleName("rismile-Tool-Button");
-		super.addToolButton(clearButton);
+		clearButton = new Button("清除",control.new ClearLogAction());
+		clearButton.addStyleName("toolbutton");
+		addToolButton(clearButton);
 	}
 
 	public Grid getGrid() {
+		
+		if( grid != null )	return grid;
+		
 		return new MouseEventGrid() {
 			public void onMouseOut(Element td, int column) {
 			}
@@ -75,16 +77,6 @@ public class RismileLogView extends RismileTableView {
 	}
 
 
-	public void mask() {
-		// TODO Auto-generated method stub
-		
-	}
-
-	public void unmask() {
-		// TODO Auto-generated method stub
-		
-	}
-	
 	public void render(RismileLogTable data)
 	{
 		TogAutoRefresh.setText(data.autoRefresh ? "查看历史" : "自动更新");
@@ -100,5 +92,10 @@ public class RismileLogView extends RismileTableView {
 		}
 		
 		super.render(data);
+	}
+	
+	public void onLoad()
+	{
+		control.load();
 	}
 }

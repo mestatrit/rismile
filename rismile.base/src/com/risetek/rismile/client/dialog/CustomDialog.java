@@ -4,6 +4,7 @@ import com.google.gwt.user.client.DOM;
 import com.google.gwt.user.client.Element;
 import com.google.gwt.user.client.Event;
 import com.google.gwt.user.client.ui.Button;
+import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.DockPanel;
 import com.google.gwt.user.client.ui.HasHorizontalAlignment;
 import com.google.gwt.user.client.ui.HasVerticalAlignment;
@@ -11,7 +12,6 @@ import com.google.gwt.user.client.ui.KeyboardListener;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.gwt.user.client.ui.DockPanel.DockLayoutConstant;
-import com.risetek.rismile.client.view.IView;
 
 public abstract class CustomDialog extends MyDialog {
 	private final DockPanel panel = new DockPanel();
@@ -19,10 +19,10 @@ public abstract class CustomDialog extends MyDialog {
 	protected final Button cancel = new Button("取消");
 	private final Label note = new Label();
 	private final Label message = new Label();
-	//private  Element mask;
-	IView parent;
-	//private final Button close  = new Button(" ");
-	public CustomDialog(IView parent) {
+
+	Composite parent;
+
+	public CustomDialog(Composite parent) {
 		super(false,true);
 		setStyleName("rismile-dialog");
 		this.parent = parent;
@@ -70,60 +70,36 @@ public abstract class CustomDialog extends MyDialog {
 		this.message.setText(message);
 	}
 	
-	public void enableConfirm(boolean enabled){
-		confirm.setEnabled(enabled);
-	}
-	public void setText(String text){
-		
-		/*DockPanel head = new DockPanel();
-		
-		head.setWidth("100%");
-		
-		//head.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_RIGHT);
-		//head.add(close, DockPanel.EAST);
-		head.setCellHorizontalAlignment(close, HasHorizontalAlignment.ALIGN_RIGHT);
-		
-		HTML title = new HTML(text);
-		head.add(title, DockPanel.WEST);
-		head.setCellVerticalAlignment(title, HasVerticalAlignment.ALIGN_MIDDLE);
-		SimplePanel dummyContainer = new SimplePanel();
-		dummyContainer.add(head);
-
-		String innerHtml = DOM.getInnerHTML(dummyContainer.getElement());
-		this.setHTML(innerHtml);*/
-		super.setText(text);
-	}
-	
 	public void show(String tips){
 		setText(tips);
-		parent.mask();
+		mask();
 		super.show();
 		center();
 	}
 	public void show(){
-		parent.mask();
+		mask();
 		super.show();
 		center();
 	}
-	public void onClick(Widget sender) {
-		unmask();
-    	this.hide();
-    	
-	}
-
+	
 	public void add(Widget widget, DockLayoutConstant direction){
 		panel.add(widget,direction);
 	}
+	
+	
+	// 这里把 开始和结束两个元素的TAB跳格做限制，防止焦点转移到别的非Dialog元素上。
 	public boolean onEventPreview(Event event) {
 	    Element target = DOM.eventGetTarget(event);
 	    
 	    int type = DOM.eventGetType(event);
+	    
 	    if( type == Event.ONKEYDOWN && DOM.eventGetKeyCode(event) == KeyboardListener.KEY_TAB 
 	    		&& !DOM.eventGetShiftKey(event)){
 	    	if(target.equals(close.getElement())){
 	    		return false;
 	    	}
-	    }else if( type == Event.ONKEYDOWN && DOM.eventGetKeyCode(event) == KeyboardListener.KEY_TAB 
+	    }
+	    else if( type == Event.ONKEYDOWN && DOM.eventGetKeyCode(event) == KeyboardListener.KEY_TAB 
 	    		&& DOM.eventGetShiftKey(event)){
 	    	if(target.equals(getFirstTabIndex().getElement())){
 	    		return false;
@@ -134,10 +110,13 @@ public abstract class CustomDialog extends MyDialog {
 	
 	abstract public Widget getFirstTabIndex();
 
-  public void unmask()
-  {
-	parent.unmask();
-  }
-
-
+	/*
+	 * 将自己背景单元（maskPanel ）设定为半透明状态。
+	 */
+	public void mask()
+	{
+		DOM.setIntStyleAttribute(mask, "height", parent.getOffsetHeight());
+		parent.getElement().appendChild(mask);
+	}
+  
 }

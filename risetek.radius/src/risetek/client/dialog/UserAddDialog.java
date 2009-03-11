@@ -25,10 +25,8 @@ public class UserAddDialog extends CustomDialog {
 	private Grid gridFrame = new Grid(4, 2);
 	private final FocusPanel focusPanel = new FocusPanel();
 	
-	//private UserView parent;
 	public UserAddDialog(UserView parent){
 		super(parent);
-		//this.parent = parent;
 		add(new Label("请输入用户信息："),DockPanel.NORTH);
 		
 		gridFrame.setWidget(0,0,IMSILable);
@@ -54,9 +52,8 @@ public class UserAddDialog extends CustomDialog {
 	}
 	
 	public void show(){
-		super.show("新加一个用户");
+		show("新加一个用户");
 		IMSI.setFocus(true);
-		//super.center();
 	}
 
 	public Widget getFirstTabIndex() {

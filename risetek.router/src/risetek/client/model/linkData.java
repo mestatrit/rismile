@@ -1,7 +1,7 @@
 package risetek.client.model;
 
 import com.google.gwt.xml.client.Element;
-import com.google.gwt.xml.client.NodeList;
+import com.risetek.rismile.client.utils.XMLDataParse;
 
 public class linkData {
 
@@ -23,20 +23,10 @@ public class linkData {
 
 	
 	public void parseXML(Element element) {
-		mtu = Integer.parseInt(getElementText(element, "mtu"));
-		mru = Integer.parseInt(getElementText(element, "mru"));
-		mrru = Integer.parseInt(getElementText(element, "mrru"));
+		mtu = Integer.parseInt(XMLDataParse.getElementText(element, "mtu"));
+		mru = Integer.parseInt(XMLDataParse.getElementText(element, "mru"));
+		mrru = Integer.parseInt(XMLDataParse.getElementText(element, "mrru"));
 
-	}
-
-	protected String getElementText(Element item, String value) {
-		String result = "";
-		NodeList itemList = item.getElementsByTagName(value);
-		if (itemList.getLength() > 0 && itemList.item(0).hasChildNodes()) {
-
-			result = itemList.item(0).getFirstChild().getNodeValue();
-		}
-		return result;
 	}
 
 }

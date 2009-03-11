@@ -7,10 +7,10 @@ import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.ClickListener;
 import com.google.gwt.user.client.ui.Widget;
-import com.risetek.rismile.client.control.SysLog;
 import com.risetek.rismile.client.http.RequestFactory;
 import com.risetek.rismile.client.utils.IPConvert;
 import com.risetek.rismile.client.utils.MessageConsole;
+import com.risetek.rismile.client.utils.SysLog;
 import com.risetek.rismile.system.client.dialog.AddOrModifyIpDialog;
 import com.risetek.rismile.system.client.dialog.AddRouteDialog;
 import com.risetek.rismile.system.client.dialog.AdminDialog;
@@ -207,7 +207,6 @@ public class SystemAllController implements RequestCallback {
 			}
 
 			public void onResponseReceived(Request request, Response response) {
-				view.unmask();
 				dialog.hide();
 				SysLog.log("remote execute");
 				load();
@@ -242,7 +241,6 @@ public class SystemAllController implements RequestCallback {
 			}
 
 			public void onResponseReceived(Request request, Response response) {
-				view.unmask();
 				dialog.hide();
 				SysLog.log("remote execute");
 				load();
@@ -277,7 +275,6 @@ public class SystemAllController implements RequestCallback {
 			}
 
 			public void onResponseReceived(Request request, Response response) {
-				view.unmask();
 				dialog.hide();
 				SysLog.log("remote execute");
 				load();
@@ -310,7 +307,6 @@ public class SystemAllController implements RequestCallback {
 			}
 
 			public void onResponseReceived(Request request, Response response) {
-				view.unmask();
 				dialog.hide();
 				SysLog.log("remote execute");
 				load();
@@ -344,7 +340,6 @@ public class SystemAllController implements RequestCallback {
 			}
 
 			public void onResponseReceived(Request request, Response response) {
-				view.unmask();
 				dialog.hide();
 				SysLog.log("remote execute");
 				load();

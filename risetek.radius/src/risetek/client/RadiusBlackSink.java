@@ -22,7 +22,4 @@ public class RadiusBlackSink extends Sink {
 		initWidget(blackController.view);
 	}
 
-	public void onShow() {
-		blackController.view.loadModel();
-	}
 }

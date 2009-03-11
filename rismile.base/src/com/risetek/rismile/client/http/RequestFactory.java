@@ -5,7 +5,7 @@ import com.google.gwt.http.client.Request;
 import com.google.gwt.http.client.RequestBuilder;
 import com.google.gwt.http.client.RequestCallback;
 import com.google.gwt.http.client.RequestException;
-import com.risetek.rismile.client.control.SysLog;
+import com.risetek.rismile.client.utils.SysLog;
 
 public class RequestFactory {
 	private final String baseUrl;

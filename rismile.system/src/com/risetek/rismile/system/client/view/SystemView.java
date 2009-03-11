@@ -16,14 +16,13 @@ import com.google.gwt.user.client.ui.ImageBundle;
 import com.google.gwt.user.client.ui.StackPanel;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.risetek.rismile.client.Entry;
-import com.risetek.rismile.client.view.IView;
 import com.risetek.rismile.system.client.control.SystemAllController;
 import com.risetek.rismile.system.client.model.InterfEntry;
 import com.risetek.rismile.system.client.model.RouterEntry;
 import com.risetek.rismile.system.client.model.Service;
 import com.risetek.rismile.system.client.model.SystemDataModel;
 
-public class SystemView extends Composite implements IView {
+public class SystemView extends Composite {
 
 	private static final Images images = (Images) GWT.create(Images.class);
 	public interface Images extends ImageBundle {
@@ -224,18 +223,6 @@ public class SystemView extends Composite implements IView {
 		control.load();
 	}
 	
-	public void mask() {
-		// TODO Auto-generated method stub
-		
-	}
-
-
-	public void unmask() {
-		// TODO Auto-generated method stub
-		
-	}
-	
-
 	private void renderServiceTable(Service service) {
 	
 		serviceGrid.setText(1, 0, service.getName());

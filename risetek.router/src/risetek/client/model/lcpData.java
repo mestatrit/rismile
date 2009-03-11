@@ -2,6 +2,7 @@ package risetek.client.model;
 
 import com.google.gwt.xml.client.Element;
 import com.google.gwt.xml.client.NodeList;
+import com.risetek.rismile.client.utils.XMLDataParse;
 
 public class lcpData {
 
@@ -14,9 +15,9 @@ public class lcpData {
 	public String keepalive;
 
 	public void parseXML(Element element) {
-		pppusername = getElementText(element, "username");
-		ppppassword = getElementText(element, "password");
-		keepalive = getElementText(element, "keepalive");
+		pppusername = XMLDataParse.getElementText(element, "username");
+		ppppassword = XMLDataParse.getElementText(element, "password");
+		keepalive = XMLDataParse.getElementText(element, "keepalive");
 
 		NodeList authList = element.getElementsByTagName("authentication");
 		for (int i = 0; i < authList.getLength(); i++) {
@@ -35,16 +36,6 @@ public class lcpData {
 				}
 			}
 		}
-	}
-
-	protected String getElementText(Element item, String value) {
-		String result = "";
-		NodeList itemList = item.getElementsByTagName(value);
-		if (itemList.getLength() > 0 && itemList.item(0).hasChildNodes()) {
-
-			result = itemList.item(0).getFirstChild().getNodeValue();
-		}
-		return result;
 	}
 
 }

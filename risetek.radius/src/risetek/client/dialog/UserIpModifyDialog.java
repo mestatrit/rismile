@@ -8,8 +8,8 @@ import com.google.gwt.user.client.ui.Grid;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.Widget;
-import com.risetek.rismile.client.control.SysLog;
 import com.risetek.rismile.client.dialog.CustomDialog;
+import com.risetek.rismile.client.utils.SysLog;
 import com.risetek.rismile.client.utils.Validity;
 
 public class UserIpModifyDialog extends CustomDialog implements
@@ -20,10 +20,11 @@ public class UserIpModifyDialog extends CustomDialog implements
 	public TextBox newValueBox = new TextBox();
 	Label newNoteLabel = new Label();
 	private Grid gridFrame = new Grid(2, 2);
-	private UserView parent;
+	public String rowid;
+	//private UserView parent;
 	public UserIpModifyDialog(UserView parent) {
 		super(parent);
-		this.parent = parent;
+		//this.parent = parent;
 		add(new Label("请输入新的IP："),DockPanel.NORTH);
 		gridFrame.setWidget(0, 0, oldNoteLabel);
 		gridFrame.setWidget(0, 1, oldValueLabel);
@@ -35,13 +36,20 @@ public class UserIpModifyDialog extends CustomDialog implements
 		add(gridFrame, DockPanel.CENTER);
 	}
 
-	public void show() {
+	public void show(String tips_id, String tips_value) {
+		/*
 		setText("记录序号：" + parent.focusID);
 		oldNoteLabel.setText("当前IP：");
 		oldValueLabel.setText(parent.focusValue);
 		newNoteLabel.setText("新的IP：");
 		newValueBox.setText(parent.focusValue);
-	
+		*/
+		rowid = tips_id;
+		setText("记录序号：" + tips_id);
+		oldNoteLabel.setText("当前IP：");
+		oldValueLabel.setText(tips_value);
+		newNoteLabel.setText("新的IP：");
+		newValueBox.setText(tips_value);
 		super.show();
 		newValueBox.setFocus(true);
 	}

@@ -11,22 +11,23 @@ import com.risetek.rismile.client.dialog.CustomDialog;
 import com.risetek.rismile.client.utils.Validity;
 
 public class UserImsiModifyDialog extends CustomDialog {
-	Label  oldNoteLabel = new Label();
+	//Label  oldNoteLabel = new Label();
 	Label  oldValueLabel = new Label();
 	public TextBox newValueBox = new TextBox();
-	Label newNoteLabel = new Label();
+	//Label newNoteLabel = new Label();
 
+	public String rowid;
 	private Grid gridFrame = new Grid(2, 2);
-	private UserView parent;
+	//private UserView parent;
 	public UserImsiModifyDialog(UserView parent) {
 		super(parent);
-		this.parent = parent;
+		//this.parent = parent;
 		// Formater Debug
 		gridFrame.setBorderWidth(1);
 		add(new Label("请输入新的IMSI："),DockPanel.NORTH);
-		gridFrame.setWidget(0, 0, oldNoteLabel);
+		gridFrame.setWidget(0, 0, new Label("当前IMSI："));
 		gridFrame.setWidget(0, 1, oldValueLabel);
-		gridFrame.setWidget(1, 0, newNoteLabel);
+		gridFrame.setWidget(1, 0, new Label("新的IMSI："));
 		gridFrame.setWidget(1, 1, newValueBox);
 		
 		newValueBox.setTabIndex(1);
@@ -34,12 +35,22 @@ public class UserImsiModifyDialog extends CustomDialog {
 		add(gridFrame, DockPanel.CENTER);
 	}
 
-	public void show() {
+	public void show(String tips_id, String tips_imsi) {
+		/*
 		setText("记录序号：" + parent.focusID);
 		oldNoteLabel.setText("当前IMSI：");
 		oldValueLabel.setText(parent.focusValue);
 		newNoteLabel.setText("新的IMSI：");
 		newValueBox.setText(parent.focusValue);
+		*/
+		
+		rowid = tips_id;
+		
+		setText("记录序号：" + tips_id);
+		//oldNoteLabel.setText("当前IMSI：");
+		oldValueLabel.setText(tips_imsi);
+		//newNoteLabel.setText("新的IMSI：");
+		newValueBox.setText(tips_imsi);
 		super.show();
 		newValueBox.setFocus(true);
 	}

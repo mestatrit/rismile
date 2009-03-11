@@ -33,7 +33,7 @@ public class BlackUserView extends RismileTableView {
 		this.control = control;
 		
 		super.addToolButton(clearButton);
-		clearButton.addStyleName("rismile-Tool-Button");
+		clearButton.addStyleName("toolbutton");
 		
 		grid.addTableListener(control.new TableAction());
 
@@ -43,8 +43,7 @@ public class BlackUserView extends RismileTableView {
 		if (grid != null)
 			return grid;
 
-		MouseEventGrid Tgrid = null;
-		Tgrid = new MouseEventGrid() {
+		return  new MouseEventGrid() {
 			public void onMouseOut(Element td, int column) {
 				DOM.setStyleAttribute(td, "color", "");
 				DOM.setStyleAttribute(td, "cursor", "pointer");
@@ -58,24 +57,11 @@ public class BlackUserView extends RismileTableView {
 			}
 		};
 
-		return Tgrid;
 	}
 
-	public void loadModel() {
+	public void onLoad()
+	{
 		control.load();
 	}
 	
-
-	public void mask() {
-		// TODO Auto-generated method stub
-		
-	}
-
-
-	public void unmask() {
-		// TODO Auto-generated method stub
-		
-	}
-	
-
 }

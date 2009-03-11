@@ -8,15 +8,15 @@ import com.google.gwt.http.client.Request;
 import com.google.gwt.http.client.RequestCallback;
 import com.google.gwt.http.client.Response;
 import com.google.gwt.user.client.Window;
+import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.ClickListener;
 import com.google.gwt.user.client.ui.SourcesTableEvents;
 import com.google.gwt.user.client.ui.TableListener;
 import com.google.gwt.user.client.ui.Widget;
 import com.risetek.rismile.client.control.RismileTableController;
-import com.risetek.rismile.client.control.SysLog;
-import com.risetek.rismile.client.control.ViewAction;
 import com.risetek.rismile.client.model.RismileTable;
 import com.risetek.rismile.client.utils.IPConvert;
+import com.risetek.rismile.client.utils.SysLog;
 import com.risetek.rismile.client.view.RismileTableView;
 
 public class RadiusBlackController extends RismileTableController {
@@ -24,21 +24,22 @@ public class RadiusBlackController extends RismileTableController {
 	private static String emptyForm = "clearblack";
 	private static String modifyForm = "SqlBlackUserInfoXML";
 
-	RismileBlackUserTable table = new RismileBlackUserTable();
+	RismileBlackUserTable data = new RismileBlackUserTable();
 	public BlackUserView view;
 
 	public RadiusBlackController() {
 		view = new BlackUserView(this);
+		data.setLimit( view.grid.getRowCount() );
 	}
 
 	public void load() {
-		String query = "lpage=" + table.getLimit() + "&offset="
-				+ table.getOffset();
-		loadTableData(loadForm, query);
+		String query = "lpage=" + data.getLimit() + "&offset="
+				+ data.getOffset();
+		remoteRequest.get(loadForm, query, this);
 	}
 
 	public void empty() {
-		changeTableData(emptyForm, null, this);
+		remoteRequest.get(emptyForm, null, this);
 	}
 
 	public void add(String rowID, String name, String imsi, String password,
@@ -46,12 +47,12 @@ public class RadiusBlackController extends RismileTableController {
 		String query = "function=newuser&id=" + rowID + "&username=" + name
 				+ "&imsicode=" + imsi + "&password=" + password + "&ipaddress="
 				+ IPConvert.long2IPString(ip);
-		changeTableData(modifyForm, query, callbak);
+		remoteRequest.get(modifyForm, query, callbak);
 	}
 
 	public void delRow(String rowID) {
 		String query = "function=deluser&id=" + rowID;
-		changeTableData(modifyForm, query, this);
+		remoteRequest.get(modifyForm, query, this);
 	}
 
 	public void onError(Request request, Throwable exception) {
@@ -59,17 +60,11 @@ public class RadiusBlackController extends RismileTableController {
 	}
 
 	public void onResponseReceived(Request request, Response response) {
-		table.parseXML(response.getText());
-		view.render(table);
+		data.parseXML(response.getText());
+		view.render(data);
 	}
 
-	public class EmptyAction extends ViewAction implements ClickListener {
-
-		public void onSuccess(Object object) {
-			super.onSuccess();
-			view.clearButton.setEnabled(true);
-			view.loadModel();
-		}
+	public class EmptyAction implements ClickListener {
 
 		public void onClick(Widget sender) {
 			if (Window.confirm("是否要清除所有不明用户?")) {
@@ -77,41 +72,31 @@ public class RadiusBlackController extends RismileTableController {
 				empty();
 			}
 		}
-
 	}
 
-	public class TableAction extends ViewAction implements TableListener {
-
-		public void onSuccess(Object object) {
-			super.onSuccess();
-			view.loadModel();
-		}
+	public class TableAction implements TableListener {
 
 		public void onCellClicked(SourcesTableEvents sender, int row, int cell) {
-
 			// 在第一列中的是数据的内部序号，我们的操作都针对这个号码。
-			// focusID = grid.getText(row, 0);
-			view.focusID = view.getRowId(row);
-			view.focusValue = view.getGrid().getText(row, cell);
-			// view.focusedRowID = Long.toString(row);
-			view.currentRow = row;
+			String rowid = view.getGrid().getText(row, 0);
+			String tips_ismi = view.getGrid().getText(row, 1);
+			String tips_username = view.getGrid().getText(row, 2);
 			switch (cell) {
 			case 0:
 				// 选择了删除用户。
 				if (Window.confirm("是否要删除?\n" + "用户名:"
-						+ view.getGrid().getText(row, 2) + "\n" + "IMSI: "
-						+ view.getGrid().getText(row, 1))) {
+						+ tips_username + "\n" + "IMSI: "
+						+ tips_ismi)) {
 
-					delRow(view.focusID);
+					delRow(rowid);
 				}
 				break;
 			case 1:
 			case 2:
 				// 导入用户为合法用户。
-				view.mask();
 				BlackUserControl control = new BlackUserControl();
 				control.dialog.confirm.addClickListener(control);
-				control.dialog.show();
+				control.dialog.show(rowid, tips_ismi, tips_username);
 
 				// BlackUserDialog dialog = new BlackUserDialog(view,
 				// view.getGrid().getText(row, 1), view.getGrid().getText(row,
@@ -126,26 +111,23 @@ public class RadiusBlackController extends RismileTableController {
 
 		// ----------------- 认可用户信息
 		public class BlackUserControl implements ClickListener, RequestCallback {
-			public BlackUserDialog dialog = new BlackUserDialog(view, view
-					.getGrid().getText(view.currentRow, 1), view.getGrid()
-					.getText(view.currentRow, 2));
+			public BlackUserDialog dialog = new BlackUserDialog(view);
 
 			public void onClick(Widget sender) {
 				if (dialog.valid()) {
-					add(view.focusID, dialog.usernameBox.getText(),
+					add(dialog.rowid, dialog.usernameBox.getText(),
 							dialog.imsiBox.getText(), dialog.passwordBox
 									.getText(), dialog.ipaddressBox.getText(),
 							this);
-					dialog.confirm.setEnabled(false);
+					((Button)sender).setEnabled(false);
 				}
 			}
 
 			public void onError(Request request, Throwable exception) {
-
+				RadiusBlackController.this.onError(request,exception);
 			}
 
 			public void onResponseReceived(Request request, Response response) {
-				view.unmask();
 				dialog.hide();
 				SysLog.log("remote execute");
 				load();
@@ -155,7 +137,7 @@ public class RadiusBlackController extends RismileTableController {
 	}
 
 	public RismileTable getTable() {
-		return table;
+		return data;
 	}
 
 	public RismileTableView getView() {

@@ -17,14 +17,14 @@ public class RismileLogController extends RismileTableController implements Requ
 	private static String emptyForm = "clearlog";
 
 	// 视图实体。
-	public RismileLogView logView;
+	public RismileLogView view;
 	// 数据实体
 	public RismileLogTable data = new RismileLogTable();
 	
 	public RismileLogController() {
 		// 视图实体。
-		logView = new RismileLogView(this);
-		data.setLimit(20);
+		view = new RismileLogView(this);
+		data.setLimit( view.grid.getRowCount() );
 	}
 
 	public void load(){
@@ -47,12 +47,10 @@ public class RismileLogController extends RismileTableController implements Requ
 	public class ClearLogAction implements ClickListener {
 
 		public void onClick(Widget sender) {
-			logView.mask();
 			if (Window.confirm("是否要清除日志?")) {
-				logView.clearButton.setEnabled(false);
+				view.clearButton.setEnabled(false);
 				empty();
 			}
-			logView.unmask();
 		}
 	}
 	
@@ -62,7 +60,7 @@ public class RismileLogController extends RismileTableController implements Requ
 
 	public void onResponseReceived(Request request, Response response) {
 		data.parseXML(response.getText());
-		logView.render(data);
+		view.render(data);
 	}
 
 	public RismileTable getTable() {
@@ -70,7 +68,7 @@ public class RismileLogController extends RismileTableController implements Requ
 	}
 
 	public RismileTableView getView() {
-		return logView;
+		return view;
 	}
 	
 

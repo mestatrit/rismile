@@ -28,6 +28,7 @@ body {
   height:auto;
   zoom:1;
 }
+
 .rismile-Sink {
   width: 100%;
   border: 1px solid #2a8ebf;
@@ -155,23 +156,6 @@ body {
  	cursor: pointer;
     cursor: hand;
 }
-.rismile-Nav-Button {
-	font-weight: bold;
-	cursor: pointer;
-    cursor: hand;
-}
-.rismile-Nav-Label {
-	padding-top: 3px;
-	text-align: right;
-	vertical-align: middle;
-}
-
-.rismile-Tool-Button {
-    height: 24px;
-	cursor: pointer;
-    cursor: hand;
-}
-
 
 .rismile-hb-message {
 	color: crimson;
@@ -195,10 +179,3 @@ body {
   position:relative;
 }
 
-
-.rismile-search-bar {
-	width: 100%;
-	background-color: #E8EEF7;
-	vertical-align: middle;
-	border-top: 1px solid #ACA899;
-}

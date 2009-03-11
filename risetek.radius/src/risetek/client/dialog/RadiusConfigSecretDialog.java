@@ -17,7 +17,6 @@ public class RadiusConfigSecretDialog extends CustomDialog {
 		newValueBox.setTabIndex(1);
 		add(new Label("请输入新共享密钥："),DockPanel.NORTH);
 		setText("修改共享密钥");
-		
 		add(newValueBox, DockPanel.CENTER);
 	}
 
@@ -31,9 +30,4 @@ public class RadiusConfigSecretDialog extends CustomDialog {
 	public Widget getFirstTabIndex() {
 		return newValueBox;
 	}
-
-	public void setFirstFocus() {
-		newValueBox.setFocus(true);
-	}
-
 }

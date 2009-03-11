@@ -13,10 +13,6 @@ public abstract class MouseEventGrid extends Grid{
 		sinkEvents(Event.MOUSEEVENTS);
 	}
 	
-	private void light(int row, boolean onoff){
-    	getRowFormatter().setStyleName(row, onoff ? "light" : "normal");
-	}
-	
 	public void onBrowserEvent(Event event)
     {
 		Element td = getEventTargetCell(event);
@@ -41,13 +37,13 @@ public abstract class MouseEventGrid extends Grid{
         switch (DOM.eventGetType(event))
         {
         case Event.ONMOUSEOVER:
-        	light(row , true);
+        	getRowFormatter().setStyleName(row, "light");
             onMouseOver(td, column);
             break;
         case Event.ONMOUSEOUT:
        	// 处理这个事件是为了让弹出菜单下面的颜色恢复正常。
         case Event.ONCLICK:
-        	light(row , false);
+        	getRowFormatter().setStyleName(row, "normal");
         	onMouseOut(td, column);
         	break;
         }

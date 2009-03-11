@@ -9,14 +9,11 @@ import risetek.client.view.stick.LCPView;
 import risetek.client.view.stick.LinkView;
 import risetek.client.view.stick.RouterView;
 
-import com.google.gwt.user.client.DOM;
-import com.google.gwt.user.client.Element;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.risetek.rismile.client.Entry;
-import com.risetek.rismile.client.view.IView;
 
-public class InterfaceView2 extends Composite implements IView {
+public class InterfaceView2 extends Composite {
 
 	// final Button addIfButton = new Button();
 	// final StackPanel ifStackPanel = new StackPanel();
@@ -65,35 +62,6 @@ public class InterfaceView2 extends Composite implements IView {
 		control.getIf();
 	}
 
-	public int getHeight(){
-		return outerPanel.getOffsetHeight();
-	}
-	
-	
-	/*
-	 * 将自己背景单元（maskPanel ）设定为半透明状态。
-	 */
-	Element mask = DOM.createDiv();
-	public void mask()
-	{
-		Element maskElement = DOM.getElementById("mask");
-		if(maskElement != null)
-		{
-			DOM.appendChild(maskElement, mask);
-			DOM.setIntStyleAttribute(mask, "height", getHeight());
-			DOM.setElementProperty(mask, "className", "rismile-mask");
-		}
-	}
-	/*
-	 * 将自己灰色屏蔽。
-	 */
-	public void unmask()
-	{
-		Element maskElement = DOM.getElementById("mask");
-		if(maskElement != null){
-			DOM.removeChild(maskElement, mask);
-		}
-	}
 	public void render(IfModel data) {
 		lcpView.render(data);
 		linkView.render(data);

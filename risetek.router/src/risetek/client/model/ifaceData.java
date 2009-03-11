@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import com.google.gwt.xml.client.Element;
 import com.google.gwt.xml.client.NodeList;
+import com.risetek.rismile.client.utils.XMLDataParse;
 
 public class ifaceData {
 
@@ -27,13 +28,13 @@ public class ifaceData {
 	}
 	
 	public void parseXML(Element element) {
-		dial_on_demand = getElementText(element, "on-demand").equals("Enabled");
-		nat = getElementText(element, "nat").equals("Enabled");
+		dial_on_demand = XMLDataParse.getElementText(element, "on-demand").equals("Enabled");
+		nat = XMLDataParse.getElementText(element, "nat").equals("Enabled");
 		
 		try {
-			idle_timeout = Integer.parseInt(getElementText(element,
+			idle_timeout = Integer.parseInt(XMLDataParse.getElementText(element,
 					"idle_timeout"));
-			session_timeout = Integer.parseInt(getElementText(element,
+			session_timeout = Integer.parseInt(XMLDataParse.getElementText(element,
 					"session_timeout"));
 		} catch (Exception e) {
 			// nothing to do.
@@ -42,21 +43,11 @@ public class ifaceData {
 		routers = new ArrayList<router>();
 		NodeList nodelist = element.getElementsByTagName("route");
 		for (int i = 0; i < nodelist.getLength(); i++) {
-			String dest = getElementText(((Element) nodelist.item(i)), "dest");
-			String mask = getElementText(((Element) nodelist.item(i)), "mask");
+			String dest = XMLDataParse.getElementText(((Element) nodelist.item(i)), "dest");
+			String mask = XMLDataParse.getElementText(((Element) nodelist.item(i)), "mask");
 			router r = new router(dest, mask);
 			routers.add(r);
 		}
-	}
-
-	protected String getElementText(Element item, String value) {
-		String result = "";
-		NodeList itemList = item.getElementsByTagName(value);
-		if (itemList.getLength() > 0 && itemList.item(0).hasChildNodes()) {
-
-			result = itemList.item(0).getFirstChild().getNodeValue();
-		}
-		return result;
 	}
 
 }

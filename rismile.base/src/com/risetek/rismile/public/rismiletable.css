@@ -11,17 +11,38 @@
 	border-bottom: 1px solid #ACA899;
 }
 
-.rismiletable .navbar button {
+.rismiletable .navbar .toolbutton {
 	width: 6em;
 	text-align: center;
 	vertical-align: middle;
+	background-color: #E0E0FF;
   	cursor: pointer;
   	cursor: hand;
+}
+
+.rismiletable .navbar .dirbutton {
+	font-weight: bold;
+	width: 4em;
+	cursor: pointer;
+    cursor: hand;
+	background-color: #E0E0FF;
+}
+
+.rismiletable .navbar .NavLabel {
+	padding-top: 3px;
+	text-align: right;
+	font-size:	18px;
+	font-weight: bold;
+	vertical-align: middle;
 }
 
 .rismiletable .navbar .status {
 	vertical-align: middle;
 	padding-right: 10px;
+}
+
+.rismiletable .navbar .info-Label {
+	color: crimson;
 }
 
 .rismiletable .table {
@@ -51,9 +72,5 @@
 
 .rismiletable .table tr.light {
 	background-color:#CCCCFC;
-}
-
-.rismile-info-Label {
-	color: crimson;
 }
 

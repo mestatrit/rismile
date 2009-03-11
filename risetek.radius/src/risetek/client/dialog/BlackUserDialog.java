@@ -17,32 +17,30 @@ public class BlackUserDialog extends CustomDialog {
 	public final TextBox ipaddressBox = new TextBox();
 	public final TextBox imsiBox = new TextBox();
 	
-	private final Label usernameboxLable = new Label("用户名称：",false);
-	private final Label IMSILable = new Label("IMSI号码：",false);
-	private final Label passwordLable = new Label("用户口令：",false);
-	private final Label ipaddressLable = new Label("分配地址：",false);
+	//private final Label usernameboxLable = new Label("用户名称：",false);
+	//private final Label IMSILable = new Label("IMSI号码：",false);
+	//private final Label passwordLable = new Label("用户口令：",false);
+	//private final Label ipaddressLable = new Label("分配地址：",false);
 	
-	private BlackUserView parent;
 	private Grid gridFrame = new Grid(4, 2);
-
-	public BlackUserDialog(BlackUserView parent, String p_IMSI, String p_username ){
+	public String rowid;
+	public BlackUserDialog(BlackUserView parent){
 		super(parent);
-		this.parent = parent;
 		add(new Label("请输入用户信息："),DockPanel.NORTH);
 		// debug format
 		gridFrame.setBorderWidth(1);
-		gridFrame.setWidget(0,0,IMSILable);
-		gridFrame.setWidget(1,0,usernameboxLable);
-		gridFrame.setWidget(2,0,passwordLable);
-		gridFrame.setWidget(3,0,ipaddressLable);
+		gridFrame.setWidget(0,0,new Label("IMSI号码：",false));
+		gridFrame.setWidget(1,0,new Label("用户名称：",false));
+		gridFrame.setWidget(2,0,new Label("用户口令：",false));
+		gridFrame.setWidget(3,0,new Label("分配地址：",false));
 		
 		
 		imsiBox.setReadOnly(true);
-		imsiBox.setText(p_IMSI);
+		//imsiBox.setText(p_IMSI);
 		gridFrame.setWidget(0,1,imsiBox);
 		
 		usernameBox.setReadOnly(true);
-		usernameBox.setText(p_username);
+		//usernameBox.setText(p_username);
 		gridFrame.setWidget(1,1,usernameBox);
 		
 		gridFrame.setWidget(2,1,passwordBox);
@@ -58,11 +56,12 @@ public class BlackUserDialog extends CustomDialog {
 		setSize("280","200");
 	}
 	
-	public void show(){
-		super.show();
-		setText("导入该用户为合法用户");
+	public void show(String tips_id, String tips_imsi, String tips_username){
+		rowid = tips_id;
+		usernameBox.setText(tips_username);
+		imsiBox.setText(tips_imsi);
+		show("导入该用户为合法用户");
 		passwordBox.setFocus(true);
-		super.center();
 	}
 
 

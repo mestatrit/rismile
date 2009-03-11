@@ -3,6 +3,7 @@ package risetek.client.model;
 import com.google.gwt.xml.client.Document;
 import com.google.gwt.xml.client.Element;
 import com.google.gwt.xml.client.XMLParser;
+import com.risetek.rismile.client.utils.XMLDataParse;
 
 public class RadiusConfModel {
 
@@ -32,14 +33,12 @@ public class RadiusConfModel {
 	{
 		Document dom = XMLParser.parse(text);
 		Element customerElement = dom.getDocumentElement();
-		XMLParser.removeWhitespace(customerElement);
 		
-		secretKey = customerElement.getElementsByTagName("secret").item(0).getFirstChild().getNodeValue();
-		authPort   = customerElement.getElementsByTagName("auth").item(0).getFirstChild().getNodeValue();
-		acctPort   = customerElement.getElementsByTagName("acct").item(0).getFirstChild().getNodeValue();
-		version = customerElement.getElementsByTagName("serial").item(0).getFirstChild().getNodeValue();
-		maxUser = customerElement.getElementsByTagName("maxuser").item(0).getFirstChild().getNodeValue();
-		
+		secretKey = XMLDataParse.getElementText(customerElement, "secret");
+		authPort = XMLDataParse.getElementText(customerElement, "auth");
+		acctPort = XMLDataParse.getElementText(customerElement, "acct");
+		version = XMLDataParse.getElementText(customerElement, "serial");
+		maxUser = XMLDataParse.getElementText(customerElement, "maxuser");
 	}
 	
 }

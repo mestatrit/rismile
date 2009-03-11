@@ -17,15 +17,15 @@ public class RismileLogSink extends Sink {
 	}
 
 	public RismileLogSink() {
-		initWidget(control.logView);
+		initWidget(control.view);
 	}
 
 	public void onShow() {
-		control.logView.start_refresh();
+		control.view.start_refresh();
 	}
 	
 	public void onHide(){
-		control.logView.stop_refresh();
+		control.view.stop_refresh();
 	}
 
 }

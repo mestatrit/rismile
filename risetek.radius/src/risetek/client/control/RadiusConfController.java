@@ -9,11 +9,12 @@ import risetek.client.view.RadiusConfigView;
 import com.google.gwt.http.client.Request;
 import com.google.gwt.http.client.RequestCallback;
 import com.google.gwt.http.client.Response;
+import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.ClickListener;
 import com.google.gwt.user.client.ui.Widget;
-import com.risetek.rismile.client.control.SysLog;
 import com.risetek.rismile.client.http.RequestFactory;
 import com.risetek.rismile.client.utils.MessageConsole;
+import com.risetek.rismile.client.utils.SysLog;
 
 
 public class RadiusConfController implements RequestCallback {
@@ -65,6 +66,7 @@ public class RadiusConfController implements RequestCallback {
 				String value = dialog.newValueBox.getText();
 				SysLog.log(value);
 				modify("setAuthPort", this);
+				((Button)sender).setEnabled(false);
 			}
 
 			public void onError(Request request, Throwable exception) {
@@ -72,7 +74,6 @@ public class RadiusConfController implements RequestCallback {
 			}
 
 			public void onResponseReceived(Request request, Response response) {
-				view.unmask();
 				dialog.hide();
 				SysLog.log("remote execute");
 				load();
@@ -95,6 +96,7 @@ public class RadiusConfController implements RequestCallback {
 				String value = dialog.newValueBox.getText();
 				SysLog.log(value);
 				modify("setAcctPort", this);
+				((Button)sender).setEnabled(false);
 			}
 
 			public void onError(Request request, Throwable exception) {
@@ -102,7 +104,6 @@ public class RadiusConfController implements RequestCallback {
 			}
 
 			public void onResponseReceived(Request request, Response response) {
-				view.unmask();
 				dialog.hide();
 				SysLog.log("remote execute");
 				load();
@@ -127,6 +128,7 @@ public class RadiusConfController implements RequestCallback {
 				String value = dialog.newValueBox.getText();
 				SysLog.log(value);
 				modify("setSecret", this);
+				((Button)sender).setEnabled(false);
 			}
 
 			public void onError(Request request, Throwable exception) {
@@ -134,7 +136,6 @@ public class RadiusConfController implements RequestCallback {
 			}
 
 			public void onResponseReceived(Request request, Response response) {
-				view.unmask();
 				dialog.hide();
 				SysLog.log("remote execute");
 				load();

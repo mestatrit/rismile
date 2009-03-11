@@ -77,7 +77,7 @@ public abstract class Entry implements EntryPoint, HistoryListener {
 		DOM.setElementProperty(message.getElement(), "id", "message");
 
 		maskPanel.setWidth("100%");
-		DOM.setElementProperty(maskPanel.getElement(), "id", "mask");
+		//DOM.setElementProperty(maskPanel.getElement(), "id", "mask");
 		maskPanel.add(sinkContainer);
 
 		sinkContainer.setStyleName("rismile-Sink");
@@ -90,7 +90,10 @@ public abstract class Entry implements EntryPoint, HistoryListener {
 		panel.add(description);
 		panel.add(maskPanel);
 		
+		//mask.setPropertyString("className", "rismile-mask");
+		
 		panel.setWidth("100%");
+		panel.setBorderWidth(1);
 
 		History.addHistoryListener(this);
 		RootPanel.get("root").add(panel);

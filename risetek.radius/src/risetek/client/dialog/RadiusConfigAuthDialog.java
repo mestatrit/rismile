@@ -31,9 +31,4 @@ public class RadiusConfigAuthDialog extends CustomDialog {
 	public Widget getFirstTabIndex() {
 		return newValueBox;
 	}
-
-	public void setFirstFocus() {
-		newValueBox.setFocus(true);
-	}
-
 }

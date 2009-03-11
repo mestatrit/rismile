@@ -11,10 +11,10 @@ import com.risetek.rismile.client.utils.Validity;
 
 public class UserPasswordModifyDialog extends CustomDialog {
 	public PasswordTextBox passwordbox = new PasswordTextBox();
-	private UserView parent;
+
+	public String rowid;
 	public UserPasswordModifyDialog(UserView parent) {
 		super(parent);
-		this.parent = parent;
 
 		add(new Label("请输入新口令："),DockPanel.NORTH);
 		add(passwordbox,DockPanel.CENTER);
@@ -22,8 +22,10 @@ public class UserPasswordModifyDialog extends CustomDialog {
 		setSize("200","140");
 	}
 
-	public void show(){
-		setText("记录序号：" + parent.focusID);
+	public void show(String tips_id){
+//		setText("记录序号：" + parent.focusID);
+		rowid = tips_id;
+		setText("记录序号：" + tips_id);
 		super.show();
 		passwordbox.setFocus(true);
 	}
@@ -32,14 +34,6 @@ public class UserPasswordModifyDialog extends CustomDialog {
 		return passwordbox;
 	}
 
-	public int getParentHeihgt() {
-		return parent.getHeight();
-	}
-
-	public void setFirstFocus() {
-		passwordbox.setFocus(true);
-	}
-	
 	public boolean valid()
 	{
 		String check = Validity.validPassword(passwordbox.getText());

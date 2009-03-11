@@ -56,8 +56,8 @@
 }
 
 .radius-info-Label {
-#	color: crimson;
-	color: red;
+	color: crimson;
+#	color: red;
 }
 
 
@@ -80,6 +80,7 @@
 }
 
 .rismiletable .table td.operator {
+	text-align: right;
 	width: 1em;
 }
 

@@ -3,8 +3,6 @@ package risetek.client.view;
 import risetek.client.control.RadiusConfController;
 import risetek.client.model.RadiusConfModel;
 
-import com.google.gwt.user.client.DOM;
-import com.google.gwt.user.client.Element;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.FlexTable;
@@ -12,9 +10,8 @@ import com.google.gwt.user.client.ui.Grid;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.Label;
 import com.risetek.rismile.client.Entry;
-import com.risetek.rismile.client.view.IView;
 
-public class RadiusConfigView extends Composite implements IView{
+public class RadiusConfigView extends Composite {
 	final Grid authGrid = new Grid(1,2);
 	final Grid acctGrid = new Grid(1,2);
 	final Grid secretGrid = new Grid(1,2);
@@ -29,6 +26,7 @@ public class RadiusConfigView extends Composite implements IView{
 		this.control = control;
 	
 		flexTable.setStyleName("radius-config");
+		
 		flexTable.setWidth("100%");
 		flexTable.setStyleName("table");
 		flexTable.setHeight(Entry.SinkHeight);
@@ -115,29 +113,4 @@ public class RadiusConfigView extends Composite implements IView{
 		control.load();
 	}
 
-	/*
-	 * 将自己背景单元（maskPanel ）设定为半透明状态。
-	 */
-	Element mask = DOM.createDiv();
-	public void mask()
-	{
-		Element maskElement = DOM.getElementById("mask");
-		if(maskElement != null)
-		{
-			DOM.appendChild(maskElement, mask);
-			DOM.setIntStyleAttribute(mask, "height", flexTable.getOffsetHeight());
-			DOM.setElementProperty(mask, "className", "rismile-mask");
-		}
-		
-	}
-	/*
-	 * 将自己灰色屏蔽取消。
-	 */
-	public void unmask()
-	{
-		Element maskElement = DOM.getElementById("mask");
-		if(maskElement != null){
-			DOM.removeChild(maskElement, mask);
-		}
-	}
 }

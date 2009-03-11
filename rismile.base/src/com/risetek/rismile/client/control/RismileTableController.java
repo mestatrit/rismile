@@ -10,17 +10,7 @@ import com.risetek.rismile.client.view.RismileTableView;
 public abstract class RismileTableController implements RequestCallback {
 
 	public RequestFactory remoteRequest = new RequestFactory();
-	String tableName;
 	
-	public void changeTableData(String formFunction, String query, RequestCallback callback){
-		remoteRequest.get(formFunction, query, callback);
-	}
-
-	
-	public void loadTableData(String formFunction, String query){
-		remoteRequest.get(formFunction, query, this);
-	}
-
 	// NAVIGATOR 按键的事件处理
 	public class navigatorFirstClick implements ClickListener
 	{

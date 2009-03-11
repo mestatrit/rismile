@@ -38,12 +38,12 @@ public class UserView extends RismileTableView {
 		super(columns, columnStyles, rowCount, control);
 		this.control = control;
 		Button addNewUser = new Button("添加用户", control.new AddUserAction());
-		super.addToolButton(addNewUser);
-		addNewUser.addStyleName("rismile-Tool-Button");
+		addToolButton(addNewUser);
+		addNewUser.addStyleName("toolbutton");
 		
 		Button downloadButton = new Button("导出文件");
 		super.addToolButton(downloadButton);
-		downloadButton.addStyleName("rismile-Tool-Button");
+		downloadButton.addStyleName("toolbutton");
 		downloadButton.addClickListener(new ClickListener(){
 			public void onClick(Widget sender) {
 				Window.open("forms/exportusers", "_self", "");
@@ -52,19 +52,16 @@ public class UserView extends RismileTableView {
 			
 		});
 		super.addToolButton(clearButton);
-		clearButton.addStyleName("rismile-Tool-Button");
+		clearButton.addStyleName("toolbutton");
 		clearButton.addClickListener(control.new EmptyAction());
 		
 	}
 
 	
 	public Grid getGrid() {
-		if (grid != null)
-			return grid;
+		if (grid != null)	return grid;
 
-		MouseEventGrid Tgrid = null;
-		
-		Tgrid = new MouseEventGrid() {
+		return new MouseEventGrid() {
 			public void onMouseOut(Element td, int column) {
 				DOM.setStyleAttribute(td, "color", "");
 				DOM.setStyleAttribute(td, "cursor", "pointer");
@@ -77,23 +74,10 @@ public class UserView extends RismileTableView {
 				setInfo(banner_text[column]);
 			}
 		};
-
-		return Tgrid;
 	}
 	
 	public void onLoad()
 	{
 		control.load();
-	}
-	
-	public void mask() {
-		// TODO Auto-generated method stub
-		
-	}
-
-
-	public void unmask() {
-		// TODO Auto-generated method stub
-		
 	}
 }
