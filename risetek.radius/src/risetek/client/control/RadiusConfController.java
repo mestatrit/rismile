@@ -24,7 +24,6 @@ public class RadiusConfController implements RequestCallback {
 	public RadiusConfigView view;
 	RadiusConfModel data = new RadiusConfModel();
 	
-	
 	public RadiusConfController(){
 		view = new RadiusConfigView(this);
 	}
@@ -64,9 +63,12 @@ public class RadiusConfController implements RequestCallback {
 			public RadiusConfigAuthDialog dialog = new RadiusConfigAuthDialog(view);
 			public void onClick(Widget sender) {
 				String value = dialog.newValueBox.getText();
-				SysLog.log(value);
-				modify("setAuthPort", this);
-				((Button)sender).setEnabled(false);
+				if( dialog.isValid() )
+				{
+					SysLog.log(value);
+					modify("setAuthPort", this);
+					((Button)sender).setEnabled(false);
+				}
 			}
 
 			public void onError(Request request, Throwable exception) {
@@ -74,9 +76,8 @@ public class RadiusConfController implements RequestCallback {
 			}
 
 			public void onResponseReceived(Request request, Response response) {
-				dialog.hide();
-				SysLog.log("remote execute");
-				load();
+				if( dialog.processResponse(response))
+					load();
 			}
 		}
 	}
@@ -96,7 +97,7 @@ public class RadiusConfController implements RequestCallback {
 				String value = dialog.newValueBox.getText();
 				SysLog.log(value);
 				modify("setAcctPort", this);
-				((Button)sender).setEnabled(false);
+				dialog.confirm.setEnabled(false);
 			}
 
 			public void onError(Request request, Throwable exception) {
@@ -104,9 +105,8 @@ public class RadiusConfController implements RequestCallback {
 			}
 
 			public void onResponseReceived(Request request, Response response) {
-				dialog.hide();
-				SysLog.log("remote execute");
-				load();
+				if( dialog.processResponse(response))
+					load();
 			}
 			
 		}
@@ -125,10 +125,13 @@ public class RadiusConfController implements RequestCallback {
 		class Control implements ClickListener, RequestCallback {
 			public RadiusConfigSecretDialog dialog = new RadiusConfigSecretDialog(view);
 			public void onClick(Widget sender) {
-				String value = dialog.newValueBox.getText();
-				SysLog.log(value);
-				modify("setSecret", this);
-				((Button)sender).setEnabled(false);
+				if( dialog.isValid())
+				{
+					String value = dialog.newValueBox.getText();
+					SysLog.log(value);
+					modify("setSecret", this);
+					((Button)sender).setEnabled(false);
+				}
 			}
 
 			public void onError(Request request, Throwable exception) {
@@ -136,9 +139,8 @@ public class RadiusConfController implements RequestCallback {
 			}
 
 			public void onResponseReceived(Request request, Response response) {
-				dialog.hide();
-				SysLog.log("remote execute");
-				load();
+				if( dialog.processResponse(response))
+					load();
 			}
 			
 		}

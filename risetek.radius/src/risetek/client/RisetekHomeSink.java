@@ -17,8 +17,4 @@ public class RisetekHomeSink extends Sink {
 	public RisetekHomeSink(){
 		initWidget(new SystemHomeView());
 	}
-	public void onShow() {
-		
-	}
-	
 }

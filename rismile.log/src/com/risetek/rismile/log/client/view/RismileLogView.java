@@ -26,7 +26,7 @@ public class RismileLogView extends RismileTableView {
 			control.load();
 		}
 	};
-	
+
 	public RismileLogView(RismileLogController control)
 	{
 		this(columns, columnStyles, rowCount, control);
@@ -35,7 +35,7 @@ public class RismileLogView extends RismileTableView {
 	private RismileLogView(String[] columns, String[] columnStyles, int rowCount, RismileLogController control) {
 		super(columns, columnStyles, rowCount, control);
 		this.control = control;
-		TogAutoRefresh = new Button("", control.new AutoRefreshClick());
+		TogAutoRefresh = new Button("查看历史", control.new AutoRefreshClick());
 		addToolButton(TogAutoRefresh);
 		TogAutoRefresh.addStyleName("toolbutton");
 
@@ -76,9 +76,9 @@ public class RismileLogView extends RismileTableView {
 		refreshTimer.cancel();
 	}
 
-
 	public void render(RismileLogTable data)
 	{
+		super.render(data);
 		TogAutoRefresh.setText(data.autoRefresh ? "查看历史" : "自动更新");
 		if(!data.autoRefresh)
 		{
@@ -90,12 +90,12 @@ public class RismileLogView extends RismileTableView {
 			navbar.enabelNavbar(false, false, false, false);
 			navbar.enable = false;
 		}
-		
-		super.render(data);
 	}
-	
+	/*
 	public void onLoad()
 	{
+		MessageConsole.setText("Log onload");
 		control.load();
 	}
+	*/
 }

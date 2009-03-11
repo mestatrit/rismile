@@ -11,12 +11,10 @@ import com.risetek.rismile.client.dialog.CustomDialog;
 import com.risetek.rismile.client.utils.Validity;
 
 public class UserNameModifyDialog extends CustomDialog {
-	//Label  oldNoteLabel = new Label();
 	Label  oldValueLabel = new Label();
 	public TextBox newValueBox = new TextBox();
-	//Label newNoteLabel = new Label();
-	
 	public String rowid;
+
 	public UserNameModifyDialog(UserView parent) {
 		super(parent);
 		add(new Label("请输入新的用户名："),DockPanel.NORTH);
@@ -30,18 +28,9 @@ public class UserNameModifyDialog extends CustomDialog {
 	}
 
 	public void show(String tips_id, String tips_value) {
-		/*
-		setText("记录序号：" + parent.focusID);
-		oldNoteLabel.setText("当前用户名：");
-		oldValueLabel.setText(parent.focusValue);
-		newNoteLabel.setText("新的用户名：");
-		newValueBox.setText(parent.focusValue);
-		*/
 		rowid = tips_id;
 		setText("记录序号：" + tips_id);
-		//oldNoteLabel.setText("当前用户名：");
 		oldValueLabel.setText(tips_value);
-		//newNoteLabel.setText("新的用户名：");
 		newValueBox.setText(tips_value);
 		super.show();
 		newValueBox.setFocus(true);
@@ -51,7 +40,7 @@ public class UserNameModifyDialog extends CustomDialog {
 		return newValueBox;
 	}
 
-	public boolean valid()
+	public boolean isValid()
 	{
 		String check = Validity.validUserName(newValueBox.getText());
 		if( null != check )

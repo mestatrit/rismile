@@ -8,6 +8,7 @@ import com.google.gwt.user.client.ui.ClickListener;
 import com.google.gwt.user.client.ui.Widget;
 import com.risetek.rismile.client.control.RismileTableController;
 import com.risetek.rismile.client.model.RismileTable;
+import com.risetek.rismile.client.utils.MessageConsole;
 import com.risetek.rismile.client.view.RismileTableView;
 import com.risetek.rismile.log.client.model.RismileLogTable;
 import com.risetek.rismile.log.client.view.RismileLogView;
@@ -24,16 +25,12 @@ public class RismileLogController extends RismileTableController implements Requ
 	public RismileLogController() {
 		// 视图实体。
 		view = new RismileLogView(this);
-		data.setLimit( view.grid.getRowCount() );
+		data.setLimit( view.grid.getRowCount() - 1 );
 	}
 
 	public void load(){
 		String query = "lpage="+data.getLimit()+"&offset="+data.getOffset();
 		remoteRequest.get(loadForm, query, this);
-	}
-	
-	public void empty(){
-		remoteRequest.get(emptyForm, null, this);
 	}
 	
 	public class AutoRefreshClick implements ClickListener{
@@ -44,21 +41,32 @@ public class RismileLogController extends RismileTableController implements Requ
 		}	
 	}
 
-	public class ClearLogAction implements ClickListener {
+	public class ClearLogAction implements ClickListener , RequestCallback {
 
 		public void onClick(Widget sender) {
 			if (Window.confirm("是否要清除日志?")) {
 				view.clearButton.setEnabled(false);
-				empty();
+				remoteRequest.get(emptyForm, null, this);
 			}
+		}
+
+		public void onError(Request request, Throwable exception) {
+			RismileLogController.this.onError(request, exception);
+		}
+
+		public void onResponseReceived(Request request, Response response) {
+			view.clearButton.setEnabled(true);
+			load();
 		}
 	}
 	
 	
 	public void onError(Request request, Throwable exception) {
+		MessageConsole.setText("记录数据访问出错!");
 	}
 
 	public void onResponseReceived(Request request, Response response) {
+		MessageConsole.setText("请求记录数据完毕!");
 		data.parseXML(response.getText());
 		view.render(data);
 	}

@@ -22,7 +22,4 @@ public class RadiusConfSink extends Sink {
 		initWidget(control.view);
 	}
 	
-	public void onShow() {
-	}
-
 }

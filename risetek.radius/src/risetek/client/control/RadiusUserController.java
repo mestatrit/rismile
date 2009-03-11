@@ -33,17 +33,13 @@ public class RadiusUserController extends RismileTableController {
 
 	public RadiusUserController() {
 		view = new UserView(this);
-		data.setLimit( view.grid.getRowCount() );
+		data.setLimit( view.grid.getRowCount() - 1 );
 	}
 
 	public void load() {
 		String query = "lpage=" + data.getLimit() + "&offset="
 				+ data.getOffset();
 		remoteRequest.get("SqlUserInfoXML", query, this);
-	}
-
-	public void empty() {
-		remoteRequest.get(emptyForm,null, this);
 	}
 
 	public void add(String name, String imsi, String password, String ip,
@@ -90,14 +86,6 @@ public class RadiusUserController extends RismileTableController {
 		view.render(data);
 	}
 
-	private boolean checkRemoteExecute(Response response)
-	{
-		if( "ERROR".equals(response.getHeader("EXECUTE")) )	return false;
-		// 执行正确，装载新的数据
-		load();
-		return true;
-	}
-	
 	public class TableAction implements TableListener {
 
 		public void onCellClicked(SourcesTableEvents sender, int row, int cell) {
@@ -151,11 +139,10 @@ public class RadiusUserController extends RismileTableController {
 			public UserImsiModifyDialog dialog = new UserImsiModifyDialog(view);
 
 			public void onClick(Widget sender) {
-				if( dialog.valid() )
+				if( dialog.isValid() )
 				{
 					SysLog.log(dialog.newValueBox.getText());
 					modifyImsi(dialog.rowid, dialog.newValueBox.getText(), this);
-					
 				}
 			}
 
@@ -164,10 +151,8 @@ public class RadiusUserController extends RismileTableController {
 			}
 
 			public void onResponseReceived(Request request, Response response) {
-				if( checkRemoteExecute(response))
-					dialog.hide();
-				else
-					dialog.setMessage_E();
+				if( dialog.processResponse(response))
+					load();
 			}
 		}
 
@@ -177,7 +162,7 @@ public class RadiusUserController extends RismileTableController {
 			public UserIpModifyDialog dialog = new UserIpModifyDialog(view);
 
 			public void onClick(Widget sender) {
-				if( dialog.valid() )
+				if( dialog.isValid() )
 				{
 					SysLog.log(dialog.newValueBox.getText());
 					modifyIp(dialog.rowid, dialog.newValueBox.getText(), this);
@@ -189,10 +174,8 @@ public class RadiusUserController extends RismileTableController {
 			}
 
 			public void onResponseReceived(Request request, Response response) {
-				if( checkRemoteExecute(response))
-					dialog.hide();
-				else
-					dialog.setMessage_E();
+				if( dialog.processResponse(response))
+					load();
 			}
 		}
 
@@ -202,11 +185,10 @@ public class RadiusUserController extends RismileTableController {
 			public UserNameModifyDialog dialog = new UserNameModifyDialog(view);
 
 			public void onClick(Widget sender) {
-				if( dialog.valid() )
+				if( dialog.isValid() )
 				{
 					SysLog.log(dialog.newValueBox.getText());
 					modifyName(dialog.rowid, dialog.newValueBox.getText(), this);
-					
 				}
 			}
 
@@ -215,10 +197,8 @@ public class RadiusUserController extends RismileTableController {
 			}
 
 			public void onResponseReceived(Request request, Response response) {
-				if( checkRemoteExecute(response))
-					dialog.hide();
-				else
-					dialog.setMessage_E();
+				if( dialog.processResponse(response))
+					load();
 			}
 		}
 
@@ -229,7 +209,7 @@ public class RadiusUserController extends RismileTableController {
 					view);
 
 			public void onClick(Widget sender) {
-				if( dialog.valid() )
+				if( dialog.isValid() )
 				{
 					modifyPassword(dialog.rowid, dialog.passwordbox.getText(), this);
 					dialog.confirm.setEnabled(false);
@@ -241,10 +221,8 @@ public class RadiusUserController extends RismileTableController {
 			}
 
 			public void onResponseReceived(Request request, Response response) {
-				if( checkRemoteExecute(response))
-					dialog.hide();
-				else
-					dialog.setMessage_E();
+				if( dialog.processResponse(response))
+					load();
 			}
 		}
 	}
@@ -262,13 +240,12 @@ public class RadiusUserController extends RismileTableController {
 			public UserAddDialog dialog = new UserAddDialog(view);
 
 			public void onClick(Widget sender) {
-				if (dialog.valid()) {
+				if (dialog.isValid()) {
 					add(dialog.usernamebox.getText(), dialog.IMSI.getText(),
 							dialog.passwordbox.getText(), dialog.ipaddress
 									.getText(), this);
 					dialog.confirm.setEnabled(false);
 				}
-
 			}
 
 			public void onError(Request request, Throwable exception) {
@@ -276,10 +253,8 @@ public class RadiusUserController extends RismileTableController {
 			}
 
 			public void onResponseReceived(Request request, Response response) {
-				if( checkRemoteExecute(response))
-					dialog.hide();
-				else
-					dialog.setMessage_E();
+				if( dialog.processResponse(response))
+					load();
 			}
 		}
 	}
@@ -289,8 +264,7 @@ public class RadiusUserController extends RismileTableController {
 
 		public void onClick(Widget sender) {
 			if (Window.confirm("是否要清除所有用户?")) {
-				view.clearButton.setEnabled(false);
-				empty();
+				remoteRequest.get(emptyForm,null, RadiusUserController.this);
 			}
 		}
 	}

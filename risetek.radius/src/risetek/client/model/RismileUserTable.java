@@ -26,7 +26,6 @@ public class RismileUserTable extends RismileTable {
 			data[j][3] = "******";
 			data[j][4] = IPConvert.longString2IPString(XMLDataParse.getElementText( logElement, "ADDRESS" ));
 			data[j][5] = XMLDataParse.getElementText( logElement, "STATUS" ).equals("1") ? "在线":"";;
-			
 		}
 		setData(data);
 	}

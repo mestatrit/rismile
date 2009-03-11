@@ -18,21 +18,17 @@ public class UserAddDialog extends CustomDialog {
 	public final TextBox ipaddress = new TextBox();
 	public final TextBox IMSI = new TextBox();
 	
-	private final Label usernameboxLable = new Label("用户名称：",false);
-	private final Label IMSILable = new Label("IMSI号码：",false);
-	private final Label passwordLable = new Label("用户口令：",false);
-	private final Label ipaddressLable = new Label("分配地址：",false);
-	private Grid gridFrame = new Grid(4, 2);
 	private final FocusPanel focusPanel = new FocusPanel();
 	
 	public UserAddDialog(UserView parent){
 		super(parent);
 		add(new Label("请输入用户信息："),DockPanel.NORTH);
 		
-		gridFrame.setWidget(0,0,IMSILable);
-		gridFrame.setWidget(1,0,usernameboxLable);
-		gridFrame.setWidget(2,0,passwordLable);
-		gridFrame.setWidget(3,0,ipaddressLable);
+		Grid gridFrame = new Grid(4, 2);
+		gridFrame.setWidget(0,0,new Label("IMSI号码：",false));
+		gridFrame.setWidget(1,0,new Label("用户名称：",false));
+		gridFrame.setWidget(2,0,new Label("用户口令：",false));
+		gridFrame.setWidget(3,0,new Label("分配地址：",false));
 		
 		gridFrame.setWidget(0,1,IMSI);
 		gridFrame.setWidget(1,1,usernamebox);
@@ -42,7 +38,6 @@ public class UserAddDialog extends CustomDialog {
 		IMSI.setTabIndex(1);
 		usernamebox.setTabIndex(2);
 		passwordbox.setTabIndex(3);
-		
 		ipaddress.setTabIndex(4);
 		
 		focusPanel.add(gridFrame);
@@ -60,7 +55,7 @@ public class UserAddDialog extends CustomDialog {
 		return IMSI;
 	}
 
-	public boolean valid()
+	public boolean isValid()
 	{
 		String check;
 		check = Validity.validIMSI(IMSI.getText());

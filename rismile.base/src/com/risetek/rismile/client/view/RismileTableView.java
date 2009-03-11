@@ -26,21 +26,8 @@ public abstract class RismileTableView extends Composite {
     
     private final Label statisticLabel = new Label("");	
     
-	//private String[] idArray;
-	//protected int tmpStartRow = 0; 
-	//public int startRow = 0;
-	//public int rowCount = 0;
-	//public int TotalRecord = 0;
-	//public String focusID;
-	//public String focusValue;
-	
-	//public int currentRow;
-	
-	//public String focusedRowID;
-	//boolean enableRowId = true;
 	// 数据表的顺序
 	String[] columnStyles;
-	//protected String condition = null;
 
 	public RismileTableView(String[] columns, String[] columnStyles, int rowCount, RismileTableController control) {
 		
@@ -60,9 +47,6 @@ public abstract class RismileTableView extends Composite {
 	    outer.setHeight(Entry.SinkHeight);
 	    initWidget(outer);
 	    setStyleName("rismiletable");
-	    
-	    //outer.setStyleName("rismiletable");
-
 	    
 	    toolPanel.setStyleName("navbar");
 	    outer.add(toolPanel, DockPanel.NORTH);
@@ -98,7 +82,6 @@ public abstract class RismileTableView extends Composite {
 	    grid.setStyleName("table");
 	    outer.add(grid, DockPanel.CENTER);
 	    
-	    //outer.add(searchBar, DockPanel.SOUTH);
 	    // 初始化网格的格式
 	    grid.resize(rowCount + 1, columns.length);
 	    for (int i = 0 ; i < columns.length; i++) {
@@ -135,11 +118,7 @@ public abstract class RismileTableView extends Composite {
 		return id;
 	}
 	*/
-/*
-    public void setStatisticText(String text){
-    	statisticLabel.setText(text);
-    }
-	*/
+
     public void setStatisticText(int total){
     	statisticLabel.setText(Integer.toString(total));
     }

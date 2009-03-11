@@ -1,5 +1,6 @@
 package com.risetek.rismile.client.dialog;
 
+import com.google.gwt.http.client.Response;
 import com.google.gwt.user.client.DOM;
 import com.google.gwt.user.client.Element;
 import com.google.gwt.user.client.Event;
@@ -12,6 +13,7 @@ import com.google.gwt.user.client.ui.KeyboardListener;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.gwt.user.client.ui.DockPanel.DockLayoutConstant;
+import com.risetek.rismile.client.utils.MessageConsole;
 
 public abstract class CustomDialog extends MyDialog {
 	private final DockPanel panel = new DockPanel();
@@ -62,10 +64,6 @@ public abstract class CustomDialog extends MyDialog {
 		this.note.setText(note);
 	}
 	
-	public void setMessage_E(){
-		setMessage("远程执行错误！");
-	}
-
 	public void setMessage(String message){
 		this.message.setText(message);
 	}
@@ -76,6 +74,7 @@ public abstract class CustomDialog extends MyDialog {
 		super.show();
 		center();
 	}
+	
 	public void show(){
 		mask();
 		super.show();
@@ -111,12 +110,30 @@ public abstract class CustomDialog extends MyDialog {
 	abstract public Widget getFirstTabIndex();
 
 	/*
-	 * 将自己背景单元（maskPanel ）设定为半透明状态。
+	 * 将背景单元（parent ）设定为半透明状态。
 	 */
 	public void mask()
 	{
+		mask.setPropertyString("className", "rismile-mask");
+		
 		DOM.setIntStyleAttribute(mask, "height", parent.getOffsetHeight());
 		parent.getElement().appendChild(mask);
 	}
-  
+	
+	public boolean processResponse(Response response)
+	{
+		String err = response.getHeader("EXECUTEFAILED");
+		MessageConsole.setText("远端回应：" + ( (err == null) ? "null " : "not null" + err ) );
+		if ( (null == err) || ("".equals( err )) )
+		{
+			hide();
+			return true;
+		}
+		else
+		{
+			confirm.setEnabled(true);
+			setMessage("远端执行错误！");
+			return false;
+		}
+	}
 }

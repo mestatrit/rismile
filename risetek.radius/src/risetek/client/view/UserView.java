@@ -18,7 +18,6 @@ public class UserView extends RismileTableView {
 	private final static String[] columnStyles = {"id","imsi","username","password","ipaddress","status"};
 	private final static int rowCount = 20;	
 	
-	public Button clearButton = new Button("清除");
 	private final static String[] banner_text = {
 		"点击删除该条记录.",
 		"点击修改IMSI号码.",
@@ -47,16 +46,13 @@ public class UserView extends RismileTableView {
 		downloadButton.addClickListener(new ClickListener(){
 			public void onClick(Widget sender) {
 				Window.open("forms/exportusers", "_self", "");
-				
 			}
-			
 		});
-		super.addToolButton(clearButton);
-		clearButton.addStyleName("toolbutton");
-		clearButton.addClickListener(control.new EmptyAction());
 		
+		Button clearButton = new Button("清除", control.new EmptyAction());
+		clearButton.addStyleName("toolbutton");
+		addToolButton(clearButton);
 	}
-
 	
 	public Grid getGrid() {
 		if (grid != null)	return grid;

@@ -56,28 +56,4 @@ public class RequestFactory {
 		}
 	}
 	
-/*	
-	public class ResponseCallback implements RequestCallback{
-		private RequestListener handler;
-
-		public ResponseCallback(RequestListener handler) {
-
-			this.handler = handler;
-		}
-		
-		public void onError(Request request, Throwable exception)
-		{
-			GWT.log( "error", exception );
-			MessageConsole.setText("请求失败！");
-			handler.onError("网络故障!");
-		}
-		
-		public void onResponseReceived(Request request, Response response)
-		{
-			
-			handler.onResponse(response);
-			
-		}
-	}
-*/
 }

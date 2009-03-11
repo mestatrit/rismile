@@ -23,7 +23,6 @@ public class UserPasswordModifyDialog extends CustomDialog {
 	}
 
 	public void show(String tips_id){
-//		setText("记录序号：" + parent.focusID);
 		rowid = tips_id;
 		setText("记录序号：" + tips_id);
 		super.show();
@@ -34,7 +33,7 @@ public class UserPasswordModifyDialog extends CustomDialog {
 		return passwordbox;
 	}
 
-	public boolean valid()
+	public boolean isValid()
 	{
 		String check = Validity.validPassword(passwordbox.getText());
 		if (null != check) {
@@ -42,7 +41,6 @@ public class UserPasswordModifyDialog extends CustomDialog {
 			passwordbox.setFocus(true);
 			return false;
 		}
-		
 		return true;
 	}
 }

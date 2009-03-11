@@ -14,7 +14,7 @@ public class RadiusConfigAuthDialog extends CustomDialog {
 	public RadiusConfigAuthDialog(RadiusConfigView parent){
 		super(parent);
 		// 格式调试
-		newValueBox.setTabIndex(1);
+		//newValueBox.setTabIndex(1);
 		add(new Label("请输入新认证端口："),DockPanel.NORTH);
 		setText("修改认证端口");
 		
@@ -25,10 +25,14 @@ public class RadiusConfigAuthDialog extends CustomDialog {
 		newValueBox.setText(value);
 		super.show();
 		newValueBox.setFocus(true);
-		center();
 	}
 
 	public Widget getFirstTabIndex() {
 		return newValueBox;
+	}
+	
+	public boolean isValid()
+	{
+		return true;
 	}
 }

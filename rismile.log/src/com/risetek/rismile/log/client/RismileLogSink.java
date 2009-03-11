@@ -27,5 +27,4 @@ public class RismileLogSink extends Sink {
 	public void onHide(){
 		control.view.stop_refresh();
 	}
-
 }

@@ -17,41 +17,30 @@ public class BlackUserDialog extends CustomDialog {
 	public final TextBox ipaddressBox = new TextBox();
 	public final TextBox imsiBox = new TextBox();
 	
-	//private final Label usernameboxLable = new Label("用户名称：",false);
-	//private final Label IMSILable = new Label("IMSI号码：",false);
-	//private final Label passwordLable = new Label("用户口令：",false);
-	//private final Label ipaddressLable = new Label("分配地址：",false);
-	
-	private Grid gridFrame = new Grid(4, 2);
 	public String rowid;
 	public BlackUserDialog(BlackUserView parent){
 		super(parent);
+		Grid gridFrame = new Grid(4, 2);
 		add(new Label("请输入用户信息："),DockPanel.NORTH);
 		// debug format
-		gridFrame.setBorderWidth(1);
+		//gridFrame.setBorderWidth(1);
 		gridFrame.setWidget(0,0,new Label("IMSI号码：",false));
 		gridFrame.setWidget(1,0,new Label("用户名称：",false));
 		gridFrame.setWidget(2,0,new Label("用户口令：",false));
 		gridFrame.setWidget(3,0,new Label("分配地址：",false));
 		
-		
 		imsiBox.setReadOnly(true);
-		//imsiBox.setText(p_IMSI);
 		gridFrame.setWidget(0,1,imsiBox);
-		
 		usernameBox.setReadOnly(true);
-		//usernameBox.setText(p_username);
 		gridFrame.setWidget(1,1,usernameBox);
 		
 		gridFrame.setWidget(2,1,passwordBox);
 		gridFrame.setWidget(3,1,ipaddressBox);
 
 		passwordBox.setTabIndex(1);
-		
 		ipaddressBox.setTabIndex(2);
 		
 		add(gridFrame,DockPanel.CENTER);
-
 		
 		setSize("280","200");
 	}
@@ -64,12 +53,11 @@ public class BlackUserDialog extends CustomDialog {
 		passwordBox.setFocus(true);
 	}
 
-
 	public Widget getFirstTabIndex() {
 		return passwordBox;
 	}
 
-	public boolean valid()
+	public boolean isValid()
 	{
 		String check;
 

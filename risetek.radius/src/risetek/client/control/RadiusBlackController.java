@@ -29,7 +29,7 @@ public class RadiusBlackController extends RismileTableController {
 
 	public RadiusBlackController() {
 		view = new BlackUserView(this);
-		data.setLimit( view.grid.getRowCount() );
+		data.setLimit( view.grid.getRowCount() - 1 );
 	}
 
 	public void load() {
@@ -114,7 +114,7 @@ public class RadiusBlackController extends RismileTableController {
 			public BlackUserDialog dialog = new BlackUserDialog(view);
 
 			public void onClick(Widget sender) {
-				if (dialog.valid()) {
+				if (dialog.isValid()) {
 					add(dialog.rowid, dialog.usernameBox.getText(),
 							dialog.imsiBox.getText(), dialog.passwordBox
 									.getText(), dialog.ipaddressBox.getText(),
@@ -128,9 +128,8 @@ public class RadiusBlackController extends RismileTableController {
 			}
 
 			public void onResponseReceived(Request request, Response response) {
-				dialog.hide();
-				SysLog.log("remote execute");
-				load();
+				if( dialog.processResponse(response))
+					load();
 			}
 		}
 

@@ -15,20 +15,18 @@ import com.risetek.rismile.client.utils.Validity;
 public class UserIpModifyDialog extends CustomDialog implements
 		ClickListener {
 
-	Label  oldNoteLabel = new Label();
 	Label  oldValueLabel = new Label();
 	public TextBox newValueBox = new TextBox();
-	Label newNoteLabel = new Label();
-	private Grid gridFrame = new Grid(2, 2);
 	public String rowid;
-	//private UserView parent;
+
 	public UserIpModifyDialog(UserView parent) {
 		super(parent);
-		//this.parent = parent;
+
+		Grid gridFrame = new Grid(2, 2);
 		add(new Label("请输入新的IP："),DockPanel.NORTH);
-		gridFrame.setWidget(0, 0, oldNoteLabel);
+		gridFrame.setWidget(0, 0, new Label("当前IP："));
 		gridFrame.setWidget(0, 1, oldValueLabel);
-		gridFrame.setWidget(1, 0, newNoteLabel);
+		gridFrame.setWidget(1, 0, new Label("新的IP："));
 		gridFrame.setWidget(1, 1, newValueBox);
 		
 		newValueBox.setTabIndex(1);
@@ -37,29 +35,20 @@ public class UserIpModifyDialog extends CustomDialog implements
 	}
 
 	public void show(String tips_id, String tips_value) {
-		/*
-		setText("记录序号：" + parent.focusID);
-		oldNoteLabel.setText("当前IP：");
-		oldValueLabel.setText(parent.focusValue);
-		newNoteLabel.setText("新的IP：");
-		newValueBox.setText(parent.focusValue);
-		*/
+
 		rowid = tips_id;
 		setText("记录序号：" + tips_id);
-		oldNoteLabel.setText("当前IP：");
 		oldValueLabel.setText(tips_value);
-		newNoteLabel.setText("新的IP：");
 		newValueBox.setText(tips_value);
 		super.show();
 		newValueBox.setFocus(true);
 	}
 
 	public Widget getFirstTabIndex() {
-		// TODO Auto-generated method stub
 		return newValueBox;
 	}
 
-	public boolean valid()
+	public boolean isValid()
 	{
 		String check = Validity.validIpAddress(newValueBox.getText());
 		if (null != check) {

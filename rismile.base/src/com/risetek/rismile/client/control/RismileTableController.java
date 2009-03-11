@@ -9,7 +9,7 @@ import com.risetek.rismile.client.view.RismileTableView;
 
 public abstract class RismileTableController implements RequestCallback {
 
-	public RequestFactory remoteRequest = new RequestFactory();
+	protected RequestFactory remoteRequest = new RequestFactory();
 	
 	// NAVIGATOR 按键的事件处理
 	public class navigatorFirstClick implements ClickListener

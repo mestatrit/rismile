@@ -10,37 +10,30 @@ import com.risetek.rismile.client.dialog.CustomDialog;
 import com.risetek.rismile.client.utils.Validity;
 import com.risetek.rismile.system.client.view.SystemView;
 
-
-
-
 public class AddOrModifyIpDialog extends CustomDialog {
 	public static final int ADD = 0;
 	public static final int MODIFY = 1;
 	private DockPanel panel = new DockPanel();
 
-	SystemView parent;
+	//SystemView parent;
 	//Widget widget;
 	public int code = ADD; 
 	public final TextBox ipBox = new TextBox();
 	public final TextBox maskBox = new TextBox();
 	
-	private final Label ipLable = new Label("IP地址：",false);
-	private final Label maskLable = new Label("子网掩码：",false);
-	private final Grid gridFrame = new Grid(2, 2);
-
 	public AddOrModifyIpDialog(final SystemView parent, int code){
 		super(parent);
-		addStyleName("dialog");
-		this.parent = parent;
+		//addStyleName("dialog");
+		//this.parent = parent;
 		//this.widget = widget;
 		
+		Grid gridFrame = new Grid(2, 2);
 		this.code = code;
 		panel.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_CENTER);
-		
 		panel.add(new Label("请在下面输入IP："),DockPanel.NORTH);
 		
-		gridFrame.setWidget(0,0,ipLable);
-		gridFrame.setWidget(1,0,maskLable);
+		gridFrame.setWidget(0,0,new Label("IP地址：",false));
+		gridFrame.setWidget(1,0,new Label("子网掩码：",false));
 		gridFrame.setWidget(0,1,ipBox);
 		gridFrame.setWidget(1,1,maskBox);
 		
@@ -53,7 +46,6 @@ public class AddOrModifyIpDialog extends CustomDialog {
 		}
 		panel.add(gridFrame, DockPanel.CENTER);
 		panel.setSpacing(10);
-		panel.setBorderWidth(0);
 		
 		add(panel,DockPanel.CENTER);
 
@@ -69,21 +61,13 @@ public class AddOrModifyIpDialog extends CustomDialog {
 		
 		super.show();
 		ipBox.setFocus(true);
-		center();
 	}
 	
-	public void show(String tips){
-		setText(tips);
-		super.show();
-		center();
-	}
-
 	public Widget getFirstTabIndex() {
-		// TODO Auto-generated method stub
 		return ipBox;
 	}
 
-	public boolean valid()
+	public boolean isValid()
 	{
 
 		String check = Validity.validIpAddress(ipBox.getText());

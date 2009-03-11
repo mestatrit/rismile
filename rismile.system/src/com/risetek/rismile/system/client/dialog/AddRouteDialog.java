@@ -14,35 +14,28 @@ public class AddRouteDialog extends CustomDialog {
 	
 	private DockPanel panel = new DockPanel();
 
-	SystemView parent;
-	//Widget widget;
+	//SystemView parent;
 	
 	public final TextBox destBox = new TextBox();
 	public final TextBox maskBox = new TextBox();
 	//private final TextBox interfaceBox = new TextBox();
 	public final TextBox gateBox = new TextBox();
 	
-	private final Label destLabel = new Label("目的地址：",false);
-	private final Label maskLabel = new Label("掩码：",false);
-	//private final Label interfaceLabel = new Label("接口：", false);
-	private final Label gateLabel = new Label("网关：", false);
-
-	private final Grid gridFrame = new Grid(3, 2);
-
 	public AddRouteDialog(final SystemView parent){
 		super(parent);
 		addStyleName("dialog");
-		this.parent = parent;
-		//this.widget = widget;
+		//this.parent = parent;
 		
+		Grid gridFrame = new Grid(3, 2);
+
 		panel.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_CENTER);
 		
 		panel.add(new Label("请在下面输入路由："),DockPanel.NORTH);
 		
-		gridFrame.setWidget(0, 0, destLabel);
-		gridFrame.setWidget(1, 0, maskLabel);
+		gridFrame.setWidget(0, 0, new Label("目的地址：",false));
+		gridFrame.setWidget(1, 0, new Label("掩码：",false));
 		//gridFrame.setWidget(2, 0, interfaceLabel);
-		gridFrame.setWidget(2, 0, gateLabel);
+		gridFrame.setWidget(2, 0, new Label("网关：", false));
 		
 		gridFrame.setWidget(0, 1, destBox);
 		gridFrame.setWidget(1, 1, maskBox);
@@ -66,23 +59,15 @@ public class AddRouteDialog extends CustomDialog {
 	public void show(){
 		setText("添加路由");
 		super.show();
-		
 		destBox.setFocus(true);
-		center();
 	}
 	
-	public void show(String tips){
-		setText(tips);
-		super.show();
-		center();
-	}
-
 	public Widget getFirstTabIndex() {
 		return destBox;
 	}
 
 
-	public boolean valid()
+	public boolean isValid()
 	{
 
 		String check = Validity.validIpAddress(destBox.getText());

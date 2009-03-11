@@ -24,7 +24,6 @@ public class RadiusConfigAcctDialog extends CustomDialog {
 		newValueBox.setText(value);
 		super.show();
 		newValueBox.setFocus(true);
-		center();
 	}
 
 	public Widget getFirstTabIndex() {

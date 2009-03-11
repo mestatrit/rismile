@@ -23,8 +23,6 @@ public class AdminDialog extends CustomDialog {
 	public final PasswordTextBox pwdBox = new PasswordTextBox();
 	public final PasswordTextBox pwdBoxSe = new PasswordTextBox();
 	
-	private final Label nameLabel = new Label("管理员名称：",false);
-	private final Label pwdLabel = new Label("密码：",false);
 	private final Label pwdLabelSe = new Label("重复密码：",false);
 	private final Grid gridFrame;
 	public AdminDialog(final SystemView parent, int code){
@@ -41,8 +39,8 @@ public class AdminDialog extends CustomDialog {
 		}else{
 			gridFrame = new Grid(2, 2);
 		}
-		gridFrame.setWidget(0,0,nameLabel);
-		gridFrame.setWidget(1,0,pwdLabel);
+		gridFrame.setWidget(0,0,new Label("管理员名称：",false));
+		gridFrame.setWidget(1,0,new Label("密码：",false));
 		gridFrame.setWidget(0,1,nameBox);
 		gridFrame.setWidget(1,1,pwdBox);
 		
@@ -73,20 +71,13 @@ public class AdminDialog extends CustomDialog {
 		
 		super.show();
 		nameBox.setFocus(true);
-		center();
 	}
 	
-	public void show(String tips){
-		setText(tips);
-		super.show();
-		center();
-	}
-
 	public Widget getFirstTabIndex() {
 		return nameBox;
 	}
 
-	public boolean valid()
+	public boolean isValid()
 	{
 		String check = Validity.validAdminName(nameBox.getText());
 		if (null != check) {
