@@ -1,8 +1,4 @@
 .radius-config {
-  position:relative;
-}
-
-.radius-config td {
 	text-align: center;
 }
 
@@ -13,18 +9,18 @@
 	font-size: larger;
 	font-weight: bold;
 	border:1px solid #2a8ebf;
+	text-align: left;
 	background: url(images/radius_blue_gradient.gif) repeat-x top left;
-	/*background-color: #7EACD6;*/
 }
 
 .radius-config .conf-table {
 	margin-top: 1cm;
 	margin-bottom: 5mm;
 	background-color: white;
-	cellspacing:2px;
-	cellpading:2px;
-	border-collapse: collapse;
+	background: white;
 	border:1px solid #999;
+	border-collapse: collapse;
+	text-align: center;
 }
 
 .radius-config .conf-table td {
@@ -34,6 +30,7 @@
 	padding-left: 3px;
     padding-bottom: 2px;
 	vertical-align: middle;
+	text-align: center;
 }
 
 .radius-config .conf-Button {
@@ -50,7 +47,7 @@
 	cursor: pointer;
     cursor: hand;
 }
-.radius-config .conf-version{
+.radius-config .conf-version {
 	margin-top: 5mm;
 	margin-bottom: 1mm;
 }

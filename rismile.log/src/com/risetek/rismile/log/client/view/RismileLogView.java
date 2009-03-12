@@ -78,7 +78,6 @@ public class RismileLogView extends RismileTableView {
 
 	public void render(RismileLogTable data)
 	{
-		super.render(data);
 		TogAutoRefresh.setText(data.autoRefresh ? "查看历史" : "自动更新");
 		if(!data.autoRefresh)
 		{
@@ -90,6 +89,7 @@ public class RismileLogView extends RismileTableView {
 			navbar.enabelNavbar(false, false, false, false);
 			navbar.enable = false;
 		}
+		super.render(data);
 	}
 	/*
 	public void onLoad()

@@ -15,7 +15,13 @@ public abstract class RismileTableController implements RequestCallback {
 	public class navigatorFirstClick implements ClickListener
 	{
 		public void onClick(Widget sender) {
-			getTable().setOffset(getTable().getSum() - getTable().getLimit());
+			int offset;
+			if( getTable().ASC )
+				offset = 0;
+			else
+				offset = getTable().getSum() - getTable().getLimit();
+				
+			getTable().setOffset(offset);
 			load();
 		}
 	}
@@ -24,7 +30,11 @@ public abstract class RismileTableController implements RequestCallback {
 	{
 
 		public void onClick(Widget sender) {
-			int offset = getTable().getOffset() - getTable().getLimit();
+			int offset;
+			if( !getTable().ASC )
+				offset = getTable().getOffset() - getTable().getLimit();
+			else
+				offset = getTable().getOffset() + getTable().getLimit();
 			getTable().setOffset(offset);
 			load();
 		}
@@ -34,7 +44,12 @@ public abstract class RismileTableController implements RequestCallback {
 	public class navigatorPrevClick implements ClickListener
 	{
 		public void onClick(Widget sender) {
-			int offset = getTable().getOffset() + getTable().getLimit();
+			int offset;
+			if( getTable().ASC )
+				offset = getTable().getOffset() - getTable().getLimit();
+			else
+				offset = getTable().getOffset() + getTable().getLimit();
+
 			getTable().setOffset(offset);
 			load();
 		}
@@ -43,7 +58,13 @@ public abstract class RismileTableController implements RequestCallback {
 	public class navigatorLastLastClick implements ClickListener
 	{
 		public void onClick(Widget sender) {
-			getTable().setOffset(0);
+			int offset;
+			if( !getTable().ASC )
+				offset = 0;
+			else
+				offset = getTable().getSum() - getTable().getLimit();
+				
+			getTable().setOffset(offset);
 			load();
 		}
 		

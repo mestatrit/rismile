@@ -15,6 +15,7 @@ public class NavBar extends Composite {
     public boolean enable = true;
     private final HorizontalPanel buttonsPanel = new HorizontalPanel();
 
+    public boolean ASC = true;
     
     public NavBar(RismileTableController control) {
       initWidget(buttonsPanel);

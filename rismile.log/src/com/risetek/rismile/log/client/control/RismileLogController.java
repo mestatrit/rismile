@@ -25,10 +25,12 @@ public class RismileLogController extends RismileTableController implements Requ
 	public RismileLogController() {
 		// 视图实体。
 		view = new RismileLogView(this);
+		data.ASC = false;
 		data.setLimit( view.grid.getRowCount() - 1 );
 	}
 
 	public void load(){
+		MessageConsole.setText("提取运行记录");
 		String query = "lpage="+data.getLimit()+"&offset="+data.getOffset();
 		remoteRequest.get(loadForm, query, this);
 	}
@@ -60,13 +62,12 @@ public class RismileLogController extends RismileTableController implements Requ
 		}
 	}
 	
-	
 	public void onError(Request request, Throwable exception) {
 		MessageConsole.setText("记录数据访问出错!");
 	}
 
 	public void onResponseReceived(Request request, Response response) {
-		MessageConsole.setText("请求记录数据完毕!");
+		MessageConsole.setText("提取记录数据完毕!");
 		data.parseXML(response.getText());
 		view.render(data);
 	}

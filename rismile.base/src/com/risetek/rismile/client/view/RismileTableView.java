@@ -164,11 +164,25 @@ public abstract class RismileTableView extends Composite {
 
 		setStatisticText( table.getSum() );
 		
+		boolean goFirst;
+		boolean goPrev;
+		boolean goNext;
+		boolean goLast;
 		// 设定导航状态
-		boolean goFirst = table.getOffset() > 0;
-		boolean goPrev = (table.getOffset() - table.getLimit()) > 0;
-		boolean goNext = (table.getOffset() + table.getLimit()) < table.getSum();
-		boolean goLast = table.getOffset() < table.getSum();
+		if( table.ASC )
+		{
+			goFirst = table.getOffset() > 0;
+			goPrev = (table.getOffset() - table.getLimit()) > 0;
+			goNext = (table.getOffset() + table.getLimit()) < table.getSum();
+			goLast = (table.getOffset() + table.getLimit()) < table.getSum();
+		}
+		else
+		{
+			goFirst = (table.getOffset() + table.getLimit()) < table.getSum();
+			goPrev = (table.getOffset() + table.getLimit()) < table.getSum();
+			goNext = (table.getOffset() - table.getLimit()) > 0;
+			goLast = table.getOffset() > 0;
+		}
 		navbar.enabelNavbar(goFirst, goPrev, goNext, goLast);
 	}
 

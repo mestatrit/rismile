@@ -2,6 +2,7 @@
 	width: 4em;
 }
 
+/* 怎么设定它为不卷绕的呢？ nowrap. */
 .rismiletable .table td.record {
 	width: 35em;
 	text-align: left;

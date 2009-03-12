@@ -25,15 +25,15 @@ public class RadiusConfigView extends Composite {
 	public RadiusConfigView( RadiusConfController control) {
 		this.control = control;
 	
-		flexTable.setStyleName("radius-config");
+		//flexTable.setStyleName("radius-config");
 		
 		flexTable.setWidth("100%");
-		flexTable.setStyleName("table");
 		flexTable.setHeight(Entry.SinkHeight);
 		initWidget(flexTable);
 		// 格式调试使用。
 		//flexTable.setBorderWidth(1);
 		setStyleName("radius-config");
+		//flexTable.setStyleName("table");
 		
 		final HTML authTitleHTML = new HTML("认证端口配置");
 		authTitleHTML.setStyleName("table-title");
@@ -46,7 +46,7 @@ public class RadiusConfigView extends Composite {
 		authGrid.setText(0, 0, "认证端口");
 		authGrid.setStyleName("conf-table");
 		authGrid.getCellFormatter().setWidth(0, 0, "60%");
-		//authGrid.setBorderWidth(1);
+		authGrid.setBorderWidth(1);
 		final Button authButton = new Button("修改", control.new authModifyClickListen());
 		authButton.setStyleName("conf-Button");
 

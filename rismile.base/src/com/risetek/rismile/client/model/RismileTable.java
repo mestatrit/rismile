@@ -8,6 +8,8 @@ public abstract class RismileTable {
 	private int limit;
 	private int sum;
 
+	public boolean ASC = true;
+	
 	public int getLimit() {
 		return limit;
 	}

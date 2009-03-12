@@ -30,55 +30,49 @@ public class SystemView extends Composite {
 		AbstractImagePrototype rightCorner();
 	}
 
-	final Grid dateGrid = new Grid();
-	final Grid serviceGrid = new Grid();
-	final Grid netGrid = new Grid();
-	final Grid routeGrid = new Grid();
+	final Grid dateGrid = new Grid(1,2);
+	final Grid serviceGrid = new Grid(2,3);
+	final Grid netGrid = new Grid(2,4);
+	final Grid routeGrid = new Grid(2,5);
 
-	private int nextHeaderIndex = 0;
-	final FlexTable flexTable = new FlexTable();
-
+	//private int nextHeaderIndex = 0;
+	final FlexTable panel = new FlexTable();
+	
 	SystemAllController control;
 	
 	public SystemView(SystemAllController control) {
 		this.control = control;
 		//flexTable.setStyleName("rismile-page-container");
-		flexTable.setHeight(Entry.SinkHeight);
-		initWidget(flexTable);
-		flexTable.setWidth("100%");
+		panel.setHeight(Entry.SinkHeight);
+		initWidget(panel);
+		panel.setWidth("100%");
 		//flexTable.setBorderWidth(1);
 
 		setStyleName("rismile-system");
-		
-		HTML emptyHtml = new HTML("&nbsp;");
-		flexTable.setWidget(0, 0, emptyHtml);
-		emptyHtml.setHeight("1em");
 
 		final StackPanel stackPanel = new StackPanel();
 		stackPanel.setWidth("100%");
 		stackPanel.setHeight("100%");
 		
 		stackPanel.setStyleName("stack-panel");
-		flexTable.setWidget(1, 0, stackPanel);
-		flexTable.getFlexCellFormatter().setColSpan(1, 0, 2);
+		panel.setWidget(0, 0, stackPanel);
+		//panel.getFlexCellFormatter().setColSpan(1, 0, 2);
 
 		final VerticalPanel servicePanel = new VerticalPanel();
 		servicePanel.setWidth("100%");
 		servicePanel.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_LEFT);
 
 		// 产品系统信息界面布局
-		dateGrid.setBorderWidth(1);
+		// dateGrid.setBorderWidth(1);
 		dateGrid.setWidth("40%");
 		dateGrid.addStyleName("date-table");
-		dateGrid.resize(1, 2);
 		servicePanel.add(dateGrid);
 
 		// 服务信息界面布局
 		servicePanel.add(serviceGrid);
-		serviceGrid.setBorderWidth(1);
+		//serviceGrid.setBorderWidth(1);
 		serviceGrid.setWidth("90%");
 		serviceGrid.setStyleName("status-table");
-		serviceGrid.resize(2, 3);
 		serviceGrid.setBorderWidth(1);
 		serviceGrid.setText(0, 0, "名称");
 		serviceGrid.setText(0, 1, "版本号");
@@ -101,7 +95,6 @@ public class SystemView extends Composite {
 		netGrid.setBorderWidth(1);
 		netGrid.setWidth("90%");
 		netGrid.setStyleName("grid2-table");
-		netGrid.resize(2, 4);
 		netGrid.setBorderWidth(1);
 		netGrid.setText(0, 0, "接口");
 		netGrid.setText(0, 1, "IP地址");
@@ -124,7 +117,6 @@ public class SystemView extends Composite {
 		routeAddButton.setStyleName("big-button");
 		routePanel.add(routeAddButton);
 
-		routeGrid.resize(2, 5);
 		routeGrid.setBorderWidth(1);
 		routeGrid.setWidth("90%");
 		routeGrid.setStyleName("grid2-table");
@@ -140,14 +132,14 @@ public class SystemView extends Composite {
 		routeGrid.getCellFormatter().setStyleName(0, 3, "head");
 		routeGrid.getCellFormatter().setStyleName(0, 4, "head");
 		routePanel.add(routeGrid);
-		stackPanel.add(routePanel, createHeaderHTML(images, "路由"), true);
+		stackPanel.add(routePanel, createHeaderHTML(images, "路由设置"), true);
 
 		// 管理配置界面布局
-		final Grid adminGrid = new Grid(2,5);
-		adminGrid.setWidth("100%");
+		final Grid adminGrid = new Grid(2,3);
+		//adminGrid.setBorderWidth(1);
 		adminGrid.setStyleName("grid1-table");
-
 		stackPanel.add(adminGrid, createHeaderHTML(images, "管理及配置"), true);
+		adminGrid.setWidth("100%");
 
 		final Button addAdminButton = new Button("添加管理员");
 		addAdminButton.setStyleName("big-button");
@@ -157,17 +149,17 @@ public class SystemView extends Composite {
 		delAdminButton.setStyleName("big-button");
 		adminGrid.setWidget(0, 1, delAdminButton);
 		
+		final Button upfileButton = new Button("升级程序",control.new uploadClickListener());
+		adminGrid.setWidget(0, 2, upfileButton);
+		upfileButton.setStyleName("big-button");
+
 		final Button paraButton = new Button("恢复出厂参数", control.new resotreClickListener());
-		adminGrid.setWidget(0, 2, paraButton);
+		adminGrid.setWidget(1, 0, paraButton);
 		paraButton.setStyleName("big-button");
 
 		final Button restartButton = new Button("重启设备", control.new resetClickListener());
-		adminGrid.setWidget(0, 3, restartButton);
+		adminGrid.setWidget(1, 2, restartButton);
 		restartButton.setStyleName("big-button");
-
-		final Button upfileButton = new Button("升级程序",control.new uploadClickListener());
-		adminGrid.setWidget(0, 4, upfileButton);
-		upfileButton.setStyleName("big-button");
 		
 		
 		//----------------------
@@ -176,9 +168,7 @@ public class SystemView extends Composite {
 
 	}
 
-	public String ip_address;
-	public String ip_mask;
-
+/*
 	private String createHeaderHTML(Images images, String caption) {
 		Grid captionGrid = new Grid();
 		captionGrid.setWidth("100%");
@@ -217,6 +207,39 @@ public class SystemView extends Composite {
 				+ "<td class='box-11'>" + captionInnerHtml + "</td>"
 				+ "<td class='box-21'>&nbsp;</td>" + "</tr></tbody></table>";
 	}
+*/
+	private String createHeaderHTML(Images images, String caption) {
+		Grid captionGrid = new Grid(1,2);
+		captionGrid.setWidth("100%");
+
+		HTML captionHtml = new HTML(caption);
+		captionHtml.setStyleName("stack-caption");
+		HTML figureHtml = new HTML("&nbsp;");
+		figureHtml.setStyleName("stack-figure");
+
+		captionGrid.setWidget(0, 0, captionHtml);
+		captionGrid.getCellFormatter().setWidth(0, 0, "90%");
+		captionGrid.getCellFormatter().setVerticalAlignment(0, 0,
+				HasVerticalAlignment.ALIGN_TOP);
+		captionGrid.setWidget(0, 1, figureHtml);
+		captionGrid.getCellFormatter().setWidth(0, 1, "10%");
+		captionGrid.getCellFormatter().setVerticalAlignment(0, 1,
+				HasVerticalAlignment.ALIGN_TOP);
+
+		String innerHtml = DOM.getInnerHTML(captionGrid.getElement());
+
+		String captionInnerHtml = "<table class='caption' cellpadding='0' cellspacing='0'>"
+				+ "<tr><td class='lcaption'>"
+				+ "</td><td class='rcaption'><b style='white-space:nowrap'>"
+				+ innerHtml + "</b></td></tr></table>";
+
+		return "<table align='left' cellpadding='0' cellspacing='0'><tbody>"
+				+ "<tr><td class='box-10'>&nbsp;</td>" + "<td class='box-10'>&nbsp;</td>"
+				+ "<td class='box-10'>&nbsp;</td>" + "</tr><tr>" + "<td></td>"
+				+ "<td class='box-11'>" + captionInnerHtml + "</td>"
+				+ "<td></td>" + "</tr></tbody></table>";
+	}
+	
 
 
 	protected void onLoad() {
@@ -230,6 +253,9 @@ public class SystemView extends Composite {
 		serviceGrid.setText(1, 2, service.getStatus());
 
 	}
+
+	public String ip_address;
+	public String ip_mask;
 
 	private void renderNetworkTable(List<InterfEntry> interfList) {
 

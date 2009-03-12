@@ -13,7 +13,10 @@ import com.google.gwt.user.client.ui.KeyboardListener;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.gwt.user.client.ui.DockPanel.DockLayoutConstant;
+import com.google.gwt.xml.client.Document;
+import com.google.gwt.xml.client.XMLParser;
 import com.risetek.rismile.client.utils.MessageConsole;
+import com.risetek.rismile.client.utils.XMLDataParse;
 
 public abstract class CustomDialog extends MyDialog {
 	private final DockPanel panel = new DockPanel();
@@ -123,11 +126,22 @@ public abstract class CustomDialog extends MyDialog {
 	public boolean processResponse(Response response)
 	{
 		String err = response.getHeader("EXECUTEFAILED");
-		MessageConsole.setText("远端回应：" + ( (err == null) ? "null " : "not null" + err ) );
+		//MessageConsole.setText("远端回应：" + ( (err == null) ? "null " : "not null" + err ) );
 		if ( (null == err) || ("".equals( err )) )
 		{
-			hide();
-			return true;
+			String resule = XMLDataParse.getElementText(response.getText(), "ERROR");
+			if( "".equals(resule) )
+			{
+				setMessage("远端执行正常");
+				hide();
+				return true;
+			}
+			else
+			{
+				confirm.setEnabled(true);
+				setMessage(resule);
+				return false;
+			}
 		}
 		else
 		{

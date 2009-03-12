@@ -66,7 +66,7 @@ public class RadiusConfController implements RequestCallback {
 				if( dialog.isValid() )
 				{
 					SysLog.log(value);
-					modify("setAuthPort", this);
+					modify("authport=" + value , this);
 					((Button)sender).setEnabled(false);
 				}
 			}
@@ -96,7 +96,7 @@ public class RadiusConfController implements RequestCallback {
 			public void onClick(Widget sender) {
 				String value = dialog.newValueBox.getText();
 				SysLog.log(value);
-				modify("setAcctPort", this);
+				modify("accport=" + value , this);
 				dialog.confirm.setEnabled(false);
 			}
 
@@ -129,7 +129,7 @@ public class RadiusConfController implements RequestCallback {
 				{
 					String value = dialog.newValueBox.getText();
 					SysLog.log(value);
-					modify("setSecret", this);
+					modify("secret=" + value , this);
 					((Button)sender).setEnabled(false);
 				}
 			}
