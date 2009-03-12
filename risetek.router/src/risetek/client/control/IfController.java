@@ -2,7 +2,7 @@ package risetek.client.control;
 
 import risetek.client.dialog.ModifyLCPUserDialog;
 import risetek.client.model.IfModel;
-import risetek.client.view.InterfaceView2;
+import risetek.client.view.InterfaceView;
 
 import com.google.gwt.http.client.Request;
 import com.google.gwt.http.client.RequestCallback;
@@ -10,6 +10,7 @@ import com.google.gwt.http.client.Response;
 import com.google.gwt.user.client.ui.ClickListener;
 import com.google.gwt.user.client.ui.Widget;
 import com.risetek.rismile.client.http.RequestFactory;
+import com.risetek.rismile.client.utils.MessageConsole;
 
 public class IfController implements RequestCallback
 {
@@ -19,15 +20,22 @@ public class IfController implements RequestCallback
 	private String setPath = "ConfigDialers";
 	
 	IfModel data = new IfModel();
-	public InterfaceView2 view;
+//	public InterfaceView2 view;
+	public InterfaceView view;
 	
 	public IfController(){
-		view = new InterfaceView2(this);
+//		view = new InterfaceView2(this);
+		view = new InterfaceView(this);
 	}
 	
 	public void getIf(){
 		remoteRequest.get(ifpath, null, this);
 	}
+
+	public void load(){
+		remoteRequest.get(ifpath, null, this);
+	}
+	
 	
 	private void setLCPUser(String username, String password, RequestCallback callback)
 	{
@@ -46,8 +54,7 @@ public class IfController implements RequestCallback
 
 
 	public void onError(Request request, Throwable exception) {
-		// TODO Auto-generated method stub
-		
+		MessageConsole.setText("网络错误!");
 	}
 
 	public void onResponseReceived(Request request, Response response) {
@@ -62,7 +69,7 @@ public class IfController implements RequestCallback
 		}
 
 		public class Control implements ClickListener, RequestCallback {
-			public ModifyLCPUserDialog dialog = new ModifyLCPUserDialog(view);
+			public ModifyLCPUserDialog dialog ;//= new ModifyLCPUserDialog(view);
 			public Control()
 			{
 				dialog.confirm.addClickListener(this);

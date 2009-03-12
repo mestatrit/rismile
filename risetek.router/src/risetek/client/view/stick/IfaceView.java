@@ -4,14 +4,14 @@ import risetek.client.model.IfModel;
 import risetek.client.model.ifaceData;
 
 import com.google.gwt.user.client.ui.CheckBox;
+import com.google.gwt.user.client.ui.FlexTable;
 import com.google.gwt.user.client.ui.Grid;
+import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Panel;
 import com.google.gwt.user.client.ui.TextBox;
-import com.google.gwt.user.client.ui.VerticalPanel;
 
 public class IfaceView {
-	VerticalPanel panel = new VerticalPanel();
 	final TextBox idleTextBox = new TextBox();
 	final TextBox sessionTextBox = new TextBox();
 	final Label idleLabel = new Label("");
@@ -22,14 +22,19 @@ public class IfaceView {
 	
 	public IfaceView(Panel outerPanel)
 	{
-		panel.setBorderWidth(1);
-		panel.setWidth("100%");
-		panel.setTitle("IFACE");
+		final FlexTable flexTable = new FlexTable();
+		flexTable.setBorderWidth(1);
+		flexTable.setWidth("100%");
+		outerPanel.add(flexTable);
+		flexTable.setStyleName("router-config");
+		final HTML authTitleHTML = new HTML("IFACE参数");
+		authTitleHTML.setStyleName("table-title");
+		flexTable.setWidget(0, 0, authTitleHTML);
 		
 		final Grid tempGrid = new Grid(1,2);
 		tempGrid.setBorderWidth(1);
 		tempGrid.setWidth("100%");
-		panel.add(tempGrid);
+		flexTable.setWidget(1, 0, tempGrid);
 		
 		tempGrid.setWidget(0,0 ,ondemandCheckBox );
 		ondemandCheckBox.setText("按需拨号");
@@ -65,9 +70,6 @@ public class IfaceView {
 		timeoutGrid.setWidget(1, 2, sessionLabel);
 		
 		*/
-		
-		outerPanel.add(panel);
-		
 	}
 	
 	public void render(IfModel data)

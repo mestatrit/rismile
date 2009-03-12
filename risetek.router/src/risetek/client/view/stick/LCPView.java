@@ -6,15 +6,15 @@ import risetek.client.model.lcpData;
 
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.CheckBox;
+import com.google.gwt.user.client.ui.FlexTable;
 import com.google.gwt.user.client.ui.Grid;
+import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Panel;
 import com.google.gwt.user.client.ui.PasswordTextBox;
 import com.google.gwt.user.client.ui.TextBox;
-import com.google.gwt.user.client.ui.VerticalPanel;
 
 public class LCPView {
-	VerticalPanel panel = new VerticalPanel();
 	
 	final TextBox userTextBox = new TextBox();
 	final PasswordTextBox passwordTextBox = new PasswordTextBox();
@@ -37,51 +37,58 @@ public class LCPView {
 	public LCPView(Panel outerPanel, IfController control)
 	{
 		this.control = control;
-		panel.setBorderWidth(1);
-		panel.setWidth("100%");
-		panel.setTitle("LCP");
 
-		final Grid tempGrid = new Grid(1,2);
-		tempGrid.setBorderWidth(1);
-		tempGrid.setWidth("100%");
-		tempGrid.getColumnFormatter().setWidth(0, "50%");
-		tempGrid.getColumnFormatter().setWidth(1, "50%");
+		final FlexTable flexTable = new FlexTable();
+		flexTable.setBorderWidth(1);
+		flexTable.setWidth("100%");
+		outerPanel.add(flexTable);
+		flexTable.setStyleName("router-config");
 		
-		panel.add(tempGrid);
+		final HTML authTitleHTML = new HTML("网络链路参数");
+		authTitleHTML.setStyleName("table-title");
+		flexTable.setWidget(0, 0, authTitleHTML);
+		flexTable.getFlexCellFormatter().setColSpan(0, 0, 2);
 		
-		final Grid pppGrid = new Grid(3,2);
+		final Grid pppGrid = new Grid(2,3);
 		pppGrid.setBorderWidth(1);
 		pppGrid.setWidth("100%");
-		tempGrid.setWidget(0,0, pppGrid);
 	
 		pppGrid.setStyleName("if-Grid");
 		pppGrid.getColumnFormatter().setStyleName(0, "head");
 		pppGrid.getColumnFormatter().setWidth(0, "40%");
-		pppGrid.getColumnFormatter().setWidth(1, "60%");
+		pppGrid.getColumnFormatter().setWidth(1, "40%");
+		pppGrid.getColumnFormatter().setWidth(2, "20%");
 		pppGrid.setText(0, 0, "用户名:");
 		pppGrid.setWidget(0, 1, userLabel);
+		pppGrid.setWidget(0, 2, new Button("修改", control.new ModifyLCPUserButtonClick()));
+		
 		pppGrid.setText(1, 0, "密码:");
 		pppGrid.setWidget(1, 1, passwordLabel);
-		pppGrid.setWidget(2, 1, new Button("修改", control.new ModifyLCPUserButtonClick()));
+		pppGrid.setWidget(1, 2, new Button("修改", control.new ModifyLCPUserButtonClick()));
+		flexTable.setWidget(1, 0, pppGrid);
 
-		final Grid authGrid = new Grid(3,2);
+		final FlexTable authGrid = new FlexTable();
 		authGrid.setBorderWidth(1);
 		authGrid.setWidth("100%");
-		tempGrid.setWidget(0,1, authGrid);
+		//tempGrid.setWidget(0,1, authGrid);
+
+		authGrid.getFlexCellFormatter().setColSpan(0, 0, 2);
 		
 		authGrid.setText(0,0,"认证方式:");
+		
 		authGrid.setWidget(1,0, chapmdCheckBox);
 		chapmdCheckBox.setText("chapmd5");
 		
-		authGrid.setWidget(1,1, eapCheckBox);
-		eapCheckBox.setText("eap");
+		//authGrid.setWidget(1,1, eapCheckBox);
+		//eapCheckBox.setText("eap");
 
-		authGrid.setWidget(2,0, mschapCheckBox);
-		mschapCheckBox.setText("ms-chap");
+		//authGrid.setWidget(2,0, mschapCheckBox);
+		//mschapCheckBox.setText("ms-chap");
 
-		authGrid.setWidget(2,1, papCheckBox);
+		authGrid.setWidget(1,1, papCheckBox);
 		papCheckBox.setText("pap");
 
+		flexTable.setWidget(1, 1, authGrid);
 		/*
 		
 		// ---------------------------------------------------------
@@ -111,7 +118,6 @@ public class LCPView {
 		lcpGrid.setWidget(0, 2, keepaliveLabel);
 		lcpGrid.setWidget(1, 2, redialLabel);
 */
-		outerPanel.add(panel);
 	}
 
 	public void render(IfModel data)
@@ -121,10 +127,10 @@ public class LCPView {
 		userLabel.setText(lcpdata.pppusername);
 		passwordLabel.setText(lcpdata.ppppassword);
 		
-		chapmdCheckBox.setChecked(lcpdata.accept_chap != 0);
-		eapCheckBox.setChecked(lcpdata.accept_eap != 0);
-		mschapCheckBox.setChecked(lcpdata.accept_mschap != 0);
-		papCheckBox.setChecked(lcpdata.accept_pap != 0);
+		chapmdCheckBox.setChecked(lcpdata.accept_chap);
+		eapCheckBox.setChecked(lcpdata.accept_eap);
+		mschapCheckBox.setChecked(lcpdata.accept_mschap);
+		papCheckBox.setChecked(lcpdata.accept_pap);
 		
 	}
 }

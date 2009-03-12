@@ -8,10 +8,10 @@ public class lcpData {
 
 	public String pppusername;
 	public String ppppassword;
-	public int accept_pap;
-	public int accept_chap;
-	public int accept_eap;
-	public int accept_mschap;
+	public boolean accept_pap;
+	public boolean accept_chap;
+	public boolean accept_eap;
+	public boolean accept_mschap;
 	public String keepalive;
 
 	public void parseXML(Element element) {
@@ -26,13 +26,13 @@ public class lcpData {
 			if (value.equals("Acceptable")) {
 				String type = ((Element) authList.item(i)).getAttribute("type");
 				if (type.equals("chapmd5")) {
-					accept_chap = 1;
+					accept_chap = true;
 				} else if (type.equals("pap")) {
-					accept_pap = 1;
+					accept_pap = true;
 				} else if (type.equals("eap")) {
-					accept_eap = 1;
+					accept_eap = true;
 				} else if (type.equals("ms-chap")) {
-					accept_mschap = 1;
+					accept_mschap = true;
 				}
 			}
 		}

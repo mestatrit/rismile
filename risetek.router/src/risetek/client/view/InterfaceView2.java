@@ -43,13 +43,13 @@ public class InterfaceView2 extends Composite {
 
 		lcpView = new LCPView(outerPanel, control);
 
-		linkView = new LinkView(outerPanel);
-
 		ifaceView = new IfaceView(outerPanel);
 
 		new BundView(outerPanel);
 
 		new IPCPView(outerPanel);
+
+		linkView = new LinkView(outerPanel);
 
 		routerView = new RouterView(outerPanel);
 	}

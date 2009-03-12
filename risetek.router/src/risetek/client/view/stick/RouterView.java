@@ -6,30 +6,31 @@ import risetek.client.model.IfModel;
 import risetek.client.model.ifaceData;
 
 import com.google.gwt.user.client.ui.Button;
-import com.google.gwt.user.client.ui.Grid;
+import com.google.gwt.user.client.ui.FlexTable;
+import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Panel;
 import com.google.gwt.user.client.ui.TextBox;
-import com.google.gwt.user.client.ui.VerticalPanel;
 
 public class RouterView {
 
-	VerticalPanel panel = new VerticalPanel();
-	final Grid routeListGrid = new Grid();
 	final TextBox destTextBox = new TextBox();
 	final TextBox maskTextBox = new TextBox();
 	final Label destLabel = new Label("");
 	final Label maskLabel = new Label("");
 	final Button addRouteButton = new Button("添加路由");
-	final Grid routeGrid = new Grid(1,3);
+	final FlexTable routeGrid = new FlexTable();
 	
 	public RouterView(Panel outerPanel)
 	{
-		panel.setBorderWidth(1);
-		panel.setWidth("100%");
-
-		panel.addStyleName("if-layout");
-		
+		final FlexTable flexTable = new FlexTable();
+		flexTable.setBorderWidth(1);
+		flexTable.setWidth("100%");
+		outerPanel.add(flexTable);
+		flexTable.setStyleName("router-config");
+		final HTML Title = new HTML("接口路由");
+		Title.setStyleName("table-title");
+		flexTable.setWidget(0, 0, Title);
 		/*
 		DisclosurePanel disclosurePanel = new DisclosurePanel("ROUTE");
 		outerPanel.add(disclosurePanel);
@@ -42,7 +43,7 @@ public class RouterView {
 		
 		routeGrid.setBorderWidth(1);
 		routeGrid.setWidth("100%");
-		panel.add(routeGrid);
+		flexTable.setWidget(1, 0, routeGrid);
 
 		routeGrid.setStyleName("if-Grid");
 		routeGrid.getColumnFormatter().addStyleName(0, "head");
@@ -68,21 +69,19 @@ public class RouterView {
 		routeGrid.setWidget(0, 2, addRouteButton);
 		//addRouteButton.addClickListener(new AddRouteListener());
 		addRouteButton.setWidth("3cm");
-
-		outerPanel.add(panel);
-
 	}
 	
 	public void render(IfModel data)
 	{
 		ifaceData conf = data.config.ifacedata;
 		ArrayList<ifaceData.router> list = conf.routers;
-		routeGrid.resizeRows(list.size()+1);
+		//routeGrid.resizeRows(list.size()+1);
 		for( int loop = 1; loop < list.size()+1; loop++)
 		{
 			ifaceData.router r = list.get(loop-1);
 			routeGrid.setText(loop, 0, r.dest);
 			routeGrid.setText(loop, 1, r.mask);
+			routeGrid.setWidget(loop, 2, new Button("删除"));
 		}
 		
 	}

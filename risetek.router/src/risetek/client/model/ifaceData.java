@@ -8,9 +8,6 @@ import com.risetek.rismile.client.utils.XMLDataParse;
 
 public class ifaceData {
 
-	public String pppusername;
-	public String ppppassword;
-	
 	public boolean dial_on_demand;
 	public boolean nat;
 	public int idle_timeout;

@@ -22,6 +22,7 @@
 <nat>disable</nat>
 <idle_timeout>0</idle_timeout>
 <session_timeout>2</session_timeout>
+<route><dest>0.0.0.0</dest><mask>255.255.255.0</mask></route>
 <route><dest>10.0.9.1</dest><mask>255.255.255.0</mask></route>
 <route><dest>10.0.8.1</dest><mask>255.255.255.0</mask></route>
 <compress><mppc>Enabled</mppc></compress>
