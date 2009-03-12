@@ -12,15 +12,15 @@ import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
 import com.risetek.rismile.client.dialog.CustomDialog;
 
-public class ModifyLCPUserDialog extends CustomDialog {
+public class ModifyMTUDialog extends CustomDialog {
 
-	public final TextBox nameBox = new TextBox();
+	public final TextBox newValuebox = new TextBox();
 	InterfaceView parent;
 	
-	public ModifyLCPUserDialog(InterfaceView parent){
+	public ModifyMTUDialog(InterfaceView parent){
 		super(parent);
 		this.parent = parent;
-		this.setText("设置用户名称");
+		this.setText("设置MTU值");
 		VerticalPanel panel = new VerticalPanel();		
 		addStyleName("dialog");
 		panel.setBorderWidth(1);
@@ -30,21 +30,21 @@ public class ModifyLCPUserDialog extends CustomDialog {
 		panel.setBorderWidth(0);
 		
 		panel.add(new Label("管理员名称：",false));
-		panel.add(nameBox);
+		panel.add(newValuebox);
 		add(panel,DockPanel.CENTER);
 
 		setSize("280","200");
 	}
-	public void show(String tips_username)
+	public void show(String tips_value)
 	{
-		nameBox.setText(tips_username);
+		newValuebox.setText(tips_value);
 		super.show();
-		nameBox.setFocus(true);
+		newValuebox.setFocus(true);
 		center();
 	}
 	
 	public Widget getFirstTabIndex() {
-		return nameBox;
+		return newValuebox;
 	}
 	
 	public boolean isValid()

@@ -47,24 +47,26 @@
 }
 
 .rismiletable .table {
-	margin: 1px;
-	cellspacing:0;
+	margin-top: 10px;
+	cellspacing:1px;
+	font-size: 11pt;
 	width: 100%;
 	align: center;
+	vertical-align: bottom;
+	white-space: nowrap;
 }
 
 .rismiletable .table td {
 	text-align: center;
 	margin:1px;
 	pading:0;
-	cellspacing:0;
-	vertical-align: bottom;
+	white-space: nowrap;
 }
 
 .rismiletable .table td.header {
 	font-weight: bold;
 	text-decoration: underline;
-	font-size: 11pt;
+	font-size: 13pt;
 	text-align: center;
 }
 

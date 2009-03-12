@@ -40,6 +40,7 @@ public class SystemAllController implements RequestCallback {
 	}
 
 	public void load() {
+		MessageConsole.setText("提取系统配置");
 		remoteRequest.get(systemAllPath, null, this);
 	}
 
@@ -89,7 +90,7 @@ public class SystemAllController implements RequestCallback {
 	}
 
 	public void onResponseReceived(Request request, Response response) {
-		MessageConsole.setText("请求数据完毕!");
+		MessageConsole.setText("获得系统配置数据");
 		data.parseXML(response.getText());
 		view.render(data);
 	}

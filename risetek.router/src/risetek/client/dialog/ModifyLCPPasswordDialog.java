@@ -12,15 +12,17 @@ import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
 import com.risetek.rismile.client.dialog.CustomDialog;
 
-public class ModifyLCPUserDialog extends CustomDialog {
+public class ModifyLCPPasswordDialog extends CustomDialog {
 
-	public final TextBox nameBox = new TextBox();
+	public final PasswordTextBox pwdBox = new PasswordTextBox();
+	public final PasswordTextBox pwdBoxSe = new PasswordTextBox();
+	
 	InterfaceView parent;
 	
-	public ModifyLCPUserDialog(InterfaceView parent){
+	public ModifyLCPPasswordDialog(InterfaceView parent){
 		super(parent);
 		this.parent = parent;
-		this.setText("设置用户名称");
+		this.setText("设置拨号口令");
 		VerticalPanel panel = new VerticalPanel();		
 		addStyleName("dialog");
 		panel.setBorderWidth(1);
@@ -29,22 +31,23 @@ public class ModifyLCPUserDialog extends CustomDialog {
 		panel.setSpacing(10);
 		panel.setBorderWidth(0);
 		
-		panel.add(new Label("管理员名称：",false));
-		panel.add(nameBox);
+		panel.add(new Label("密码：",false));
+		panel.add(pwdBox);
+		panel.add(pwdBoxSe);
+		
 		add(panel,DockPanel.CENTER);
 
 		setSize("280","200");
 	}
 	public void show(String tips_username)
 	{
-		nameBox.setText(tips_username);
 		super.show();
-		nameBox.setFocus(true);
+		pwdBox.setFocus(true);
 		center();
 	}
 	
 	public Widget getFirstTabIndex() {
-		return nameBox;
+		return pwdBox;
 	}
 	
 	public boolean isValid()

@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import risetek.client.control.IfController;
 import risetek.client.model.IfModel;
 import risetek.client.model.ifaceData;
+import risetek.client.view.stick.AdvancedView;
 
 import com.google.gwt.user.client.DOM;
 import com.google.gwt.user.client.ui.Button;
@@ -48,7 +49,6 @@ public class InterfaceView extends Composite {
 		panel.setHeight(Entry.SinkHeight);
 		initWidget(panel);
 		panel.setWidth("100%");
-		//flexTable.setBorderWidth(1);
 
 		setStyleName("rismile-system");
 
@@ -61,16 +61,11 @@ public class InterfaceView extends Composite {
 		//panel.getFlexCellFormatter().setColSpan(1, 0, 2);
 
 		// 网络配置信息界面布局
-		final VerticalPanel dialbase = new VerticalPanel();
-		dialbase.setWidth("100%");
-		dialbase.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_LEFT);
 
-		
-		
 		FlexTable flexTable = new FlexTable();
 		flexTable.setBorderWidth(1);
 		flexTable.setWidth("100%");
-		dialbase.add(flexTable);
+
 		flexTable.setStyleName("router-config");
 		
 		final Grid pppGrid = new Grid(3,3);
@@ -88,13 +83,13 @@ public class InterfaceView extends Composite {
 		
 		pppGrid.setText(1, 0, "密码:");
 		pppGrid.setWidget(1, 1, passwordLabel);
-		pppGrid.setWidget(1, 2, new Button("修改", control.new ModifyLCPUserButtonClick()));
+		pppGrid.setWidget(1, 2, new Button("修改", control.new ModifyLCPPasswordButtonClick()));
 
 		pppGrid.setText(2, 0, "MTU:");
 		pppGrid.setWidget(2, 1, mtuLabel);
-		pppGrid.setWidget(2, 2, new Button("修改", control.new ModifyLCPUserButtonClick()));
+		pppGrid.setWidget(2, 2, new Button("修改", control.new ModifyMTUButtonClick()));
 		
-		flexTable.setWidget(1, 0, pppGrid);
+		flexTable.setWidget(0, 0, pppGrid);
 
 		
 		
@@ -107,6 +102,7 @@ public class InterfaceView extends Composite {
 		//tempGrid.setText(0,0,"认证方式:");
 		
 		tempGrid.setWidget(0,0, chapmdCheckBox);
+		chapmdCheckBox.addClickListener(control.new ModifyCHAPMD5Listener());
 		//chapmdCheckBox.setText("CHAP认证");
 		
 		//authGrid.setWidget(1,1, eapCheckBox);
@@ -123,17 +119,16 @@ public class InterfaceView extends Composite {
 		
 		tempGrid.setWidget(2,0, defaultRouter);
 
-		flexTable.setWidget(1, 1, tempGrid);
+		flexTable.setWidget(0, 1, tempGrid);
 		
-		stackPanel.add(dialbase, createHeaderHTML("拨号接口基本参数"), true);
+		stackPanel.add(flexTable, createHeaderHTML("拨号接口基本参数"), true);
 
-		// 路由信息界面布局
+		// 接口路由设置
 		final VerticalPanel routePanel = new VerticalPanel();
 		routePanel.setWidth("100%");
 		routePanel.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_LEFT);
 
 		final Button routeAddButton = new Button("添加路由");
-		routeAddButton.setStyleName("big-button");
 		routePanel.add(routeAddButton);
 
 		routeGrid.setBorderWidth(1);
@@ -151,34 +146,15 @@ public class InterfaceView extends Composite {
 		routeGrid.getCellFormatter().setStyleName(0, 3, "head");
 		routeGrid.getCellFormatter().setStyleName(0, 4, "head");
 		routePanel.add(routeGrid);
-		stackPanel.add(routePanel, createHeaderHTML("接口路由设置"), true);
+		stackPanel.add(routeGrid, createHeaderHTML("接口路由设置"), true);
 
 		// 管理配置界面布局
-		final Grid adminGrid = new Grid(2,3);
-		//adminGrid.setBorderWidth(1);
-		adminGrid.setStyleName("grid1-table");
-		stackPanel.add(adminGrid, createHeaderHTML("拨号接口高级配置"), true);
-		adminGrid.setWidth("100%");
-
-		final Button addAdminButton = new Button("添加管理员");
-		addAdminButton.setStyleName("big-button");
-		adminGrid.setWidget(0, 0, addAdminButton);
-		final Button delAdminButton = new Button("删除管理员");
-		delAdminButton.setStyleName("big-button");
-		adminGrid.setWidget(0, 1, delAdminButton);
-		
-		final Button upfileButton = new Button("升级程序");
-		adminGrid.setWidget(0, 2, upfileButton);
-		upfileButton.setStyleName("big-button");
-
-		final Button paraButton = new Button("恢复出厂参数");
-		adminGrid.setWidget(1, 0, paraButton);
-		paraButton.setStyleName("big-button");
-
-		final Button restartButton = new Button("重启设备");
-		adminGrid.setWidget(1, 2, restartButton);
-		restartButton.setStyleName("big-button");
-		
+		flexTable = new FlexTable();
+		flexTable.setBorderWidth(1);
+		flexTable.setWidth("100%");
+		flexTable.setStyleName("router-config");
+		stackPanel.add(flexTable, createHeaderHTML("拨号接口高级配置"), true);
+		new AdvancedView(flexTable);
 	}
 
 	private String createHeaderHTML(String caption) {

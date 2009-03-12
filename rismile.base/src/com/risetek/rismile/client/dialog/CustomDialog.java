@@ -13,9 +13,6 @@ import com.google.gwt.user.client.ui.KeyboardListener;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.gwt.user.client.ui.DockPanel.DockLayoutConstant;
-import com.google.gwt.xml.client.Document;
-import com.google.gwt.xml.client.XMLParser;
-import com.risetek.rismile.client.utils.MessageConsole;
 import com.risetek.rismile.client.utils.XMLDataParse;
 
 public abstract class CustomDialog extends MyDialog {
@@ -40,17 +37,17 @@ public abstract class CustomDialog extends MyDialog {
 		toolPanel.setVerticalAlignment(HasVerticalAlignment.ALIGN_BOTTOM);
 		
 		toolPanel.add(confirm, DockPanel.EAST);
-		confirm.setStyleName("rismile-dialog-button");
+		confirm.setStyleName("button");
 		
 		toolPanel.add(cancel, DockPanel.WEST);
-		cancel.setStyleName("rismile-dialog-button");
+		cancel.setStyleName("button");
 		cancel.addClickListener(this);
 		
 		panel.add(toolPanel, DockPanel.SOUTH);
 		panel.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_CENTER);
 		
 		panel.add(message, DockPanel.SOUTH);
-		message.setStyleName("rismile-dialog-label");
+		message.setStyleName("message");
 		panel.setSpacing(10);
 		
 		cancel.setTabIndex(101);
@@ -59,9 +56,6 @@ public abstract class CustomDialog extends MyDialog {
 		
 		setWidget(panel);
 		
-		//close.addStyleName("close-button");
-		//close.addClickListener(this);
-		//close.setTabIndex(103);
 	}
 	public void setNote(String note){
 		this.note.setText(note);
@@ -73,15 +67,15 @@ public abstract class CustomDialog extends MyDialog {
 	
 	public void show(String tips){
 		setText(tips);
-		mask();
 		super.show();
 		center();
+		mask();
 	}
 	
 	public void show(){
-		mask();
 		super.show();
 		center();
+		mask();
 	}
 	
 	public void add(Widget widget, DockLayoutConstant direction){
@@ -117,9 +111,9 @@ public abstract class CustomDialog extends MyDialog {
 	 */
 	public void mask()
 	{
-		mask.setPropertyString("className", "rismile-mask");
-		
-		DOM.setIntStyleAttribute(mask, "height", parent.getOffsetHeight());
+		//mask.setPropertyString("className", "rismile-mask");
+		mask.getStyle().setPropertyPx("height", parent.getOffsetHeight());
+		//DOM.setIntStyleAttribute(mask, "height", parent.getOffsetHeight());
 		parent.getElement().appendChild(mask);
 	}
 	
@@ -132,7 +126,7 @@ public abstract class CustomDialog extends MyDialog {
 			String resule = XMLDataParse.getElementText(response.getText(), "ERROR");
 			if( "".equals(resule) )
 			{
-				setMessage("远端执行正常");
+				// setMessage("远端执行正常");
 				hide();
 				return true;
 			}
@@ -146,7 +140,7 @@ public abstract class CustomDialog extends MyDialog {
 		else
 		{
 			confirm.setEnabled(true);
-			setMessage("远端执行错误！");
+			setMessage(err);
 			return false;
 		}
 	}

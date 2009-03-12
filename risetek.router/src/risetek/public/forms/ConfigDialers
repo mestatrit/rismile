@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="gb2312"?><Risetek>
+<interface name = "Dialer0">
+<lcp>
+<username>demo</username>
+<password>demo</password>
+<authentication type="chapmd5">Acceptable</authentication>
+<authentication type="eap">disable</authentication>
+<authentication type="ms-chap">Acceptable</authentication>
+<authentication type="pap">disable</authentication>
+<keepalive min="4" max="40" default="0">12</keepalive>
+<redial>-1</redial>
+</lcp>
+<link type="pppoe">eth0
+<mtu>1500</mtu><mru>1500</mru><mrru>2048</mrru>
+</link>
+<ipcp>
+<vjcomp>disable</vjcomp>
+<request_dns>Enabled</request_dns>
+</ipcp>
+<iface>
+<on-demand>Enabled</on-demand>
+<nat>disable</nat>
+<idle_timeout>0</idle_timeout>
+<session_timeout>2</session_timeout>
+<route><dest>0.0.0.0</dest><mask>255.255.255.0</mask></route>
+<route><dest>10.0.9.1</dest><mask>255.255.255.0</mask></route>
+<route><dest>10.0.8.1</dest><mask>255.255.255.0</mask></route>
+<compress><mppc>Enabled</mppc></compress>
+</iface>
+</interface>
+</Risetek>

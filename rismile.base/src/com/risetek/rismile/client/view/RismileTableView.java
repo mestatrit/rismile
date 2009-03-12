@@ -84,6 +84,7 @@ public abstract class RismileTableView extends Composite {
 	    
 	    // 初始化网格的格式
 	    grid.resize(rowCount + 1, columns.length);
+
 	    for (int i = 0 ; i < columns.length; i++) {
 	        grid.setText(0, i, columns[i]);
 	        if (columnStyles != null) {

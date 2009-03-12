@@ -84,22 +84,23 @@ public abstract class MyDialog extends PopupPanel implements HasHTML,
 		super(autoHide, modal);
 
 		mask.setPropertyString("className", "rismile-mask");
+		super.setWidget(panel);
+		setStyleName("rismile-dialog");
 
-		Grid head = new Grid();
+		Grid head = new Grid(1,2);
 
-		head.resize(1, 2);
 		head.setWidth("100%");
-		head.setHeight("25px");
+//		head.setHeight("25px");
 
 		head.setWidget(0, 1, close);
 		head.getCellFormatter().setHorizontalAlignment(0, 1,
 				HasHorizontalAlignment.ALIGN_RIGHT);
 		head.getCellFormatter().setWidth(0, 1, "22px");
-		head.setStyleName("rismile-dialog-caption");
+		head.setStyleName("caption");
 		panel.setWidget(0, 0, head);
 
 		// close.addStyleName("user-close-button");
-		close.setStylePrimaryName("rismile-dialog-close");
+		close.setStylePrimaryName("close");
 		close.addClickListener(this);
 		close.setTabIndex(103);
 
@@ -128,9 +129,7 @@ public abstract class MyDialog extends PopupPanel implements HasHTML,
 		panel.getCellFormatter().setAlignment(1, 0,
 				HasHorizontalAlignment.ALIGN_CENTER,
 				HasVerticalAlignment.ALIGN_MIDDLE);
-		super.setWidget(panel);
 
-		setStyleName("rismile-DialogBox");
 		// caption.setStyleName("Caption");
 
 	}
@@ -231,8 +230,8 @@ public abstract class MyDialog extends PopupPanel implements HasHTML,
 	}
 
 	public void hide() {
-		unmask();
 		super.hide();
+		unmask();
 	}
 
 	public void onClick(Widget sender) {

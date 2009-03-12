@@ -13,6 +13,32 @@
 	background: url(images/system_blue_gradient.gif) repeat-x top left;
 }
 
+.router-config Button {
+	width: 6em;
+	padding-top:1px;
+	background-color: #E2EAF5;
+	border-top: #FFFFFF 1px solid;
+	border-right: #797979 2px solid;
+	border-bottom: #797979 2px solid;
+	border-left: #FFFFFF 1px solid;
+	cursor: pointer;
+    cursor: hand;
+}
+
+.router-config table {
+/*	background-color: white; */
+}
+
+.router-config table td {
+	background-color: white;
+}
+
+
+.router-config CheckBox {
+	background-color: blue;
+}
+
+
 .sys-introH {
   font-size: 22pt;
   font-weight: bold;

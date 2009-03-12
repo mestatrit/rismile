@@ -42,7 +42,7 @@ public class SystemView extends Composite {
 	
 	public SystemView(SystemAllController control) {
 		this.control = control;
-		//flexTable.setStyleName("rismile-page-container");
+
 		panel.setHeight(Entry.SinkHeight);
 		initWidget(panel);
 		panel.setWidth("100%");

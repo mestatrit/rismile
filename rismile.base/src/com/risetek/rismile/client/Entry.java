@@ -64,24 +64,25 @@ public abstract class Entry implements EntryPoint, HistoryListener {
 	public void onModuleLoad() {
 		// Load all the sinks.
 		loadSinks();
-
+		panel.setStyleName("rismile");
+		
 		headPanel.setWidth("100%");
 		DOM.setStyleAttribute(headPanel.getElement(), "position", "relative");
 		headPanel.add(list);
 		headPanel.add(hbMessage);
-		hbMessage.setStyleName("rismile-hb-message");
+		hbMessage.setStyleName("hb-message");
 		DOM.setElementProperty(hbMessage.getElement(), "id", "hbMessage");
 		headPanel.add(message);
 		// message.setWidth("100%");
-		message.setStyleName("rismile-http-message");
+		message.setStyleName("http-message");
 		DOM.setElementProperty(message.getElement(), "id", "message");
 
 		maskPanel.setWidth("100%");
 		maskPanel.add(sinkContainer);
-		sinkContainer.setStyleName("rismile-Sink");
+		sinkContainer.setStyleName("Sink");
 		sinkContainer.setWidth("100%");
 
-		description.setStyleName("rismile-Info");
+		description.setStyleName("Info");
 		description.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_RIGHT);
 
 		panel.add(headPanel);
