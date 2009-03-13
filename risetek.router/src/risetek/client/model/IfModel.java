@@ -11,15 +11,14 @@ public class IfModel  {
 	//public List<DialerInterfaceData> InterfaceList = new ArrayList<DialerInterfaceData>();
 	
 	
-	public DialerInterfaceData config = new DialerInterfaceData();
+	public DialerInterfaceData config;	// = new DialerInterfaceData();
 	
 	public void parseXML(String text)
 	{
+		// 每次数据到来我们都拥有新的数据结构对应？
+		config = new DialerInterfaceData();
 		Document customerDom = XMLParser.parse(text);
 		Element customerElement = customerDom.getDocumentElement();
-
-		XMLParser.removeWhitespace(customerElement);
-
 		NodeList interfaces = customerElement.getElementsByTagName("interface");
 		
 		for(int i = 0; i < interfaces.getLength(); i++){

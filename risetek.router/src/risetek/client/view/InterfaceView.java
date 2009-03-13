@@ -3,6 +3,7 @@ package risetek.client.view;
 import java.util.ArrayList;
 
 import risetek.client.control.IfController;
+import risetek.client.model.DialerInterfaceData;
 import risetek.client.model.IfModel;
 import risetek.client.model.ifaceData;
 import risetek.client.view.stick.AdvancedView;
@@ -23,24 +24,20 @@ import com.risetek.rismile.client.Entry;
 
 public class InterfaceView extends Composite {
 
-	final Grid serviceGrid = new Grid(2,3);
-	final Grid netGrid = new Grid(2,4);
-	final Grid routeGrid = new Grid(2,5);
+	final FlexTable routeGrid = new FlexTable();
 
 	final FlexTable panel = new FlexTable();
 	
-	final Label userLabel = new Label("未设置");
-	final Label passwordLabel = new Label("未设置");
-	final Label mtuLabel = new Label("MTU值");
+	final Label userLabel = new Label();
+	final Label passwordLabel = new Label("****");	// 我们不显示这个数据
+	final Label mtuLabel = new Label();
 	
 	final CheckBox chapmdCheckBox = new CheckBox("CHAP认证");
 	final CheckBox papCheckBox = new CheckBox("PAP 认证");
-	final CheckBox natCheckBox = new CheckBox("网络地址转换（NAT）");
+	final CheckBox natCheckBox = new CheckBox("NAT");
 	//final CheckBox ondemandCheckBox = new CheckBox();
-	final CheckBox mppcRadioButton = new CheckBox("MPPC 压缩");
-	final CheckBox defaultRouter = new CheckBox("作为缺省路由");
-	
-	
+	final CheckBox mppcCheckBox = new CheckBox("MPPC 压缩");
+	final CheckBox defaultRouterCheckBox = new CheckBox("作为缺省路由");
 	
 	IfController control;
 	
@@ -60,22 +57,36 @@ public class InterfaceView extends Composite {
 		panel.setWidget(0, 0, stackPanel);
 		//panel.getFlexCellFormatter().setColSpan(1, 0, 2);
 
-		// 网络配置信息界面布局
-
+		// --- 网络状态显示
 		FlexTable flexTable = new FlexTable();
 		flexTable.setBorderWidth(1);
 		flexTable.setWidth("100%");
+		flexTable.getColumnFormatter().setWidth(0, "50%");
+		flexTable.getColumnFormatter().setWidth(1, "50%");
+		flexTable.setWidget(0, 0, new Button("断开连接"));
+		flexTable.setWidget(0, 1, new Button("建立连接"));
+		flexTable.setWidget(1, 0, new Button("更新状态"));
+		flexTable.setStyleName("router-config");
+		stackPanel.add(flexTable, createHeaderHTML("拨号接口运行状态"), true);
+		
+		
+		// 网络配置信息界面布局
 
+		flexTable = new FlexTable();
+		flexTable.setBorderWidth(1);
+		flexTable.setWidth("100%");
+		flexTable.getColumnFormatter().setWidth(0, "50%");
+		flexTable.getColumnFormatter().setWidth(1, "50%");
 		flexTable.setStyleName("router-config");
 		
 		final Grid pppGrid = new Grid(3,3);
 		pppGrid.setBorderWidth(1);
-		pppGrid.setWidth("100%");
+		pppGrid.setWidth("80%");
 	
-		pppGrid.setStyleName("if-Grid");
-		pppGrid.getColumnFormatter().setStyleName(0, "head");
-		pppGrid.getColumnFormatter().setWidth(0, "40%");
-		pppGrid.getColumnFormatter().setWidth(1, "40%");
+		// pppGrid.setStyleName("if-Grid");
+		// pppGrid.getColumnFormatter().setStyleName(0, "head");
+		pppGrid.getColumnFormatter().setWidth(0, "30%");
+		pppGrid.getColumnFormatter().setWidth(1, "50%");
 		pppGrid.getColumnFormatter().setWidth(2, "20%");
 		pppGrid.setText(0, 0, "用户名:");
 		pppGrid.setWidget(0, 1, userLabel);
@@ -95,7 +106,9 @@ public class InterfaceView extends Composite {
 		
 		FlexTable tempGrid = new FlexTable();
 		tempGrid.setBorderWidth(1);
-		tempGrid.setWidth("100%");
+		tempGrid.setWidth("80%");
+		tempGrid.getColumnFormatter().setWidth(0, "50%");
+		
 		//tempGrid.setWidget(0,1, authGrid);
 
 		//tempGrid.getFlexCellFormatter().setColSpan(0, 0, 2);
@@ -112,41 +125,36 @@ public class InterfaceView extends Composite {
 		//mschapCheckBox.setText("ms-chap");
 
 		tempGrid.setWidget(0,1, papCheckBox);
+		papCheckBox.addClickListener(control.new ModifyPAPListener());
 
 		tempGrid.setWidget(1,0, natCheckBox);
+		natCheckBox.addClickListener(control.new ModifyNATListener());
 		
-		tempGrid.setWidget(1,1, mppcRadioButton);
+		tempGrid.setWidget(1,1, mppcCheckBox);
+		mppcCheckBox.addClickListener(control.new ModifyMPPCListener());
 		
-		tempGrid.setWidget(2,0, defaultRouter);
-
+		tempGrid.setWidget(2,0, defaultRouterCheckBox);
+		defaultRouterCheckBox.addClickListener(control.new ModifyDefaultROUTEListener());
+		
 		flexTable.setWidget(0, 1, tempGrid);
 		
-		stackPanel.add(flexTable, createHeaderHTML("拨号接口基本参数"), true);
+		stackPanel.add(flexTable, createHeaderHTML("拨号接口基本配置"), true);
 
 		// 接口路由设置
-		final VerticalPanel routePanel = new VerticalPanel();
-		routePanel.setWidth("100%");
-		routePanel.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_LEFT);
-
-		final Button routeAddButton = new Button("添加路由");
-		routePanel.add(routeAddButton);
 
 		routeGrid.setBorderWidth(1);
-		routeGrid.setWidth("90%");
-		routeGrid.setStyleName("grid2-table");
-		routeGrid.setText(0, 0, "目的地址");
-		routeGrid.setText(0, 1, "掩码");
-		routeGrid.setText(0, 2, "接口");
-		routeGrid.setText(0, 3, "网关");
-		routeGrid.setText(0, 4, "操作");
-		routeGrid.setStyleName("status-table");
+		routeGrid.setWidth("100%");
+		routeGrid.setStyleName("router-config");
+		/*
 		routeGrid.getCellFormatter().setStyleName(0, 0, "head");
 		routeGrid.getCellFormatter().setStyleName(0, 1, "head");
 		routeGrid.getCellFormatter().setStyleName(0, 2, "head");
-		routeGrid.getCellFormatter().setStyleName(0, 3, "head");
-		routeGrid.getCellFormatter().setStyleName(0, 4, "head");
-		routePanel.add(routeGrid);
-		stackPanel.add(routeGrid, createHeaderHTML("接口路由设置"), true);
+		*/
+		routeGrid.setText(0, 0, "目标地址");
+		routeGrid.setText(0, 1, "掩码");
+		routeGrid.setWidget(0, 2, new Button("添加路由", control.new AddInterfaceRouteButtonClick()));
+//		routeGrid.setStyleName("status-table");
+		stackPanel.add(routeGrid, createHeaderHTML("拨号接口路由设置"), true);
 
 		// 管理配置界面布局
 		flexTable = new FlexTable();
@@ -196,30 +204,35 @@ public class InterfaceView extends Composite {
 	}
 	
 
-	public void render(IfModel data)
+	public void render(DialerInterfaceData data)
 	{
-		userLabel.setText(data.config.lcpdata.pppusername);
-		passwordLabel.setText(data.config.lcpdata.ppppassword);
-		mtuLabel.setText(Integer.toString(data.config.linkdata.mtu));
+		userLabel.setText(data.lcpdata.pppusername);
+//		passwordLabel.setText(data.config.lcpdata.ppppassword);
+		mtuLabel.setText(Integer.toString(data.linkdata.mtu));
 		
-		chapmdCheckBox.setChecked(data.config.lcpdata.accept_chap);
-		papCheckBox.setChecked(data.config.lcpdata.accept_pap);
+		chapmdCheckBox.setChecked(data.lcpdata.accept_chap);
+		papCheckBox.setChecked(data.lcpdata.accept_pap);
 		
-		natCheckBox.setChecked(data.config.ifacedata.nat);
-		//mppcRadioButton.setEnabled(data.config.linkdata.)
+		natCheckBox.setChecked(data.ifacedata.nat);
+		mppcCheckBox.setChecked(data.ifacedata.mppc);
 		
-		ifaceData conf = data.config.ifacedata;
-		ArrayList<ifaceData.router> list = conf.routers;
-		for( int loop = 1; loop < list.size()+1; loop++)
-		{
-			ifaceData.router r = list.get(loop-1);
-			if("0.0.0.0".equals(r.dest))
-			{
-				defaultRouter.setChecked(true);
-				break;
-			}
-		}
+		ifaceData conf = data.ifacedata;
 
+		defaultRouterCheckBox.setChecked(conf.haveDefaultRoute);
 		
-}
+		ArrayList<ifaceData.router> list = conf.routers;
+
+		for( int loop = 0; loop < list.size(); loop++)
+		{
+			ifaceData.router r = list.get(loop);
+			routeGrid.setText(loop+1, 0, r.dest);
+			routeGrid.setText(loop+1, 1, r.mask);
+			routeGrid.setWidget(loop+1, 2, new Button("删除路由", control.new DelInterfaceRouteButtonClick(r.dest, r.mask)));
+		}
+		// 我们需要排除第一行，是标题。
+		while ( (routeGrid.getRowCount() - 1 ) >  list.size())
+		{
+			routeGrid.removeRow(routeGrid.getRowCount() - 1 );
+		}
+	}
 }

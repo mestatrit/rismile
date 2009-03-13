@@ -146,10 +146,6 @@
   /*background-color: #b7cdec;*/
   background: url(images/system_blue_bg.PNG) repeat-x top left
 }
-/* CSS3 hack to target Opera8+ */
-@media all and (min-width: 0px) {
-    body .box-10 { line-height: 0px; }
-}
 
 .box-11 {
   vertical-align: top;

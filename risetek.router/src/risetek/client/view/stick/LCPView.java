@@ -1,6 +1,7 @@
 package risetek.client.view.stick;
 
 import risetek.client.control.IfController;
+import risetek.client.model.DialerInterfaceData;
 import risetek.client.model.IfModel;
 import risetek.client.model.lcpData;
 
@@ -120,9 +121,9 @@ public class LCPView {
 */
 	}
 
-	public void render(IfModel data)
+	public void render(DialerInterfaceData data)
 	{
-		lcpData lcpdata = data.config.lcpdata;
+		lcpData lcpdata = data.lcpdata;
 
 		userLabel.setText(lcpdata.pppusername);
 		passwordLabel.setText(lcpdata.ppppassword);

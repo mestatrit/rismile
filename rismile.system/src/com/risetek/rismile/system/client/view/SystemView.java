@@ -31,7 +31,7 @@ public class SystemView extends Composite {
 	}
 
 	final Grid dateGrid = new Grid(1,2);
-	final Grid serviceGrid = new Grid(2,3);
+//	final Grid serviceGrid = new Grid(2,3);
 	final Grid netGrid = new Grid(2,4);
 	final Grid routeGrid = new Grid(2,5);
 
@@ -68,6 +68,7 @@ public class SystemView extends Composite {
 		dateGrid.addStyleName("date-table");
 		servicePanel.add(dateGrid);
 
+		/*
 		// 服务信息界面布局
 		servicePanel.add(serviceGrid);
 		//serviceGrid.setBorderWidth(1);
@@ -82,7 +83,8 @@ public class SystemView extends Composite {
 		serviceGrid.getCellFormatter().setStyleName(0, 1, "head");
 		serviceGrid.getCellFormatter().setStyleName(0, 2, "head");
 		stackPanel.add(servicePanel, createHeaderHTML(images, "系统服务"), true);
-
+		*/
+		
 		// 网络配置信息界面布局
 		final VerticalPanel netPanel = new VerticalPanel();
 		netPanel.setWidth("100%");
@@ -245,15 +247,16 @@ public class SystemView extends Composite {
 	protected void onLoad() {
 		control.load();
 	}
-	
+	/*
 	private void renderServiceTable(Service service) {
-	
+		dateGrid.setText(0, 0, "当前日期:" + data.getDate());
+		dateGrid.setText(0, 1, "当前时间:" + data.getTime());
 		serviceGrid.setText(1, 0, service.getName());
 		serviceGrid.setText(1, 1, service.getVersion());
 		serviceGrid.setText(1, 2, service.getStatus());
 
 	}
-
+	*/
 	public String ip_address;
 	public String ip_mask;
 
@@ -296,10 +299,7 @@ public class SystemView extends Composite {
 	}
 	public void render(SystemDataModel data)
 	{
-		dateGrid.setText(0, 0, "当前日期:" + data.getDate());
-		dateGrid.setText(0, 1, "当前时间:" + data.getTime());
-		
-		renderServiceTable(data.getService());
+		//renderServiceTable(data.getService());
 		renderNetworkTable(data.getInterfList());
 		renderRouterTable(data.getRouteList());
 	}

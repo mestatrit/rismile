@@ -20,7 +20,8 @@ import com.risetek.rismile.system.client.view.SystemView;
 public class SystemAllController implements RequestCallback {
 
 	private RequestFactory remoteRequest = new RequestFactory();
-	private String systemAllPath = "SysStateXML";
+	//private String systemAllPath = "SysStateXML";
+	private String systemAllPath = "netstate";
 	private String addIpPath = "config_ip_second";
 	private String modifyIpPath = "config_ip";
 	private String delIpPath = "del_ip";

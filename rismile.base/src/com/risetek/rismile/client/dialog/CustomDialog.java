@@ -111,9 +111,7 @@ public abstract class CustomDialog extends MyDialog {
 	 */
 	public void mask()
 	{
-		//mask.setPropertyString("className", "rismile-mask");
 		mask.getStyle().setPropertyPx("height", parent.getOffsetHeight());
-		//DOM.setIntStyleAttribute(mask, "height", parent.getOffsetHeight());
 		parent.getElement().appendChild(mask);
 	}
 	

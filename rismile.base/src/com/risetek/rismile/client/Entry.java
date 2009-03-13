@@ -44,7 +44,7 @@ public abstract class Entry implements EntryPoint, HistoryListener {
 	
 	private VerticalPanel panel = new VerticalPanel();
 	private DockPanel sinkContainer = new DockPanel();
-	private FlowPanel maskPanel = new FlowPanel();
+	//static public FlowPanel maskPanel = new FlowPanel();
 	private final FlowPanel headPanel = new FlowPanel();
 	private final HTML hbMessage = new HTML();
 	private final HTML message = new HTML();
@@ -69,6 +69,7 @@ public abstract class Entry implements EntryPoint, HistoryListener {
 		headPanel.setWidth("100%");
 		DOM.setStyleAttribute(headPanel.getElement(), "position", "relative");
 		headPanel.add(list);
+		
 		headPanel.add(hbMessage);
 		hbMessage.setStyleName("hb-message");
 		DOM.setElementProperty(hbMessage.getElement(), "id", "hbMessage");
@@ -77,8 +78,10 @@ public abstract class Entry implements EntryPoint, HistoryListener {
 		message.setStyleName("http-message");
 		DOM.setElementProperty(message.getElement(), "id", "message");
 
+		/*
 		maskPanel.setWidth("100%");
 		maskPanel.add(sinkContainer);
+		*/
 		sinkContainer.setStyleName("Sink");
 		sinkContainer.setWidth("100%");
 
@@ -87,7 +90,8 @@ public abstract class Entry implements EntryPoint, HistoryListener {
 
 		panel.add(headPanel);
 		panel.add(description);
-		panel.add(maskPanel);
+//		panel.add(maskPanel);
+		panel.add(sinkContainer);
 		panel.setWidth("100%");
 		//panel.setBorderWidth(1);
 

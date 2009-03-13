@@ -63,7 +63,7 @@ public class InterfaceView2 extends Composite {
 	}
 
 	public void render(IfModel data) {
-		lcpView.render(data);
+		lcpView.render(data.config);
 		linkView.render(data);
 		ifaceView.render(data);
 		routerView.render(data);

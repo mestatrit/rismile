@@ -1,12 +1,9 @@
 package risetek.client.dialog;
 
 import risetek.client.view.InterfaceView;
-import risetek.client.view.InterfaceView2;
 
 import com.google.gwt.user.client.ui.DockPanel;
-import com.google.gwt.user.client.ui.Grid;
 import com.google.gwt.user.client.ui.Label;
-import com.google.gwt.user.client.ui.PasswordTextBox;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
@@ -29,8 +26,11 @@ public class ModifyMTUDialog extends CustomDialog {
 		panel.setSpacing(10);
 		panel.setBorderWidth(0);
 		
-		panel.add(new Label("管理员名称：",false));
+		panel.add(new Label("MTU：",false));
 		panel.add(newValuebox);
+		
+		newValuebox.setTabIndex(1);
+
 		add(panel,DockPanel.CENTER);
 
 		setSize("280","200");
@@ -40,7 +40,6 @@ public class ModifyMTUDialog extends CustomDialog {
 		newValuebox.setText(tips_value);
 		super.show();
 		newValuebox.setFocus(true);
-		center();
 	}
 	
 	public Widget getFirstTabIndex() {

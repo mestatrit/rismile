@@ -5,21 +5,23 @@ import risetek.client.view.InterfaceView;
 import com.google.gwt.user.client.ui.DockPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.PasswordTextBox;
+import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
 import com.risetek.rismile.client.dialog.CustomDialog;
+import com.risetek.rismile.client.utils.Validity;
 
-public class ModifyLCPPasswordDialog extends CustomDialog {
+public class AddInterfaceRouteDialog extends CustomDialog {
 
-	public final PasswordTextBox pwdBox = new PasswordTextBox();
-	public final PasswordTextBox pwdBoxSe = new PasswordTextBox();
+	public final TextBox destBox = new TextBox();
+	public final TextBox maskBox = new TextBox();
 	
 	InterfaceView parent;
 	
-	public ModifyLCPPasswordDialog(InterfaceView parent){
+	public AddInterfaceRouteDialog(InterfaceView parent){
 		super(parent);
 		this.parent = parent;
-		this.setText("设置拨号口令");
+		this.setText("添加接口路由");
 		VerticalPanel panel = new VerticalPanel();		
 		addStyleName("dialog");
 		panel.setBorderWidth(1);
@@ -28,29 +30,38 @@ public class ModifyLCPPasswordDialog extends CustomDialog {
 		panel.setSpacing(10);
 		panel.setBorderWidth(0);
 		
-		panel.add(new Label("密码：",false));
-		panel.add(pwdBox);
-		panel.add(pwdBoxSe);
-		pwdBox.setTabIndex(1);
-		pwdBoxSe.setTabIndex(2);
+		panel.add(new Label("目标地址：",false));
+		panel.add(destBox);
+		panel.add(new Label("地址掩码：",false));
+		panel.add(maskBox);
+		
+		destBox.setTabIndex(1);
+		maskBox.setTabIndex(2);
 		add(panel,DockPanel.CENTER);
 
 		setSize("280","200");
 	}
-	public void show(String tips_username)
+	public void show()
 	{
 		super.show();
-		pwdBox.setFocus(true);
+		destBox.setFocus(true);
 	}
 	
 	public Widget getFirstTabIndex() {
-		return pwdBox;
+		return destBox;
 	}
 	
 	public boolean isValid()
 	{
-		if( pwdBox.getText().equals(pwdBoxSe.getText()))
-			return true;
-		return false;
+		String check = Validity.validIpAddress(destBox.getText());
+		
+		if( check != null )
+			setMessage(check);
+		
+		check = Validity.validIpAddress(maskBox.getText());
+		if( check != null )
+			setMessage(check);
+		
+		return true;
 	}
 }

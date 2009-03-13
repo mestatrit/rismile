@@ -101,23 +101,21 @@ public class SystemDataModel {
 	}
 	
 	private void parseSystemAll(Element systemAllXml) {
-		
+		/*
 		date = ((Element) systemAllXml.getElementsByTagName(
 				"currnet_date").item(0)).getFirstChild().getNodeValue();
 		time = ((Element) systemAllXml.getElementsByTagName(
 				"currnet_time").item(0)).getFirstChild().getNodeValue();
-
 		Element serviceXml = (Element) systemAllXml.getElementsByTagName(
 				"service").item(0);
 		service = parseService(serviceXml);
+		*/
 
-		Element networksXml = (Element) systemAllXml.getElementsByTagName(
-				"networks").item(0);
+		Element networksXml = (Element) systemAllXml.getElementsByTagName("networks").item(0);
 		
 		interfList = parseInterf(networksXml);
 
-		Element routerXml = (Element) systemAllXml.getElementsByTagName(
-				"ROUTER").item(0);
+		Element routerXml = (Element) systemAllXml.getElementsByTagName("ROUTER").item(0);
 		routerList = parseRouter(routerXml);
 		
 	}
