@@ -1,5 +1,6 @@
 package risetek.client.control;
 
+import risetek.client.index;
 import risetek.client.dialog.AddInterfaceRouteDialog;
 import risetek.client.dialog.ModifyLCPPasswordDialog;
 import risetek.client.dialog.ModifyLCPUserDialog;
@@ -359,5 +360,13 @@ public class IfController implements RequestCallback {
 		}
 
 	}	
-
+	
+	// 删除接口的操作
+	/*
+	public class RemoveInterfaceClick implements ClickListener {
+		public void onClick(Widget sender) {
+			index.removeInterfaceSink();
+		}
+	}
+	*/
 }

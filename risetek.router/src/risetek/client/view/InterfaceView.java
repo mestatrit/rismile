@@ -2,6 +2,7 @@ package risetek.client.view;
 
 import java.util.ArrayList;
 
+import risetek.client.index;
 import risetek.client.control.IfController;
 import risetek.client.model.DialerInterfaceData;
 import risetek.client.model.IfModel;
@@ -11,6 +12,7 @@ import risetek.client.view.stick.AdvancedView;
 import com.google.gwt.user.client.DOM;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.CheckBox;
+import com.google.gwt.user.client.ui.ClickListener;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.FlexTable;
 import com.google.gwt.user.client.ui.Grid;
@@ -20,7 +22,9 @@ import com.google.gwt.user.client.ui.HasVerticalAlignment;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.StackPanel;
 import com.google.gwt.user.client.ui.VerticalPanel;
+import com.google.gwt.user.client.ui.Widget;
 import com.risetek.rismile.client.Entry;
+import com.risetek.rismile.client.utils.UI;
 
 public class InterfaceView extends Composite {
 
@@ -66,8 +70,9 @@ public class InterfaceView extends Composite {
 		flexTable.setWidget(0, 0, new Button("断开连接"));
 		flexTable.setWidget(0, 1, new Button("建立连接"));
 		flexTable.setWidget(1, 0, new Button("更新状态"));
+		// flexTable.setWidget(1, 1, new Button("删除接口", control.new RemoveInterfaceClick()));
 		flexTable.setStyleName("router-config");
-		stackPanel.add(flexTable, createHeaderHTML("拨号接口运行状态"), true);
+		stackPanel.add(flexTable, UI.createHeaderHTML("拨号接口运行状态"), true);
 		
 		
 		// 网络配置信息界面布局
@@ -138,7 +143,7 @@ public class InterfaceView extends Composite {
 		
 		flexTable.setWidget(0, 1, tempGrid);
 		
-		stackPanel.add(flexTable, createHeaderHTML("拨号接口基本配置"), true);
+		stackPanel.add(flexTable, UI.createHeaderHTML("拨号接口基本配置"), true);
 
 		// 接口路由设置
 
@@ -154,17 +159,17 @@ public class InterfaceView extends Composite {
 		routeGrid.setText(0, 1, "掩码");
 		routeGrid.setWidget(0, 2, new Button("添加路由", control.new AddInterfaceRouteButtonClick()));
 //		routeGrid.setStyleName("status-table");
-		stackPanel.add(routeGrid, createHeaderHTML("拨号接口路由设置"), true);
+		stackPanel.add(routeGrid, UI.createHeaderHTML("拨号接口路由设置"), true);
 
 		// 管理配置界面布局
 		flexTable = new FlexTable();
 		flexTable.setBorderWidth(1);
 		flexTable.setWidth("100%");
 		flexTable.setStyleName("router-config");
-		stackPanel.add(flexTable, createHeaderHTML("拨号接口高级配置"), true);
+		stackPanel.add(flexTable, UI.createHeaderHTML("拨号接口高级配置"), true);
 		new AdvancedView(flexTable);
 	}
-
+	/*
 	private String createHeaderHTML(String caption) {
 		Grid captionGrid = new Grid(1,2);
 		captionGrid.setWidth("100%");
@@ -196,7 +201,7 @@ public class InterfaceView extends Composite {
 				+ "<td class='box-11'>" + captionInnerHtml + "</td>"
 				+ "<td></td>" + "</tr></tbody></table>";
 	}
-	
+	*/
 
 
 	protected void onLoad() {
@@ -235,4 +240,5 @@ public class InterfaceView extends Composite {
 			routeGrid.removeRow(routeGrid.getRowCount() - 1 );
 		}
 	}
+	
 }

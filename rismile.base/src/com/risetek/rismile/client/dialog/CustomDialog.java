@@ -11,6 +11,7 @@ import com.google.gwt.user.client.ui.HasHorizontalAlignment;
 import com.google.gwt.user.client.ui.HasVerticalAlignment;
 import com.google.gwt.user.client.ui.KeyboardListener;
 import com.google.gwt.user.client.ui.Label;
+import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.gwt.user.client.ui.DockPanel.DockLayoutConstant;
 import com.risetek.rismile.client.utils.XMLDataParse;
@@ -111,8 +112,15 @@ public abstract class CustomDialog extends MyDialog {
 	 */
 	public void mask()
 	{
+		Widget w = RootPanel.get();
+		mask.getStyle().setPropertyPx("width", w.getOffsetWidth());
+		mask.getStyle().setPropertyPx("height", w.getOffsetHeight());
+		w.getElement().appendChild(mask);
+		/*
+		mask.getStyle().setPropertyPx("width", parent.getOffsetWidth());
 		mask.getStyle().setPropertyPx("height", parent.getOffsetHeight());
 		parent.getElement().appendChild(mask);
+		*/
 	}
 	
 	public boolean processResponse(Response response)

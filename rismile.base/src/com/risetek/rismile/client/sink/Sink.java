@@ -17,7 +17,7 @@ public abstract class Sink extends Composite {
 		private Sink instance;
 		private String name, description;
 		private String tag;
-
+		public int link_index;
 		public SinkInfo(String tag, String name, String desc) {
 			this.tag = tag;
 			this.name = name;

@@ -4,11 +4,15 @@ import java.util.ArrayList;
 
 import com.google.gwt.user.client.DOM;
 import com.google.gwt.user.client.Event;
+import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Composite;
+import com.google.gwt.user.client.ui.HTML;
+import com.google.gwt.user.client.ui.HasVerticalAlignment;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Hyperlink;
 import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Widget;
+import com.google.gwt.user.client.ui.HasVerticalAlignment.VerticalAlignmentConstant;
 import com.risetek.rismile.client.sink.Sink.SinkInfo;
 
 /**
@@ -42,27 +46,44 @@ public class SinkList extends Composite {
 		}
 	}
 
+	private HorizontalPanel outerlist = new HorizontalPanel();
 	private HorizontalPanel list = new HorizontalPanel();
 	private ArrayList<SinkInfo> sinks = new ArrayList<SinkInfo>();
 
 	private int selectedSink = -1;
 
 	public SinkList(Image image) {
-		initWidget(list);
+		//outerlist.setBorderWidth(1);
+		//list.setBorderWidth(1);
+		outerlist.setVerticalAlignment(HasVerticalAlignment.ALIGN_BOTTOM);
+		outerlist.add(list);
+		initWidget(outerlist);
 		list.add(image);
 		setStyleName("rismile-SinkList");
+		list.setStyleName("rismile-SinkList");
 	}
 
+	public void addExternalLink(Widget w) {
+		w.setStyleName("ks-External");
+		outerlist.add(w);
+	}
+	
 	public void addSink(final SinkInfo info) {
 		String name = info.getName();
 		int index = list.getWidgetCount() - 1;
 
 		MouseLink link = new MouseLink(name, info.getTag(), index);
 		list.add(link);
+		info.link_index = index + 1;
 		sinks.add(info);
 
 		list.setCellVerticalAlignment(link, HorizontalPanel.ALIGN_BOTTOM);
 		styleSink(index, false);
+	}
+
+	public void removeSink(final SinkInfo info) {
+		list.remove(info.link_index);
+		sinks.remove(info);
 	}
 
 	public SinkInfo find(String sinkName) {

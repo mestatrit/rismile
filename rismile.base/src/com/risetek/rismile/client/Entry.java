@@ -35,7 +35,7 @@ public abstract class Entry implements EntryPoint, HistoryListener {
 	private static final Images images = (Images) GWT.create(Images.class);
 
 	// 导航条
-	protected SinkList list = new SinkList(images.gwtLogo().createImage());
+	public SinkList list = new SinkList(images.gwtLogo().createImage());
 	
 	private SinkInfo curInfo;
 	private Sink curSink;

@@ -16,6 +16,7 @@ import com.google.gwt.user.client.ui.ImageBundle;
 import com.google.gwt.user.client.ui.StackPanel;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.risetek.rismile.client.Entry;
+import com.risetek.rismile.client.utils.UI;
 import com.risetek.rismile.system.client.control.SystemAllController;
 import com.risetek.rismile.system.client.model.InterfEntry;
 import com.risetek.rismile.system.client.model.RouterEntry;
@@ -108,7 +109,7 @@ public class SystemView extends Composite {
 		netGrid.getCellFormatter().setStyleName(0, 2, "head");
 		netGrid.getCellFormatter().setStyleName(0, 3, "head");
 		netPanel.add(netGrid);
-		stackPanel.add(netPanel, createHeaderHTML(images, "网络接口"), true);
+		stackPanel.add(netPanel, UI.createHeaderHTML("网络接口"), true);
 
 		// 路由信息界面布局
 		final VerticalPanel routePanel = new VerticalPanel();
@@ -134,13 +135,13 @@ public class SystemView extends Composite {
 		routeGrid.getCellFormatter().setStyleName(0, 3, "head");
 		routeGrid.getCellFormatter().setStyleName(0, 4, "head");
 		routePanel.add(routeGrid);
-		stackPanel.add(routePanel, createHeaderHTML(images, "路由设置"), true);
+		stackPanel.add(routePanel, UI.createHeaderHTML("路由设置"), true);
 
 		// 管理配置界面布局
 		final Grid adminGrid = new Grid(2,3);
 		//adminGrid.setBorderWidth(1);
 		adminGrid.setStyleName("grid1-table");
-		stackPanel.add(adminGrid, createHeaderHTML(images, "管理及配置"), true);
+		stackPanel.add(adminGrid, UI.createHeaderHTML("管理及配置"), true);
 		adminGrid.setWidth("100%");
 
 		final Button addAdminButton = new Button("添加管理员");
@@ -210,6 +211,7 @@ public class SystemView extends Composite {
 				+ "<td class='box-21'>&nbsp;</td>" + "</tr></tbody></table>";
 	}
 */
+	/*
 	private String createHeaderHTML(Images images, String caption) {
 		Grid captionGrid = new Grid(1,2);
 		captionGrid.setWidth("100%");
@@ -241,7 +243,7 @@ public class SystemView extends Composite {
 				+ "<td class='box-11'>" + captionInnerHtml + "</td>"
 				+ "<td></td>" + "</tr></tbody></table>";
 	}
-	
+	*/
 
 
 	protected void onLoad() {
