@@ -369,4 +369,45 @@ public class IfController implements RequestCallback {
 		}
 	}
 	*/
+
+	// 断开连接  -----------------------------------------------------------------------
+	public class DisconnectListener implements ClickListener,
+			RequestCallback {
+		public void onClick(Widget sender) {
+			remoteRequest.get("websexec", "commands=disconnect Dialer 0", this);
+		}
+
+		public void onError(Request request, Throwable exception) {
+			IfController.this.onError(request, exception);
+		}
+
+		public void onResponseReceived(Request request, Response response) {
+			load();
+		}
+	}
+
+	// 建立连接  -----------------------------------------------------------------------
+	public class ConnectListener implements ClickListener,
+			RequestCallback {
+		public void onClick(Widget sender) {
+			remoteRequest.get("websexec", "commands=connect Dialer 0", this);
+		}
+
+		public void onError(Request request, Throwable exception) {
+			IfController.this.onError(request, exception);
+		}
+
+		public void onResponseReceived(Request request, Response response) {
+			load();
+		}
+
+	}
+
+	// 更新数据  -----------------------------------------------------------------------
+	public class ReloadStatListener implements ClickListener {
+		public void onClick(Widget sender) {
+			load();
+		}
+	}
+
 }

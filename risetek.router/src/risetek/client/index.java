@@ -16,6 +16,7 @@ import com.google.gwt.xml.client.NodeList;
 import com.google.gwt.xml.client.XMLParser;
 import com.risetek.rismile.client.Entry;
 import com.risetek.rismile.client.http.RequestFactory;
+import com.risetek.rismile.client.sink.Sink.SinkInfo;
 import com.risetek.rismile.client.utils.MessageConsole;
 import com.risetek.rismile.system.client.RisetekSystemSink;
 
@@ -46,7 +47,7 @@ public class index  extends  Entry implements ClickListener, RequestCallback {
 		public dummyCreateInterface()
 		{
 			// TODO: 在 EXEC 模式下执行命令。
-			remoteRequest.get("websconfig", "interface Dialer 0", this);
+			remoteRequest.get("ConfigDialers", "interface=interface Dialer 0", this);
 		}
 		
 		public void onError(Request request, Throwable exception) {
@@ -77,8 +78,10 @@ public class index  extends  Entry implements ClickListener, RequestCallback {
 		{
 			if( "Dialer0".equals(((Element)interfaces.item(i)).getAttribute("name")))
 			{
-				list.addSink(InterfaceSink.init(0));
+				SinkInfo is = InterfaceSink.init(0);
+				list.addSink( is );
 				link.removeFromParent();
+				show(is, true);
 				break;
 			}
 		}

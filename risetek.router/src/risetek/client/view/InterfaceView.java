@@ -67,9 +67,9 @@ public class InterfaceView extends Composite {
 		flexTable.setWidth("100%");
 		flexTable.getColumnFormatter().setWidth(0, "50%");
 		flexTable.getColumnFormatter().setWidth(1, "50%");
-		flexTable.setWidget(0, 0, new Button("断开连接"));
-		flexTable.setWidget(0, 1, new Button("建立连接"));
-		flexTable.setWidget(1, 0, new Button("更新状态"));
+		flexTable.setWidget(0, 0, new Button("断开连接", control.new DisconnectListener()));
+		flexTable.setWidget(0, 1, new Button("建立连接", control.new ConnectListener()));
+		flexTable.setWidget(1, 0, new Button("更新状态", control.new ReloadStatListener()));
 		// flexTable.setWidget(1, 1, new Button("删除接口", control.new RemoveInterfaceClick()));
 		flexTable.setStyleName("router-config");
 		stackPanel.add(flexTable, UI.createHeaderHTML("拨号接口运行状态"), true);
