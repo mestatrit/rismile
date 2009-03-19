@@ -21,12 +21,17 @@ public class linkData {
 	public int mru_default;
 	public int mrru_default;
 
+	public boolean phys_default;
 	
 	public void parseXML(Element element) {
 		mtu = Integer.parseInt(XMLDataParse.getElementText(element, "mtu"));
 		mru = Integer.parseInt(XMLDataParse.getElementText(element, "mru"));
 		mrru = Integer.parseInt(XMLDataParse.getElementText(element, "mrru"));
-
+		
+		if( null != XMLDataParse.getElementAttribute(element, "phys", "type") )
+		{
+			phys_default = true;
+		}
 	}
 
 }

@@ -60,7 +60,7 @@ public class RadiusConfController implements RequestCallback {
 		}
 
 		public class Control implements ClickListener, RequestCallback {
-			public RadiusConfigAuthDialog dialog = new RadiusConfigAuthDialog(view);
+			public RadiusConfigAuthDialog dialog = new RadiusConfigAuthDialog();
 			public void onClick(Widget sender) {
 				String value = dialog.newValueBox.getText();
 				if( dialog.isValid() )
@@ -92,7 +92,7 @@ public class RadiusConfController implements RequestCallback {
 			dialog.show(data.getAcctPort());
 		}
 		public class Control implements ClickListener, RequestCallback {
-			public RadiusConfigAcctDialog dialog = new RadiusConfigAcctDialog(view);
+			public RadiusConfigAcctDialog dialog = new RadiusConfigAcctDialog();
 			public void onClick(Widget sender) {
 				String value = dialog.newValueBox.getText();
 				SysLog.log(value);
@@ -123,7 +123,7 @@ public class RadiusConfController implements RequestCallback {
 		}
 
 		class Control implements ClickListener, RequestCallback {
-			public RadiusConfigSecretDialog dialog = new RadiusConfigSecretDialog(view);
+			public RadiusConfigSecretDialog dialog = new RadiusConfigSecretDialog();
 			public void onClick(Widget sender) {
 				if( dialog.isValid())
 				{

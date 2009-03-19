@@ -9,14 +9,12 @@ import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.Widget;
 import com.risetek.rismile.client.dialog.CustomDialog;
 import com.risetek.rismile.client.utils.Validity;
-import com.risetek.rismile.system.client.view.SystemView;
 
 public class AdminDialog extends CustomDialog {
 	public static final int ADD = 0;
 	public static final int DEL = 1;
 	private DockPanel panel = new DockPanel();
 
-	SystemView parent;
 	//Widget widget;
 	private int code = ADD; 
 	public final TextBox nameBox = new TextBox();
@@ -25,11 +23,8 @@ public class AdminDialog extends CustomDialog {
 	
 	private final Label pwdLabelSe = new Label("重复密码：",false);
 	private final Grid gridFrame;
-	public AdminDialog(final SystemView parent, int code){
-		super(parent);
+	public AdminDialog(int code){
 		addStyleName("dialog");
-		this.parent = parent;
-		
 		this.code = code;
 		panel.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_CENTER);
 		

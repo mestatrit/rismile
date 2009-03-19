@@ -1,10 +1,7 @@
 package risetek.client.dialog;
 
-import risetek.client.view.InterfaceView;
-
 import com.google.gwt.user.client.ui.DockPanel;
 import com.google.gwt.user.client.ui.Label;
-import com.google.gwt.user.client.ui.PasswordTextBox;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
@@ -16,11 +13,7 @@ public class AddInterfaceRouteDialog extends CustomDialog {
 	public final TextBox destBox = new TextBox();
 	public final TextBox maskBox = new TextBox();
 	
-	InterfaceView parent;
-	
-	public AddInterfaceRouteDialog(InterfaceView parent){
-		super(parent);
-		this.parent = parent;
+	public AddInterfaceRouteDialog(){
 		this.setText("添加接口路由");
 		VerticalPanel panel = new VerticalPanel();		
 		addStyleName("dialog");

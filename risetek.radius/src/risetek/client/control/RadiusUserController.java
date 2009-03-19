@@ -136,7 +136,7 @@ public class RadiusUserController extends RismileTableController {
 		// ----------------- 修改 IMSI 号码
 		public class UserIMSIModifyControl implements ClickListener,
 				RequestCallback {
-			public UserImsiModifyDialog dialog = new UserImsiModifyDialog(view);
+			public UserImsiModifyDialog dialog = new UserImsiModifyDialog();
 
 			public void onClick(Widget sender) {
 				if( dialog.isValid() )
@@ -159,7 +159,7 @@ public class RadiusUserController extends RismileTableController {
 		// ----------------- 修改 分配 IP 地址
 		public class UserIpModifyControl implements ClickListener,
 				RequestCallback {
-			public UserIpModifyDialog dialog = new UserIpModifyDialog(view);
+			public UserIpModifyDialog dialog = new UserIpModifyDialog();
 
 			public void onClick(Widget sender) {
 				if( dialog.isValid() )
@@ -182,7 +182,7 @@ public class RadiusUserController extends RismileTableController {
 		// ----------------- 修改用户名称
 		public class UserNameModifyControl implements ClickListener,
 				RequestCallback {
-			public UserNameModifyDialog dialog = new UserNameModifyDialog(view);
+			public UserNameModifyDialog dialog = new UserNameModifyDialog();
 
 			public void onClick(Widget sender) {
 				if( dialog.isValid() )
@@ -205,8 +205,7 @@ public class RadiusUserController extends RismileTableController {
 		// ----------------- 修改用户口令
 		public class UserPasswordModifyControl implements ClickListener,
 				RequestCallback {
-			public UserPasswordModifyDialog dialog = new UserPasswordModifyDialog(
-					view);
+			public UserPasswordModifyDialog dialog = new UserPasswordModifyDialog();
 
 			public void onClick(Widget sender) {
 				if( dialog.isValid() )
@@ -237,7 +236,7 @@ public class RadiusUserController extends RismileTableController {
 		}
 
 		public class AddUserControl implements ClickListener, RequestCallback {
-			public UserAddDialog dialog = new UserAddDialog(view);
+			public UserAddDialog dialog = new UserAddDialog();
 
 			public void onClick(Widget sender) {
 				if (dialog.isValid()) {

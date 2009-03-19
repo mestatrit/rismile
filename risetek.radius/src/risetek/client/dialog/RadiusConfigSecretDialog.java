@@ -1,7 +1,5 @@
 package risetek.client.dialog;
 
-import risetek.client.view.RadiusConfigView;
-
 import com.google.gwt.user.client.ui.DockPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.TextBox;
@@ -11,8 +9,7 @@ import com.risetek.rismile.client.dialog.CustomDialog;
 public class RadiusConfigSecretDialog extends CustomDialog {
 	
 	public TextBox newValueBox = new TextBox();
-	public RadiusConfigSecretDialog(RadiusConfigView parent){
-		super(parent);
+	public RadiusConfigSecretDialog(){
 		// 格式调试
 		//newValueBox.setTabIndex(1);
 		add(new Label("请输入新共享密钥："),DockPanel.NORTH);

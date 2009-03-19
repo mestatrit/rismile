@@ -3,15 +3,12 @@ package com.risetek.rismile.system.client.view;
 import java.util.List;
 
 import com.google.gwt.core.client.GWT;
-import com.google.gwt.user.client.DOM;
 import com.google.gwt.user.client.ui.AbstractImagePrototype;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.FlexTable;
 import com.google.gwt.user.client.ui.Grid;
-import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.HasHorizontalAlignment;
-import com.google.gwt.user.client.ui.HasVerticalAlignment;
 import com.google.gwt.user.client.ui.ImageBundle;
 import com.google.gwt.user.client.ui.StackPanel;
 import com.google.gwt.user.client.ui.VerticalPanel;
@@ -20,7 +17,6 @@ import com.risetek.rismile.client.utils.UI;
 import com.risetek.rismile.system.client.control.SystemAllController;
 import com.risetek.rismile.system.client.model.InterfEntry;
 import com.risetek.rismile.system.client.model.RouterEntry;
-import com.risetek.rismile.system.client.model.Service;
 import com.risetek.rismile.system.client.model.SystemDataModel;
 
 public class SystemView extends Composite {
@@ -259,8 +255,8 @@ public class SystemView extends Composite {
 
 	}
 	*/
-	public String ip_address;
-	public String ip_mask;
+	//public String ip_address;
+	//public String ip_mask;
 
 	private void renderNetworkTable(List<InterfEntry> interfList) {
 
@@ -274,9 +270,9 @@ public class SystemView extends Composite {
 			netGrid.setText(i + 1, 2, interfEntry.getMask());
 			Button button;
 			if (i == 0) {
-				this.ip_address = interfEntry.getAddress();
-				this.ip_mask = interfEntry.getMask();
-				button = new Button("更改", control.new modifyIPClickListener());
+				//this.ip_address = interfEntry.getAddress();
+				//this.ip_mask = interfEntry.getMask();
+				button = new Button("更改", control.new modifyIPClickListener(interfEntry.getAddress(), interfEntry.getMask()));
 			} else {
 				button = new Button("删除", control.new IpClickListener(interfEntry.getAddress()));
 			}

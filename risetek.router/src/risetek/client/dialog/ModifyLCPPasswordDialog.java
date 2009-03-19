@@ -1,7 +1,5 @@
 package risetek.client.dialog;
 
-import risetek.client.view.InterfaceView;
-
 import com.google.gwt.user.client.ui.DockPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.PasswordTextBox;
@@ -14,11 +12,7 @@ public class ModifyLCPPasswordDialog extends CustomDialog {
 	public final PasswordTextBox pwdBox = new PasswordTextBox();
 	public final PasswordTextBox pwdBoxSe = new PasswordTextBox();
 	
-	InterfaceView parent;
-	
-	public ModifyLCPPasswordDialog(InterfaceView parent){
-		super(parent);
-		this.parent = parent;
+	public ModifyLCPPasswordDialog(){
 		this.setText("设置拨号口令");
 		VerticalPanel panel = new VerticalPanel();		
 		addStyleName("dialog");
@@ -37,7 +31,7 @@ public class ModifyLCPPasswordDialog extends CustomDialog {
 
 		setSize("280","200");
 	}
-	public void show(String tips_username)
+	public void show()
 	{
 		super.show();
 		pwdBox.setFocus(true);

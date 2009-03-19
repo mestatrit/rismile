@@ -14,10 +14,9 @@ import com.google.gwt.user.client.ui.HasHorizontalAlignment;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
 import com.risetek.rismile.client.dialog.CustomDialog;
-import com.risetek.rismile.system.client.view.SystemView;
 
 public class UpfileDialog extends CustomDialog {
-	SystemView parent;
+
 	private final DockPanel panel = new DockPanel();
 	
 	private final FormPanel formPanel = new FormPanel();
@@ -26,9 +25,8 @@ public class UpfileDialog extends CustomDialog {
 
 	private final HTML html = new HTML();
 	
-	public UpfileDialog(final SystemView parent){
-		super(parent);
-		this.parent = parent;
+	public UpfileDialog()
+	{
 		panel.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_CENTER);
 		
 		fileUpload.setName("file1");

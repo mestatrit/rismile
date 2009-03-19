@@ -1,7 +1,5 @@
 package risetek.client.dialog;
 
-import risetek.client.view.InterfaceView;
-
 import com.google.gwt.user.client.ui.DockPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.TextBox;
@@ -12,11 +10,8 @@ import com.risetek.rismile.client.dialog.CustomDialog;
 public class ModifyMTUDialog extends CustomDialog {
 
 	public final TextBox newValuebox = new TextBox();
-	InterfaceView parent;
 	
-	public ModifyMTUDialog(InterfaceView parent){
-		super(parent);
-		this.parent = parent;
+	public ModifyMTUDialog(){
 		this.setText("设置MTU值");
 		VerticalPanel panel = new VerticalPanel();		
 		addStyleName("dialog");

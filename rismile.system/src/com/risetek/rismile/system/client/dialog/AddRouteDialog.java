@@ -8,23 +8,18 @@ import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.Widget;
 import com.risetek.rismile.client.dialog.CustomDialog;
 import com.risetek.rismile.client.utils.Validity;
-import com.risetek.rismile.system.client.view.SystemView;
 
 public class AddRouteDialog extends CustomDialog {
 	
 	private DockPanel panel = new DockPanel();
 
-	//SystemView parent;
-	
 	public final TextBox destBox = new TextBox();
 	public final TextBox maskBox = new TextBox();
 	//private final TextBox interfaceBox = new TextBox();
 	public final TextBox gateBox = new TextBox();
 	
-	public AddRouteDialog(final SystemView parent){
-		super(parent);
+	public AddRouteDialog(){
 		addStyleName("dialog");
-		//this.parent = parent;
 		
 		Grid gridFrame = new Grid(3, 2);
 

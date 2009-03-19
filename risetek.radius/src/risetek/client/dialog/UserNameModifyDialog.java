@@ -1,7 +1,5 @@
 package risetek.client.dialog;
 
-import risetek.client.view.UserView;
-
 import com.google.gwt.user.client.ui.DockPanel;
 import com.google.gwt.user.client.ui.Grid;
 import com.google.gwt.user.client.ui.Label;
@@ -15,8 +13,7 @@ public class UserNameModifyDialog extends CustomDialog {
 	public TextBox newValueBox = new TextBox();
 	public String rowid;
 
-	public UserNameModifyDialog(UserView parent) {
-		super(parent);
+	public UserNameModifyDialog() {
 		add(new Label("请输入新的用户名："),DockPanel.NORTH);
 		Grid gridFrame = new Grid(2, 2);
 		gridFrame.setWidget(0, 0, new Label("当前用户名："));

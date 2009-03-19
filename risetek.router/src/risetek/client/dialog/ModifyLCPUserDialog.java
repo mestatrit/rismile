@@ -1,7 +1,5 @@
 package risetek.client.dialog;
 
-import risetek.client.view.InterfaceView;
-
 import com.google.gwt.user.client.ui.DockPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.TextBox;
@@ -12,11 +10,8 @@ import com.risetek.rismile.client.dialog.CustomDialog;
 public class ModifyLCPUserDialog extends CustomDialog {
 
 	public final TextBox nameBox = new TextBox();
-	InterfaceView parent;
 	
-	public ModifyLCPUserDialog(InterfaceView parent){
-		super(parent);
-		this.parent = parent;
+	public ModifyLCPUserDialog(){
 		this.setText("设置用户名称");
 		VerticalPanel panel = new VerticalPanel();		
 		addStyleName("dialog");

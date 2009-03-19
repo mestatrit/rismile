@@ -1,6 +1,5 @@
 package risetek.client.control;
 
-import risetek.client.index;
 import risetek.client.dialog.AddInterfaceRouteDialog;
 import risetek.client.dialog.ModifyLCPPasswordDialog;
 import risetek.client.dialog.ModifyLCPUserDialog;
@@ -18,33 +17,43 @@ import com.risetek.rismile.client.http.RequestFactory;
 import com.risetek.rismile.client.utils.MessageConsole;
 
 public class IfController implements RequestCallback {
+	
+	int DialerUnit;
+	
 	private static enum AUTH_TYPE {
 		CHAPMD5, PAP, EAP, CHAPMS
 	}
 
 	private RequestFactory remoteRequest = new RequestFactory();
-	final private static String ifpath = "Dialers";
-	private String setPath = "ConfigDialers";
-
-	IfModel data = new IfModel();
-	// public InterfaceView2 view;
+	private final String setPath = "ConfigDialers";
+	String interfaceName = "interface=interface Dialer ";
+	
+	
+	IfModel data;
 	public InterfaceView view;
 
-	public IfController() {
-		// view = new InterfaceView2(this);
+	public IfController(int unit) {
+		DialerUnit = unit;
+		data = new IfModel(unit);
+		interfaceName += unit;
 		view = new InterfaceView(this);
 	}
 
-	public void getIf() {
-		remoteRequest.get(ifpath, null, this);
-	}
-
 	public void load() {
-		remoteRequest.get(ifpath, null, this);
+		remoteRequest.get("Dialers", "interface="+DialerUnit, this);
 	}
 
+	public void onError(Request request, Throwable exception) {
+		MessageConsole.setText("网络错误!");
+	}
+
+	public void onResponseReceived(Request request, Response response) {
+		data.parseXML(response.getText());
+		view.render(data.config);
+	}
+	
 	private void setNAT(boolean on, RequestCallback callback) {
-		String query = "interface=interface Dialer 0&commands=";
+		String query = interfaceName + "&commands=";
 		if( on )
 			query += "nat outside";
 		else
@@ -53,7 +62,7 @@ public class IfController implements RequestCallback {
 	}
 
 	private void setMPPC(boolean on, RequestCallback callback) {
-		String query = "interface=interface Dialer 0&commands=";
+		String query = interfaceName + "&commands=";
 		if( on )
 			query += "compress mppc";
 		else
@@ -62,7 +71,7 @@ public class IfController implements RequestCallback {
 	}
 
 	private void setRoute(boolean on, String dest, String mask ,RequestCallback callback) {
-		String query = "interface=interface Dialer 0&commands=";
+		String query = interfaceName + "&commands=";
 		if( on )
 			query += "route " + dest + " " + mask;
 		else
@@ -75,10 +84,20 @@ public class IfController implements RequestCallback {
 	private void setDefaultRoute(boolean on, RequestCallback callback) {
 		setRoute(on, "0.0.0.0", "0.0.0.0" , callback);
 	}
+
+	private void setDefaultPhys(boolean on, RequestCallback callback) {
+		String query = interfaceName + "&commands=";
+		if(on)
+			query += data.defaultlink;
+		else
+			query += "no link";
+		
+		remoteRequest.get(setPath, query, callback);
+	}
 	
 	private void ModifyLCPAuth(AUTH_TYPE authtype, boolean accepted,
 			RequestCallback callback) {
-		String query = "interface=interface Dialer 0&commands=";
+		String query = interfaceName + "&commands=";
 		if( !accepted )
 			query += "no ";
 		query += "ppp authentication ";
@@ -97,12 +116,12 @@ public class IfController implements RequestCallback {
 	}
 
 	private void setMTU(String value, RequestCallback callback) {
-		String query = "interface=interface Dialer 0&commands=link mtu "+ value;
+		String query = interfaceName + "&commands=link mtu "+ value;
 		remoteRequest.get(setPath, query, callback);
 	}
 
 	private void setLCPUser(String username, RequestCallback callback) {
-		String query = "interface=interface Dialer 0&commands=";
+		String query = interfaceName + "&commands=";
 		if( "".equals(username))
 			query += "no ppp username";
 		else
@@ -111,22 +130,13 @@ public class IfController implements RequestCallback {
 	}
 
 	private void setLCPPassword(String password, RequestCallback callback) {
-		String query = "interface=interface Dialer 0&commands=";
+		String query = interfaceName + "&commands=";
 		if( "".equals(password))
 			query += "no ppp password";
 		else
 			query +="ppp password "+ password;
 			
 		remoteRequest.get(setPath, query, callback);
-	}
-
-	public void onError(Request request, Throwable exception) {
-		MessageConsole.setText("网络错误!");
-	}
-
-	public void onResponseReceived(Request request, Response response) {
-		data.parseXML(response.getText());
-		view.render(data.config);
 	}
 
 	public class ModifyLCPUserButtonClick implements ClickListener {
@@ -136,7 +146,7 @@ public class IfController implements RequestCallback {
 		}
 
 		public class Control implements ClickListener, RequestCallback {
-			public ModifyLCPUserDialog dialog = new ModifyLCPUserDialog(view);
+			public ModifyLCPUserDialog dialog = new ModifyLCPUserDialog();
 
 			public Control() {
 				dialog.confirm.addClickListener(this);
@@ -167,8 +177,7 @@ public class IfController implements RequestCallback {
 		}
 
 		public class Control implements ClickListener, RequestCallback {
-			public ModifyLCPPasswordDialog dialog = new ModifyLCPPasswordDialog(
-					view);
+			public ModifyLCPPasswordDialog dialog = new ModifyLCPPasswordDialog();
 
 			public Control() {
 				dialog.confirm.addClickListener(this);
@@ -199,7 +208,7 @@ public class IfController implements RequestCallback {
 		}
 
 		public class Control implements ClickListener, RequestCallback {
-			public ModifyMTUDialog dialog = new ModifyMTUDialog(view);
+			public ModifyMTUDialog dialog = new ModifyMTUDialog();
 
 			public Control() {
 				dialog.confirm.addClickListener(this);
@@ -288,7 +297,7 @@ public class IfController implements RequestCallback {
 			load();
 		}
 	}
-	// --------------------------------------------------------------------------------------------------------
+	// ------------------------------------------------------------------
 	public class ModifyDefaultROUTEListener implements ClickListener, RequestCallback {
 		public void onClick(Widget sender) {
 			CheckBox box = (CheckBox) sender;
@@ -304,6 +313,22 @@ public class IfController implements RequestCallback {
 		}
 	}
 	
+	// ------------------------------------------------------------------
+	public class ModifyDefaultPhysListener implements ClickListener, RequestCallback {
+		public void onClick(Widget sender) {
+			CheckBox box = (CheckBox) sender;
+			setDefaultPhys( box.isChecked() , this);
+		}
+
+		public void onError(Request request, Throwable exception) {
+			IfController.this.onError(request, exception);
+		}
+
+		public void onResponseReceived(Request request, Response response) {
+			load();
+		}
+	}
+
 	// 加入接口路由--------------------------------------------------------
 	public class AddInterfaceRouteButtonClick implements ClickListener {
 		public void onClick(Widget sender) {
@@ -312,7 +337,7 @@ public class IfController implements RequestCallback {
 		}
 
 		public class Control implements ClickListener, RequestCallback {
-			public AddInterfaceRouteDialog dialog = new AddInterfaceRouteDialog(view);
+			public AddInterfaceRouteDialog dialog = new AddInterfaceRouteDialog();
 
 			public Control() {
 				dialog.confirm.addClickListener(this);
@@ -374,7 +399,7 @@ public class IfController implements RequestCallback {
 	public class DisconnectListener implements ClickListener,
 			RequestCallback {
 		public void onClick(Widget sender) {
-			remoteRequest.get("websexec", "commands=disconnect Dialer 0", this);
+			remoteRequest.get("websexec", "commands=disconnect Dialer "+DialerUnit, this);
 		}
 
 		public void onError(Request request, Throwable exception) {
@@ -390,7 +415,7 @@ public class IfController implements RequestCallback {
 	public class ConnectListener implements ClickListener,
 			RequestCallback {
 		public void onClick(Widget sender) {
-			remoteRequest.get("websexec", "commands=connect Dialer 0", this);
+			remoteRequest.get("websexec", "commands=connect Dialer "+DialerUnit, this);
 		}
 
 		public void onError(Request request, Throwable exception) {

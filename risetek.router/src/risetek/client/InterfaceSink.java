@@ -18,7 +18,7 @@ public class InterfaceSink extends Sink{
 		};
 	}
 	public InterfaceSink(int unit){
-		control  = new IfController();
+		control  = new IfController(unit);
 		initWidget(control.view);
 	}
 	

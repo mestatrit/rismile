@@ -1,5 +1,12 @@
 <?xml version="1.0" encoding="gb2312"?><Risetek>
+<defaultlink>link type pppoe iface eth0</defaultlink>
 <interface name = "Dialer0">
+<stat>
+<Status1>OPEN</Status1>
+<Status2>UP</Status2>
+<BundLinks id="0">Li0[Opened/UP]</BundLinks>
+<IPCP self="10.10.10.2" peer="10.10.10.1" />
+</stat>
 <lcp>
 <username>demo</username>
 <password>demo</password>

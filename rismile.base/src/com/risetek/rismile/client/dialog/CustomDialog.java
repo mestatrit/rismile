@@ -5,7 +5,6 @@ import com.google.gwt.user.client.DOM;
 import com.google.gwt.user.client.Element;
 import com.google.gwt.user.client.Event;
 import com.google.gwt.user.client.ui.Button;
-import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.DockPanel;
 import com.google.gwt.user.client.ui.HasHorizontalAlignment;
 import com.google.gwt.user.client.ui.HasVerticalAlignment;
@@ -23,12 +22,12 @@ public abstract class CustomDialog extends MyDialog {
 	private final Label note = new Label();
 	private final Label message = new Label();
 
-	Composite parent;
+//	Composite parent;
 
-	public CustomDialog(Composite parent) {
+	public CustomDialog() {
 		super(false,true);
 		setStyleName("rismile-dialog");
-		this.parent = parent;
+//		this.parent = parent;
 		panel.setWidth("100%");
 		panel.add(note, DockPanel.NORTH);
 		
@@ -112,7 +111,7 @@ public abstract class CustomDialog extends MyDialog {
 	 */
 	public void mask()
 	{
-		Widget w = RootPanel.get();
+		Widget w = RootPanel.get("maskPanel");
 		mask.getStyle().setPropertyPx("width", w.getOffsetWidth());
 		mask.getStyle().setPropertyPx("height", w.getOffsetHeight());
 		w.getElement().appendChild(mask);

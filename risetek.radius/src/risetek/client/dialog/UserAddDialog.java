@@ -1,7 +1,5 @@
 package risetek.client.dialog;
 
-import risetek.client.view.UserView;
-
 import com.google.gwt.user.client.ui.DockPanel;
 import com.google.gwt.user.client.ui.FocusPanel;
 import com.google.gwt.user.client.ui.Grid;
@@ -20,8 +18,7 @@ public class UserAddDialog extends CustomDialog {
 	
 	private final FocusPanel focusPanel = new FocusPanel();
 	
-	public UserAddDialog(UserView parent){
-		super(parent);
+	public UserAddDialog(){
 		add(new Label("请输入用户信息："),DockPanel.NORTH);
 		
 		Grid gridFrame = new Grid(4, 2);

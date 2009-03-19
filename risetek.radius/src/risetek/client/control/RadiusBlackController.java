@@ -111,7 +111,7 @@ public class RadiusBlackController extends RismileTableController {
 
 		// ----------------- 认可用户信息
 		public class BlackUserControl implements ClickListener, RequestCallback {
-			public BlackUserDialog dialog = new BlackUserDialog(view);
+			public BlackUserDialog dialog = new BlackUserDialog();
 
 			public void onClick(Widget sender) {
 				if (dialog.isValid()) {

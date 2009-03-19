@@ -173,7 +173,7 @@ public class SystemAllController implements RequestCallback {
 	public class uploadClickListener implements ClickListener {
 
 		public void onClick(Widget sender) {
-			(new UpfileDialog(view)).show();
+			(new UpfileDialog()).show();
 		}
 	}
 
@@ -187,8 +187,7 @@ public class SystemAllController implements RequestCallback {
 		}
 
 		public class Control implements ClickListener, RequestCallback {
-			public AddOrModifyIpDialog dialog = new AddOrModifyIpDialog(view,
-					AddOrModifyIpDialog.ADD);
+			public AddOrModifyIpDialog dialog = new AddOrModifyIpDialog(AddOrModifyIpDialog.ADD);
 
 			public void onClick(Widget sender) {
 				if (dialog.isValid()) {
@@ -211,16 +210,22 @@ public class SystemAllController implements RequestCallback {
 	}
 
 	public class modifyIPClickListener implements ClickListener {
-
+		String ipadd;
+		String ipmask;
+		public modifyIPClickListener(String ipadd, String ipmask)
+		{
+			this.ipadd = ipadd;
+			this.ipmask = ipmask;
+		}
 		public void onClick(Widget sender) {
 			Control control = new Control();
 			control.dialog.confirm.addClickListener(control);
-			control.dialog.show();
+			control.dialog.show(ipadd, ipmask);
 		}
 
 		public class Control implements ClickListener, RequestCallback {
-			public AddOrModifyIpDialog dialog = new AddOrModifyIpDialog(view,
-					AddOrModifyIpDialog.MODIFY);
+
+			public AddOrModifyIpDialog dialog = new AddOrModifyIpDialog(AddOrModifyIpDialog.MODIFY);
 
 			public void onClick(Widget sender) {
 				if( dialog.isValid())
@@ -251,7 +256,7 @@ public class SystemAllController implements RequestCallback {
 		}
 
 		public class Control implements ClickListener, RequestCallback {
-			public AddRouteDialog dialog = new AddRouteDialog(view);
+			public AddRouteDialog dialog = new AddRouteDialog();
 
 			public void onClick(Widget sender) {
 				if( dialog.isValid() )
@@ -285,7 +290,7 @@ public class SystemAllController implements RequestCallback {
 		}
 
 		public class Control implements ClickListener, RequestCallback {
-			public AdminDialog dialog = new AdminDialog(view, AdminDialog.DEL);
+			public AdminDialog dialog = new AdminDialog(AdminDialog.DEL);
 
 			public void onClick(Widget sender) {
 				if( dialog.isValid())
@@ -316,7 +321,7 @@ public class SystemAllController implements RequestCallback {
 		}
 
 		public class Control implements ClickListener, RequestCallback {
-			public AdminDialog dialog = new AdminDialog(view, AdminDialog.DEL);
+			public AdminDialog dialog = new AdminDialog(AdminDialog.DEL);
 
 			public void onClick(Widget sender) {
 				if( dialog.isValid())

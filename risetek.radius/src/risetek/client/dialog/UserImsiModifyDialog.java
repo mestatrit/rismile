@@ -1,7 +1,5 @@
 package risetek.client.dialog;
 
-import risetek.client.view.UserView;
-
 import com.google.gwt.user.client.ui.DockPanel;
 import com.google.gwt.user.client.ui.Grid;
 import com.google.gwt.user.client.ui.Label;
@@ -17,8 +15,7 @@ public class UserImsiModifyDialog extends CustomDialog {
 
 	public String rowid;
 
-	public UserImsiModifyDialog(UserView parent) {
-		super(parent);
+	public UserImsiModifyDialog() {
 		Grid gridFrame = new Grid(2, 2);
 		// Formater Debug
 		//gridFrame.setBorderWidth(1);

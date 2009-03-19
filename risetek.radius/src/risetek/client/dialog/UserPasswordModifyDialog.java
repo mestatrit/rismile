@@ -1,7 +1,5 @@
 package risetek.client.dialog;
 
-import risetek.client.view.UserView;
-
 import com.google.gwt.user.client.ui.DockPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.PasswordTextBox;
@@ -13,9 +11,7 @@ public class UserPasswordModifyDialog extends CustomDialog {
 	public PasswordTextBox passwordbox = new PasswordTextBox();
 
 	public String rowid;
-	public UserPasswordModifyDialog(UserView parent) {
-		super(parent);
-
+	public UserPasswordModifyDialog() {
 		add(new Label("请输入新口令："),DockPanel.NORTH);
 		add(passwordbox,DockPanel.CENTER);
 		passwordbox.setTabIndex(1);

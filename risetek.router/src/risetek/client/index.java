@@ -3,11 +3,7 @@ package risetek.client;
 import com.google.gwt.http.client.Request;
 import com.google.gwt.http.client.RequestCallback;
 import com.google.gwt.http.client.Response;
-import com.google.gwt.user.client.DOM;
-import com.google.gwt.user.client.Event;
-import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.ClickListener;
-import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.Hyperlink;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.gwt.xml.client.Document;
@@ -40,7 +36,7 @@ public class index  extends  Entry implements ClickListener, RequestCallback {
 		link.addClickListener(this);
 		list.addExternalLink(link);
 		// 通过请求获取接口数据来确定 interface Sink 的出现。
-		remoteRequest.get("Dialers", null, this);
+		remoteRequest.get("Dialers", "interface=0", this);
 	}
 
 	class dummyCreateInterface implements RequestCallback {
@@ -56,7 +52,7 @@ public class index  extends  Entry implements ClickListener, RequestCallback {
 
 		public void onResponseReceived(Request request, Response response) {
 			// 这个响应会被 index 的 onResponseReceived 处理。
-			remoteRequest.get("Dialers", null, index.this);
+			remoteRequest.get("Dialers", "interface=0", index.this);
 		}
 		
 	}

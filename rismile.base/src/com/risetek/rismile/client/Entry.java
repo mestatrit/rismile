@@ -42,9 +42,9 @@ public abstract class Entry implements EntryPoint, HistoryListener {
 	// 操作提示
 	private HTML description = new HTML();
 	
-	private VerticalPanel panel = new VerticalPanel();
-	private DockPanel sinkContainer = new DockPanel();
-	//static public FlowPanel maskPanel = new FlowPanel();
+	private final VerticalPanel panel = new VerticalPanel();
+	private final DockPanel sinkContainer = new DockPanel();
+	private final FlowPanel maskPanel = new FlowPanel();
 	private final FlowPanel headPanel = new FlowPanel();
 	private final HTML hbMessage = new HTML();
 	private final HTML message = new HTML();
@@ -67,7 +67,7 @@ public abstract class Entry implements EntryPoint, HistoryListener {
 		panel.setStyleName("rismile");
 		
 		headPanel.setWidth("100%");
-		DOM.setStyleAttribute(headPanel.getElement(), "position", "relative");
+		//DOM.setStyleAttribute(headPanel.getElement(), "position", "relative");
 		headPanel.add(list);
 		
 		headPanel.add(hbMessage);
@@ -78,20 +78,21 @@ public abstract class Entry implements EntryPoint, HistoryListener {
 		message.setStyleName("http-message");
 		DOM.setElementProperty(message.getElement(), "id", "message");
 
-		/*
-		maskPanel.setWidth("100%");
-		maskPanel.add(sinkContainer);
-		*/
+
 		sinkContainer.setStyleName("Sink");
 		sinkContainer.setWidth("100%");
 
 		description.setStyleName("Info");
 		description.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_RIGHT);
 
-		panel.add(headPanel);
-		panel.add(description);
-//		panel.add(maskPanel);
-		panel.add(sinkContainer);
+		maskPanel.setWidth("100%");
+		DOM.setStyleAttribute(maskPanel.getElement(), "position", "relative");
+		DOM.setElementProperty(maskPanel.getElement(), "id", "maskPanel");
+		maskPanel.add(headPanel);
+		maskPanel.add(description);
+		maskPanel.add(sinkContainer);
+
+		panel.add(maskPanel);
 		panel.setWidth("100%");
 		//panel.setBorderWidth(1);
 

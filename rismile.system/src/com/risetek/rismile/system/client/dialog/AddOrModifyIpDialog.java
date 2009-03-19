@@ -8,21 +8,18 @@ import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.Widget;
 import com.risetek.rismile.client.dialog.CustomDialog;
 import com.risetek.rismile.client.utils.Validity;
-import com.risetek.rismile.system.client.view.SystemView;
 
 public class AddOrModifyIpDialog extends CustomDialog {
 	public static final int ADD = 0;
 	public static final int MODIFY = 1;
 	private DockPanel panel = new DockPanel();
 
-	//SystemView parent;
 	//Widget widget;
 	public int code = ADD; 
 	public final TextBox ipBox = new TextBox();
 	public final TextBox maskBox = new TextBox();
 	
-	public AddOrModifyIpDialog(final SystemView parent, int code){
-		super(parent);
+	public AddOrModifyIpDialog(int code){
 		//addStyleName("dialog");
 		//this.parent = parent;
 		//this.widget = widget;
@@ -39,11 +36,12 @@ public class AddOrModifyIpDialog extends CustomDialog {
 		
 		ipBox.setTabIndex(1);
 		maskBox.setTabIndex(2);
-		
+/*		
 		if(code == MODIFY){
 			ipBox.setText(parent.ip_address);
 			maskBox.setText(parent.ip_mask);
 		}
+*/		
 		panel.add(gridFrame, DockPanel.CENTER);
 		panel.setSpacing(10);
 		
@@ -51,6 +49,20 @@ public class AddOrModifyIpDialog extends CustomDialog {
 
 		setSize("280","200");
 	}
+	
+	public void show(String ipadd, String ipmask){
+		if(AddOrModifyIpDialog.this.code == MODIFY){
+			setText("更改IP地址");
+			ipBox.setText(ipadd);
+			maskBox.setText(ipmask);
+		}else{
+			setText("添加IP地址");
+		}
+		
+		super.show();
+		ipBox.setFocus(true);
+	}
+
 	
 	public void show(){
 		if(AddOrModifyIpDialog.this.code == MODIFY){

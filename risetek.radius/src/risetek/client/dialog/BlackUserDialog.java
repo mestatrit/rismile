@@ -1,7 +1,5 @@
 package risetek.client.dialog;
 
-import risetek.client.view.BlackUserView;
-
 import com.google.gwt.user.client.ui.DockPanel;
 import com.google.gwt.user.client.ui.Grid;
 import com.google.gwt.user.client.ui.Label;
@@ -18,8 +16,7 @@ public class BlackUserDialog extends CustomDialog {
 	public final TextBox imsiBox = new TextBox();
 	
 	public String rowid;
-	public BlackUserDialog(BlackUserView parent){
-		super(parent);
+	public BlackUserDialog(){
 		Grid gridFrame = new Grid(4, 2);
 		add(new Label("请输入用户信息："),DockPanel.NORTH);
 		// debug format

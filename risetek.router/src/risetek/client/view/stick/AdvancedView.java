@@ -8,6 +8,17 @@ public class AdvancedView {
 
 	public AdvancedView(FlexTable flexTable)
 	{
+		
+		//chapmdCheckBox.setText("CHAP认证");
+		
+		//authGrid.setWidget(1,1, eapCheckBox);
+		//eapCheckBox.setText("eap");
+
+		//authGrid.setWidget(2,0, mschapCheckBox);
+		//mschapCheckBox.setText("ms-chap");
+		
+		
+		
 		final Grid pppGrid = new Grid(3,3);
 		pppGrid.setBorderWidth(1);
 		pppGrid.setWidth("100%");

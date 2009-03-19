@@ -1,5 +1,7 @@
 .router-config {
 	text-align: center;
+	vertical-align: middle;
+	align: center;
 }
 
 .router-config .table-title {
@@ -15,24 +17,29 @@
 
 .router-config Button {
 	width: 6em;
-	padding-top:1px;
+	padding-top: 2px;
+	padding-bottom: 2px;
 	background-color: #E2EAF5;
-	border-top: #FFFFFF 1px solid;
-	border-right: #797979 2px solid;
-	border-bottom: #797979 2px solid;
-	border-left: #FFFFFF 1px solid;
 	cursor: pointer;
     cursor: hand;
 }
 
-.router-config table {
-/*	background-color: white; */
-}
-
-.router-config table td {
+.router-config .table {
+	border: 1px solid #999;
 	background-color: white;
+	border-collapse: collapse;
 }
 
+.router-config .table td {
+	border:solid #999;
+	border-width:1px 1px 1px 1px;
+	padding:3px;
+}
+
+.router-config .table .head {
+	background: #F4F7FB;
+	font-weight: bold;
+}
 
 .router-config CheckBox {
 	background-color: blue;
