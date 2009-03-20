@@ -4,13 +4,6 @@
 	background: #E8EEF7;
 }
 
-.rismile-system .stack-panel {
-  background: #E8EEF7;
-  border-bottom: 1px solid #2a8ebf;
-  border-right: 1px solid #2a8ebf;
-  border-left: 1px solid #2a8ebf;
-}
-
 .rismile-system .status-table {
 	cellspacing:2px;
 	cellpading:2px;
@@ -29,6 +22,7 @@
 }
 
 .rismile-system .status-table .head {
+	font: bold;
 	background: #F4F7FB;
 }
 
@@ -39,46 +33,15 @@
 }
 
 .rismile-system .grid1-table {
-	vertical-align: middle;
+ 	vertical-align: middle;
 	text-align: center;
 }
 
-.rismile-system .grid2-table {
-	cellspacing:2px;
-	cellpading:2px;
-	margin-bottom: 5mm;
-	margin-left: 5mm;
-	border: 1px solid #999;
-	background-color: white;
-	border-collapse: collapse;
-	vertical-align: middle;
-}
-.rismile-system .grid2-table td {
-	border:solid #999;
-	border-width:1px 1px 1px 1px;
-	padding:3px;
-	vertical-align: middle;
-	text-align: center;
-}
-
-.rismile-system .big-button {
-	height: 25px;
-	width: 9em;
-	margin-top: 1cm;
-	margin-bottom: 3mm;
-	margin-left: 5mm;
-	background-color: #E2EAF5;
-	border-top: #FFFFFF 1px solid;
-	border-right: #797979 2px solid;
-	border-bottom: #797979 2px solid;
-	border-left: #FFFFFF 1px solid;
-	cursor: pointer;
-    cursor: hand;
-}
-.rismile-system .sys-button {
+.rismile-system Button {
     height: 25px;
 	margin-top: 1mm;
 	margin-bottom: 1mm;
+	width: 8em;
 	padding-top:3px;
 	background-color: #E2EAF5;
 	border-top: #FFFFFF 1px solid;
@@ -130,14 +93,6 @@
 
 .rismile-system .stack-panel .gwt-StackPanelItem table {
   width: 100%;
-}
-
-.stack-caption {
-
-  text-indent: 1em;
-	padding-bottom: 4px;
-	font-size: larger;
-	font-weight: bold;
 }
 
 .box-10 {

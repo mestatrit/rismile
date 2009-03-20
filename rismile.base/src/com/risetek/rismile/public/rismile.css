@@ -186,3 +186,10 @@ body {
 	color: crimson;
 }
 
+.stack-caption {
+	text-indent: 1em;
+	padding-bottom: 4px;
+	font-size: larger;
+	font-weight: bold;
+}
+

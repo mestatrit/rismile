@@ -1,8 +1,9 @@
 .radius-config {
+	vertical-align: middle;
 	text-align: center;
 }
 
-.radius-config .table-title {
+.radius-config .title {
 	text-indent: 1em;
 	padding-top: 4px;
 	padding-bottom: 4px;
@@ -14,8 +15,6 @@
 }
 
 .radius-config .conf-table {
-	margin-top: 1cm;
-	margin-bottom: 5mm;
 	background-color: white;
 	background: white;
 	border:1px solid #999;
@@ -24,6 +23,7 @@
 }
 
 .radius-config .conf-table td {
+	width: 8em;
 	border:solid #999;
 	border-width:1px 1px 1px 1px;
 	padding-top:4px;
@@ -36,19 +36,13 @@
 .radius-config .conf-Button {
 	height: 25px;
 	width: 6em;
-	margin-top: 1cm;
-	margin-bottom: 5mm;
 	padding-top:1px;
 	background-color: #E2EAF5;
-	border-top: #FFFFFF 1px solid;
-	border-right: #797979 2px solid;
-	border-bottom: #797979 2px solid;
-	border-left: #FFFFFF 1px solid;
 	cursor: pointer;
     cursor: hand;
 }
 .radius-config .conf-version {
-	margin-top: 5mm;
+	margin-top: 1mm;
 	margin-bottom: 1mm;
 }
 

@@ -3,16 +3,21 @@ package com.risetek.rismile.system.client.view;
 import java.util.List;
 
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.user.client.DOM;
+import com.google.gwt.user.client.Element;
+import com.google.gwt.user.client.Event;
 import com.google.gwt.user.client.ui.AbstractImagePrototype;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.FlexTable;
 import com.google.gwt.user.client.ui.Grid;
 import com.google.gwt.user.client.ui.HasHorizontalAlignment;
+import com.google.gwt.user.client.ui.HasVerticalAlignment;
 import com.google.gwt.user.client.ui.ImageBundle;
 import com.google.gwt.user.client.ui.StackPanel;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.risetek.rismile.client.Entry;
+import com.risetek.rismile.client.utils.MessageConsole;
 import com.risetek.rismile.client.utils.UI;
 import com.risetek.rismile.system.client.control.SystemAllController;
 import com.risetek.rismile.system.client.model.InterfEntry;
@@ -21,21 +26,63 @@ import com.risetek.rismile.system.client.model.SystemDataModel;
 
 public class SystemView extends Composite {
 
-	private static final Images images = (Images) GWT.create(Images.class);
-	public interface Images extends ImageBundle {
-		AbstractImagePrototype leftCorner();
-		AbstractImagePrototype rightCorner();
-	}
-
 	final Grid dateGrid = new Grid(1,2);
 //	final Grid serviceGrid = new Grid(2,3);
 	final Grid netGrid = new Grid(2,4);
 	final Grid routeGrid = new Grid(2,5);
 
-	//private int nextHeaderIndex = 0;
-	final FlexTable panel = new FlexTable();
+	final VerticalPanel panel = new VerticalPanel();
 	
 	SystemAllController control;
+	
+	class exStackPanel extends StackPanel {
+
+		  private int findDividerIndex(Element elem) {
+			  if( elem == getElement() )
+			  {
+				    MessageConsole.setText("IT is me!");
+				    return -1;
+			  }
+			  
+			    while (elem != getElement()) 
+			    {
+			      String expando = DOM.getElementProperty(elem, "__index");
+			      if (expando != null) {
+			        // Make sure it belongs to me!
+			        int ownerHash = DOM.getElementPropertyInt(elem, "__owner");
+			        if (ownerHash == hashCode()) {
+			          // Yes, it's mine.
+			          return Integer.parseInt(expando);
+			        } else {
+					    MessageConsole.setText("expando null");
+			          // It must belong to some nested StackPanel.
+			          return -1;
+			        }
+			      }
+			      else
+			      {
+				    MessageConsole.setText("属于别的？");
+			      }
+			      elem = DOM.getParent(elem);
+			    }
+			    MessageConsole.setText("没找到!"+ elem.toString());
+			    return -1;
+			  }
+		
+		
+		public void onBrowserEvent(Event event)
+		{
+
+		    if (DOM.eventGetType(event) == Event.ONCLICK) {
+		        Element target = DOM.eventGetTarget(event);
+		        int index = findDividerIndex(target);
+		        if (index != -1) {
+			        MessageConsole.setText("显示TARGET!");
+		          showStack(index);
+		        }
+		      }
+		}
+	}
 	
 	public SystemView(SystemAllController control) {
 		this.control = control;
@@ -43,18 +90,18 @@ public class SystemView extends Composite {
 		panel.setHeight(Entry.SinkHeight);
 		initWidget(panel);
 		panel.setWidth("100%");
-		//flexTable.setBorderWidth(1);
 
 		setStyleName("rismile-system");
 
-		final StackPanel stackPanel = new StackPanel();
+		final exStackPanel stackPanel = new exStackPanel();
 		stackPanel.setWidth("100%");
 		stackPanel.setHeight("100%");
 		
 		stackPanel.setStyleName("stack-panel");
-		panel.setWidget(0, 0, stackPanel);
+		panel.add(stackPanel);
 		//panel.getFlexCellFormatter().setColSpan(1, 0, 2);
 
+		/*
 		final VerticalPanel servicePanel = new VerticalPanel();
 		servicePanel.setWidth("100%");
 		servicePanel.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_LEFT);
@@ -65,7 +112,6 @@ public class SystemView extends Composite {
 		dateGrid.addStyleName("date-table");
 		servicePanel.add(dateGrid);
 
-		/*
 		// 服务信息界面布局
 		servicePanel.add(serviceGrid);
 		//serviceGrid.setBorderWidth(1);
@@ -84,46 +130,46 @@ public class SystemView extends Composite {
 		
 		// 网络配置信息界面布局
 		final VerticalPanel netPanel = new VerticalPanel();
+		stackPanel.add(netPanel, UI.createHeaderHTML("网络接口"), true);
 		netPanel.setWidth("100%");
-		netPanel.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_LEFT);
-
-		final Button netAddButton = new Button("添加IP", control.new addIPClickListener());
-		netAddButton.setStyleName("big-button");
-		netPanel.add(netAddButton);
-
+		netPanel.setHeight("100%");
+		netPanel.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_CENTER);
+		netPanel.setVerticalAlignment(HasVerticalAlignment.ALIGN_MIDDLE);
+		final Button netAddButton = new Button("添加地址", control.new addIPClickListener());
+		//netAddButton.setStyleName("sys-button");
+		//netPanel.add(netAddButton);
 		netGrid.setBorderWidth(1);
 		netGrid.setWidth("90%");
-		netGrid.setStyleName("grid2-table");
-		netGrid.setBorderWidth(1);
 		netGrid.setText(0, 0, "接口");
 		netGrid.setText(0, 1, "IP地址");
 		netGrid.setText(0, 2, "子网掩码");
-		netGrid.setText(0, 3, "操作");
+		netGrid.setWidget(0, 3, netAddButton);
 		netGrid.setStyleName("status-table");
 		netGrid.getCellFormatter().setStyleName(0, 0, "head");
 		netGrid.getCellFormatter().setStyleName(0, 1, "head");
 		netGrid.getCellFormatter().setStyleName(0, 2, "head");
 		netGrid.getCellFormatter().setStyleName(0, 3, "head");
 		netPanel.add(netGrid);
-		stackPanel.add(netPanel, UI.createHeaderHTML("网络接口"), true);
 
 		// 路由信息界面布局
 		final VerticalPanel routePanel = new VerticalPanel();
+		stackPanel.add(routePanel, UI.createHeaderHTML("路由设置"), true);
 		routePanel.setWidth("100%");
-		routePanel.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_LEFT);
+		routePanel.setHeight("100%");
+		routePanel.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_CENTER);
+		routePanel.setVerticalAlignment(HasVerticalAlignment.ALIGN_MIDDLE);
 
 		final Button routeAddButton = new Button("添加路由", control.new addRouterClickListener());
-		routeAddButton.setStyleName("big-button");
-		routePanel.add(routeAddButton);
+		//routeAddButton.setStyleName("big-button");
+		//routePanel.add(routeAddButton);
 
 		routeGrid.setBorderWidth(1);
 		routeGrid.setWidth("90%");
-		routeGrid.setStyleName("grid2-table");
 		routeGrid.setText(0, 0, "目的地址");
 		routeGrid.setText(0, 1, "掩码");
 		routeGrid.setText(0, 2, "接口");
 		routeGrid.setText(0, 3, "网关");
-		routeGrid.setText(0, 4, "操作");
+		routeGrid.setWidget(0, 4, routeAddButton);
 		routeGrid.setStyleName("status-table");
 		routeGrid.getCellFormatter().setStyleName(0, 0, "head");
 		routeGrid.getCellFormatter().setStyleName(0, 1, "head");
@@ -131,34 +177,39 @@ public class SystemView extends Composite {
 		routeGrid.getCellFormatter().setStyleName(0, 3, "head");
 		routeGrid.getCellFormatter().setStyleName(0, 4, "head");
 		routePanel.add(routeGrid);
-		stackPanel.add(routePanel, UI.createHeaderHTML("路由设置"), true);
 
 		// 管理配置界面布局
+		final VerticalPanel mPanel = new VerticalPanel();
+		mPanel.setWidth("100%");
+		mPanel.setHeight("100%");
+		mPanel.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_CENTER);
+		mPanel.setVerticalAlignment(HasVerticalAlignment.ALIGN_MIDDLE);
 		final Grid adminGrid = new Grid(2,3);
+		mPanel.add(adminGrid);
 		//adminGrid.setBorderWidth(1);
 		adminGrid.setStyleName("grid1-table");
-		stackPanel.add(adminGrid, UI.createHeaderHTML("管理及配置"), true);
+		stackPanel.add(mPanel, UI.createHeaderHTML("管理及配置"), true);
 		adminGrid.setWidth("100%");
 
 		final Button addAdminButton = new Button("添加管理员");
-		addAdminButton.setStyleName("big-button");
+		//addAdminButton.setStyleName("big-button");
 		adminGrid.setWidget(0, 0, addAdminButton);
 		addAdminButton.addClickListener(control.new addAdminClickListener());
 		final Button delAdminButton = new Button("删除管理员", control.new delAdminClickListener());
-		delAdminButton.setStyleName("big-button");
+		//delAdminButton.setStyleName("big-button");
 		adminGrid.setWidget(0, 1, delAdminButton);
 		
 		final Button upfileButton = new Button("升级程序",control.new uploadClickListener());
 		adminGrid.setWidget(0, 2, upfileButton);
-		upfileButton.setStyleName("big-button");
+		//upfileButton.setStyleName("big-button");
 
 		final Button paraButton = new Button("恢复出厂参数", control.new resotreClickListener());
 		adminGrid.setWidget(1, 0, paraButton);
-		paraButton.setStyleName("big-button");
+		//paraButton.setStyleName("big-button");
 
 		final Button restartButton = new Button("重启设备", control.new resetClickListener());
 		adminGrid.setWidget(1, 2, restartButton);
-		restartButton.setStyleName("big-button");
+		//restartButton.setStyleName("big-button");
 		
 		
 		//----------------------
