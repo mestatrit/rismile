@@ -27,10 +27,6 @@ public abstract class Sink extends Composite {
 
 		public abstract Sink createInstance();
 
-		public String getColor() {
-			return "#2a8ebf";
-		}
-
 		public String getDescription() {
 			return description;
 		}

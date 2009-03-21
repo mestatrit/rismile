@@ -3,5 +3,4 @@
 	<inherits name="com.google.gwt.xml.XML"/>
 	<inherits name="com.google.gwt.user.User"/>
     <stylesheet src='rismile.css' />
-    <stylesheet src='rismiletable.css' />
 </module>

@@ -83,7 +83,7 @@ public abstract class MyDialog extends PopupPanel implements HasHTML,
 	public MyDialog(boolean autoHide, boolean modal) {
 		super(autoHide, modal);
 
-		mask.setPropertyString("className", "rismile-mask");
+		mask.setPropertyString("className", "mask");
 		super.setWidget(panel);
 		setStyleName("rismile-dialog");
 

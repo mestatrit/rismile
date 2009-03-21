@@ -45,14 +45,14 @@ public class InterfaceView extends Composite {
 		initWidget(panel);
 		panel.setWidth("100%");
 
-		setStyleName("rismile-system");
+		setStyleName("system");
 
 		final StackPanel stackPanel = new StackPanel();
 		
 		stackPanel.setWidth("100%");
 		stackPanel.setHeight("100%");
 		
-		stackPanel.setStyleName("stack-panel");
+		//stackPanel.setStyleName("stack-panel");
 		panel.setWidget(0, 0, stackPanel);
 		//panel.getFlexCellFormatter().setColSpan(1, 0, 2);
 
@@ -71,11 +71,8 @@ public class InterfaceView extends Composite {
 		//statGrid.setBorderWidth(1);
 		statGrid.setStyleName("table");
 		flexTable.setWidget(0,0, statGrid);
-		statGrid.getCellFormatter().setStyleName(0, 0, "head");
-		statGrid.getCellFormatter().setStyleName(1, 0, "head");
-		statGrid.getCellFormatter().setStyleName(2, 0, "head");
-		statGrid.getCellFormatter().setStyleName(3, 0, "head");
-		//statGrid.getCellFormatter().setStyleName(2, 0, "head");
+		statGrid.getColumnFormatter().setStyleName(0, "head");
+
 		statGrid.getColumnFormatter().setWidth(0, "50%");
 		statGrid.getColumnFormatter().setWidth(1, "50%");
 		
@@ -109,10 +106,8 @@ public class InterfaceView extends Composite {
 		//pppGrid.setBorderWidth(1);
 		pppGrid.setStyleName("table");
 		pppGrid.setWidth("80%");
-		pppGrid.getCellFormatter().setStyleName(0, 0, "head");
-		pppGrid.getCellFormatter().setStyleName(1, 0, "head");
-		pppGrid.getCellFormatter().setStyleName(2, 0, "head");
-	
+		pppGrid.getColumnFormatter().setStyleName(0, "head");
+
 		pppGrid.getColumnFormatter().setWidth(0, "30%");
 		pppGrid.getColumnFormatter().setWidth(1, "50%");
 		pppGrid.getColumnFormatter().setWidth(2, "20%");
@@ -175,10 +170,8 @@ public class InterfaceView extends Composite {
 		//routeGrid.setBorderWidth(1);
 		routeGrid.setWidth("80%");
 		routeGrid.setStyleName("table");
+		routeGrid.getRowFormatter().setStyleName(0, "head");
 
-		routeGrid.getCellFormatter().setStyleName(0, 0, "head");
-		routeGrid.getCellFormatter().setStyleName(0, 1, "head");
-		routeGrid.getCellFormatter().setStyleName(0, 2, "head");
 		routeGrid.getColumnFormatter().setWidth(0, "40%");
 		routeGrid.getColumnFormatter().setWidth(1, "40%");
 

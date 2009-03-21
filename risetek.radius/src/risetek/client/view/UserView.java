@@ -38,11 +38,9 @@ public class UserView extends RismileTableView {
 		this.control = control;
 		Button addNewUser = new Button("添加用户", control.new AddUserAction());
 		addToolButton(addNewUser);
-		addNewUser.addStyleName("toolbutton");
 		
 		Button downloadButton = new Button("导出文件");
 		super.addToolButton(downloadButton);
-		downloadButton.addStyleName("toolbutton");
 		downloadButton.addClickListener(new ClickListener(){
 			public void onClick(Widget sender) {
 				Window.open("forms/exportusers", "_self", "");
@@ -50,7 +48,6 @@ public class UserView extends RismileTableView {
 		});
 		
 		Button clearButton = new Button("清除", control.new EmptyAction());
-		clearButton.addStyleName("toolbutton");
 		addToolButton(clearButton);
 	}
 	

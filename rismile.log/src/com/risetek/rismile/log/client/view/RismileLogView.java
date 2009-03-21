@@ -37,11 +37,11 @@ public class RismileLogView extends RismileTableView {
 		this.control = control;
 		TogAutoRefresh = new Button("查看历史", control.new AutoRefreshClick());
 		addToolButton(TogAutoRefresh);
-		TogAutoRefresh.addStyleName("toolbutton");
+		//TogAutoRefresh.addStyleName("toolbutton");
 
 		Button downloadButton = new Button("导出文件");
 		addToolButton(downloadButton);
-		downloadButton.addStyleName("toolbutton");
+		//downloadButton.addStyleName("toolbutton");
 		downloadButton.addClickListener(new ClickListener() {
 			public void onClick(Widget sender) {
 				Window.open("forms/exportlog", "_self", "");
@@ -50,7 +50,7 @@ public class RismileLogView extends RismileTableView {
 		});
 		
 		clearButton = new Button("清除",control.new ClearLogAction());
-		clearButton.addStyleName("toolbutton");
+		//clearButton.addStyleName("toolbutton");
 		addToolButton(clearButton);
 	}
 

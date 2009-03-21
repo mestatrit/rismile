@@ -56,8 +56,8 @@ public class SinkList extends Composite {
 		outerlist.add(list);
 		initWidget(outerlist);
 		list.add(image);
-		setStyleName("rismile-SinkList");
-		list.setStyleName("rismile-SinkList");
+		setStyleName("rismile");
+		list.setStyleName("SinkList");
 	}
 
 	public void addExternalLink(Widget w) {
@@ -111,7 +111,7 @@ public class SinkList extends Composite {
 	private void colorSink(int index, boolean on) {
 		String color = "";
 		if (on) {
-			color = sinks.get(index).getColor();
+			color = "#2a8ebf";
 		}
 
 		Widget w = list.getWidget(index + 1);

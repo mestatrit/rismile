@@ -46,29 +46,6 @@
 	margin-bottom: 1mm;
 }
 
-.radius-info-Label {
-	color: crimson;
-#	color: red;
-}
-
-
-.sys-introH {
-  font-size: 22pt;
-  font-weight: bold;
-  padding: 4px;
-  padding-left: 16px;
-  padding-right: 16px;
-  margin-right: 3px;
-  text-align: center;
-}
-
-.sys-intro {
-  font-size: 18pt;
-  padding: 4px;
-  padding-left: 16px;
-  padding-right: 16px;
-  margin-right: 3px;
-}
 
 .rismiletable .table td.operator {
 	text-align: right;
@@ -93,5 +70,32 @@
 
 .rismiletable .table td.sched {
 	width: 20em;
+}
+
+.radius-config .sys-introH {
+  font-size: 22pt;
+  font-weight: bold;
+  padding: 4px;
+  padding-left: 16px;
+  padding-right: 16px;
+  margin-right: 3px;
+  text-align: center;
+}
+
+.radius-config .sys-intro {
+  font-size: 18pt;
+  padding: 4px;
+  padding-left: 16px;
+  padding-right: 16px;
+  margin-right: 3px;
+}
+
+.radius-config .images-table {
+	text-align: right;
+}
+
+.radius-config .info-table {
+	font-size: 10px;
+	border:1px solid #999;
 }
 

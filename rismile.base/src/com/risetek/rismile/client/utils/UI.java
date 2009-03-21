@@ -26,14 +26,14 @@ public class UI {
 
 		String innerHtml = DOM.getInnerHTML(captionGrid.getElement());
 
+		
 		String captionInnerHtml = "<table class='caption' cellpadding='0' cellspacing='0'>"
-				+ "<tr><td class='lcaption'>"
-				+ "</td><td class='rcaption'><b style='white-space:nowrap'>"
+				+ "<tr><td><b style='white-space:nowrap'>"
 				+ innerHtml + "</b></td></tr></table>";
 
 		return "<table align='left' cellpadding='0' cellspacing='0'><tbody>"
 				+ "<tr><td class='box-10'>&nbsp;</td>" + "<td class='box-10'>&nbsp;</td>"
-				+ "<td class='box-10'>&nbsp;</td>" + "</tr><tr>" + "<td></td>"
+				+ "<td class='box-10'>&nbsp;</td></tr><tr><td></td>"
 				+ "<td class='box-11'>" + captionInnerHtml + "</td>"
 				+ "<td></td>" + "</tr></tbody></table>";
 	}

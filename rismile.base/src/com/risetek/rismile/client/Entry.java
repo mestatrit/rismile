@@ -82,7 +82,7 @@ public abstract class Entry implements EntryPoint, HistoryListener {
 		sinkContainer.setStyleName("Sink");
 		sinkContainer.setWidth("100%");
 
-		description.setStyleName("Info");
+		description.setStyleName("description");
 		description.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_RIGHT);
 
 		maskPanel.setWidth("100%");
@@ -126,15 +126,11 @@ public abstract class Entry implements EntryPoint, HistoryListener {
 		// sink list.
 		curSink = info.getInstance();
 		list.setSinkSelection(info.getName());
-		description.setHTML(info.getDescription() + "  <<<<");
+		description.setText(info.getDescription() + "  <<<<");
 
 		if (affectHistory) {
 			History.newItem(info.getName());
 		}
-
-		// 设置操作提示区域的背景颜色与info的颜色一致。
-		// TODO: copyright 的背景颜色是否也该做一致性设置？
-		DOM.setStyleAttribute(description.getElement(), "backgroundColor", info.getColor());
 
 		// Display the new sink.
 		curSink.setVisible(false);

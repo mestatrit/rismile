@@ -23,19 +23,19 @@ public class NavBar extends Composite {
 	  // First
 	  gotoFirst = new Button("&lt;&lt;", control.new navigatorFirstClick());
       buttonsPanel.add(gotoFirst);
-      gotoFirst.setStyleName("dirbutton");
+      gotoFirst.addStyleDependentName("dir");
       // Prev
       gotoPrev = new Button("&lt;", control.new navigatorPrevClick());
       buttonsPanel.add(gotoPrev);
-      gotoPrev.setStyleName("dirbutton");
+      gotoPrev.addStyleDependentName("dir");
       // Next
       gotoNext = new Button("&gt;", control.new navigatorNextClick());
       buttonsPanel.add(gotoNext);
-      gotoNext.setStyleName("dirbutton");
+      gotoNext.addStyleDependentName("dir");
       // Last
       gotoLast = new Button("&gt;&gt;", control.new navigatorLastLastClick());
       buttonsPanel.add(gotoLast);
-      gotoLast.setStyleName("dirbutton");
+      gotoLast.addStyleDependentName("dir");
 
       enabelNavbar(false,false,false,false);
     }

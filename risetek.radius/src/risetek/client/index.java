@@ -1,8 +1,8 @@
 package risetek.client;
 
 import com.risetek.rismile.client.Entry;
+import com.risetek.rismile.client.RisetekSystemSink;
 import com.risetek.rismile.log.client.RismileLogSink;
-import com.risetek.rismile.system.client.RisetekSystemSink;
 /**
  * Entry point classes define <code>onModuleLoad()</code>.
  */

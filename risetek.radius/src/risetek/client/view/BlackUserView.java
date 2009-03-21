@@ -33,7 +33,7 @@ public class BlackUserView extends RismileTableView {
 		this.control = control;
 		
 		super.addToolButton(clearButton);
-		clearButton.addStyleName("toolbutton");
+		//clearButton.addStyleName("toolbutton");
 		
 		grid.addTableListener(control.new TableAction());
 

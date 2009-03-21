@@ -11,10 +11,10 @@ import com.google.gwt.xml.client.Element;
 import com.google.gwt.xml.client.NodeList;
 import com.google.gwt.xml.client.XMLParser;
 import com.risetek.rismile.client.Entry;
+import com.risetek.rismile.client.RisetekSystemSink;
 import com.risetek.rismile.client.http.RequestFactory;
 import com.risetek.rismile.client.sink.Sink.SinkInfo;
 import com.risetek.rismile.client.utils.MessageConsole;
-import com.risetek.rismile.system.client.RisetekSystemSink;
 
 /**
  * Entry point classes define <code>onModuleLoad()</code>.
