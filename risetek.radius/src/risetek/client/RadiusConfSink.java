@@ -11,7 +11,7 @@ public class RadiusConfSink extends Sink {
 	private RadiusConfController control = new RadiusConfController();
 	
 	public static SinkInfo init() {
-		return new SinkInfo(Tag, "认证配置", "radius配置信息.") {
+		return new SinkInfo(Tag, "认证配置", "radius配置信息") {
 			public Sink createInstance() {
 				return new RadiusConfSink();
 			}

@@ -126,7 +126,7 @@ public abstract class Entry implements EntryPoint, HistoryListener {
 		// sink list.
 		curSink = info.getInstance();
 		list.setSinkSelection(info.getName());
-		description.setText(info.getDescription() + "  <<<<");
+		description.setText(info.getDescription()+ "    ");
 
 		if (affectHistory) {
 			History.newItem(info.getName());

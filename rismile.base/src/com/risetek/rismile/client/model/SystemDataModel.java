@@ -44,19 +44,6 @@ public class SystemDataModel {
 	}
 	
 	
-	private Service parseService(Element serviceXml) {
-		Element radius = (Element) serviceXml.getElementsByTagName("radius").item(
-				0);
-		
-		String name = "认证服务";
-		String status = ((Element) radius.getElementsByTagName(
-				"status").item(0)).getFirstChild().getNodeValue();
-		String version = ((Element) radius.getElementsByTagName(
-				"version").item(0)).getFirstChild().getNodeValue();
-		Service service = new Service(name, status, version);
-		return service;
-	}
-
 	private List<InterfEntry> parseInterf(Element networksXml) {
 
 		NodeList interfaces = networksXml.getElementsByTagName("interface");

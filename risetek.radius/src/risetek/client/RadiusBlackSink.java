@@ -11,7 +11,7 @@ public class RadiusBlackSink extends Sink {
 	public RadiusBlackController control = new RadiusBlackController();
 	
 	public static SinkInfo init() {
-		return new SinkInfo(Tag, "不明用户", "不明用户管理."){
+		return new SinkInfo(Tag, "不明用户", "不明用户管理"){
 		      public Sink createInstance() {
 		          return new RadiusBlackSink();
 		        }

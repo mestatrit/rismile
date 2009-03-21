@@ -6,7 +6,6 @@ import risetek.client.model.ProduceData;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.client.ui.AbstractImagePrototype;
 import com.google.gwt.user.client.ui.Composite;
-import com.google.gwt.user.client.ui.FlexTable;
 import com.google.gwt.user.client.ui.Grid;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.HasHorizontalAlignment;
@@ -15,11 +14,11 @@ import com.risetek.rismile.client.Entry;
 
 public class SystemHomeView extends Composite {
 
-	private FlexTable table = new FlexTable();
-	private FlexTable table2 = new FlexTable();
-	private FlexTable table1 = new FlexTable();
-	private Grid serial = new Grid(1, 1);
-	private Grid status = new Grid(1, 2);
+	private final Grid table = new Grid(1,2);
+	private final Grid table2 = new Grid(4,1);
+	private final Grid table1 = new Grid(4,1);
+	private final Grid serial = new Grid(1, 1);
+	private final Grid status = new Grid(1, 2);
 
 	private final HTML title = new HTML(
 			"<DIV class='sys-introH'>成都中联信通科技有限公司</DIV><DIV class='sys-introH'>专网认证服务器</DIV>");

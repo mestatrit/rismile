@@ -75,7 +75,7 @@
 .radius-config .sys-introH {
   font-size: 22pt;
   font-weight: bold;
-  padding: 4px;
+  padding-top: 4px;
   padding-left: 16px;
   padding-right: 16px;
   margin-right: 3px;
@@ -84,10 +84,10 @@
 
 .radius-config .sys-intro {
   font-size: 18pt;
-  padding: 4px;
+  padding-top: 4px;
   padding-left: 16px;
   padding-right: 16px;
-  margin-right: 3px;
+  margin-left: 1em;  
 }
 
 .radius-config .images-table {

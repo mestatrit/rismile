@@ -9,7 +9,7 @@ public class RisetekSystemSink  extends Sink {
 	public SystemController systemAllController = new SystemController();
 
 	public static SinkInfo init() {
-		return new SinkInfo(Tag, "系统配置", "系统配置信息.") {
+		return new SinkInfo(Tag, "系统配置", "系统配置信息") {
 			public Sink createInstance() {
 				return new RisetekSystemSink();
 			}

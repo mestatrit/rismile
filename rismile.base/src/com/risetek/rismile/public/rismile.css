@@ -206,7 +206,7 @@ body {
 }
 
 .rismile .system .gray table .head {
-	font: bold;
+	font-weight: bold;
 	background: #F4F7FB;
 }
 
