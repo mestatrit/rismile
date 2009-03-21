@@ -1,21 +1,9 @@
 .router-config {
 	text-align: center;
-	vertical-align: middle;
 	align: center;
 }
 
-.router-config .table-title {
-	text-indent: 1em;
-	padding-top: 4px;
-	padding-bottom: 4px;
-	font-size: larger;
-	font-weight: bold;
-	border:1px solid #2a8ebf;
-	text-align: left;
-	background: url(images/system_blue_gradient.gif) repeat-x top left;
-}
-
-.router-config Button {
+.router-config .gwt-Button {
 	width: 6em;
 	padding-top: 2px;
 	padding-bottom: 2px;
@@ -25,6 +13,7 @@
 }
 
 .router-config .table {
+	margin-top: 1cm;
 	border: 1px solid #999;
 	background-color: white;
 	border-collapse: collapse;
@@ -41,12 +30,27 @@
 	font-weight: bold;
 }
 
-.router-config CheckBox {
-	background-color: blue;
+.router-config .operator-table {
+	margin-top: 1cm;
+}
+
+.router-config .checkbox-table {
+	margin-top: 1cm;
+	border: 1px solid #999;
+	border-collapse: collapse;
+}
+
+.router-config .checkbox-table td {
+	border:solid #999;
+	border-width:1px 1px 1px 1px;
+	padding:4px;
+}
+
+.router-config .gwt-CheckBox {
 }
 
 
-.sys-introH {
+.router-config .sys-introH {
   font-size: 22pt;
   font-weight: bold;
   padding: 4px;
@@ -56,10 +60,20 @@
   text-align: center;
 }
 
-.sys-intro {
+.router-config .sys-intro {
   font-size: 18pt;
   padding: 4px;
   padding-left: 16px;
   padding-right: 16px;
   margin-right: 3px;
 }
+
+.router-config .images-table {
+	text-align: right;
+}
+
+.router-config .info-table {
+	font-size: 10px;
+	border:1px solid #999;
+}
+

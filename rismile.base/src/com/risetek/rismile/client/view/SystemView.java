@@ -133,11 +133,15 @@ public class SystemView extends Composite {
 		final Button netAddButton = new Button("添加地址", control.new addIPClickListener());
 		netPanel.setStyleName("gray");
 		netGrid.setBorderWidth(1);
-		netGrid.setWidth("90%");
+		netGrid.setWidth("85%");
 		netGrid.setText(0, 0, "接口");
 		netGrid.setText(0, 1, "IP地址");
 		netGrid.setText(0, 2, "子网掩码");
 		netGrid.setWidget(0, 3, netAddButton);
+		netGrid.getColumnFormatter().setWidth(0	, "15%");
+		netGrid.getColumnFormatter().setWidth(1	, "34%");
+		netGrid.getColumnFormatter().setWidth(2	, "34%");
+		netGrid.getColumnFormatter().setWidth(3	, "17%");
 		netGrid.getRowFormatter().setStyleName(0, "head");
 		netPanel.add(netGrid);
 
@@ -158,6 +162,11 @@ public class SystemView extends Composite {
 		routeGrid.setText(0, 2, "接口");
 		routeGrid.setText(0, 3, "网关");
 		routeGrid.setWidget(0, 4, routeAddButton);
+		routeGrid.getColumnFormatter().setWidth(0 , "25%");
+		routeGrid.getColumnFormatter().setWidth(1 , "25%");
+		routeGrid.getColumnFormatter().setWidth(2 , "10%");
+		routeGrid.getColumnFormatter().setWidth(3 , "25%");
+		routeGrid.getColumnFormatter().setWidth(4 , "15%");
 		routeGrid.getRowFormatter().setStyleName(0, "head");
 		routePanel.add(routeGrid);
 

@@ -1,10 +1,8 @@
 package com.risetek.rismile.client.dialog;
 
 import com.google.gwt.user.client.DOM;
-import com.google.gwt.user.client.Element;
 import com.google.gwt.user.client.Event;
 import com.google.gwt.user.client.ui.Button;
-import com.google.gwt.user.client.ui.ClickListener;
 import com.google.gwt.user.client.ui.FlexTable;
 import com.google.gwt.user.client.ui.Grid;
 import com.google.gwt.user.client.ui.HTML;
@@ -15,21 +13,8 @@ import com.google.gwt.user.client.ui.MouseListener;
 import com.google.gwt.user.client.ui.PopupPanel;
 import com.google.gwt.user.client.ui.Widget;
 
-/**
- * A form of popup that has a caption area at the top and can be dragged by the
- * user.
- * <p>
- * <img class='gallery' src='DialogBox.png'/>
- * </p>
- * <h3>CSS Style Rules</h3> <ul class='css'> <li>.gwt-DialogBox { the outside of
- * the dialog }</li> <li>.gwt-DialogBox .Caption { the caption }</li> </ul>
- * <p>
- * <h3>Example</h3>
- * {@example com.google.gwt.examples.DialogBoxExample}
- * </p>
- */
 public abstract class MyDialog extends PopupPanel implements HasHTML,
-		MouseListener, ClickListener {
+		MouseListener {
 
 	private HTML caption = new HTML();
 	protected Button close = new Button();
@@ -37,15 +22,6 @@ public abstract class MyDialog extends PopupPanel implements HasHTML,
 	private boolean dragging;
 	private int dragStartX, dragStartY;
 	private FlexTable panel = new FlexTable();
-	// 用来实现半透明屏蔽
-	Element mask = DOM.createDiv();
-
-	/*
-	 * 将自己灰色屏蔽取消。
-	 */
-	public void unmask() {
-		mask.getParentElement().removeChild(mask);
-	}
 
 	/**
 	 * Creates an empty dialog box. It should not be shown until its child
@@ -83,14 +59,12 @@ public abstract class MyDialog extends PopupPanel implements HasHTML,
 	public MyDialog(boolean autoHide, boolean modal) {
 		super(autoHide, modal);
 
-		mask.setPropertyString("className", "mask");
 		super.setWidget(panel);
 		setStyleName("rismile-dialog");
 
 		Grid head = new Grid(1,2);
 
 		head.setWidth("100%");
-//		head.setHeight("25px");
 
 		head.setWidget(0, 1, close);
 		head.getCellFormatter().setHorizontalAlignment(0, 1,
@@ -99,29 +73,19 @@ public abstract class MyDialog extends PopupPanel implements HasHTML,
 		head.setStyleName("caption");
 		panel.setWidget(0, 0, head);
 
-		// close.addStyleName("user-close-button");
 		close.setStylePrimaryName("close");
-		close.addClickListener(this);
 		close.setTabIndex(103);
 
-		// head.add(caption, DockPanel.WEST);
-		// head.setCellVerticalAlignment(caption,
-		// HasVerticalAlignment.ALIGN_MIDDLE);
 		head.setWidget(0, 0, caption);
 		head.getCellFormatter().setVerticalAlignment(0, 0,
 				HasVerticalAlignment.ALIGN_BOTTOM);
 		caption.setWidth("100%");
 		caption.addMouseListener(this);
-		// panel.setWidget(0, 0, caption);
 
 		panel.setHeight("100%");
 		panel.setBorderWidth(0);
 		panel.setCellPadding(0);
 		panel.setCellSpacing(0);
-
-		// panel.setWidget(0, 1, close);
-		// panel.getCellFormatter().setHorizontalAlignment(0, 1,
-		// HasHorizontalAlignment.ALIGN_RIGHT);
 
 		panel.getFlexCellFormatter().setColSpan(1, 0, 2);
 		panel.getCellFormatter().setHeight(1, 0, "100%");
@@ -129,9 +93,6 @@ public abstract class MyDialog extends PopupPanel implements HasHTML,
 		panel.getCellFormatter().setAlignment(1, 0,
 				HasHorizontalAlignment.ALIGN_CENTER,
 				HasVerticalAlignment.ALIGN_MIDDLE);
-
-		// caption.setStyleName("Caption");
-
 	}
 
 	public String getHTML() {
@@ -229,12 +190,4 @@ public abstract class MyDialog extends PopupPanel implements HasHTML,
 		panel.setWidth("100%");
 	}
 
-	public void hide() {
-		super.hide();
-		unmask();
-	}
-
-	public void onClick(Widget sender) {
-		hide();
-	}
 }

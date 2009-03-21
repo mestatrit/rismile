@@ -5,9 +5,8 @@ import risetek.client.control.IfController;
 import com.risetek.rismile.client.sink.Sink;
 
 public class InterfaceSink extends Sink{
-	public static String Tag = "Interface";
+	public static String Tag = "Dialer";
 	IfController control;
-	
 	
 	public static SinkInfo init(final int unit) {
 		Tag += unit;

@@ -14,6 +14,7 @@ import com.google.gwt.user.client.ui.Grid;
 import com.google.gwt.user.client.ui.HasHorizontalAlignment;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.StackPanel;
+import com.google.gwt.user.client.ui.VerticalPanel;
 import com.risetek.rismile.client.Entry;
 import com.risetek.rismile.client.utils.UI;
 
@@ -21,7 +22,7 @@ public class InterfaceView extends Composite {
 
 	final FlexTable routeGrid = new FlexTable();
 
-	final FlexTable panel = new FlexTable();
+	final VerticalPanel panel = new VerticalPanel();
 	
 	final Label userLabel = new Label();
 	final Label passwordLabel = new Label("未设置");	// 我们不显示这个数据
@@ -53,7 +54,7 @@ public class InterfaceView extends Composite {
 		stackPanel.setHeight("100%");
 		
 		//stackPanel.setStyleName("stack-panel");
-		panel.setWidget(0, 0, stackPanel);
+		panel.add(stackPanel);
 		//panel.getFlexCellFormatter().setColSpan(1, 0, 2);
 
 		// --- 网络状态显示
@@ -61,20 +62,19 @@ public class InterfaceView extends Composite {
 		//flexTable.setBorderWidth(1);
 		flexTable.setWidth("100%");
 		flexTable.setStyleName("router-config");
-		flexTable.getColumnFormatter().setWidth(0, "50%");
-		flexTable.getColumnFormatter().setWidth(1, "50%");
+		flexTable.getColumnFormatter().setWidth(0, "70%");
+		flexTable.getColumnFormatter().setWidth(1, "30%");
 
-		flexTable.getFlexCellFormatter().setColSpan(0, 0, 2);
-		flexTable.getFlexCellFormatter().setHorizontalAlignment(0, 0, HasHorizontalAlignment.ALIGN_CENTER);
+		flexTable.getFlexCellFormatter().setHorizontalAlignment(0, 0, HasHorizontalAlignment.ALIGN_RIGHT);
+		flexTable.getFlexCellFormatter().setHorizontalAlignment(0, 1, HasHorizontalAlignment.ALIGN_LEFT);
 
 		statGrid.setWidth("80%");
 		//statGrid.setBorderWidth(1);
 		statGrid.setStyleName("table");
-		flexTable.setWidget(0,0, statGrid);
 		statGrid.getColumnFormatter().setStyleName(0, "head");
 
-		statGrid.getColumnFormatter().setWidth(0, "50%");
-		statGrid.getColumnFormatter().setWidth(1, "50%");
+		statGrid.getColumnFormatter().setWidth(0, "30%");
+		statGrid.getColumnFormatter().setWidth(1, "70%");
 		
 		
 		statGrid.setText(0, 0, "接口状态");
@@ -83,33 +83,38 @@ public class InterfaceView extends Composite {
 		statGrid.setText(3, 0, "接口地址");
 		//statGrid.setText(2, 0, "LinkStat");
 
-		flexTable.setWidget(2, 0, new Button("断开连接", control.new DisconnectListener()));
-		flexTable.setWidget(2, 1, new Button("建立连接", control.new ConnectListener()));
-		flexTable.setWidget(3, 0, new Button("更新状态", control.new ReloadStatListener()));
+		Grid operator = new Grid(3,1);
+		operator.setStyleName("operator-table");
+		operator.setWidget(0, 0, new Button("断开连接", control.new DisconnectListener()));
+		operator.setWidget(1, 0, new Button("建立连接", control.new ConnectListener()));
+		operator.setWidget(2, 0, new Button("更新状态", control.new ReloadStatListener()));
 		// flexTable.setWidget(2, 1, new Button("删除接口", control.new RemoveInterfaceClick()));
 		
+		flexTable.setWidget(0,0, statGrid);
+		flexTable.setWidget(0,1, operator);
+
 		stackPanel.add(flexTable, UI.createHeaderHTML("运行状态"), true);
 		
 		
 		// 网络配置信息界面布局--------------------------------------------
 
 		flexTable = new FlexTable();
-		//flexTable.setBorderWidth(1);
+		// flexTable.setBorderWidth(1);
 		flexTable.setWidth("100%");
 		flexTable.getColumnFormatter().setWidth(0, "60%");
 		flexTable.getColumnFormatter().setWidth(1, "40%");
-		flexTable.getFlexCellFormatter().setHorizontalAlignment(0, 0, HasHorizontalAlignment.ALIGN_CENTER);
-		flexTable.getFlexCellFormatter().setHorizontalAlignment(0, 1, HasHorizontalAlignment.ALIGN_CENTER);
+		flexTable.getFlexCellFormatter().setHorizontalAlignment(0, 0, HasHorizontalAlignment.ALIGN_RIGHT);
+		flexTable.getFlexCellFormatter().setHorizontalAlignment(0, 1, HasHorizontalAlignment.ALIGN_LEFT);
 		flexTable.setStyleName("router-config");
 		
 		final Grid pppGrid = new Grid(3,3);
 		//pppGrid.setBorderWidth(1);
 		pppGrid.setStyleName("table");
-		pppGrid.setWidth("80%");
+		pppGrid.setWidth("90%");
 		pppGrid.getColumnFormatter().setStyleName(0, "head");
 
-		pppGrid.getColumnFormatter().setWidth(0, "30%");
-		pppGrid.getColumnFormatter().setWidth(1, "50%");
+		pppGrid.getColumnFormatter().setWidth(0, "20%");
+		pppGrid.getColumnFormatter().setWidth(1, "60%");
 		pppGrid.getColumnFormatter().setWidth(2, "20%");
 		pppGrid.setText(0, 0, "用户名:");
 		pppGrid.setWidget(0, 1, userLabel);
@@ -127,9 +132,9 @@ public class InterfaceView extends Composite {
 		
 		FlexTable tempGrid = new FlexTable();
 		//tempGrid.setBorderWidth(1);
-		tempGrid.setWidth("80%");
+		tempGrid.setWidth("90%");
 		tempGrid.getColumnFormatter().setWidth(0, "50%");
-		tempGrid.setStyleName("table");
+		tempGrid.setStyleName("checkbox-table");
 		
 		//tempGrid.setWidget(0,1, authGrid);
 

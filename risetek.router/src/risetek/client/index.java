@@ -77,7 +77,7 @@ public class index  extends  Entry implements ClickListener, RequestCallback {
 				SinkInfo is = InterfaceSink.init(0);
 				list.addSink( is );
 				link.removeFromParent();
-				show(is, true);
+				// show(is, true);
 				break;
 			}
 		}

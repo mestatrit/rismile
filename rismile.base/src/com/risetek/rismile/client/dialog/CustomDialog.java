@@ -5,6 +5,7 @@ import com.google.gwt.user.client.DOM;
 import com.google.gwt.user.client.Element;
 import com.google.gwt.user.client.Event;
 import com.google.gwt.user.client.ui.Button;
+import com.google.gwt.user.client.ui.ClickListener;
 import com.google.gwt.user.client.ui.DockPanel;
 import com.google.gwt.user.client.ui.HasHorizontalAlignment;
 import com.google.gwt.user.client.ui.HasVerticalAlignment;
@@ -21,13 +22,26 @@ public abstract class CustomDialog extends MyDialog {
 	protected final Button cancel = new Button("取消");
 	private final Label note = new Label();
 	private final Label message = new Label();
-
-//	Composite parent;
+	// 用来实现半透明屏蔽
+	Element mask = DOM.createDiv();
+	/*
+	 * 将自己灰色屏蔽取消。
+	 */
+	public void unmask() {
+		mask.getParentElement().removeChild(mask);
+	}
 
 	public CustomDialog() {
 		super(false,true);
+		
+		close.addClickListener(new ClickListener(){
+			public void onClick(Widget sender) {
+				hide();
+			}});
+
+		mask.setPropertyString("className", "mask");
+		
 		setStyleName("rismile-dialog");
-//		this.parent = parent;
 		panel.setWidth("100%");
 		panel.add(note, DockPanel.NORTH);
 		
@@ -41,7 +55,10 @@ public abstract class CustomDialog extends MyDialog {
 		
 		toolPanel.add(cancel, DockPanel.WEST);
 		cancel.setStyleName("button");
-		cancel.addClickListener(this);
+		cancel.addClickListener(new ClickListener(){
+			public void onClick(Widget sender) {
+				hide();
+			}});
 		
 		panel.add(toolPanel, DockPanel.SOUTH);
 		panel.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_CENTER);
@@ -115,11 +132,6 @@ public abstract class CustomDialog extends MyDialog {
 		mask.getStyle().setPropertyPx("width", w.getOffsetWidth());
 		mask.getStyle().setPropertyPx("height", w.getOffsetHeight());
 		w.getElement().appendChild(mask);
-		/*
-		mask.getStyle().setPropertyPx("width", parent.getOffsetWidth());
-		mask.getStyle().setPropertyPx("height", parent.getOffsetHeight());
-		parent.getElement().appendChild(mask);
-		*/
 	}
 	
 	public boolean processResponse(Response response)
@@ -148,5 +160,14 @@ public abstract class CustomDialog extends MyDialog {
 			setMessage(err);
 			return false;
 		}
+	}
+
+	public void hide() {
+		super.hide();
+		unmask();
+	}
+
+	public void onClick(Widget sender) {
+		hide();
 	}
 }
