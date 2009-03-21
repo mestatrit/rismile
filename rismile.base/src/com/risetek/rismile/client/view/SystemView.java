@@ -2,9 +2,6 @@ package com.risetek.rismile.client.view;
 
 import java.util.List;
 
-import com.google.gwt.user.client.DOM;
-import com.google.gwt.user.client.Element;
-import com.google.gwt.user.client.Event;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.Grid;
@@ -17,7 +14,6 @@ import com.risetek.rismile.client.control.SystemController;
 import com.risetek.rismile.client.model.InterfEntry;
 import com.risetek.rismile.client.model.RouterEntry;
 import com.risetek.rismile.client.model.SystemDataModel;
-import com.risetek.rismile.client.utils.MessageConsole;
 import com.risetek.rismile.client.utils.UI;
 
 public class SystemView extends Composite {
@@ -31,55 +27,6 @@ public class SystemView extends Composite {
 	
 	SystemController control;
 	
-	class exStackPanel extends StackPanel {
-
-		  private int findDividerIndex(Element elem) {
-			  if( elem == getElement() )
-			  {
-				    MessageConsole.setText("IT is me!");
-				    return -1;
-			  }
-			  
-			    while (elem != getElement()) 
-			    {
-			      String expando = DOM.getElementProperty(elem, "__index");
-			      if (expando != null) {
-			        // Make sure it belongs to me!
-			        int ownerHash = DOM.getElementPropertyInt(elem, "__owner");
-			        if (ownerHash == hashCode()) {
-			          // Yes, it's mine.
-			          return Integer.parseInt(expando);
-			        } else {
-					    MessageConsole.setText("expando null");
-			          // It must belong to some nested StackPanel.
-			          return -1;
-			        }
-			      }
-			      else
-			      {
-				    MessageConsole.setText("属于别的？");
-			      }
-			      elem = DOM.getParent(elem);
-			    }
-			    MessageConsole.setText("没找到!"+ elem.toString());
-			    return -1;
-			  }
-		
-		
-		public void onBrowserEvent(Event event)
-		{
-
-		    if (DOM.eventGetType(event) == Event.ONCLICK) {
-		        Element target = DOM.eventGetTarget(event);
-		        int index = findDividerIndex(target);
-		        if (index != -1) {
-			        MessageConsole.setText("显示TARGET!");
-		          showStack(index);
-		        }
-		      }
-		}
-	}
-	
 	public SystemView(SystemController control) {
 		this.control = control;
 
@@ -89,7 +36,7 @@ public class SystemView extends Composite {
 
 		setStyleName("system");
 
-		final exStackPanel stackPanel = new exStackPanel();
+		final StackPanel stackPanel = new StackPanel();
 		stackPanel.setWidth("100%");
 		stackPanel.setHeight("100%");
 		

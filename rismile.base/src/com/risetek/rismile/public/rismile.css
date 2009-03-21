@@ -52,6 +52,10 @@ body {
 	width: 100%
 }
 
+.rismile .description .gwt-HTML {
+	margin-right: 0.7cm;
+}
+
 .rismile .Sink {
 	width: 100%;
 	border: 1px solid #2a8ebf;

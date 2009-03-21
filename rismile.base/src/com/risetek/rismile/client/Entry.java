@@ -10,6 +10,7 @@ import com.google.gwt.user.client.ui.DockPanel;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.HasHorizontalAlignment;
+import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.ImageBundle;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.VerticalPanel;
@@ -41,7 +42,9 @@ public abstract class Entry implements EntryPoint, HistoryListener {
 	private Sink curSink;
 	// 操作提示
 	private HTML description = new HTML();
-	
+
+	private final HorizontalPanel descriptionPanel = new HorizontalPanel();
+
 	private final VerticalPanel panel = new VerticalPanel();
 	private final DockPanel sinkContainer = new DockPanel();
 	private final FlowPanel maskPanel = new FlowPanel();
@@ -82,14 +85,16 @@ public abstract class Entry implements EntryPoint, HistoryListener {
 		sinkContainer.setStyleName("Sink");
 		sinkContainer.setWidth("100%");
 
-		description.setStyleName("description");
+		// description.setStyleName("description");
 		description.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_RIGHT);
-
+		descriptionPanel.setWidth("100%");
+		descriptionPanel.setStyleName("description");
+		descriptionPanel.add(description);
 		maskPanel.setWidth("100%");
 		DOM.setStyleAttribute(maskPanel.getElement(), "position", "relative");
 		DOM.setElementProperty(maskPanel.getElement(), "id", "maskPanel");
 		maskPanel.add(headPanel);
-		maskPanel.add(description);
+		maskPanel.add(descriptionPanel);
 		maskPanel.add(sinkContainer);
 
 		panel.add(maskPanel);
