@@ -272,7 +272,8 @@ body {
 .rismiletable .navbar {
 	padding-top: 4px;
 	padding-bottom: 4px;
-	border:1px solid #2a8ebf;
+	border-top: 1px solid #2a8ebf;
+	border-bottom: 1px solid #2a8ebf;
 	width: 100%;
 	vertical-align: middle;
 	background: url(images/system_blue_gradient.gif) repeat-x top left;

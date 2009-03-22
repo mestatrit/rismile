@@ -9,7 +9,8 @@
 	padding-bottom: 4px;
 	font-size: larger;
 	font-weight: bold;
-	border:1px solid #2a8ebf;
+	border-top:1px solid #2a8ebf;
+	border-bottom:1px solid #2a8ebf;
 	text-align: left;
 	background: url(images/system_blue_gradient.gif) repeat-x top left;
 }

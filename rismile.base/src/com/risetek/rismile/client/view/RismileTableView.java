@@ -7,6 +7,7 @@ import com.google.gwt.user.client.ui.HasAlignment;
 import com.google.gwt.user.client.ui.HasHorizontalAlignment;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Label;
+import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.gwt.user.client.ui.HTMLTable.CellFormatter;
 import com.risetek.rismile.client.Entry;
@@ -18,7 +19,7 @@ public abstract class RismileTableView extends Composite {
 
 	public final Grid grid = getGrid();
     
-	private final DockPanel outer = new DockPanel();
+	private final VerticalPanel outer = new VerticalPanel();
 	private final DockPanel toolPanel = new DockPanel();
 	private final HorizontalPanel buttonsPanel = new HorizontalPanel();
 	public final NavBar navbar;
@@ -49,7 +50,7 @@ public abstract class RismileTableView extends Composite {
 	    setStyleName("rismiletable");
 	    //toolPanel.setBorderWidth(1);
 	    toolPanel.setStyleName("navbar");
-	    outer.add(toolPanel, DockPanel.NORTH);
+	    outer.add(toolPanel);
 	    
 	    toolPanel.add(navbar, DockPanel.EAST);
 	    
@@ -73,7 +74,7 @@ public abstract class RismileTableView extends Composite {
 	    infoLabel.setStyleName("info-Label");
 	    
 	    grid.setStyleName("table");
-	    outer.add(grid, DockPanel.CENTER);
+	    outer.add(grid);
 	    
 	    // 初始化网格的格式
 	    grid.resize(rowCount + 1, columns.length);
