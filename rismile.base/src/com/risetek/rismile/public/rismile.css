@@ -157,6 +157,7 @@ body {
   padding: 2px 2px;
   font-weight: bold;
   cursor: default;
+  white-space:nowrap;
   border-bottom: 1px solid #2a8ebf;
 }
 
@@ -185,13 +186,6 @@ body {
 
 .rismile-dialog .message {
 	color: crimson;
-}
-
-.stack-caption {
-	text-indent: 1em;
-	padding-bottom: 4px;
-	font-size: larger;
-	font-weight: bold;
 }
 
 .rismile .system .gray table {
@@ -236,10 +230,19 @@ body {
 	color: crimson;
 }
 
+.rismile .system .gwt-StackPanel .gwt-StackPanelItem .gwt-HTML {
+	text-indent: 1em;
+	font-size: larger;
+	font-weight: bold;
+}
+
 .rismile .system .gwt-StackPanel .gwt-StackPanelItem {
-  background: url(images/system_blue_gradient.gif) repeat-x top left;
-  cursor: pointer;
-  cursor: hand;
+	background: url(images/system_blue_gradient.gif) repeat-x top left;
+	border-top: 1px solid #2a8ebf;
+	cursor: pointer;
+	cursor: hand;
+	padding-top: 4px;
+	padding-bottom: 4px;
 }
 
 .rismile .system .gwt-StackPanel .gwt-StackPanelItem .stack-figure {
@@ -252,19 +255,6 @@ body {
 
 .rismile .system .gwt-StackPanel .gwt-StackPanelItem-selected  .stack-figure {
   background: url(images/system_minus.gif) no-repeat 0;
-}
-
-.rismile .system .gwt-StackPanel .gwt-StackPanelItem table {
-  width: 100%;
-}
-
-.box-10 {
-  font-size: 2px;
-  border-top: 1px solid #2a8ebf;
-}
-
-.box-11 {
-  vertical-align: top;
 }
 
 .rismile-system .date-table {
