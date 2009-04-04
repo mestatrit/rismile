@@ -92,9 +92,9 @@ class usersHandler(webapp.RequestHandler):
 class monitorHandler(webapp.RequestHandler):
 
   def get(self):
-  	self.response.headers['Content-Type'] = "application/x-java-jnlp-file"
+  	self.response.headers['Content-Type'] = 'application/x-java-jnlp-file'
 	self.response.out.write('<?xml version="1.0" encoding="utf-8"?>')
-	self.response.out.write('<jnlp spec="1.5+" codebase="http://risedius.appspot.com/" href="forms/monitor.jnlp">')
+	self.response.out.write('<jnlp spec="1.5+" codebase="http://risedius.appspot.com/" href="forms/rtmon">')
 	self.response.out.write('<information><title>Risetek Monitor</title><vendor>ChengDu Risetek Corp.</vendor>')
 	self.response.out.write('<homepage href="http://www.risetek.com"/><description>risetek monitor</description>')
 	self.response.out.write('<description kind="short">risetek monitor</description>')
@@ -130,8 +130,7 @@ def main():
   		('/forms/SqlUserInfoXML', usersHandler),
   		('/forms/SysStateXML', systateHandler),
   		('/forms/test', testHandler),
-  		('/forms/monitor', monitorHandler),
-  		('/forms/monitor.jnlp', monitorHandler),
+  		('/forms/rtmon', monitorHandler),
   		('/forms/.*', MainHandler)
   		],
       debug=True)
