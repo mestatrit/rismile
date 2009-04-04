@@ -1,0 +1,69 @@
+<project name="JarSignerBuilder" default="jarsigner" basedir=".">
+	<!-- set global properties for this build -->
+	<property file="build.properties" />
+	<property name="deploy.dir" value="${basedir}" />
+	<property name="build.dir" value="${basedir}\..\target" />
+
+	
+	<!-- ********************************************************* -->
+	<!-- dname {CN=1, OU=1, O=1, L=1, ST=1, C=1} ？-->
+	<!--名字与姓氏-->
+	<property name="commonName" value="${dname.CN}" />
+	<!-- 组织单位名称 -->
+	<property name="organizationUnit" value="${dname.OU}" />
+	<!-- 组织名称 -->
+	<property name="organizationName" value="${dname.O}" />
+	<!-- 所在的城市或区域名称 -->
+	<property name="localityName" value="${dname.L}" />
+	<!-- 所在的州或省份名称 -->
+	<property name="stateName" value="${dname.ST}" />
+	<!-- 该单位的两字母国家代码 -->
+	<property name="country" value="${dname.C}" />
+	<property name="dname" value="CN=${commonName},OU=${organizationUnit},O=${organizationName},L=${localityName},ST=${stateName},C=${country}" />
+	<!-- ********************************************************* -->
+	<target name="keytool" depends="undeploy">
+		<echo message="keytool..." />
+		<echo message="dname = { ${dname} }" />
+		<echo message="genkey..." />
+		<exec dir="${deploy.dir}" executable="${keytool.home}/${keytool}" os="${os.name}">
+			<arg line="-genkey" />
+			<arg line="-dname ${dname}" />
+			<arg line="-keystore ${keystore}" />
+			<arg line="-alias ${alias}" />
+			<arg line="-storepass ${storepass}" />
+			<arg line="-keypass ${keypass}" />
+		</exec>
+		<echo message="export..." />
+		<exec dir="${deploy.dir}" executable="${keytool.home}/${keytool}" os="${os.name}">
+			<arg line="-export" />
+			<arg line="-keystore ${keystore}" />
+			<arg line="-storepass ${storepass}" />
+			<arg line="-alias ${alias}" />
+			<arg line="-file ${cer.file}" />
+		</exec>
+		<echo message="keytool...done." />
+	</target>
+	
+	
+	<target name="jarsigner" depends="keytool">
+		<!-- Sign the jar -->
+		<echo message="jarsigner..." />
+		<exec dir="${deploy.dir}" executable="${jarsigner.home}/${jarsigner}" os="${os.name}">
+			<arg line="-keystore ${keystore}" />
+			<arg line="-storepass ${storepass}" />
+			<arg line="-keypass ${keypass}" />
+			<arg line="../target/httping.jar" />
+			<arg line="${alias}" />
+		</exec>
+		<echo message="jarsigner...done." /> 
+	</target>
+	<target name="undeploy">
+		<delete file="${keystore}" />
+		<delete file="${cer.file}" />
+	</target>
+	
+	<target name="clean">
+		<delete dir="${build.dir}" />
+	</target>	
+	
+</project>

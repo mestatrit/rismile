@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<jnlp spec="1.5+" codebase="file:///e:/workspace/risetek.httping/target/"
+	href="risetek.jnlp">
+	<information>
+		<title>Risetek Monitor</title>
+		<vendor>ChengDu Risetek Corp.</vendor>
+		<homepage href="http://www.risetek.com"/>
+		<description>risetek monitor</description>
+		<description kind="short">risetek monitor</description>
+		<association mime-type="application-x/singleinstance-file" extensions="sif"/>
+		<shortcut online="false" />
+	</information>
+	<resources>
+		<j2se version="1.5+" />
+		<jar href="httping.jar" main='true' />
+	</resources>
+	<application-desc main-class="com.risetek.pinger.RisetekMonitor">
+		<argument>10.0.0.10</argument>
+	</application-desc>
+  
+	<offline-allowed/>
+	<security>
+  	<all-permissions/>
+  	</security>
+</jnlp>
