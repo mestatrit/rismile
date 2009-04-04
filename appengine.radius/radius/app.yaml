@@ -10,8 +10,14 @@ handlers:
   upload: static/index.html
 
 - url: /favicon.ico
-  static_files: static/favicon.ico
-  upload: static/favicon.ico
+  static_files: static/images/favicon.ico
+  mime_type: application/octet-stream
+  upload: static/images/favicon.ico
+
+- url: /httping.jar
+  static_files: static/httping.jar
+  mime_type: application/octet-stream
+  upload: static/httping.jar
 
 - url: /forms/.*
   script: main.py
