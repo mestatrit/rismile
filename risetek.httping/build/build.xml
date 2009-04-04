@@ -2,7 +2,10 @@
 	<!-- set global properties for this build -->
 	<property file="build.properties" />
 	<property name="deploy.dir" value="${basedir}" />
+	<property name="src" value="${basedir}\..\src" />
+	<property name="bin" value="${basedir}\..\bin" />
 	<property name="build.dir" value="${basedir}\..\target" />
+	<property name="target.file" value="${basedir}\..\target\httping.jar" />
 
 	
 	<!-- ********************************************************* -->
@@ -21,7 +24,16 @@
 	<property name="country" value="${dname.C}" />
 	<property name="dname" value="CN=${commonName},OU=${organizationUnit},O=${organizationName},L=${localityName},ST=${stateName},C=${country}" />
 	<!-- ********************************************************* -->
-	<target name="keytool" depends="undeploy">
+	<target name="init">
+		<echo message="compile ..." />
+		<mkdir dir="${build.dir}" />
+		<copy file="risetek.jnlp" tofile="${build.dir}/risetek.jnlp" filtering="true"/>
+		<javac destdir="${bin}" srcdir="${src}">
+		<classpath refid="classpath.local"/>
+		</javac>
+	</target>
+	
+	<target name="keytool" depends="undeploy,init">
 		<echo message="keytool..." />
 		<echo message="dname = { ${dname} }" />
 		<echo message="genkey..." />
@@ -45,25 +57,39 @@
 	</target>
 	
 	
-	<target name="jarsigner" depends="keytool">
+	<target name="jarsigner" depends="keytool,create_run_jar">
 		<!-- Sign the jar -->
 		<echo message="jarsigner..." />
 		<exec dir="${deploy.dir}" executable="${jarsigner.home}/${jarsigner}" os="${os.name}">
 			<arg line="-keystore ${keystore}" />
 			<arg line="-storepass ${storepass}" />
 			<arg line="-keypass ${keypass}" />
-			<arg line="../target/httping.jar" />
+			<arg line="${target.file}" />
 			<arg line="${alias}" />
 		</exec>
 		<echo message="jarsigner...done." /> 
-	</target>
-	<target name="undeploy">
 		<delete file="${keystore}" />
 		<delete file="${cer.file}" />
 	</target>
 	
-	<target name="clean">
+	<target name="undeploy">
+		<delete file="${keystore}" />
+		<delete file="${cer.file}" />
+		<delete file="${target.file}" />
 		<delete dir="${build.dir}" />
-	</target>	
+	</target>
+	
+    <target name="create_run_jar">
+        <jar destfile="${target.file}" filesetmanifest="mergewithoutmain">
+            <manifest>
+                <attribute name="Built-By" value="${user.name}"/>
+                <attribute name="Main-Class" value="com.risetek.pinger.RisetekMonitor"/>
+                <attribute name="Class-Path" value="."/>
+            </manifest>
+            <fileset dir="${deploy.dir}/../bin"/>
+            <!-- zipfileset excludes="META-INF/*.SF" src="C:/Program Files/Java/jre6/lib/javaws.jar"/ -->
+        </jar>
+    </target>
+	
 	
 </project>
