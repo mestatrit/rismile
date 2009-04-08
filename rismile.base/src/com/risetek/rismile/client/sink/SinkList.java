@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import com.google.gwt.user.client.DOM;
 import com.google.gwt.user.client.Event;
 import com.google.gwt.user.client.ui.Composite;
-import com.google.gwt.user.client.ui.HasVerticalAlignment;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Hyperlink;
 import com.google.gwt.user.client.ui.Image;
@@ -43,18 +42,13 @@ public class SinkList extends Composite {
 		}
 	}
 
-	private HorizontalPanel outerlist = new HorizontalPanel();
 	private HorizontalPanel list = new HorizontalPanel();
 	private ArrayList<SinkInfo> sinks = new ArrayList<SinkInfo>();
 
 	private int selectedSink = -1;
 
 	public SinkList(Image image) {
-		//outerlist.setBorderWidth(1);
-		//list.setBorderWidth(1);
-		outerlist.setVerticalAlignment(HasVerticalAlignment.ALIGN_BOTTOM);
-		outerlist.add(list);
-		initWidget(outerlist);
+		initWidget(list);
 		list.add(image);
 		setStyleName("rismile");
 		list.setStyleName("SinkList");
@@ -62,7 +56,8 @@ public class SinkList extends Composite {
 
 	public void addExternalLink(Widget w) {
 		w.setStyleName("ks-External");
-		outerlist.add(w);
+		list.add(w);
+		list.setCellVerticalAlignment(w, HorizontalPanel.ALIGN_BOTTOM);
 	}
 	
 	public void addSink(final SinkInfo info) {
