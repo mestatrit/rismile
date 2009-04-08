@@ -75,8 +75,8 @@ public class index  extends  Entry implements ClickListener, RequestCallback {
 			if( "Dialer0".equals(((Element)interfaces.item(i)).getAttribute("name")))
 			{
 				SinkInfo is = InterfaceSink.init(0);
-				list.addSink( is );
 				link.removeFromParent();
+				list.addSink( is );
 				// show(is, true);
 				break;
 			}

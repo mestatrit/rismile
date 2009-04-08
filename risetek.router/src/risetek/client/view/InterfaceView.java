@@ -197,7 +197,7 @@ public class InterfaceView extends Composite {
 		*/
 	}
 
-	protected void onLoad() {
+	public void onLoad() {
 		control.load();
 	}
 
