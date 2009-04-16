@@ -23,7 +23,7 @@ public class InterfaceSink extends Sink{
 	
 	public void onShow()
 	{
-		control.view.onLoad();
+		control.load();
 	}
 	
 }
