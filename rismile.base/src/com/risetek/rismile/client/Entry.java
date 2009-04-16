@@ -4,7 +4,6 @@ import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.client.DOM;
 import com.google.gwt.user.client.History;
-import com.google.gwt.user.client.HistoryListener;
 import com.google.gwt.user.client.ui.AbstractImagePrototype;
 import com.google.gwt.user.client.ui.DockPanel;
 import com.google.gwt.user.client.ui.FlowPanel;
@@ -18,14 +17,16 @@ import com.risetek.rismile.client.sink.Sink;
 import com.risetek.rismile.client.sink.SinkList;
 import com.risetek.rismile.client.sink.Sink.SinkInfo;
 import com.risetek.rismile.client.utils.Heartbeat;
+import com.google.gwt.event.logical.shared.ValueChangeEvent;
+import com.google.gwt.event.logical.shared.ValueChangeHandler;
 
 /**
  * Entry point classes define <code>onModuleLoad()</code>.
  */
-public abstract class Entry implements EntryPoint, HistoryListener {
-	
+public abstract class Entry implements EntryPoint{
+
 	public static String SinkHeight = "470px";
-	
+
 	/**
 	 * An image provider to make available images to Sinks.
 	 */
@@ -37,7 +38,7 @@ public abstract class Entry implements EntryPoint, HistoryListener {
 
 	// 导航条
 	public SinkList list = new SinkList(images.gwtLogo().createImage());
-	
+
 	private SinkInfo curInfo;
 	private Sink curSink;
 	// 操作提示
@@ -68,11 +69,12 @@ public abstract class Entry implements EntryPoint, HistoryListener {
 		// Load all the sinks.
 		loadSinks();
 		panel.setStyleName("rismile");
-		
+
 		headPanel.setWidth("100%");
-		//DOM.setStyleAttribute(headPanel.getElement(), "position", "relative");
+		// DOM.setStyleAttribute(headPanel.getElement(), "position",
+		// "relative");
 		headPanel.add(list);
-		
+
 		headPanel.add(hbMessage);
 		hbMessage.setStyleName("hb-message");
 		DOM.setElementProperty(hbMessage.getElement(), "id", "hbMessage");
@@ -80,7 +82,6 @@ public abstract class Entry implements EntryPoint, HistoryListener {
 		// message.setWidth("100%");
 		message.setStyleName("http-message");
 		DOM.setElementProperty(message.getElement(), "id", "message");
-
 
 		sinkContainer.setStyleName("Sink");
 		sinkContainer.setWidth("100%");
@@ -99,9 +100,26 @@ public abstract class Entry implements EntryPoint, HistoryListener {
 
 		panel.add(maskPanel);
 		panel.setWidth("100%");
-		//panel.setBorderWidth(1);
+		// panel.setBorderWidth(1);
 
-		History.addHistoryListener(this);
+		History.addValueChangeHandler(new ValueChangeHandler<String>() {
+			public void onValueChange(ValueChangeEvent<String> event) {
+				// Find the SinkInfo associated with the history context. If one
+				// is
+				// found, show it (It may not be found, for example, when the
+				// user mis-
+				// types a URL, or on startup, when the first context will be
+				// "").
+				String token = event.getValue();
+				SinkInfo info = list.find(token);
+				if (info == null) {
+					showInfo();
+					return;
+				}
+				show(info, false);
+			}
+		});
+
 		RootPanel.get("root").add(panel);
 
 		// Show the initial screen.
@@ -131,7 +149,7 @@ public abstract class Entry implements EntryPoint, HistoryListener {
 		// sink list.
 		curSink = info.getInstance();
 		list.setSinkSelection(info.getName());
-		description.setText(info.getDescription()+ "    ");
+		description.setText(info.getDescription() + "    ");
 
 		if (affectHistory) {
 			History.newItem(info.getName());
@@ -140,7 +158,8 @@ public abstract class Entry implements EntryPoint, HistoryListener {
 		// Display the new sink.
 		curSink.setVisible(false);
 		sinkContainer.add(curSink, DockPanel.CENTER);
-		sinkContainer.setCellHorizontalAlignment(curSink,VerticalPanel.ALIGN_CENTER);
+		sinkContainer.setCellHorizontalAlignment(curSink,
+				VerticalPanel.ALIGN_CENTER);
 		curSink.setVisible(true);
 		curSink.onShow();
 	}
