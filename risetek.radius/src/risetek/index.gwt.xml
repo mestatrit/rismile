@@ -1,4 +1,4 @@
-<module>
+<module rename-to='rismile'>
       <inherits name='com.google.gwt.user.User'/>
       <inherits name="com.risetek.rismile.base" />
       <inherits name="com.risetek.rismile.log.log" />
