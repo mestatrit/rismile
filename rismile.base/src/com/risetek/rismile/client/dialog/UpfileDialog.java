@@ -1,18 +1,20 @@
 package com.risetek.rismile.client.dialog;
 
+import com.google.gwt.event.dom.client.ClickEvent;
+import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.ui.Button;
-import com.google.gwt.user.client.ui.ClickListener;
 import com.google.gwt.user.client.ui.DockPanel;
 import com.google.gwt.user.client.ui.FileUpload;
-import com.google.gwt.user.client.ui.FormHandler;
 import com.google.gwt.user.client.ui.FormPanel;
-import com.google.gwt.user.client.ui.FormSubmitCompleteEvent;
-import com.google.gwt.user.client.ui.FormSubmitEvent;
 import com.google.gwt.user.client.ui.Grid;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.HasHorizontalAlignment;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
+import com.google.gwt.user.client.ui.FormPanel.SubmitCompleteEvent;
+import com.google.gwt.user.client.ui.FormPanel.SubmitCompleteHandler;
+import com.google.gwt.user.client.ui.FormPanel.SubmitEvent;
+import com.google.gwt.user.client.ui.FormPanel.SubmitHandler;
 
 public class UpfileDialog extends CustomDialog {
 
@@ -40,8 +42,8 @@ public class UpfileDialog extends CustomDialog {
 		Button submit = new Button("开始上传文件");
 		gridFrame.setWidget(2, 1, submit);
 		submit.setWidth("7em");
-		submit.addClickListener(new ClickListener(){
-			public void onClick(Widget sender) {
+		submit.addClickHandler(new ClickHandler(){
+			public void onClick(ClickEvent event) {
 				formPanel.submit();
 			}
 		});
@@ -50,11 +52,15 @@ public class UpfileDialog extends CustomDialog {
 		formPanel.setAction("forms/uploads");
 		formPanel.setEncoding(FormPanel.ENCODING_MULTIPART);
 		formPanel.add(gridFrame);
-		formPanel.addFormHandler(new FormHandler(){
-			public void onSubmit(FormSubmitEvent event) {
+		formPanel.addSubmitHandler(new SubmitHandler(){
+			public void onSubmit(SubmitEvent event) {
 				html.setHTML("开始上传...");
 			}
-			public void onSubmitComplete(FormSubmitCompleteEvent event) {
+		}
+		);
+
+		formPanel.addSubmitCompleteHandler(new SubmitCompleteHandler(){
+			public void onSubmitComplete(SubmitCompleteEvent event) {
 				html.setHTML(event.getResults());
 				hide();
 			}

@@ -1,12 +1,12 @@
 package com.risetek.rismile.client.control;
 
+import com.google.gwt.event.dom.client.ClickEvent;
+import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.http.client.Request;
 import com.google.gwt.http.client.RequestCallback;
 import com.google.gwt.http.client.Response;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Button;
-import com.google.gwt.user.client.ui.ClickListener;
-import com.google.gwt.user.client.ui.Widget;
 import com.risetek.rismile.client.dialog.AddOrModifyIpDialog;
 import com.risetek.rismile.client.dialog.AddRouteDialog;
 import com.risetek.rismile.client.dialog.AdminDialog;
@@ -96,20 +96,20 @@ public class SystemController implements RequestCallback {
 		view.render(data);
 	}
 
-	public class RouteClickListener implements ClickListener , RequestCallback {
+	public class RouteClickHandler implements ClickHandler , RequestCallback {
 		private String ip;
 		private String mask;
 
-		public RouteClickListener(String ip, String mask) {
+		public RouteClickHandler(String ip, String mask) {
 			this.ip = ip;
 			this.mask = mask;
 		}
 
-		public void onClick(Widget sender) {
+		public void onClick(ClickEvent event) {
 			if (Window.confirm("是否要删除?\n" + "IP地址:" + ip + "\n" + "掩码:" + mask)) {
 				String requestData = "ip_address=" + ip + "&mask_address=" + mask;
 				remoteRequest.get(delRouterPath, requestData, this);
-				((Button) sender).setEnabled(false);
+				((Button)event.getSource()).setEnabled(false);
 			}
 		}
 
@@ -123,18 +123,18 @@ public class SystemController implements RequestCallback {
 
 	}
 
-	public class IpClickListener implements ClickListener , RequestCallback {
+	public class IpClickHandler implements ClickHandler , RequestCallback {
 		private String ip;
 
-		public IpClickListener(String ip) {
+		public IpClickHandler(String ip) {
 			this.ip = ip;
 		}
 
-		public void onClick(Widget sender) {
+		public void onClick(ClickEvent event) {
 			if (Window.confirm("是否要删除?\n" + "IP地址:" + ip)) {
 				String requestData = "ip_address=" + ip;
 				remoteRequest.get(delIpPath, requestData, this);
-				((Button) sender).setEnabled(false);
+				((Button)event.getSource()).setEnabled(false);
 			}
 		}
 
@@ -148,9 +148,9 @@ public class SystemController implements RequestCallback {
 
 	}
 
-	public class resotreClickListener implements ClickListener {
+	public class resotreClickHandler implements ClickHandler {
 
-		public void onClick(Widget sender) {
+		public void onClick(ClickEvent event) {
 			// Window.open("forms/restart", "_blank", "");
 
 			if (Window.confirm("是否要恢复出厂参数？\n" + "恢复出厂参数后，IP地址为192.168.0.1 。")) {
@@ -161,8 +161,8 @@ public class SystemController implements RequestCallback {
 		}
 	}
 
-	public class resetClickListener implements ClickListener {
-		public void onClick(Widget sender) {
+	public class resetClickHandler implements ClickHandler {
+		public void onClick(ClickEvent event) {
 			if (Window.confirm("是否要重启设备？")) {
 				// TODO: 如何重定位到首页？
 				remoteRequest.get(resetPath, null, SystemController.this);
@@ -170,30 +170,29 @@ public class SystemController implements RequestCallback {
 		}
 	}
 
-	public class uploadClickListener implements ClickListener {
-
-		public void onClick(Widget sender) {
+	public class uploadClickHandler implements ClickHandler {
+		public void onClick(ClickEvent event) {
 			(new UpfileDialog()).show();
 		}
 	}
 
 	// ----------------- 增加、修改IP地址
-	public class addIPClickListener implements ClickListener {
+	public class addIPClickHandler implements ClickHandler {
 
-		public void onClick(Widget sender) {
+		public void onClick(ClickEvent event) {
 			Control control = new Control();
-			control.dialog.confirm.addClickListener(control);
+			control.dialog.confirm.addClickHandler(control);
 			control.dialog.show();
 		}
 
-		public class Control implements ClickListener, RequestCallback {
+		public class Control implements ClickHandler, RequestCallback {
 			public AddOrModifyIpDialog dialog = new AddOrModifyIpDialog(AddOrModifyIpDialog.ADD);
 
-			public void onClick(Widget sender) {
+			public void onClick(ClickEvent event) {
 				if (dialog.isValid()) {
 					addIp(IPConvert.long2IPString(dialog.ipBox.getText()),
 							IPConvert.long2IPString(dialog.maskBox.getText()), this);
-					((Button) sender).setEnabled(false);
+					((Button)event.getSource()).setEnabled(false);
 				}
 			}
 
@@ -209,30 +208,31 @@ public class SystemController implements RequestCallback {
 
 	}
 
-	public class modifyIPClickListener implements ClickListener {
+	public class modifyIPClickHandler implements ClickHandler {
 		String ipadd;
 		String ipmask;
-		public modifyIPClickListener(String ipadd, String ipmask)
+		public modifyIPClickHandler(String ipadd, String ipmask)
 		{
 			this.ipadd = ipadd;
 			this.ipmask = ipmask;
 		}
-		public void onClick(Widget sender) {
+
+		public void onClick(ClickEvent event) {
 			Control control = new Control();
-			control.dialog.confirm.addClickListener(control);
+			control.dialog.confirm.addClickHandler(control);
 			control.dialog.show(ipadd, ipmask);
 		}
 
-		public class Control implements ClickListener, RequestCallback {
+		public class Control implements ClickHandler, RequestCallback {
 
 			public AddOrModifyIpDialog dialog = new AddOrModifyIpDialog(AddOrModifyIpDialog.MODIFY);
 
-			public void onClick(Widget sender) {
+			public void onClick(ClickEvent event) {
 				if( dialog.isValid())
 				{
 					modifyIp(IPConvert.long2IPString(dialog.ipBox.getText()),
 							IPConvert.long2IPString(dialog.maskBox.getText()), this);
-					((Button) sender).setEnabled(false);
+					((Button)event.getSource()).setEnabled(false);
 				}
 			}
 
@@ -248,23 +248,24 @@ public class SystemController implements RequestCallback {
 	}
 
 	// ----------------- 增加路由 ------------------------------------------
-	public class addRouterClickListener implements ClickListener {
-		public void onClick(Widget sender) {
+	public class addRouterClickHandler implements ClickHandler {
+
+		public void onClick(ClickEvent event) {
 			Control control = new Control();
-			control.dialog.confirm.addClickListener(control);
+			control.dialog.confirm.addClickHandler(control);
 			control.dialog.show();
 		}
 
-		public class Control implements ClickListener, RequestCallback {
+		public class Control implements ClickHandler, RequestCallback {
 			public AddRouteDialog dialog = new AddRouteDialog();
 
-			public void onClick(Widget sender) {
+			public void onClick(ClickEvent event) {
 				if( dialog.isValid() )
 				{
 					addRouter(IPConvert.long2IPString(dialog.destBox.getText()),
 							IPConvert.long2IPString(dialog.maskBox.getText()),
 							IPConvert.long2IPString(dialog.gateBox.getText()), this);
-					((Button) sender).setEnabled(false);
+					((Button)event.getSource()).setEnabled(false);
 				}
 				
 			}
@@ -281,22 +282,22 @@ public class SystemController implements RequestCallback {
 	}
 
 	// -- 管理员维护
-	public class delAdminClickListener implements ClickListener {
+	public class delAdminClickHandler implements ClickHandler {
 
-		public void onClick(Widget sender) {
+		public void onClick(ClickEvent event) {
 			Control control = new Control();
-			control.dialog.confirm.addClickListener(control);
+			control.dialog.confirm.addClickHandler(control);
 			control.dialog.show();
 		}
 
-		public class Control implements ClickListener, RequestCallback {
+		public class Control implements ClickHandler, RequestCallback {
 			public AdminDialog dialog = new AdminDialog(AdminDialog.DEL);
 
-			public void onClick(Widget sender) {
+			public void onClick(ClickEvent event) {
 				if( dialog.isValid())
 				{
 					delAdmin(dialog.nameBox.getText(), dialog.pwdBox.getText(), this);
-					((Button) sender).setEnabled(false);
+					((Button)event.getSource()).setEnabled(false);
 				}
 			}
 
@@ -312,18 +313,18 @@ public class SystemController implements RequestCallback {
 	}
 
 	// -------------------------
-	public class addAdminClickListener implements ClickListener {
+	public class addAdminClickHandler implements ClickHandler {
 
-		public void onClick(Widget sender) {
+		public void onClick(ClickEvent event) {
 			Control control = new Control();
-			control.dialog.confirm.addClickListener(control);
+			control.dialog.confirm.addClickHandler(control);
 			control.dialog.show();
 		}
 
-		public class Control implements ClickListener, RequestCallback {
+		public class Control implements ClickHandler, RequestCallback {
 			public AdminDialog dialog = new AdminDialog(AdminDialog.DEL);
 
-			public void onClick(Widget sender) {
+			public void onClick(ClickEvent event) {
 				if( dialog.isValid())
 				{
 					addAdmin(dialog.nameBox.getText(), dialog.pwdBox.getText(),

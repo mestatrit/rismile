@@ -1,8 +1,8 @@
 package com.risetek.rismile.client.control;
 
 import com.google.gwt.http.client.RequestCallback;
-import com.google.gwt.user.client.ui.ClickListener;
-import com.google.gwt.user.client.ui.Widget;
+import com.google.gwt.event.dom.client.ClickEvent;
+import com.google.gwt.event.dom.client.ClickHandler;
 import com.risetek.rismile.client.http.RequestFactory;
 import com.risetek.rismile.client.model.RismileTable;
 import com.risetek.rismile.client.view.RismileTableView;
@@ -12,9 +12,10 @@ public abstract class RismileTableController implements RequestCallback {
 	protected RequestFactory remoteRequest = new RequestFactory();
 	
 	// NAVIGATOR 按键的事件处理
-	public class navigatorFirstClick implements ClickListener
+	public class navigatorFirstClick implements ClickHandler
 	{
-		public void onClick(Widget sender) {
+		@Override
+		public void onClick(ClickEvent event) {
 			int offset;
 			if( getTable().ASC )
 				offset = 0;
@@ -26,10 +27,10 @@ public abstract class RismileTableController implements RequestCallback {
 		}
 	}
 	
-	public class navigatorNextClick implements ClickListener
+	public class navigatorNextClick implements ClickHandler
 	{
 
-		public void onClick(Widget sender) {
+		public void onClick(ClickEvent event) {
 			int offset;
 			if( !getTable().ASC )
 				offset = getTable().getOffset() - getTable().getLimit();
@@ -41,9 +42,9 @@ public abstract class RismileTableController implements RequestCallback {
 		
 	}
 
-	public class navigatorPrevClick implements ClickListener
+	public class navigatorPrevClick implements ClickHandler
 	{
-		public void onClick(Widget sender) {
+		public void onClick(ClickEvent event) {
 			int offset;
 			if( getTable().ASC )
 				offset = getTable().getOffset() - getTable().getLimit();
@@ -55,9 +56,9 @@ public abstract class RismileTableController implements RequestCallback {
 		}
 	}
 	
-	public class navigatorLastLastClick implements ClickListener
+	public class navigatorLastLastClick implements ClickHandler
 	{
-		public void onClick(Widget sender) {
+		public void onClick(ClickEvent event) {
 			int offset;
 			if( !getTable().ASC )
 				offset = 0;

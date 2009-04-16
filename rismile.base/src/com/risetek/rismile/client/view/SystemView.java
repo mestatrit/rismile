@@ -77,7 +77,7 @@ public class SystemView extends Composite {
 		netPanel.setHeight("100%");
 		netPanel.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_CENTER);
 		netPanel.setVerticalAlignment(HasVerticalAlignment.ALIGN_TOP);
-		final Button netAddButton = new Button("添加地址", control.new addIPClickListener());
+		final Button netAddButton = new Button("添加地址", control.new addIPClickHandler());
 		netPanel.setStyleName("gray");
 		netGrid.setBorderWidth(1);
 		netGrid.setWidth("85%");
@@ -100,7 +100,7 @@ public class SystemView extends Composite {
 		routePanel.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_CENTER);
 		routePanel.setVerticalAlignment(HasVerticalAlignment.ALIGN_TOP);
 
-		final Button routeAddButton = new Button("添加路由", control.new addRouterClickListener());
+		final Button routeAddButton = new Button("添加路由", control.new addRouterClickHandler());
 		routePanel.setStyleName("gray");
 		routeGrid.setBorderWidth(1);
 		routeGrid.setWidth("90%");
@@ -132,17 +132,17 @@ public class SystemView extends Composite {
 
 		final Button addAdminButton = new Button("添加管理员");
 		adminGrid.setWidget(0, 0, addAdminButton);
-		addAdminButton.addClickListener(control.new addAdminClickListener());
-		final Button delAdminButton = new Button("删除管理员", control.new delAdminClickListener());
+		addAdminButton.addClickHandler(control.new addAdminClickHandler());
+		final Button delAdminButton = new Button("删除管理员", control.new delAdminClickHandler());
 		adminGrid.setWidget(0, 1, delAdminButton);
 		
-		final Button upfileButton = new Button("升级程序",control.new uploadClickListener());
+		final Button upfileButton = new Button("升级程序",control.new uploadClickHandler());
 		adminGrid.setWidget(0, 2, upfileButton);
 
-		final Button paraButton = new Button("恢复出厂参数", control.new resotreClickListener());
+		final Button paraButton = new Button("恢复出厂参数", control.new resotreClickHandler());
 		adminGrid.setWidget(1, 0, paraButton);
 
-		final Button restartButton = new Button("重启设备", control.new resetClickListener());
+		final Button restartButton = new Button("重启设备", control.new resetClickHandler());
 		adminGrid.setWidget(1, 2, restartButton);
 		
 		
@@ -180,9 +180,9 @@ public class SystemView extends Composite {
 			netGrid.setText(i + 1, 2, interfEntry.getMask());
 			Button button;
 			if (i == 0) {
-				button = new Button("更改", control.new modifyIPClickListener(interfEntry.getAddress(), interfEntry.getMask()));
+				button = new Button("更改", control.new modifyIPClickHandler(interfEntry.getAddress(), interfEntry.getMask()));
 			} else {
-				button = new Button("删除", control.new IpClickListener(interfEntry.getAddress()));
+				button = new Button("删除", control.new IpClickHandler(interfEntry.getAddress()));
 			}
 			netGrid.setWidget(i + 1, 3, button);
 		}
@@ -197,7 +197,7 @@ public class SystemView extends Composite {
 			routeGrid.setText(i + 1, 1, routerEntry.getMask());
 			routeGrid.setText(i + 1, 2, routerEntry.getInterf());
 			routeGrid.setText(i + 1, 3, routerEntry.getGateway());
-			Button button = new Button("删除", control.new RouteClickListener(routerEntry.getDest(), routerEntry.getMask()));
+			Button button = new Button("删除", control.new RouteClickHandler(routerEntry.getDest(), routerEntry.getMask()));
 			routeGrid.setWidget(i + 1, 4, button);
 		}
 	}
