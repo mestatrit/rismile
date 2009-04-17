@@ -2,6 +2,7 @@ package com.risetek.rismile.client.dialog;
 
 import com.google.gwt.user.client.DOM;
 import com.google.gwt.user.client.Event;
+import com.google.gwt.user.client.Event.NativePreviewEvent;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.FlexTable;
 import com.google.gwt.user.client.ui.Grid;
@@ -9,12 +10,17 @@ import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.HasHTML;
 import com.google.gwt.user.client.ui.HasHorizontalAlignment;
 import com.google.gwt.user.client.ui.HasVerticalAlignment;
-import com.google.gwt.user.client.ui.MouseListener;
 import com.google.gwt.user.client.ui.PopupPanel;
 import com.google.gwt.user.client.ui.Widget;
+import com.google.gwt.event.dom.client.MouseDownEvent;
+import com.google.gwt.event.dom.client.MouseDownHandler;
+import com.google.gwt.event.dom.client.MouseMoveEvent;
+import com.google.gwt.event.dom.client.MouseMoveHandler;
+import com.google.gwt.event.dom.client.MouseUpEvent;
+import com.google.gwt.event.dom.client.MouseUpHandler;
 
 public abstract class MyDialog extends PopupPanel implements HasHTML,
-		MouseListener {
+		MouseDownHandler, MouseMoveHandler, MouseUpHandler {
 
 	private HTML caption = new HTML();
 	protected Button close = new Button();
@@ -80,8 +86,11 @@ public abstract class MyDialog extends PopupPanel implements HasHTML,
 		head.getCellFormatter().setVerticalAlignment(0, 0,
 				HasVerticalAlignment.ALIGN_BOTTOM);
 		caption.setWidth("100%");
-		caption.addMouseListener(this);
 
+		caption.addMouseDownHandler(this);
+		caption.addMouseUpHandler(this);
+		caption.addMouseMoveHandler(this);
+		
 		panel.setHeight("100%");
 		panel.setBorderWidth(0);
 		panel.setCellPadding(0);
@@ -103,42 +112,36 @@ public abstract class MyDialog extends PopupPanel implements HasHTML,
 		return caption.getText();
 	}
 
-	public boolean onEventPreview(Event event) {
+	protected void onPreviewNativeEvent(NativePreviewEvent event) {
 		// We need to preventDefault() on mouseDown events (outside of the
 		// DialogBox content) to keep text from being selected when it
 		// is dragged.
-		if (DOM.eventGetType(event) == Event.ONMOUSEDOWN) {
-			if (DOM.isOrHasChild(caption.getElement(), DOM
-					.eventGetTarget(event))) {
-				DOM.eventPreventDefault(event);
+		if( event.getTypeInt() == Event.ONMOUSEDOWN ) {
+			if( DOM.isOrHasChild(caption.getElement(), DOM.eventGetTarget(Event.as(event.getNativeEvent()))))
+			{
+				Event.as(event.getNativeEvent()).preventDefault();
 			}
 		}
-
-		return super.onEventPreview(event);
+		super.onPreviewNativeEvent(event);
 	}
 
-	public void onMouseDown(Widget sender, int x, int y) {
+	@Override
+	public void onMouseDown(MouseDownEvent event) {
 		dragging = true;
 		DOM.setCapture(caption.getElement());
-		dragStartX = x;
-		dragStartY = y;
+		dragStartX = event.getX();
+		dragStartY = event.getY();
 	}
-
-	public void onMouseEnter(Widget sender) {
-	}
-
-	public void onMouseLeave(Widget sender) {
-	}
-
-	public void onMouseMove(Widget sender, int x, int y) {
+	@Override
+	public void onMouseMove(MouseMoveEvent event) {
 		if (dragging) {
-			int absX = x + getAbsoluteLeft();
-			int absY = y + getAbsoluteTop();
+			int absX = event.getX() + getAbsoluteLeft();
+			int absY = event.getY() + getAbsoluteTop();
 			setPopupPosition(absX - dragStartX, absY - dragStartY);
 		}
 	}
-
-	public void onMouseUp(Widget sender, int x, int y) {
+	@Override
+	public void onMouseUp(MouseUpEvent event) {
 		dragging = false;
 		DOM.releaseCapture(caption.getElement());
 	}

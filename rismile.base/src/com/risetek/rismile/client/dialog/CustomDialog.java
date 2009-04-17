@@ -1,15 +1,18 @@
 package com.risetek.rismile.client.dialog;
 
+import com.google.gwt.dom.client.EventTarget;
+import com.google.gwt.event.dom.client.ClickEvent;
+import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.event.dom.client.KeyCodes;
 import com.google.gwt.http.client.Response;
 import com.google.gwt.user.client.DOM;
 import com.google.gwt.user.client.Element;
 import com.google.gwt.user.client.Event;
+import com.google.gwt.user.client.Event.NativePreviewEvent;
 import com.google.gwt.user.client.ui.Button;
-import com.google.gwt.user.client.ui.ClickListener;
 import com.google.gwt.user.client.ui.DockPanel;
 import com.google.gwt.user.client.ui.HasHorizontalAlignment;
 import com.google.gwt.user.client.ui.HasVerticalAlignment;
-import com.google.gwt.user.client.ui.KeyboardListener;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.Widget;
@@ -34,8 +37,9 @@ public abstract class CustomDialog extends MyDialog {
 	public CustomDialog() {
 		super(false,true);
 		
-		close.addClickListener(new ClickListener(){
-			public void onClick(Widget sender) {
+		close.addClickHandler(new ClickHandler(){
+			@Override
+			public void onClick(ClickEvent event) {
 				hide();
 			}});
 
@@ -55,8 +59,8 @@ public abstract class CustomDialog extends MyDialog {
 		
 		toolPanel.add(cancel, DockPanel.WEST);
 		cancel.setStyleName("button");
-		cancel.addClickListener(new ClickListener(){
-			public void onClick(Widget sender) {
+		cancel.addClickHandler(new ClickHandler(){
+			public void onClick(ClickEvent event) {
 				hide();
 			}});
 		
@@ -99,28 +103,23 @@ public abstract class CustomDialog extends MyDialog {
 		panel.add(widget,direction);
 	}
 	
-	
 	// 这里把 开始和结束两个元素的TAB跳格做限制，防止焦点转移到别的非Dialog元素上。
-	public boolean onEventPreview(Event event) {
-	    Element target = DOM.eventGetTarget(event);
+	protected void onPreviewNativeEvent(NativePreviewEvent event) {
+		
+		EventTarget target = event.getNativeEvent().getEventTarget();
 	    
-	    int type = DOM.eventGetType(event);
+	    int type = event.getTypeInt();
 	    
-	    if( type == Event.ONKEYDOWN && DOM.eventGetKeyCode(event) == KeyboardListener.KEY_TAB 
-	    		&& !DOM.eventGetShiftKey(event)){
-	    	if(target.equals(close.getElement())){
-	    		return false;
+	    if( type == Event.ONKEYDOWN && event.getNativeEvent().getKeyCode() == KeyCodes.KEY_TAB )
+	    {
+	    	if( (!event.getNativeEvent().getShiftKey() && target.equals(close.getElement()) )
+	    		||	(event.getNativeEvent().getShiftKey() && target.equals(getFirstTabIndex().getElement())) ){
+	    		event.cancel();
 	    	}
 	    }
-	    else if( type == Event.ONKEYDOWN && DOM.eventGetKeyCode(event) == KeyboardListener.KEY_TAB 
-	    		&& DOM.eventGetShiftKey(event)){
-	    	if(target.equals(getFirstTabIndex().getElement())){
-	    		return false;
-	    	}
-	    }									
-	    return super.onEventPreview(event);
+	    super.onPreviewNativeEvent(event);
 	}
-	
+
 	abstract public Widget getFirstTabIndex();
 
 	/*
