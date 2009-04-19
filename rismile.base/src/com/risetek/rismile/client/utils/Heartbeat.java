@@ -14,7 +14,6 @@ public class Heartbeat implements RequestCallback {
 	private static RequestBuilder hb_Builder = new RequestBuilder(
 			RequestBuilder.POST, "forms/hb");
 	private static Timer hbTimer;
-	private static int heartFreq = 20000;
 
 	
 	static Heartbeat response = new Heartbeat();
@@ -30,13 +29,12 @@ public class Heartbeat implements RequestCallback {
 				}
 			}
 		};
-		hbTimer.schedule(5000);
+		hbTimer.schedule(1000);
 	}
 
 	public void onError(Request request, Throwable exception) {
 		MessageConsole.setHbText("设备未响应！");
-		heartFreq = 5000;
-		hbTimer.schedule(heartFreq);
+		hbTimer.schedule(5000);
 	}
 
 	public void onResponseReceived(Request request, Response response) {
@@ -56,11 +54,10 @@ public class Heartbeat implements RequestCallback {
 			} else {
 				MessageConsole.setHbText("网络正常！");
 			}
-			heartFreq = 20000;
+			hbTimer.schedule(20000);
 		} else {
 			MessageConsole.setHbText("设备响应异常！");
-			heartFreq = 5000;
+			hbTimer.schedule(5000);
 		}
-		hbTimer.schedule(heartFreq);
 	}
 }
