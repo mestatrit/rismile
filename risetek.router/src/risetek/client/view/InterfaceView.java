@@ -142,22 +142,22 @@ public class InterfaceView extends Composite {
 		//tempGrid.setText(0,0,"认证方式:");
 		
 		tempGrid.setWidget(0,0, chapmdCheckBox);
-		chapmdCheckBox.addClickListener(control.new ModifyCHAPMD5Listener());
+		chapmdCheckBox.addClickHandler(control.new ModifyCHAPMD5Listener());
 
 		tempGrid.setWidget(0,1, papCheckBox);
-		papCheckBox.addClickListener(control.new ModifyPAPListener());
+		papCheckBox.addClickHandler(control.new ModifyPAPListener());
 
 		tempGrid.setWidget(1,0, natCheckBox);
-		natCheckBox.addClickListener(control.new ModifyNATListener());
+		natCheckBox.addClickHandler(control.new ModifyNATListener());
 		
 		tempGrid.setWidget(1,1, mppcCheckBox);
-		mppcCheckBox.addClickListener(control.new ModifyMPPCListener());
+		mppcCheckBox.addClickHandler(control.new ModifyMPPCListener());
 		
 		tempGrid.setWidget(2,0, defaultRouterCheckBox);
-		defaultRouterCheckBox.addClickListener(control.new ModifyDefaultROUTEListener());
+		defaultRouterCheckBox.addClickHandler(control.new ModifyDefaultROUTEListener());
 		
 		tempGrid.setWidget(2,1, physCheckBox);
-		physCheckBox.addClickListener(control.new ModifyDefaultPhysListener());
+		physCheckBox.addClickHandler(control.new ModifyDefaultPhysListener());
 
 		flexTable.setWidget(0, 1, tempGrid);
 		
@@ -214,16 +214,16 @@ public class InterfaceView extends Composite {
 			passwordLabel.setText("****");
 		mtuLabel.setText(Integer.toString(data.linkdata.mtu));
 		
-		chapmdCheckBox.setChecked(data.lcpdata.accept_chap);
-		papCheckBox.setChecked(data.lcpdata.accept_pap);
+		chapmdCheckBox.setValue(data.lcpdata.accept_chap);
+		papCheckBox.setValue(data.lcpdata.accept_pap);
 		
-		natCheckBox.setChecked(data.ifacedata.nat);
-		mppcCheckBox.setChecked(data.ifacedata.mppc);
-		physCheckBox.setChecked(data.linkdata.phys_default);
+		natCheckBox.setValue(data.ifacedata.nat);
+		mppcCheckBox.setValue(data.ifacedata.mppc);
+		physCheckBox.setValue(data.linkdata.phys_default);
 		
 		ifaceData conf = data.ifacedata;
 
-		defaultRouterCheckBox.setChecked(conf.haveDefaultRoute);
+		defaultRouterCheckBox.setValue(conf.haveDefaultRoute);
 		
 		ArrayList<ifaceData.router> list = conf.routers;
 

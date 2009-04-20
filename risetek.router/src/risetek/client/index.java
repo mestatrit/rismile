@@ -1,11 +1,11 @@
 package risetek.client;
 
+import com.google.gwt.event.dom.client.ClickEvent;
+import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.http.client.Request;
 import com.google.gwt.http.client.RequestCallback;
 import com.google.gwt.http.client.Response;
-import com.google.gwt.user.client.ui.ClickListener;
 import com.google.gwt.user.client.ui.Hyperlink;
-import com.google.gwt.user.client.ui.Widget;
 import com.google.gwt.xml.client.Document;
 import com.google.gwt.xml.client.Element;
 import com.google.gwt.xml.client.NodeList;
@@ -19,7 +19,7 @@ import com.risetek.rismile.client.utils.MessageConsole;
 /**
  * Entry point classes define <code>onModuleLoad()</code>.
  */
-public class index  extends  Entry implements ClickListener, RequestCallback {
+public class index  extends  Entry implements ClickHandler, RequestCallback {
 
 	// 远程方法执行者。
 	private RequestFactory remoteRequest = new RequestFactory();
@@ -33,7 +33,7 @@ public class index  extends  Entry implements ClickListener, RequestCallback {
 		list.addSink(RisetekSystemSink.init());
 //		list.addSink(InterfaceSink.init());
 		link.setText("添加接口");
-		link.addClickListener(this);
+		link.addClickHandler(this);
 		list.addExternalLink(link);
 		// 通过请求获取接口数据来确定 interface Sink 的出现。
 		remoteRequest.get("Dialers", "interface=0", this);
@@ -57,11 +57,6 @@ public class index  extends  Entry implements ClickListener, RequestCallback {
 		
 	}
 	
-	public void onClick(Widget sender) {
-		//	TODO: 我们在这里发起一个创建接口0的远程请求，这个请求会被返回来形成interfaceSink的数据。
-		new dummyCreateInterface();
-	}
-
 	public void onError(Request request, Throwable exception) {
 		MessageConsole.setText("提取拨号配置数据失败");
 	}
@@ -93,4 +88,10 @@ public class index  extends  Entry implements ClickListener, RequestCallback {
 		list.addExternalLink(link);
 	}
 	*/
+
+	@Override
+	public void onClick(ClickEvent event) {
+		//	TODO: 我们在这里发起一个创建接口0的远程请求，这个请求会被返回来形成interfaceSink的数据。
+		new dummyCreateInterface();
+	}
 }

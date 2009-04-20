@@ -6,13 +6,12 @@ import risetek.client.dialog.ModifyLCPUserDialog;
 import risetek.client.dialog.ModifyMTUDialog;
 import risetek.client.model.IfModel;
 import risetek.client.view.InterfaceView;
-
 import com.google.gwt.http.client.Request;
 import com.google.gwt.http.client.RequestCallback;
 import com.google.gwt.http.client.Response;
 import com.google.gwt.user.client.ui.CheckBox;
-import com.google.gwt.user.client.ui.ClickListener;
-import com.google.gwt.user.client.ui.Widget;
+import com.google.gwt.event.dom.client.ClickEvent;
+import com.google.gwt.event.dom.client.ClickHandler;
 import com.risetek.rismile.client.http.RequestFactory;
 import com.risetek.rismile.client.utils.MessageConsole;
 
@@ -139,20 +138,20 @@ public class IfController implements RequestCallback {
 		remoteRequest.get(setPath, query, callback);
 	}
 
-	public class ModifyLCPUserButtonClick implements ClickListener {
-		public void onClick(Widget sender) {
+	public class ModifyLCPUserButtonClick implements ClickHandler {
+		public void onClick(ClickEvent event) {
 			Control control = new Control();
 			control.dialog.show(data.config.lcpdata.pppusername);
 		}
 
-		public class Control implements ClickListener, RequestCallback {
+		public class Control implements ClickHandler, RequestCallback {
 			public ModifyLCPUserDialog dialog = new ModifyLCPUserDialog();
 
 			public Control() {
-				dialog.confirm.addClickListener(this);
+				dialog.confirm.addClickHandler(this);
 			}
 
-			public void onClick(Widget sender) {
+			public void onClick(ClickEvent event) {
 				if (dialog.isValid()) {
 					setLCPUser(dialog.nameBox.getText(), this);
 				}
@@ -170,20 +169,20 @@ public class IfController implements RequestCallback {
 		}
 	}
 
-	public class ModifyLCPPasswordButtonClick implements ClickListener {
-		public void onClick(Widget sender) {
+	public class ModifyLCPPasswordButtonClick implements ClickHandler {
+		public void onClick(ClickEvent event) {
 			Control control = new Control();
 			control.dialog.show();
 		}
 
-		public class Control implements ClickListener, RequestCallback {
+		public class Control implements ClickHandler, RequestCallback {
 			public ModifyLCPPasswordDialog dialog = new ModifyLCPPasswordDialog();
 
 			public Control() {
-				dialog.confirm.addClickListener(this);
+				dialog.confirm.addClickHandler(this);
 			}
 
-			public void onClick(Widget sender) {
+			public void onClick(ClickEvent event) {
 				if (dialog.isValid()) {
 					setLCPPassword(dialog.pwdBox.getText(), this);
 				}
@@ -201,20 +200,20 @@ public class IfController implements RequestCallback {
 		}
 	}
 
-	public class ModifyMTUButtonClick implements ClickListener {
-		public void onClick(Widget sender) {
+	public class ModifyMTUButtonClick implements ClickHandler {
+		public void onClick(ClickEvent event) {
 			Control control = new Control();
 			control.dialog.show(Integer.toString(data.config.linkdata.mtu));
 		}
 
-		public class Control implements ClickListener, RequestCallback {
+		public class Control implements ClickHandler, RequestCallback {
 			public ModifyMTUDialog dialog = new ModifyMTUDialog();
 
 			public Control() {
-				dialog.confirm.addClickListener(this);
+				dialog.confirm.addClickHandler(this);
 			}
 
-			public void onClick(Widget sender) {
+			public void onClick(ClickEvent event) {
 				if (dialog.isValid()) {
 					setMTU(dialog.newValuebox.getText(), this);
 				}
@@ -233,11 +232,11 @@ public class IfController implements RequestCallback {
 	}
 
 	// --------------------------------------------------------------------------------------------------------
-	public class ModifyCHAPMD5Listener implements ClickListener,
+	public class ModifyCHAPMD5Listener implements ClickHandler,
 			RequestCallback {
-		public void onClick(Widget sender) {
-			CheckBox box = (CheckBox) sender;
-			ModifyLCPAuth(AUTH_TYPE.CHAPMD5, box.isChecked(), this);
+		public void onClick(ClickEvent event) {
+			CheckBox box = (CheckBox) event.getSource();
+			ModifyLCPAuth(AUTH_TYPE.CHAPMD5, box.getValue(), this);
 		}
 
 		public void onError(Request request, Throwable exception) {
@@ -251,10 +250,10 @@ public class IfController implements RequestCallback {
 	}
 
 	// --------------------------------------------------------------------------------------------------------
-	public class ModifyPAPListener implements ClickListener, RequestCallback {
-		public void onClick(Widget sender) {
-			CheckBox box = (CheckBox) sender;
-			ModifyLCPAuth(AUTH_TYPE.PAP, box.isChecked(), this);
+	public class ModifyPAPListener implements ClickHandler, RequestCallback {
+		public void onClick(ClickEvent event) {
+			CheckBox box = (CheckBox) event.getSource();
+			ModifyLCPAuth(AUTH_TYPE.PAP, box.getValue(), this);
 		}
 
 		public void onError(Request request, Throwable exception) {
@@ -267,10 +266,10 @@ public class IfController implements RequestCallback {
 	}
 
 	// --------------------------------------------------------------------------------------------------------
-	public class ModifyNATListener implements ClickListener, RequestCallback {
-		public void onClick(Widget sender) {
-			CheckBox box = (CheckBox) sender;
-			setNAT( box.isChecked(), this);
+	public class ModifyNATListener implements ClickHandler, RequestCallback {
+		public void onClick(ClickEvent event) {
+			CheckBox box = (CheckBox) event.getSource();
+			setNAT( box.getValue(), this);
 		}
 
 		public void onError(Request request, Throwable exception) {
@@ -283,10 +282,10 @@ public class IfController implements RequestCallback {
 	}
 
 	// --------------------------------------------------------------------------------------------------------
-	public class ModifyMPPCListener implements ClickListener, RequestCallback {
-		public void onClick(Widget sender) {
-			CheckBox box = (CheckBox) sender;
-			setMPPC( box.isChecked() , this);
+	public class ModifyMPPCListener implements ClickHandler, RequestCallback {
+		public void onClick(ClickEvent event) {
+			CheckBox box = (CheckBox) event.getSource();
+			setMPPC( box.getValue() , this);
 		}
 
 		public void onError(Request request, Throwable exception) {
@@ -298,10 +297,10 @@ public class IfController implements RequestCallback {
 		}
 	}
 	// ------------------------------------------------------------------
-	public class ModifyDefaultROUTEListener implements ClickListener, RequestCallback {
-		public void onClick(Widget sender) {
-			CheckBox box = (CheckBox) sender;
-			setDefaultRoute( box.isChecked() , this);
+	public class ModifyDefaultROUTEListener implements ClickHandler, RequestCallback {
+		public void onClick(ClickEvent event) {
+			CheckBox box = (CheckBox) event.getSource();
+			setDefaultRoute( box.getValue() , this);
 		}
 
 		public void onError(Request request, Throwable exception) {
@@ -314,10 +313,10 @@ public class IfController implements RequestCallback {
 	}
 	
 	// ------------------------------------------------------------------
-	public class ModifyDefaultPhysListener implements ClickListener, RequestCallback {
-		public void onClick(Widget sender) {
-			CheckBox box = (CheckBox) sender;
-			setDefaultPhys( box.isChecked() , this);
+	public class ModifyDefaultPhysListener implements ClickHandler, RequestCallback {
+		public void onClick(ClickEvent event) {
+			CheckBox box = (CheckBox) event.getSource();
+			setDefaultPhys( box.getValue() , this);
 		}
 
 		public void onError(Request request, Throwable exception) {
@@ -330,20 +329,20 @@ public class IfController implements RequestCallback {
 	}
 
 	// 加入接口路由--------------------------------------------------------
-	public class AddInterfaceRouteButtonClick implements ClickListener {
-		public void onClick(Widget sender) {
+	public class AddInterfaceRouteButtonClick implements ClickHandler {
+		public void onClick(ClickEvent event) {
 			Control control = new Control();
 			control.dialog.show();
 		}
 
-		public class Control implements ClickListener, RequestCallback {
+		public class Control implements ClickHandler, RequestCallback {
 			public AddInterfaceRouteDialog dialog = new AddInterfaceRouteDialog();
 
 			public Control() {
-				dialog.confirm.addClickListener(this);
+				dialog.confirm.addClickHandler(this);
 			}
 
-			public void onClick(Widget sender) {
+			public void onClick(ClickEvent event) {
 				if (dialog.isValid()) {
 					setRoute(true, dialog.destBox.getText(), dialog.maskBox.getText() , this);
 				}
@@ -362,7 +361,7 @@ public class IfController implements RequestCallback {
 	}	
 
 	// 删除接口路由--------------------------------------------------------
-	public class DelInterfaceRouteButtonClick implements ClickListener , RequestCallback {
+	public class DelInterfaceRouteButtonClick implements ClickHandler , RequestCallback {
 		private String dest;
 		private String mask;
 		public DelInterfaceRouteButtonClick(String dest, String mask)
@@ -370,7 +369,7 @@ public class IfController implements RequestCallback {
 			this.dest = dest;
 			this.mask = mask;
 		}
-		public void onClick(Widget sender) {
+		public void onClick(ClickEvent event) {
 			MessageConsole.setText("删除接口路由");
 			setRoute(false, dest, mask , this);
 		}
@@ -388,17 +387,17 @@ public class IfController implements RequestCallback {
 	
 	// 删除接口的操作
 	/*
-	public class RemoveInterfaceClick implements ClickListener {
-		public void onClick(Widget sender) {
+	public class RemoveInterfaceClick implements ClickHandler {
+		public void onClick(ClickEvent event) {
 			index.removeInterfaceSink();
 		}
 	}
 	*/
 
 	// 断开连接  -----------------------------------------------------------------------
-	public class DisconnectListener implements ClickListener,
+	public class DisconnectListener implements ClickHandler,
 			RequestCallback {
-		public void onClick(Widget sender) {
+		public void onClick(ClickEvent event) {
 			remoteRequest.get("websexec", "commands=disconnect Dialer "+DialerUnit, this);
 		}
 
@@ -412,9 +411,9 @@ public class IfController implements RequestCallback {
 	}
 
 	// 建立连接  -----------------------------------------------------------------------
-	public class ConnectListener implements ClickListener,
+	public class ConnectListener implements ClickHandler,
 			RequestCallback {
-		public void onClick(Widget sender) {
+		public void onClick(ClickEvent event) {
 			remoteRequest.get("websexec", "commands=connect Dialer "+DialerUnit, this);
 		}
 
@@ -429,8 +428,8 @@ public class IfController implements RequestCallback {
 	}
 
 	// 更新数据  -----------------------------------------------------------------------
-	public class ReloadStatListener implements ClickListener {
-		public void onClick(Widget sender) {
+	public class ReloadStatListener implements ClickHandler {
+		public void onClick(ClickEvent event) {
 			load();
 		}
 	}
