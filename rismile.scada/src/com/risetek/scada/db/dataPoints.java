@@ -37,8 +37,7 @@ public class dataPoints {
 	public void setBlob(Blob blob) {
 		this.blob = blob;
 	}
-	public dataPoints(Long id, int dataSourceId, Blob blob) {
-		this.id = id;
+	public dataPoints(int dataSourceId, Blob blob) {
 		this.dataSourceId = dataSourceId;
 		this.blob = blob;
 	}
@@ -49,6 +48,4 @@ public class dataPoints {
 	private int dataSourceId;
 	@Persistent
 	private Blob blob;
-	
-	
 }

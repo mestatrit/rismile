@@ -45,9 +45,7 @@ public class dataSources {
 	public void setData(Blob data) {
 		this.data = data;
 	}
-	public dataSources(Long id, int dataSourceType, String name, Blob data) {
-		super();
-		this.id = id;
+	public dataSources(int dataSourceType, String name, Blob data) {
 		this.dataSourceType = dataSourceType;
 		this.name = name;
 		this.data = data;
