@@ -8,6 +8,7 @@ import com.google.gwt.user.client.ui.AbstractImagePrototype;
 import com.google.gwt.user.client.ui.DecoratorPanel;
 import com.google.gwt.user.client.ui.DockPanel;
 import com.google.gwt.user.client.ui.FlowPanel;
+import com.google.gwt.user.client.ui.Grid;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.HasHorizontalAlignment;
 import com.google.gwt.user.client.ui.HorizontalPanel;
@@ -50,7 +51,7 @@ public abstract class Entry implements EntryPoint{
 	private final DockPanel sinkContainer = new DockPanel();
 	private final DecoratorPanel sinkContainerOut = new DecoratorPanel();
 	private final FlowPanel maskPanel = new FlowPanel();
-	private final HorizontalPanel headPanel = new HorizontalPanel();
+	private final Grid headPanel = new Grid(1,2);
 
 	public void onHistoryChanged(String token) {
 		// Find the SinkInfo associated with the history context. If one is
@@ -66,16 +67,22 @@ public abstract class Entry implements EntryPoint{
 
 	public void onModuleLoad() {
 		
-		panel.setBorderWidth(1);
-		sinkContainer.setBorderWidth(1);
+		//panel.setBorderWidth(1);
+		//sinkContainer.setBorderWidth(1);
 		//sinkContainerOut.setWidth("600px");
 		// Load all the sinks.
 		loadSinks();
 		panel.add(images.gwtLogo().createImage());
 		
 		headPanel.setWidth("100%");
-		headPanel.add(list);
+		headPanel.getCellFormatter().setWidth(0, 0, "20%");
+		headPanel.getCellFormatter().setWidth(0, 1, "80%");
+		headPanel.setWidget(0, 0, list);
 
+		//headPanel.setBorderWidth(1);
+		headPanel.setCellPadding(0);
+		headPanel.setCellSpacing(0);
+		
 		sinkContainer.setWidth("100%");
 
 		// description.setStyleName("description");
@@ -88,7 +95,11 @@ public abstract class Entry implements EntryPoint{
 		sinkContainer.add(descriptionPanel, DockPanel.NORTH);
 		sinkContainerOut.add(sinkContainer);
 
-		headPanel.add(sinkContainerOut);
+		DOM.setStyleAttribute(sinkContainer.getElement(), "backgroundColor", "#E0ECFF");
+
+		
+		headPanel.setWidget(0, 1, sinkContainerOut);
+		sinkContainer.setWidth("640px");
 		maskPanel.add(headPanel);
 		
 		panel.add(maskPanel);

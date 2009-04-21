@@ -21,7 +21,7 @@ public class SinkList extends Composite {
 	private int selectedSink = -1;
 
 	public SinkList() {
-		list.setBorderWidth(1);
+		list.setWidth("100%");
 		initWidget(list);
 	}
 
@@ -34,7 +34,7 @@ public class SinkList extends Composite {
 		info.link_index = index;
 		sinks.add(info);
 
-		list.setCellVerticalAlignment(link, HorizontalPanel.ALIGN_BOTTOM);
+		list.setCellVerticalAlignment(link, HorizontalPanel.ALIGN_MIDDLE);
 		styleSink(index, false);
 	}
 
@@ -71,7 +71,8 @@ public class SinkList extends Composite {
 	private void colorSink(int index, boolean on) {
 		String color = "";
 		if (on) {
-			color = "#2a8ebf";
+			color = "#E0ECFF";
+			//color = "#C3D9FF";
 		}
 
 		Widget w = list.getWidget(index);
@@ -79,14 +80,6 @@ public class SinkList extends Composite {
 	}
 
 	private void styleSink(int index, boolean selected) {
-		String style = (index == 0) ? "ks-FirstSinkItem" : "ks-SinkItem";
-		if (selected) {
-			style += "-selected";
-		}
-
-		Widget w = list.getWidget(index);
-		w.setStyleName(style);
-
 		colorSink(index, selected);
 	}
 }
