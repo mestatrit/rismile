@@ -26,14 +26,8 @@ import java.util.List;
 
 //import com.serotonin.mango.Common;
 import com.risetek.scada.Common.Common;
-import com.serotonin.mango.rt.dataImage.PointValueTime;
-import com.serotonin.mango.view.chart.ChartRenderer;
-import com.serotonin.mango.view.text.TextRenderer;
-import com.serotonin.mango.vo.dataSource.PointLocatorVO;
-import com.serotonin.mango.vo.event.PointEventDetectorVO;
-import com.serotonin.util.SerializationHelper;
-
-public class DataPointVO implements Serializable {
+import com.risetek.scada.vo.dataSource.PointLocatorVO;
+public class DataPointVO {
     private static final long serialVersionUID = -1;
     
     public interface LoggingTypes {
@@ -75,9 +69,6 @@ public class DataPointVO implements Serializable {
     private double tolerance = 0;
     private int purgeType = Common.TimePeriods.YEARS;
     private int purgePeriod = 1;
-    private TextRenderer textRenderer;
-    private ChartRenderer chartRenderer;
-    private List<PointEventDetectorVO> eventDetectors;
     private List<UserComment> comments;
     
     private PointLocatorVO pointLocator;
@@ -100,17 +91,6 @@ public class DataPointVO implements Serializable {
      * the browser side needs to be refreshed. Initially set to this value so that point views will update 
      * (since null values in this case do in fact equal each other).
      */
-    private PointValueTime pointValue = new PointValueTime(null, -1);
-    
-    public void resetPointValue() {
-        this.pointValue = new PointValueTime(null, -1);
-    }
-    public PointValueTime njbGetPointValue() {
-        return pointValue;
-    }
-    public void njbSetPointValue(PointValueTime pointValue) {
-        this.pointValue = pointValue;
-    }
     
     
     public int getDataSourceId() {
@@ -185,24 +165,6 @@ public class DataPointVO implements Serializable {
     public void setTolerance(double tolerance) {
         this.tolerance = tolerance;
     }
-    public TextRenderer getTextRenderer() {
-        return textRenderer;
-    }
-    public void setTextRenderer(TextRenderer textRenderer) {
-        this.textRenderer = textRenderer;
-    }
-    public ChartRenderer getChartRenderer() {
-        return chartRenderer;
-    }
-    public void setChartRenderer(ChartRenderer chartRenderer) {
-        this.chartRenderer = chartRenderer;
-    }
-    public List<PointEventDetectorVO> getEventDetectors() {
-        return eventDetectors;
-    }
-    public void setEventDetectors(List<PointEventDetectorVO> eventDetectors) {
-        this.eventDetectors = eventDetectors;
-    }
     public List<UserComment> getComments() {
         return comments;
     }
@@ -217,55 +179,5 @@ public class DataPointVO implements Serializable {
     ///
     //
     private static final int version = 2;
-    private void writeObject(ObjectOutputStream out) throws IOException {
-        out.writeInt(version);
-        SerializationHelper.writeSafeUTF(out, name);
-        out.writeBoolean(enabled);
-        out.writeInt(pointFolderId);
-        out.writeInt(loggingType);
-        out.writeDouble(tolerance);
-        out.writeInt(purgeType);
-        out.writeInt(purgePeriod);
-        out.writeObject(textRenderer);
-        out.writeObject(chartRenderer);
-        out.writeObject(pointLocator);
-    }
     
-    private void readObject(ObjectInputStream in) throws IOException, ClassNotFoundException {
-        int ver = in.readInt();
-        
-        // Switch on the version of the class so that version changes can be elegantly handled.
-        if (ver == 1) {
-            name = SerializationHelper.readSafeUTF(in);
-            enabled = in.readBoolean();
-            pointFolderId = 0;
-            loggingType = in.readInt();
-            tolerance = in.readDouble();
-            purgeType = in.readInt();
-            purgePeriod = in.readInt();
-            textRenderer = (TextRenderer)in.readObject();
-            chartRenderer = (ChartRenderer)in.readObject();
-            pointLocator = (PointLocatorVO)in.readObject();
-        }
-        else if (ver == 2) {
-            name = SerializationHelper.readSafeUTF(in);
-            enabled = in.readBoolean();
-            pointFolderId = in.readInt();
-            loggingType = in.readInt();
-            tolerance = in.readDouble();
-            purgeType = in.readInt();
-            purgePeriod = in.readInt();
-            textRenderer = (TextRenderer)in.readObject();
-            chartRenderer = (ChartRenderer)in.readObject();
-            
-            // The spinwave changes were not correctly implemented, so we need to handle potential errors here.
-            try {
-                pointLocator = (PointLocatorVO)in.readObject();
-            }
-            catch (IOException e) {
-                // Turn this guy off.
-                enabled = false;
-            }
-        }
-    }
 }

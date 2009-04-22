@@ -18,9 +18,6 @@
  */
 package com.risetek.scada.db.dao;
 
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Types;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
@@ -35,16 +32,9 @@ import org.springframework.transaction.support.TransactionCallbackWithoutResult;
 
 import com.risetek.scada.vo.DataPointVO;
 import com.serotonin.ShouldNeverHappenException;
-import com.serotonin.db.IntValuePair;
+import com.risetek.scada.Common.IntValuePair;
+
 import com.serotonin.db.spring.GenericRowMapper;
-import com.serotonin.mango.Common;
-import com.serotonin.mango.rt.event.type.EventType;
-import com.serotonin.mango.view.text.PlainRenderer;
-//import com.serotonin.mango.vo.DataPointVO;
-//import com.serotonin.mango.vo.UserComment;
-import com.serotonin.mango.vo.event.PointEventDetectorVO;
-import com.serotonin.mango.vo.hierarchy.PointFolder;
-import com.serotonin.mango.vo.hierarchy.PointHierarchy;
 import com.serotonin.util.SerializationHelper;
 import com.serotonin.util.StringUtils;
 

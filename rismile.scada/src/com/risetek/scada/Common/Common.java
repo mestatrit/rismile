@@ -24,16 +24,14 @@ import org.joda.time.Period;
 import org.quartz.CronTrigger;
 
 import com.serotonin.ShouldNeverHappenException;
-import com.serotonin.mango.web.ContextWrapper;
 import com.serotonin.util.PropertiesUtils;
 
 public class Common {
     
-    private static final String SESSION_USER = "sessionUser";
-    private static final String ANON_VIEW_KEY = "anonymousViews";
+    //private static final String SESSION_USER = "sessionUser";
+    //private static final String ANON_VIEW_KEY = "anonymousViews";
     
     public static final int NEW_ID = -1;
-    public static ContextWrapper ctx;
     
     /*
      * Updating the Mango version:
@@ -143,19 +141,9 @@ public class Common {
         return new PropertiesUtils("env");
     }
     
-    public static String getDatabaseUrl() {
-        String name = getEnvironmentProfile().getString("db.url", "~/../../mangoDB");
-        if (name.startsWith("~"))
-            name = ctx.getServletContext().getRealPath(name.substring(1));
-        return name;
-    }
-    
     public static String getGroveUrl(String servlet) {
         String grove = getEnvironmentProfile().getString("grove.url", "http://mango.serotoninsoftware.com/servlet");
         return grove +"/"+ servlet;
-    }
-    public static String getDocPath() {
-        return ctx.getServletContext().getRealPath("WEB-INF/dox") +"/";
     }
 
     public static CronTrigger getCronTrigger(String name, String group, int periodType) {
