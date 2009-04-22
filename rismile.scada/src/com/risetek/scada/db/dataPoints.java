@@ -37,6 +37,7 @@ public class dataPoints {
 	public void setBlob(Blob blob) {
 		this.blob = blob;
 	}
+	
 	public dataPoints(int dataSourceId, Blob blob) {
 		this.dataSourceId = dataSourceId;
 		this.blob = blob;
