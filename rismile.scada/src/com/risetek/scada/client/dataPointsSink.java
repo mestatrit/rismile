@@ -1,7 +1,6 @@
 package com.risetek.scada.client;
 
 import com.risetek.scada.client.sink.Sink;
-import com.risetek.scada.client.view.SystemHomeView;
 import com.risetek.scada.client.view.dataPointsView;
 
 public class dataPointsSink extends Sink {

@@ -1,17 +1,17 @@
 package com.risetek.scada.client.view;
 
-import com.google.gwt.user.client.ui.Button;
-import com.google.gwt.user.client.ui.Composite;
-import com.google.gwt.user.client.ui.Grid;
-import com.google.gwt.user.client.ui.TextBox;
-import com.risetek.scada.client.Entry;
-import com.risetek.scada.client.remote.RequestFactory;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.http.client.Request;
 import com.google.gwt.http.client.RequestCallback;
 import com.google.gwt.http.client.Response;
+import com.google.gwt.user.client.ui.Button;
+import com.google.gwt.user.client.ui.Composite;
+import com.google.gwt.user.client.ui.Grid;
+import com.google.gwt.user.client.ui.TextBox;
+import com.risetek.scada.client.Entry;
+import com.risetek.scada.client.remote.RequestFactory;
 
 public class dataPointsView extends Composite {
 

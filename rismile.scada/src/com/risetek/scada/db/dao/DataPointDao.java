@@ -18,6 +18,8 @@
  */
 package com.risetek.scada.db.dao;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
@@ -26,17 +28,10 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
-import org.springframework.jdbc.core.RowCallbackHandler;
-import org.springframework.transaction.TransactionStatus;
-import org.springframework.transaction.support.TransactionCallbackWithoutResult;
-
-import com.risetek.scada.vo.DataPointVO;
-import com.serotonin.ShouldNeverHappenException;
+import com.risetek.scada.Common.Common;
 import com.risetek.scada.Common.IntValuePair;
-
-import com.serotonin.db.spring.GenericRowMapper;
-import com.serotonin.util.SerializationHelper;
-import com.serotonin.util.StringUtils;
+import com.risetek.scada.vo.DataPointVO;
+import com.risetek.scada.vo.UserComment;
 
 public class DataPointDao extends BaseDao {
     

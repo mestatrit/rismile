@@ -18,14 +18,6 @@
  */
 package com.risetek.scada.Common;
 
-import java.text.ParseException;
-
-import org.joda.time.Period;
-import org.quartz.CronTrigger;
-
-import com.serotonin.ShouldNeverHappenException;
-import com.serotonin.util.PropertiesUtils;
-
 public class Common {
     
     //private static final String SESSION_USER = "sessionUser";
@@ -70,37 +62,6 @@ public class Common {
         String MANGO_LOG = "mangoLog";
     }
     
-    /**
-     * Returns the length of time in milliseconds that the 
-     * @param timePeriod
-     * @param numberOfPeriods
-     * @return
-     */
-    public static long getMillis(int periodType, int periods) {
-        return getPeriod(periodType, periods).toDurationFrom(null).getMillis();
-    }
-    
-    public static Period getPeriod(int periodType, int periods) {
-        switch (periodType) {
-        case TimePeriods.SECONDS:
-            return Period.seconds(periods);
-        case TimePeriods.MINUTES:
-            return Period.minutes(periods);
-        case TimePeriods.HOURS:
-            return Period.hours(periods);
-        case TimePeriods.DAYS:
-            return Period.days(periods);
-        case TimePeriods.WEEKS:
-            return Period.weeks(periods);
-        case TimePeriods.MONTHS:
-            return Period.months(periods);
-        case TimePeriods.YEARS:
-            return Period.years(periods);
-        default :
-            throw new ShouldNeverHappenException("Unsupported time period: "+ periodType);
-        }
-    }
-    
     public static String getPeriodDescription(int periodType, int periods) {
         String periodDescription;
         switch (periodType) {
@@ -126,7 +87,7 @@ public class Common {
             periodDescription = " year";
             break;
         default :
-            throw new ShouldNeverHappenException("Unsupported time period: "+ periodType);
+            throw new RuntimeException("Unsupported time period: "+ periodType);
         }
         
         if (periods != 1)
@@ -134,49 +95,5 @@ public class Common {
         
         return Integer.toString(periods) + periodDescription;
     }
-    
-    //
-    // Environment profile
-    public static PropertiesUtils getEnvironmentProfile() {
-        return new PropertiesUtils("env");
-    }
-    
-    public static String getGroveUrl(String servlet) {
-        String grove = getEnvironmentProfile().getString("grove.url", "http://mango.serotoninsoftware.com/servlet");
-        return grove +"/"+ servlet;
-    }
 
-    public static CronTrigger getCronTrigger(String name, String group, int periodType) {
-        CronTrigger trigger = new CronTrigger(name, group);
-        try {
-            switch (periodType) {
-            case TimePeriods.SECONDS :
-                trigger.setCronExpression("* * * * * ?");
-                break;
-            case TimePeriods.MINUTES :
-                trigger.setCronExpression("0 * * * * ?");
-                break;
-            case TimePeriods.HOURS :
-                trigger.setCronExpression("0 0 * * * ?");
-                break;
-            case TimePeriods.DAYS :
-                trigger.setCronExpression("0 0 0 * * ?");
-                break;
-            case TimePeriods.WEEKS :
-                trigger.setCronExpression("0 0 0 ? * MON");
-                break;
-            case TimePeriods.MONTHS :
-                trigger.setCronExpression("0 0 0 1 * ?");
-                break;
-            case TimePeriods.YEARS :
-                trigger.setCronExpression("0 0 0 1 JAN ?");
-                break;
-            }
-        }
-        catch (ParseException e) {
-            throw new ShouldNeverHappenException(e);
-        }
-        return trigger;
-    }
-    
 }

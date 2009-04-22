@@ -18,13 +18,8 @@
  */
 package com.risetek.scada.vo;
 
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-import java.io.Serializable;
 import java.util.List;
 
-//import com.serotonin.mango.Common;
 import com.risetek.scada.Common.Common;
 import com.risetek.scada.vo.dataSource.PointLocatorVO;
 public class DataPointVO {
@@ -178,6 +173,6 @@ public class DataPointVO {
     /// Serialization
     ///
     //
-    private static final int version = 2;
+    //private static final int version = 2;
     
 }
