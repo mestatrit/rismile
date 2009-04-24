@@ -13,7 +13,7 @@
   <!-- Servlets -->
   <servlet>
     <servlet-name>greetServlet</servlet-name>
-    <servlet-class>com.risetek.scada.server.GreetingServiceImpl</servlet-class>
+    <servlet-class>com.risetek.scada.server.dataPointsCreateServiceImpl</servlet-class>
   </servlet>
   
   <servlet-mapping>
