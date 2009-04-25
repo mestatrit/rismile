@@ -3,16 +3,14 @@ package com.risetek.scada.server;
 import java.io.IOException;
 import java.io.PrintWriter;
 
-import javax.jdo.PersistenceManager;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
 import com.google.appengine.api.datastore.Blob;
 import com.google.gwt.core.client.GWT;
-import com.risetek.scada.db.PMF;
-import com.risetek.scada.db.dataPoints;
+import com.risetek.scada.db.dao.*;
+import com.risetek.scada.vo.DataPointVO;
 
 /**
  * The server side implementation of the RPC service.
@@ -29,15 +27,8 @@ public class dataPointsCreateServiceImpl extends HttpServlet {
 
 			GWT.log(blob, null);
 			
-			PersistenceManager pm = PMF.get().getPersistenceManager();
-
-			dataPoints dp = new dataPoints(0, new Blob("blob".getBytes()));
-
-			try {
-				pm.makePersistent(dp);
-			} finally {
-				pm.close();
-			}
+			DataPointVO dp = new DataPointVO(0, new Blob("blob".getBytes()));
+			(new DataPointDao()).saveDataPoint(dp);
 
 		}
 		else
