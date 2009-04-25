@@ -55,8 +55,8 @@ public class DataPointDao extends BaseDao {
     	
 		PersistenceManager pm = PMF.get().getPersistenceManager();
 		Query query = pm.newQuery(DataPointVO.class);
-		query.setRange(0, 10);
-	    query.setOrdering("id desc");
+		//query.setRange(0, 10);
+	    //query.setOrdering("id desc");
 
 	    try {
 	        List<DataPointVO> results = (List<DataPointVO>)query.execute();
@@ -76,8 +76,8 @@ public class DataPointDao extends BaseDao {
     public List<DataPointVO> getDataPoints(int dataSourceId) {
 		PersistenceManager pm = PMF.get().getPersistenceManager();
 		Query query = pm.newQuery(DataPointVO.class);
-		query.setRange(0, 10);
-	    query.setOrdering("id desc");
+		//query.setRange(0, 10);
+	    //query.setOrdering("id desc");
 
 	    try {
 	        List<DataPointVO> results = (List<DataPointVO>)query.execute();
@@ -93,7 +93,7 @@ public class DataPointDao extends BaseDao {
         return dps;
 */
     }
-    
+    /*
     private static class DataPointNameComparator implements Comparator<DataPointVO> {
         public int compare(DataPointVO dp1, DataPointVO dp2) {
             if (null == dp1.getName())
@@ -101,6 +101,7 @@ public class DataPointDao extends BaseDao {
             return dp1.getName().compareToIgnoreCase(dp2.getName());
         }
     }
+    */
     /*
     public DataPointVO getDataPoint(int id) {
 		PersistenceManager pm = PMF.get().getPersistenceManager();
@@ -373,4 +374,9 @@ public class DataPointDao extends BaseDao {
     }
     
 */
+
+	@Override
+	public void onResponse(String resp) {
+		
+	}
 }

@@ -10,40 +10,68 @@ import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.Grid;
 import com.google.gwt.user.client.ui.TextBox;
+import com.google.gwt.user.client.ui.VerticalPanel;
 import com.risetek.scada.client.Entry;
 import com.risetek.scada.client.remote.RequestFactory;
+import com.google.gwt.user.client.ui.FlexTable;
+import com.google.gwt.xml.client.Document;
+import com.google.gwt.xml.client.Element;
+import com.google.gwt.xml.client.NodeList;
+import com.google.gwt.xml.client.XMLParser;
 
 public class dataPointsView extends Composite {
 
-	private final Grid table = new Grid(1,1);
+	private final Grid table = new Grid(2,1);
 	TextBox userLabel = new TextBox();
+	private final VerticalPanel frame = new VerticalPanel();
+	private final FlexTable datapoints = new FlexTable();
 
 	
 	private class createPoints implements ClickHandler {
 
 		@Override
 		public void onClick(ClickEvent event) {
-			RequestFactory request = new RequestFactory();
-			request.get("greet", "blob="+userLabel.getText(), new RequestCallback(){
+			getDatas(userLabel.getText());
+		}
+	}
+	
+	
+	private class dataPointsCallback implements RequestCallback {
 
-				@Override
-				public void onError(Request request, Throwable exception) {
-					GWT.log("error", null);
-				}
+		@Override
+		public void onError(Request request, Throwable exception) {
+			GWT.log("error", null);
+		}
 
-				@Override
-				public void onResponseReceived(Request request,
-						Response response) {
-					GWT.log("ok", null);
-				}
-				
-			});
+		@Override
+		public void onResponseReceived(Request request, Response response) {
+			Document datas = XMLParser.parse(response.getText());
+			Element datasElement = datas.getDocumentElement();
+			NodeList nodelist = datasElement.getElementsByTagName("SET");
+			for (int i = 0; i < nodelist.getLength(); i++) {
+				datapoints.setText(i, 0, ((Element)nodelist.item(i)).getAttribute("id"));
+				datapoints.setText(i, 1, nodelist.item(i).getFirstChild().getNodeValue());
+			}
+			GWT.log("ok", null);
 		}
 		
 	}
 	
+	public void getDatas(String blob)
+	{
+		RequestFactory request = new RequestFactory();
+		if( null == blob )
+		{
+			request.get("greet", null , new dataPointsCallback());
+		}
+		else
+		{
+			request.get("greet", "blob="+blob, new dataPointsCallback());
+		}
+	}
+	
 	public dataPointsView() {
-
+		datapoints.setBorderWidth(1);
 		table.setBorderWidth(1);
 
 		table.setWidth("100%");
@@ -53,10 +81,17 @@ public class dataPointsView extends Composite {
 		pppGrid.setWidget(0, 1, userLabel);
 		pppGrid.setWidget(0, 2, new Button("修改", new createPoints()));
 
-		table.setHeight(Entry.SinkHeight);
-		
 		table.setWidget(0, 0, pppGrid);
-		initWidget(table);
+		table.setWidget(1, 0, datapoints);
+		
+		frame.add(table);
+		frame.setWidth("100%");		
+		frame.setHeight(Entry.SinkHeight);
+		initWidget(frame);
 	}
 
+	public void onLoad()
+	{
+		getDatas(null);
+	}
 }

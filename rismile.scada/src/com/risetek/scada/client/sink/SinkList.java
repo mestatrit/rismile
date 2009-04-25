@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 import com.google.gwt.user.client.DOM;
 import com.google.gwt.user.client.ui.Composite;
-import com.google.gwt.user.client.ui.HorizontalPanel;
+import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Hyperlink;
 import com.google.gwt.user.client.ui.Widget;
 import com.risetek.scada.client.sink.Sink.SinkInfo;
@@ -15,7 +15,7 @@ import com.risetek.scada.client.sink.Sink.SinkInfo;
  */
 public class SinkList extends Composite {
 	
-	private HorizontalPanel list = new HorizontalPanel();
+	private VerticalPanel list = new VerticalPanel();
 	private ArrayList<SinkInfo> sinks = new ArrayList<SinkInfo>();
 
 	private int selectedSink = -1;
@@ -34,7 +34,7 @@ public class SinkList extends Composite {
 		info.link_index = index;
 		sinks.add(info);
 
-		list.setCellVerticalAlignment(link, HorizontalPanel.ALIGN_MIDDLE);
+		list.setCellVerticalAlignment(link, VerticalPanel.ALIGN_MIDDLE);
 		styleSink(index, false);
 	}
 

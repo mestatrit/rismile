@@ -22,7 +22,7 @@ public class dataPointsQueryServiceImpl extends HttpServlet {
 
 		if (dps.iterator().hasNext()) {
 			for (DataPointVO e : dps) {
-				out.println("<SET id='" + e.getId() + "'>" + e.getData()
+				out.println("<SET id='" + e.getId() + "'>" + (new String(e.getData().getBytes()))
 						+ "</SET>");
 			}
 		}

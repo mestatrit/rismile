@@ -30,6 +30,7 @@ import com.google.appengine.api.datastore.Blob;
 import com.risetek.scada.Common.Common;
 import com.risetek.scada.vo.dataSource.PointLocatorVO;
 
+
 @PersistenceCapable(identityType = IdentityType.APPLICATION)
 public class DataPointVO {
     private static final long serialVersionUID = -1;
@@ -47,14 +48,6 @@ public class DataPointVO {
         int YEARS = Common.TimePeriods.YEARS;
     }
     
-    public String getDataTypeDescription() {
-        return pointLocator.getDataTypeDescription();
-    }
-    
-    public String getConfigurationDescription() {
-        return pointLocator.getConfigurationDescription();
-    }
-    
     public boolean isNew() {
         return id == Common.NEW_ID;
     }
@@ -64,16 +57,7 @@ public class DataPointVO {
     /// Properties
     ///
     //
-	@PrimaryKey
-    @Persistent(valueStrategy = IdGeneratorStrategy.IDENTITY)
-    private Long id;// = Common.NEW_ID;
-    private String name;
-	@Persistent
-    private int dataSourceId;
-	@Persistent
-	private Blob data;
-	
-	
+
     public Blob getData() {
 		return data;
 	}
@@ -82,6 +66,23 @@ public class DataPointVO {
 		this.data = data;
 	}
 
+    
+    //
+    ///
+    /// Serialization
+    ///
+    //
+    //private static final int version = 2;
+    
+	@PrimaryKey
+    @Persistent(valueStrategy = IdGeneratorStrategy.IDENTITY)
+    private Long id;// = Common.NEW_ID;
+	@Persistent
+    private int dataSourceId;
+	@Persistent
+	private Blob data;
+/*
+    private String name;
 	private boolean enabled;
     private int pointFolderId;
     private int loggingType = LoggingTypes.ON_CHANGE;
@@ -89,9 +90,7 @@ public class DataPointVO {
     private int purgeType = Common.TimePeriods.YEARS;
     private int purgePeriod = 1;
     private List<UserComment> comments;
-    
     private PointLocatorVO pointLocator;
-    
     //
     ///
     /// Convenience data from data source
@@ -99,6 +98,7 @@ public class DataPointVO {
     //
     private int dataSourceTypeId;
     private String dataSourceName;
+    */
     
     //
     ///
@@ -118,6 +118,7 @@ public class DataPointVO {
     public void setDataSourceId(int dataSourceId) {
         this.dataSourceId = dataSourceId;
     }
+    /*
     public boolean isEnabled() {
         return enabled;
     }
@@ -129,12 +130,6 @@ public class DataPointVO {
     }
     public void setPointFolderId(int pointFolderId) {
         this.pointFolderId = pointFolderId;
-    }
-    public Long getId() {
-        return id;
-    }
-    public void setId(Long id) {
-        this.id = id;
     }
     public String getName() {
         return name;
@@ -190,18 +185,25 @@ public class DataPointVO {
     public void setComments(List<UserComment> comments) {
         this.comments = comments;
     }
+    public String getDataTypeDescription() {
+        return pointLocator.getDataTypeDescription();
+    }
+    
+    public String getConfigurationDescription() {
+        return pointLocator.getConfigurationDescription();
+    }
+    
 
+	*/
+    public Long getId() {
+        return id;
+    }
+    public void setId(Long id) {
+        this.id = id;
+    }
 	public DataPointVO(int dataSourceId, Blob data) {
 		this.dataSourceId = dataSourceId;
 		this.data = data;
 	}
-    
-    
-    //
-    ///
-    /// Serialization
-    ///
-    //
-    //private static final int version = 2;
     
 }
