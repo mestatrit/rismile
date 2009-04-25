@@ -20,8 +20,17 @@ package com.risetek.scada.vo;
 
 import java.util.List;
 
+import javax.jdo.annotations.IdGeneratorStrategy;
+import javax.jdo.annotations.IdentityType;
+import javax.jdo.annotations.PersistenceCapable;
+import javax.jdo.annotations.Persistent;
+import javax.jdo.annotations.PrimaryKey;
+import com.google.appengine.api.datastore.Blob;
+
 import com.risetek.scada.Common.Common;
 import com.risetek.scada.vo.dataSource.PointLocatorVO;
+
+@PersistenceCapable(identityType = IdentityType.APPLICATION)
 public class DataPointVO {
     private static final long serialVersionUID = -1;
     
@@ -55,10 +64,25 @@ public class DataPointVO {
     /// Properties
     ///
     //
-    private int id = Common.NEW_ID;
+	@PrimaryKey
+    @Persistent(valueStrategy = IdGeneratorStrategy.IDENTITY)
+    private Long id;// = Common.NEW_ID;
     private String name;
+	@Persistent
     private int dataSourceId;
-    private boolean enabled;
+	@Persistent
+	private Blob data;
+	
+	
+    public Blob getData() {
+		return data;
+	}
+
+	public void setData(Blob data) {
+		this.data = data;
+	}
+
+	private boolean enabled;
     private int pointFolderId;
     private int loggingType = LoggingTypes.ON_CHANGE;
     private double tolerance = 0;
@@ -106,10 +130,10 @@ public class DataPointVO {
     public void setPointFolderId(int pointFolderId) {
         this.pointFolderId = pointFolderId;
     }
-    public int getId() {
+    public Long getId() {
         return id;
     }
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
     public String getName() {
@@ -166,6 +190,11 @@ public class DataPointVO {
     public void setComments(List<UserComment> comments) {
         this.comments = comments;
     }
+
+	public DataPointVO(int dataSourceId, Blob data) {
+		this.dataSourceId = dataSourceId;
+		this.data = data;
+	}
     
     
     //
