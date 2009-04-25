@@ -17,21 +17,27 @@
     @author Matthew Lohbihler
  */
 package com.risetek.scada.db.dao;
-
-import java.sql.ResultSet;
-import java.sql.SQLException;
+/*
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedList;
-import java.util.List;
 import java.util.Map;
+import com.google.appengine.api.datastore.Blob;
+import com.risetek.scada.Common.IntValuePair;
+import com.risetek.scada.db.dataPoints;
+import com.risetek.scada.vo.UserComment;
+*/
 
 import com.risetek.scada.Common.Common;
-import com.risetek.scada.Common.IntValuePair;
+import com.risetek.scada.db.PMF;
 import com.risetek.scada.vo.DataPointVO;
-import com.risetek.scada.vo.UserComment;
+
+import java.util.Comparator;
+import java.util.List;
+import javax.jdo.PersistenceManager;
+import javax.jdo.Query;
+
 
 public class DataPointDao extends BaseDao {
     
@@ -40,40 +46,83 @@ public class DataPointDao extends BaseDao {
     /// Data Points
     ///
     //
+	/*
     private static final String DATA_POINT_SELECT =
         "select dp.id, dp.dataSourceId, dp.data, ds.name, ds.dataSourceType "+
         "from dataPoints dp join dataSources ds on ds.id = dp.dataSourceId ";
-    
-    public List<DataPointVO> getDataPoints() {
+    */
+	public List<DataPointVO> getDataPoints() {
+    	
+		PersistenceManager pm = PMF.get().getPersistenceManager();
+		Query query = pm.newQuery(DataPointVO.class);
+		query.setRange(0, 10);
+	    query.setOrdering("id desc");
+
+	    try {
+	        List<DataPointVO> results = (List<DataPointVO>)query.execute();
+	        return results;
+	    } finally {
+	        query.closeAll();
+	    }
+
+/*
         List<DataPointVO> dps = query(DATA_POINT_SELECT, new DataPointRowMapper());
         setRelationalData(dps);
         Collections.sort(dps, new DataPointNameComparator());
         return dps;
+*/        
     }
     
     public List<DataPointVO> getDataPoints(int dataSourceId) {
+		PersistenceManager pm = PMF.get().getPersistenceManager();
+		Query query = pm.newQuery(DataPointVO.class);
+		query.setRange(0, 10);
+	    query.setOrdering("id desc");
+
+	    try {
+	        List<DataPointVO> results = (List<DataPointVO>)query.execute();
+	        return results;
+	    } finally {
+	        query.closeAll();
+	    }
+/*    	
         List<DataPointVO> dps = query(DATA_POINT_SELECT +" where dp.dataSourceId=?",
                 new Object[] {dataSourceId}, new DataPointRowMapper());
         setRelationalData(dps);
         Collections.sort(dps, new DataPointNameComparator());
         return dps;
+*/
     }
     
     private static class DataPointNameComparator implements Comparator<DataPointVO> {
         public int compare(DataPointVO dp1, DataPointVO dp2) {
-            if (StringUtils.isEmpty(dp1.getName()))
+            if (null == dp1.getName())
                 return -1;
             return dp1.getName().compareToIgnoreCase(dp2.getName());
         }
     }
-    
+    /*
     public DataPointVO getDataPoint(int id) {
-        DataPointVO dp = queryForObject(DATA_POINT_SELECT +" where dp.id=?",
+		PersistenceManager pm = PMF.get().getPersistenceManager();
+		Query query = pm.newQuery(dataPoints.class);
+		query.setRange(0, 10);
+	    query.setOrdering("id desc");
+
+	    try {
+	        List<DataPointVO> results = (List<DataPointVO>)query.execute();
+	        return results.;
+	    } finally {
+	        query.closeAll();
+	    }
+
+         DataPointVO dp = queryForObject(DATA_POINT_SELECT +" where dp.id=?",
                 new Object[] {id}, new DataPointRowMapper(), null);
         setRelationalData(dp);
         return dp;
+
     }
-    
+    */
+/*    
     public DataPointVO getDataPointFromPointViewId(int pointViewId) {
         DataPointVO dp = queryForObject(
                 DATA_POINT_SELECT +" where dp.id=(select dataPointId from pointViews where id=?)",
@@ -123,9 +172,32 @@ public class DataPointDao extends BaseDao {
     }
     
     
-    
+    */
     
     public void saveDataPoint(final DataPointVO dp) {
+    	
+		PersistenceManager pm = PMF.get().getPersistenceManager();
+
+        //if (dp.getId() == Common.NEW_ID)
+        {
+			try {
+				pm.makePersistent(dp);
+			} finally {
+				pm.close();
+			}
+        }
+        /*
+        else
+        {
+        	// TODO: update!
+			try {
+				pm.makePersistent(dp);
+			} finally {
+				pm.close();
+			}
+        }
+    	*/
+/*    	
         getTransactionTemplate().execute(new TransactionCallbackWithoutResult() {
             @Override
             protected void doInTransactionWithoutResult(TransactionStatus status) {
@@ -136,8 +208,9 @@ public class DataPointDao extends BaseDao {
                     updateDataPoint(dp);
             }
         });
+        */
     }
-    
+    /*
     private void insertDataPoint(final DataPointVO dp) {
         // Create a default text renderer
         dp.setTextRenderer(new PlainRenderer(""));
@@ -299,78 +372,5 @@ public class DataPointDao extends BaseDao {
                 new UserCommentRowMapper()));
     }
     
-    
-    
-    //
-    /// Point hierarchy
-    //
-    public PointHierarchy getPointHierarchy() {
-        final Map<Integer, List<PointFolder>> folders = new HashMap<Integer, List<PointFolder>>();
-        
-        // Get the folder list.
-        ejt.query("select id, parentId, name from pointHierarchy", new RowCallbackHandler() {
-            public void processRow(ResultSet rs) throws SQLException {
-                PointFolder f = new PointFolder(rs.getInt(1), rs.getString(3));
-                int parentId = rs.getInt(2);
-                List<PointFolder> folderList = folders.get(parentId);
-                if (folderList == null) {
-                    folderList = new LinkedList<PointFolder>();
-                    folders.put(parentId, folderList);
-                }
-                folderList.add(f);
-            }
-        });
-        
-        // Create the folder hierarchy.
-        PointHierarchy ph = new PointHierarchy();
-        addFoldersToHeirarchy(ph, 0, folders);
-        
-        return ph;
-    }
-    
-    private void addFoldersToHeirarchy(PointHierarchy ph, int parentId, Map<Integer, List<PointFolder>> folders) {
-        List<PointFolder> folderList = folders.remove(parentId);
-        if (folderList == null)
-            return;
-        
-        for (PointFolder f : folderList) {
-            ph.addPointFolder(f, parentId);
-            addFoldersToHeirarchy(ph, f.getId(), folders);
-        }
-    }
-    
-    public void savePointHierarchy(final PointFolder root) {
-        getTransactionTemplate().execute(new TransactionCallbackWithoutResult() {
-            @Override
-            protected void doInTransactionWithoutResult(TransactionStatus status) {
-                // Dump the heirarchy table.
-                ejt.update("delete from pointHierarchy");
-                
-                // Save the point folders.
-                savePointFolder(root, 0);
-            }
-        });
-    }
-    
-    private void savePointFolder(PointFolder folder, int parentId) {
-        // Save the folder.
-        if (folder.getId() == Common.NEW_ID)
-            folder.setId(doInsert("insert into pointHierarchy (parentId, name) values (?,?)",
-                    new Object[] {parentId, folder.getName()}));
-        else if (folder.getId() != 0)
-            ejt.update("insert into pointHierarchy (id, parentId, name) values (?,?,?)",
-                    new Object[] {folder.getId(), parentId, folder.getName()});
-        
-        // Save the subfolders
-        for (PointFolder sf : folder.getSubfolders())
-            savePointFolder(sf, folder.getId());
-        
-        // Update the folder references in the points.
-        DataPointVO dp;
-        for (IntValuePair p : folder.getPoints()) {
-            dp = getDataPoint(p.getKey());
-            dp.setPointFolderId(folder.getId());
-            updateDataPointShallow(dp);
-        }
-    }
+*/
 }
