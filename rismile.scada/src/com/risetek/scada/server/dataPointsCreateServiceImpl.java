@@ -8,9 +8,10 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
 import com.google.appengine.api.datastore.Blob;
 import com.google.gwt.core.client.GWT;
-import com.risetek.scada.db.dao.*;
+import com.risetek.scada.db.dao.DataPointDao;
 import com.risetek.scada.vo.DataPointVO;
 
 /**
