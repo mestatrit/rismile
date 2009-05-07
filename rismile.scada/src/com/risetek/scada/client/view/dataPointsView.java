@@ -8,16 +8,16 @@ import com.google.gwt.http.client.RequestCallback;
 import com.google.gwt.http.client.Response;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Composite;
+import com.google.gwt.user.client.ui.FlexTable;
 import com.google.gwt.user.client.ui.Grid;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
-import com.risetek.scada.client.Entry;
-import com.risetek.scada.client.remote.RequestFactory;
-import com.google.gwt.user.client.ui.FlexTable;
 import com.google.gwt.xml.client.Document;
 import com.google.gwt.xml.client.Element;
 import com.google.gwt.xml.client.NodeList;
 import com.google.gwt.xml.client.XMLParser;
+import com.risetek.scada.client.Entry;
+import com.risetek.scada.client.remote.RequestFactory;
 
 public class dataPointsView extends Composite {
 
