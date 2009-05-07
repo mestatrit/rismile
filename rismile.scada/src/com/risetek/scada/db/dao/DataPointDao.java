@@ -29,15 +29,13 @@ import com.risetek.scada.db.dataPoints;
 import com.risetek.scada.vo.UserComment;
 */
 
-import com.risetek.scada.Common.Common;
-import com.risetek.scada.db.PMF;
-import com.risetek.scada.vo.DataPointVO;
-
-import java.util.Comparator;
 import java.util.List;
+
 import javax.jdo.PersistenceManager;
 import javax.jdo.Query;
 
+import com.risetek.scada.db.PMF;
+import com.risetek.scada.vo.DataPointVO;
 
 public class DataPointDao extends BaseDao {
     
@@ -375,8 +373,4 @@ public class DataPointDao extends BaseDao {
     
 */
 
-	@Override
-	public void onResponse(String resp) {
-		
-	}
 }

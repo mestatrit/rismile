@@ -18,7 +18,7 @@
  */
 package com.risetek.scada.db.dao;
 
-public abstract class BaseDao {
+public class BaseDao {
     /**
      * Public constuctor for code that needs to get stuff from the database.
      */
@@ -36,5 +36,4 @@ public abstract class BaseDao {
         return "Y".equals(s);
     }
     
-    public abstract void onResponse(String resp);
 }
