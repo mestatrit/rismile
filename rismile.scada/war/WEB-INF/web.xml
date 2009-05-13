@@ -21,6 +21,11 @@
     <servlet-class>com.risetek.scada.server.dataPointsQueryServiceImpl</servlet-class>
   </servlet>
   
+  <servlet>
+    <servlet-name>cameraServlet</servlet-name>
+    <servlet-class>com.risetek.scada.server.cameraQueryServiceImpl</servlet-class>
+  </servlet>
+
   <servlet-mapping>
     <servlet-name>greetServlet</servlet-name>
     <url-pattern>/scada/greet</url-pattern>
@@ -28,6 +33,11 @@
   <servlet-mapping>
     <servlet-name>dataPoinsServlet</servlet-name>
     <url-pattern>/scada/dataPoints</url-pattern>
+  </servlet-mapping>
+
+  <servlet-mapping>
+    <servlet-name>cameraServlet</servlet-name>
+    <url-pattern>/scada/camera</url-pattern>
   </servlet-mapping>
 
 </web-app>
