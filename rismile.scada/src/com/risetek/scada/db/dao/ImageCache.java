@@ -1,5 +1,8 @@
 package com.risetek.scada.db.dao;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.Collections;
 
 import javax.cache.Cache;
@@ -28,6 +31,24 @@ public class ImageCache {
 		}
 		
 		//Image img = new Image();
+		/*
+		try {
+			FileInputStream imgfile = new FileInputStream("/image/p2.jpg");
+			byte[] b;
+			try {
+				imgfile.read(b);
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+			
+			
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		*/
 		
 	}
 	

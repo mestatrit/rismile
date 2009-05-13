@@ -1,5 +1,7 @@
 package com.risetek.scada.server;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 
 import javax.servlet.ServletException;
@@ -20,7 +22,11 @@ public class cameraQueryServiceImpl extends HttpServlet {
 		GWT.log("output picture", null);
 		//resp.setCharacterEncoding("UTF-8");
 		resp.setContentType("image/jpg");
+		// TODO: no-cache
+		resp.setHeader("Cache-Control", "no-store, no-cache, must-revalidate");
 		ServletOutputStream out = resp.getOutputStream();
+		
+		/*
 		ImageData img = new ImageData();
 		byte[] data = ImageCache.imageCache.getImage();
 		if( data != null )
@@ -31,7 +37,33 @@ public class cameraQueryServiceImpl extends HttpServlet {
 		}
 		else
 			GWT.log("no picture there", null);
+		*/
+		// http://forums.smartclient.com/showthread.php?t=5258
+		try {
+			FileInputStream imgfile = new FileInputStream("image/p3.jpg");
 
+			try {
+				byte[] buf = new byte[1024];
+				int len;
+				while ((len = imgfile.read(buf)) > 0) {
+					out.write(buf, 0, len);
+				}				
+				
+				imgfile.close();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+			
+			
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		}
+		out.flush();
+		out.close();
+		
+		
 	}
 
 }

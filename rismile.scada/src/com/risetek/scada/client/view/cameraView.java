@@ -28,7 +28,6 @@ public class cameraView extends Composite {
 	private static Timer hbTimer;
 
 	Image photo = new Image();
-	static int n = 2;
 	
 	public cameraView() {
 
@@ -37,8 +36,7 @@ public class cameraView extends Composite {
 		table.setWidth("100%");
 
 		GWT.log("get picture", null);
-//		photo.setUrl("/scada/camera");
-		photo.setUrl("/image/p2.jpg");
+		photo.setUrl("/scada/camera");
 		table.setWidget(0, 0, photo);
 
 		
@@ -72,13 +70,9 @@ public class cameraView extends Composite {
 
 		hbTimer = new Timer() {
 			public void run() {
-				
-				String imgname = "/image/p" + n +".jpg";
-				
-				n++;
-				if( n >5 ) n = 2;
-				
+				String imgname = "/scada/camera";
 				GWT.log("获取图片: " + imgname ,null);
+				photo.setUrl("/image/p2.jpg");
 				photo.setUrl(imgname);
 				hbTimer.schedule(1000);
 			}
