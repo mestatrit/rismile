@@ -26,6 +26,11 @@
     <servlet-class>com.risetek.scada.server.cameraQueryServiceImpl</servlet-class>
   </servlet>
 
+  <servlet>
+    <servlet-name>takeServlet</servlet-name>
+    <servlet-class>com.risetek.scada.server.cameraPostServiceImpl</servlet-class>
+  </servlet>
+
   <servlet-mapping>
     <servlet-name>greetServlet</servlet-name>
     <url-pattern>/scada/greet</url-pattern>
@@ -40,4 +45,8 @@
     <url-pattern>/scada/camera</url-pattern>
   </servlet-mapping>
 
+  <servlet-mapping>
+    <servlet-name>takeServlet</servlet-name>
+    <url-pattern>/scada/take</url-pattern>
+  </servlet-mapping>
 </web-app>
