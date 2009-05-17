@@ -3,6 +3,8 @@ package com.risetek.scada.client.view;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.event.dom.client.LoadEvent;
+import com.google.gwt.event.dom.client.LoadHandler;
 import com.google.gwt.user.client.Timer;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Composite;
@@ -27,6 +29,9 @@ public class cameraView extends Composite {
 	private static Timer hbTimer;
 
 	Image photo = new Image();
+
+	static int loop = 0;
+	
 	
 	public cameraView() {
 
@@ -69,10 +74,20 @@ public class cameraView extends Composite {
 
 		hbTimer = new Timer() {
 			public void run() {
-				String imgname = "/scada/camera";
+				loop++;
+				String imgname = "/scada/camera?id="+System.currentTimeMillis();
+				MessageConsole.setText("获取图片: " + imgname );
+				
 				GWT.log("获取图片: " + imgname ,null);
-				photo.setUrl("/image/p2.jpg");
+				//photo.setUrl("/image/p2.jpg");
 				photo.setUrl(imgname);
+				photo.addLoadHandler(new LoadHandler(){
+
+					@Override
+					public void onLoad(LoadEvent event) {
+						MessageConsole.setText("图片得到 ");
+					}});
+//				Image.prefetch(imgname);
 				hbTimer.schedule(1000);
 			}
 		};
