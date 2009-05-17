@@ -52,6 +52,7 @@ public abstract class Entry implements EntryPoint{
 	private final DecoratorPanel sinkContainerOut = new DecoratorPanel();
 	private final FlowPanel maskPanel = new FlowPanel();
 	private final Grid headPanel = new Grid(1,2);
+	private final HTML message = new HTML("hello");
 
 	public void onHistoryChanged(String token) {
 		// Find the SinkInfo associated with the history context. If one is
@@ -82,7 +83,7 @@ public abstract class Entry implements EntryPoint{
 		//headPanel.setBorderWidth(1);
 		headPanel.setCellPadding(0);
 		headPanel.setCellSpacing(0);
-		
+
 		sinkContainer.setWidth("100%");
 
 		// description.setStyleName("description");
@@ -97,6 +98,11 @@ public abstract class Entry implements EntryPoint{
 
 		DOM.setStyleAttribute(sinkContainer.getElement(), "backgroundColor", "#E0ECFF");
 
+		
+		message.setStyleName("http-message");
+		DOM.setElementProperty(message.getElement(), "id", "message");
+		message.setText("hello!");
+		panel.add(message);
 		
 		headPanel.setWidget(0, 1, sinkContainerOut);
 		sinkContainer.setWidth("640px");
