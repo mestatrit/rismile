@@ -68,6 +68,7 @@ public class ImageCache {
 	
 	public void putImage(byte[] image)
 	{
+		if(image == null) return;
 		this.image.put("image", image);
 	}
 	
