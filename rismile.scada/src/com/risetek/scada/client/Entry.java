@@ -48,6 +48,7 @@ public abstract class Entry implements EntryPoint{
 	private final HorizontalPanel descriptionPanel = new HorizontalPanel();
 
 	private final VerticalPanel panel = new VerticalPanel();
+	private final Grid titlePanel = new Grid(1,2);
 	private final DockPanel sinkContainer = new DockPanel();
 	private final DecoratorPanel sinkContainerOut = new DecoratorPanel();
 	private final FlowPanel maskPanel = new FlowPanel();
@@ -71,9 +72,20 @@ public abstract class Entry implements EntryPoint{
 		//panel.setBorderWidth(1);
 		//sinkContainer.setBorderWidth(1);
 		//sinkContainerOut.setWidth("600px");
+		//titlePanel.setBorderWidth(1);
 		// Load all the sinks.
+		
 		loadSinks();
-		panel.add(images.gwtLogo().createImage());
+		titlePanel.setWidget(0,0,images.gwtLogo().createImage());
+		message.setStyleName("http-message");
+		DOM.setElementProperty(message.getElement(), "id", "message");
+		titlePanel.setWidget(0,1,message);
+		titlePanel.getCellFormatter().setWidth(0, 0, "240px");
+		
+		
+		
+		panel.add(titlePanel);
+		titlePanel.setWidth("100%");
 		
 		headPanel.setWidth("100%");
 		headPanel.getCellFormatter().setWidth(0, 0, "20%");
@@ -98,12 +110,6 @@ public abstract class Entry implements EntryPoint{
 
 		DOM.setStyleAttribute(sinkContainer.getElement(), "backgroundColor", "#E0ECFF");
 
-		
-		message.setStyleName("http-message");
-		DOM.setElementProperty(message.getElement(), "id", "message");
-		message.setText("hello!");
-		panel.add(message);
-		
 		headPanel.setWidget(0, 1, sinkContainerOut);
 		sinkContainer.setWidth("640px");
 		maskPanel.add(headPanel);

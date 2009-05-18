@@ -5,7 +5,6 @@ body {
 .http-message {
 	color: crimson;
 	font-size: 10pt;
-	position: absolute;
 	text-align: right;
 	top: 2px;
 	width: 100%;
