@@ -19,5 +19,4 @@ public class HeartbeatServiceImpl extends HttpServlet {
 		"<nopassword>未配置密码！</nopassword></OK></Risetek>");
 	    out.flush();
 	}
-
 }
