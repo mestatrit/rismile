@@ -6,12 +6,12 @@ import risetek.client.dialog.RadiusConfigSecretDialog;
 import risetek.client.model.RadiusConfModel;
 import risetek.client.view.RadiusConfigView;
 
+import com.google.gwt.event.dom.client.ClickEvent;
+import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.http.client.Request;
 import com.google.gwt.http.client.RequestCallback;
 import com.google.gwt.http.client.Response;
 import com.google.gwt.user.client.ui.Button;
-import com.google.gwt.user.client.ui.ClickListener;
-import com.google.gwt.user.client.ui.Widget;
 import com.risetek.rismile.client.http.RequestFactory;
 import com.risetek.rismile.client.utils.MessageConsole;
 import com.risetek.rismile.client.utils.SysLog;
@@ -50,26 +50,10 @@ public class RadiusConfController implements RequestCallback {
 	}
 	
 	//--------- Auth 修改控制
-	public class authModifyClickListen implements ClickListener
+	public class authModifyClickListen implements ClickHandler
 	{
-		public void onClick(Widget sender) {
-			Control control = new Control();
-			RadiusConfigAuthDialog dialog = control.dialog;
-			dialog.confirm.addClickListener(control);
-			dialog.show(data.getAuthPort());
-		}
-
-		public class Control implements ClickListener, RequestCallback {
+		public class Control implements ClickHandler, RequestCallback {
 			public RadiusConfigAuthDialog dialog = new RadiusConfigAuthDialog();
-			public void onClick(Widget sender) {
-				String value = dialog.newValueBox.getText();
-				if( dialog.isValid() )
-				{
-					SysLog.log(value);
-					modify("authport=" + value , this);
-					((Button)sender).setEnabled(false);
-				}
-			}
 
 			public void onError(Request request, Throwable exception) {
 				RadiusConfController.this.onError(request, exception);
@@ -79,21 +63,42 @@ public class RadiusConfController implements RequestCallback {
 				if( dialog.processResponse(response))
 					load();
 			}
+
+			@Override
+			public void onClick(ClickEvent event) {
+				String value = dialog.newValueBox.getText();
+				if( dialog.isValid() )
+				{
+					SysLog.log(value);
+					modify("authport=" + value , this);
+					((Button)event.getSource()).setEnabled(false);
+				}
+			}
+		}
+
+		@Override
+		public void onClick(ClickEvent event) {
+			Control control = new Control();
+			RadiusConfigAuthDialog dialog = control.dialog;
+			dialog.confirm.addClickHandler(control);
+			dialog.show(data.getAuthPort());
 		}
 	}
 	
 	//--------- Acct 修改控制
-	public class acctModifyClickListen implements ClickListener
+	public class acctModifyClickListen implements ClickHandler
 	{
-		public void onClick(Widget sender) {
+		@Override
+		public void onClick(ClickEvent event) {
 			Control control = new Control();
 			RadiusConfigAcctDialog dialog = control.dialog;
-			dialog.confirm.addClickListener(control);
+			dialog.confirm.addClickHandler(control);
 			dialog.show(data.getAcctPort());
 		}
-		public class Control implements ClickListener, RequestCallback {
+		public class Control implements ClickHandler, RequestCallback {
 			public RadiusConfigAcctDialog dialog = new RadiusConfigAcctDialog();
-			public void onClick(Widget sender) {
+			@Override
+			public void onClick(ClickEvent event) {
 				String value = dialog.newValueBox.getText();
 				SysLog.log(value);
 				modify("accport=" + value , this);
@@ -108,29 +113,31 @@ public class RadiusConfController implements RequestCallback {
 				if( dialog.processResponse(response))
 					load();
 			}
-			
+
 		}
 	}
 	
 	//--------- Secret 修改控制
-	public class secretModifyClickListen implements ClickListener
+	public class secretModifyClickListen implements ClickHandler
 	{
-		public void onClick(Widget sender) {
+		@Override
+		public void onClick(ClickEvent event) {
 			Control control = new Control();
 			RadiusConfigSecretDialog dialog = control.dialog;
-			dialog.confirm.addClickListener(control);
+			dialog.confirm.addClickHandler(control);
 			dialog.show(data.getSecretKey());
 		}
 
-		class Control implements ClickListener, RequestCallback {
+		class Control implements ClickHandler, RequestCallback {
 			public RadiusConfigSecretDialog dialog = new RadiusConfigSecretDialog();
-			public void onClick(Widget sender) {
+			@Override
+			public void onClick(ClickEvent event) {
 				if( dialog.isValid())
 				{
 					String value = dialog.newValueBox.getText();
 					SysLog.log(value);
 					modify("secret=" + value , this);
-					((Button)sender).setEnabled(false);
+					((Button)event.getSource()).setEnabled(false);
 				}
 			}
 

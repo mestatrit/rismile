@@ -7,15 +7,14 @@ import risetek.client.dialog.UserNameModifyDialog;
 import risetek.client.dialog.UserPasswordModifyDialog;
 import risetek.client.model.RismileUserTable;
 import risetek.client.view.UserView;
-
+import com.google.gwt.event.dom.client.ClickEvent;
+import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.http.client.Request;
 import com.google.gwt.http.client.RequestCallback;
 import com.google.gwt.http.client.Response;
 import com.google.gwt.user.client.Window;
-import com.google.gwt.user.client.ui.ClickListener;
-import com.google.gwt.user.client.ui.SourcesTableEvents;
-import com.google.gwt.user.client.ui.TableListener;
-import com.google.gwt.user.client.ui.Widget;
+import com.google.gwt.user.client.ui.HTMLTable;
+import com.google.gwt.user.client.ui.HTMLTable.Cell;
 import com.risetek.rismile.client.control.RismileTableController;
 import com.risetek.rismile.client.model.RismileTable;
 import com.risetek.rismile.client.utils.IPConvert;
@@ -86,9 +85,15 @@ public class RadiusUserController extends RismileTableController {
 		view.render(data);
 	}
 
-	public class TableAction implements TableListener {
+	public class TableAction implements ClickHandler {
 
-		public void onCellClicked(SourcesTableEvents sender, int row, int cell) {
+		@Override
+		public void onClick(ClickEvent event) {
+			HTMLTable table = (HTMLTable)event.getSource();
+			Cell Mycell = table.getCellForEvent(event);
+			int row = Mycell.getRowIndex();
+			int cell = Mycell.getCellIndex();
+
 			// 在第一列中的是数据的内部序号，我们的操作都针对这个号码。
 			String rowid = view.getGrid().getText(row, 0);
 			String tisp_value = view.getGrid().getText(row, cell);
@@ -105,26 +110,26 @@ public class RadiusUserController extends RismileTableController {
 			case 1:
 				// 修改IMSI号码。
 				UserIMSIModifyControl ismi_control = new UserIMSIModifyControl();
-				ismi_control.dialog.confirm.addClickListener(ismi_control);
+				ismi_control.dialog.confirm.addClickHandler(ismi_control);
 				ismi_control.dialog.show(rowid, tisp_value);
 				break;
 			case 2:
 				// 修改用户名称。
 				UserNameModifyControl name_control = new UserNameModifyControl();
-				name_control.dialog.confirm.addClickListener(name_control);
+				name_control.dialog.confirm.addClickHandler(name_control);
 				name_control.dialog.show(rowid, tisp_value);
 				break;
 			case 3:
 				// 修改用户口令。
 				UserPasswordModifyControl password_control = new UserPasswordModifyControl();
 				password_control.dialog.confirm
-						.addClickListener(password_control);
+						.addClickHandler(password_control);
 				password_control.dialog.show(rowid);
 				break;
 			case 4:
 				// 修改 分配IP 地址
 				UserIpModifyControl ip_control = new UserIpModifyControl();
-				ip_control.dialog.confirm.addClickListener(ip_control);
+				ip_control.dialog.confirm.addClickHandler(ip_control);
 				ip_control.dialog.show(rowid, tisp_value);
 				break;
 			default:
@@ -134,11 +139,12 @@ public class RadiusUserController extends RismileTableController {
 		}
 
 		// ----------------- 修改 IMSI 号码
-		public class UserIMSIModifyControl implements ClickListener,
+		public class UserIMSIModifyControl implements ClickHandler,
 				RequestCallback {
 			public UserImsiModifyDialog dialog = new UserImsiModifyDialog();
 
-			public void onClick(Widget sender) {
+			@Override
+			public void onClick(ClickEvent event) {
 				if( dialog.isValid() )
 				{
 					SysLog.log(dialog.newValueBox.getText());
@@ -157,11 +163,12 @@ public class RadiusUserController extends RismileTableController {
 		}
 
 		// ----------------- 修改 分配 IP 地址
-		public class UserIpModifyControl implements ClickListener,
+		public class UserIpModifyControl implements ClickHandler,
 				RequestCallback {
 			public UserIpModifyDialog dialog = new UserIpModifyDialog();
 
-			public void onClick(Widget sender) {
+			@Override
+			public void onClick(ClickEvent event) {
 				if( dialog.isValid() )
 				{
 					SysLog.log(dialog.newValueBox.getText());
@@ -180,11 +187,12 @@ public class RadiusUserController extends RismileTableController {
 		}
 
 		// ----------------- 修改用户名称
-		public class UserNameModifyControl implements ClickListener,
+		public class UserNameModifyControl implements ClickHandler,
 				RequestCallback {
 			public UserNameModifyDialog dialog = new UserNameModifyDialog();
 
-			public void onClick(Widget sender) {
+			@Override
+			public void onClick(ClickEvent event) {
 				if( dialog.isValid() )
 				{
 					SysLog.log(dialog.newValueBox.getText());
@@ -203,11 +211,12 @@ public class RadiusUserController extends RismileTableController {
 		}
 
 		// ----------------- 修改用户口令
-		public class UserPasswordModifyControl implements ClickListener,
+		public class UserPasswordModifyControl implements ClickHandler,
 				RequestCallback {
 			public UserPasswordModifyDialog dialog = new UserPasswordModifyDialog();
 
-			public void onClick(Widget sender) {
+			@Override
+			public void onClick(ClickEvent event) {
 				if( dialog.isValid() )
 				{
 					modifyPassword(dialog.rowid, dialog.passwordbox.getText(), this);
@@ -227,18 +236,20 @@ public class RadiusUserController extends RismileTableController {
 	}
 
 	// ----------------- 增加用户
-	public class AddUserAction implements ClickListener {
+	public class AddUserAction implements ClickHandler {
 
-		public void onClick(Widget sender) {
+		@Override
+		public void onClick(ClickEvent event) {
 			AddUserControl control = new AddUserControl();
-			control.dialog.confirm.addClickListener(control);
+			control.dialog.confirm.addClickHandler(control);
 			control.dialog.show();
 		}
 
-		public class AddUserControl implements ClickListener, RequestCallback {
+		public class AddUserControl implements ClickHandler, RequestCallback {
 			public UserAddDialog dialog = new UserAddDialog();
 
-			public void onClick(Widget sender) {
+			@Override
+			public void onClick(ClickEvent event) {
 				if (dialog.isValid()) {
 					add(dialog.usernamebox.getText(), dialog.IMSI.getText(),
 							dialog.passwordbox.getText(), dialog.ipaddress
@@ -259,9 +270,10 @@ public class RadiusUserController extends RismileTableController {
 	}
 
 	// 清除所有用户
-	public class EmptyAction implements ClickListener {
+	public class EmptyAction implements ClickHandler {
 
-		public void onClick(Widget sender) {
+		@Override
+		public void onClick(ClickEvent event) {
 			if (Window.confirm("是否要清除所有用户?")) {
 				remoteRequest.get(emptyForm,null, RadiusUserController.this);
 			}

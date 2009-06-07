@@ -2,13 +2,13 @@ package risetek.client.view;
 
 import risetek.client.control.RadiusUserController;
 
+import com.google.gwt.event.dom.client.ClickEvent;
+import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.DOM;
 import com.google.gwt.user.client.Element;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Button;
-import com.google.gwt.user.client.ui.ClickListener;
 import com.google.gwt.user.client.ui.Grid;
-import com.google.gwt.user.client.ui.Widget;
 import com.risetek.rismile.client.view.MouseEventGrid;
 import com.risetek.rismile.client.view.RismileTableView;
 
@@ -30,7 +30,7 @@ public class UserView extends RismileTableView {
 
 	public UserView(RadiusUserController control) {
 		this(columns, columnStyles, rowCount, control);
-		grid.addTableListener(control.new TableAction());
+		grid.addClickHandler(control.new TableAction());
 	}
 	
 	private UserView(String[] columns, String[] columnStyles, int rowCount, RadiusUserController control) {
@@ -41,8 +41,8 @@ public class UserView extends RismileTableView {
 		
 		Button downloadButton = new Button("导出文件");
 		super.addToolButton(downloadButton);
-		downloadButton.addClickListener(new ClickListener(){
-			public void onClick(Widget sender) {
+		downloadButton.addClickHandler(new ClickHandler(){
+			public void onClick(ClickEvent event) {
 				Window.open("forms/exportusers", "_self", "");
 			}
 		});

@@ -1,6 +1,5 @@
 package risetek.client.dialog;
 
-import com.google.gwt.user.client.ui.ClickListener;
 import com.google.gwt.user.client.ui.DockPanel;
 import com.google.gwt.user.client.ui.Grid;
 import com.google.gwt.user.client.ui.Label;
@@ -10,8 +9,7 @@ import com.risetek.rismile.client.dialog.CustomDialog;
 import com.risetek.rismile.client.utils.SysLog;
 import com.risetek.rismile.client.utils.Validity;
 
-public class UserIpModifyDialog extends CustomDialog implements
-		ClickListener {
+public class UserIpModifyDialog extends CustomDialog {
 
 	Label  oldValueLabel = new Label();
 	public TextBox newValueBox = new TextBox();

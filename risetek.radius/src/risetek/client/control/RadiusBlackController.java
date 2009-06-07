@@ -4,15 +4,15 @@ import risetek.client.dialog.BlackUserDialog;
 import risetek.client.model.RismileBlackUserTable;
 import risetek.client.view.BlackUserView;
 
+import com.google.gwt.event.dom.client.ClickEvent;
+import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.http.client.Request;
 import com.google.gwt.http.client.RequestCallback;
 import com.google.gwt.http.client.Response;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Button;
-import com.google.gwt.user.client.ui.ClickListener;
-import com.google.gwt.user.client.ui.SourcesTableEvents;
-import com.google.gwt.user.client.ui.TableListener;
-import com.google.gwt.user.client.ui.Widget;
+import com.google.gwt.user.client.ui.HTMLTable;
+import com.google.gwt.user.client.ui.HTMLTable.Cell;
 import com.risetek.rismile.client.control.RismileTableController;
 import com.risetek.rismile.client.model.RismileTable;
 import com.risetek.rismile.client.utils.IPConvert;
@@ -64,19 +64,26 @@ public class RadiusBlackController extends RismileTableController {
 		view.render(data);
 	}
 
-	public class EmptyAction implements ClickListener {
-
-		public void onClick(Widget sender) {
+	public class EmptyAction implements ClickHandler {
+		@Override
+		public void onClick(ClickEvent event) {
 			if (Window.confirm("是否要清除所有不明用户?")) {
 				view.clearButton.setEnabled(false);
 				empty();
 			}
 		}
 	}
+	
+	public class TableAction implements ClickHandler {
 
-	public class TableAction implements TableListener {
+		@Override
+		public void onClick(ClickEvent event) {
+			HTMLTable table = (HTMLTable)event.getSource();
+			Cell Mycell = table.getCellForEvent(event);
+			int row = Mycell.getRowIndex();
+			int cell = Mycell.getCellIndex();
+			
 
-		public void onCellClicked(SourcesTableEvents sender, int row, int cell) {
 			// 在第一列中的是数据的内部序号，我们的操作都针对这个号码。
 			String rowid = view.getGrid().getText(row, 0);
 			String tips_ismi = view.getGrid().getText(row, 1);
@@ -95,7 +102,7 @@ public class RadiusBlackController extends RismileTableController {
 			case 2:
 				// 导入用户为合法用户。
 				BlackUserControl control = new BlackUserControl();
-				control.dialog.confirm.addClickListener(control);
+				control.dialog.confirm.addClickHandler(control);
 				control.dialog.show(rowid, tips_ismi, tips_username);
 
 				// BlackUserDialog dialog = new BlackUserDialog(view,
@@ -107,21 +114,12 @@ public class RadiusBlackController extends RismileTableController {
 				break;
 			}
 
+					
 		}
 
 		// ----------------- 认可用户信息
-		public class BlackUserControl implements ClickListener, RequestCallback {
+		public class BlackUserControl implements ClickHandler, RequestCallback {
 			public BlackUserDialog dialog = new BlackUserDialog();
-
-			public void onClick(Widget sender) {
-				if (dialog.isValid()) {
-					add(dialog.rowid, dialog.usernameBox.getText(),
-							dialog.imsiBox.getText(), dialog.passwordBox
-									.getText(), dialog.ipaddressBox.getText(),
-							this);
-					((Button)sender).setEnabled(false);
-				}
-			}
 
 			public void onError(Request request, Throwable exception) {
 				RadiusBlackController.this.onError(request,exception);
@@ -130,6 +128,17 @@ public class RadiusBlackController extends RismileTableController {
 			public void onResponseReceived(Request request, Response response) {
 				if( dialog.processResponse(response))
 					load();
+			}
+
+			@Override
+			public void onClick(ClickEvent event) {
+				if (dialog.isValid()) {
+					add(dialog.rowid, dialog.usernameBox.getText(),
+							dialog.imsiBox.getText(), dialog.passwordBox
+									.getText(), dialog.ipaddressBox.getText(),
+							this);
+					((Button)event.getSource()).setEnabled(false);
+				}
 			}
 		}
 
