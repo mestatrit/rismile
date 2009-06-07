@@ -1,12 +1,12 @@
 package com.risetek.rismile.log.client.view;
 
+import com.google.gwt.event.dom.client.ClickEvent;
+import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.Element;
 import com.google.gwt.user.client.Timer;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Button;
-import com.google.gwt.user.client.ui.ClickListener;
 import com.google.gwt.user.client.ui.Grid;
-import com.google.gwt.user.client.ui.Widget;
 import com.risetek.rismile.client.view.MouseEventGrid;
 import com.risetek.rismile.client.view.RismileTableView;
 import com.risetek.rismile.log.client.control.RismileLogController;
@@ -42,8 +42,9 @@ public class RismileLogView extends RismileTableView {
 		Button downloadButton = new Button("导出文件");
 		addToolButton(downloadButton);
 		//downloadButton.addStyleName("toolbutton");
-		downloadButton.addClickListener(new ClickListener() {
-			public void onClick(Widget sender) {
+		downloadButton.addClickHandler(new ClickHandler() {
+			@Override
+			public void onClick(ClickEvent event) {
 				Window.open("forms/exportlog", "_self", "");
 			}
 

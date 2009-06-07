@@ -4,8 +4,8 @@ import com.google.gwt.http.client.Request;
 import com.google.gwt.http.client.RequestCallback;
 import com.google.gwt.http.client.Response;
 import com.google.gwt.user.client.Window;
-import com.google.gwt.user.client.ui.ClickListener;
-import com.google.gwt.user.client.ui.Widget;
+import com.google.gwt.event.dom.client.ClickEvent;
+import com.google.gwt.event.dom.client.ClickHandler;
 import com.risetek.rismile.client.control.RismileTableController;
 import com.risetek.rismile.client.model.RismileTable;
 import com.risetek.rismile.client.utils.MessageConsole;
@@ -35,22 +35,16 @@ public class RismileLogController extends RismileTableController implements Requ
 		remoteRequest.get(loadForm, query, this);
 	}
 	
-	public class AutoRefreshClick implements ClickListener{
+	public class AutoRefreshClick implements ClickHandler {
 
-		public void onClick(Widget sender) {
+		@Override
+		public void onClick(ClickEvent event) {
 			data.autoRefresh = !data.autoRefresh;
 			load();
 		}	
 	}
 
-	public class ClearLogAction implements ClickListener , RequestCallback {
-
-		public void onClick(Widget sender) {
-			if (Window.confirm("是否要清除日志?")) {
-				view.clearButton.setEnabled(false);
-				remoteRequest.get(emptyForm, null, this);
-			}
-		}
+	public class ClearLogAction implements ClickHandler , RequestCallback {
 
 		public void onError(Request request, Throwable exception) {
 			RismileLogController.this.onError(request, exception);
@@ -59,6 +53,14 @@ public class RismileLogController extends RismileTableController implements Requ
 		public void onResponseReceived(Request request, Response response) {
 			view.clearButton.setEnabled(true);
 			load();
+		}
+
+		@Override
+		public void onClick(ClickEvent event) {
+			if (Window.confirm("是否要清除日志?")) {
+				view.clearButton.setEnabled(false);
+				remoteRequest.get(emptyForm, null, this);
+			}
 		}
 	}
 	
