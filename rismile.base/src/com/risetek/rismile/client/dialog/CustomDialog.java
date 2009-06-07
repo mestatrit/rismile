@@ -19,7 +19,7 @@ import com.google.gwt.user.client.ui.Widget;
 import com.google.gwt.user.client.ui.DockPanel.DockLayoutConstant;
 import com.risetek.rismile.client.utils.XMLDataParse;
 
-public abstract class CustomDialog extends MyDialog {
+public abstract class CustomDialog extends MyDialog implements ClickHandler {
 	private final DockPanel panel = new DockPanel();
 	public final Button confirm = new Button("确定");
 	protected final Button cancel = new Button("取消");
@@ -166,7 +166,8 @@ public abstract class CustomDialog extends MyDialog {
 		unmask();
 	}
 
-	public void onClick(Widget sender) {
+	@Override
+	public void onClick(ClickEvent event) {
 		hide();
 	}
 }
