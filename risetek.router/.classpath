@@ -2,9 +2,9 @@
 <classpath>
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="src" path="servlet_src"/>
+	<classpathentry combineaccessrules="false" exported="true" kind="src" path="/rismile.base"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="con" path="com.google.appengine.eclipse.core.GAE_CONTAINER"/>
 	<classpathentry kind="con" path="com.google.gwt.eclipse.core.GWT_CONTAINER"/>
-	<classpathentry combineaccessrules="false" exported="true" kind="src" path="/rismile.base"/>
 	<classpathentry kind="output" path="war/WEB-INF/classes"/>
 </classpath>
