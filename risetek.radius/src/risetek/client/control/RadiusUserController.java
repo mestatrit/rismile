@@ -4,6 +4,7 @@ import risetek.client.dialog.UserAddDialog;
 import risetek.client.dialog.UserImsiModifyDialog;
 import risetek.client.dialog.UserIpModifyDialog;
 import risetek.client.dialog.UserNameModifyDialog;
+import risetek.client.dialog.UserNoteModifyDialog;
 import risetek.client.dialog.UserPasswordModifyDialog;
 import risetek.client.model.RismileUserTable;
 import risetek.client.view.UserView;
@@ -23,7 +24,6 @@ import com.risetek.rismile.client.utils.SysLog;
 import com.risetek.rismile.client.view.RismileTableView;
 
 public class RadiusUserController extends RismileTableController {
-	//private static String loadForm = "SqlUserInfoXML";
 	private static String emptyForm = "clearuser";
 	private static String modifyForm = "SqlUserInfoXML";
 	RismileUserTable data = new RismileUserTable();
@@ -36,6 +36,7 @@ public class RadiusUserController extends RismileTableController {
 	}
 
 	public void load() {
+		MessageConsole.setText("提取用户数据");
 		String query = "lpage=" + data.getLimit() + "&offset="
 				+ data.getOffset();
 		remoteRequest.get("SqlUserInfoXML", query, this);
@@ -71,16 +72,26 @@ public class RadiusUserController extends RismileTableController {
 		remoteRequest.get(modifyForm, query, callback);
 	}
 
+	public void modifyNote(String rowID, String note,
+			RequestCallback callback)
+	{
+		String query = "function=modnote&id=" + rowID + "&note=" + note;
+		remoteRequest.get(modifyForm, query, callback);
+	}
+
 	public void delRow(String rowID, RequestCallback callback) {
 		String query = "function=deluser&id=" + rowID;
 		remoteRequest.get(modifyForm, query, callback);
 	}
 
 	public void onError(Request request, Throwable exception) {
-		MessageConsole.setText("RadiusUserController 执行错误！");
+		MessageConsole.setText("提取用户数据失败");
+		//MessageConsole.setText("RadiusUserController 执行错误！");
 	}
 
-	public void onResponseReceived(Request request, Response response) {
+	public void onResponseReceived(Request request, Response response)
+	{
+		MessageConsole.setText("获得用户数据");
 		data.parseXML(response.getText());
 		view.render(data);
 	}
@@ -132,10 +143,15 @@ public class RadiusUserController extends RismileTableController {
 				ip_control.dialog.confirm.addClickHandler(ip_control);
 				ip_control.dialog.show(rowid, tisp_value);
 				break;
+			case 5:
+				// 修改用户备注
+				UserNoteModifyControl note_control = new UserNoteModifyControl();
+				note_control.dialog.confirm.addClickHandler(note_control);
+				note_control.dialog.show(rowid, tisp_value);
+				break;
 			default:
 				break;
 			}
-
 		}
 
 		// ----------------- 修改 IMSI 号码
@@ -220,6 +236,31 @@ public class RadiusUserController extends RismileTableController {
 				if( dialog.isValid() )
 				{
 					modifyPassword(dialog.rowid, dialog.passwordbox.getText(), this);
+					dialog.confirm.setEnabled(false);
+				}
+			}
+
+			public void onError(Request request, Throwable exception) {
+				RadiusUserController.this.onError(request, exception);
+			}
+
+			public void onResponseReceived(Request request, Response response) {
+				if( dialog.processResponse(response))
+					load();
+			}
+		}
+
+	
+		// ----------------- 修改用户备注
+		public class UserNoteModifyControl implements ClickHandler,
+				RequestCallback {
+			public UserNoteModifyDialog dialog = new UserNoteModifyDialog();
+
+			@Override
+			public void onClick(ClickEvent event) {
+				if( dialog.isValid() )
+				{
+					modifyNote(dialog.rowid, dialog.note.getText(), this);
 					dialog.confirm.setEnabled(false);
 				}
 			}

@@ -22,17 +22,17 @@ public class ProduceHomeController implements RequestCallback {
 	}
 
 	public void load() {
-		MessageConsole.setText("提取产品信息");
+		MessageConsole.setText("提取产品信息数据");
 		remoteRequest.get("SysStateXML", null, this);
 	}
 
 	public void onResponseReceived(Request request, Response response) {
-		MessageConsole.setText("获得产品信息");
+		MessageConsole.setText("获得产品信息数据");
 		data.parseXML(response.getText());
 		view.render(data);
 	}
 
 	public void onError(Request request, Throwable exception) {
-		MessageConsole.setText("提取产品信息失败");
+		MessageConsole.setText("提取产品信息失败数据");
 	}
 }

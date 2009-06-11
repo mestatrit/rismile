@@ -30,6 +30,7 @@ public class RadiusConfController implements RequestCallback {
 	
 	public void load()
 	{
+		MessageConsole.setText("提取认证配置数据");
 		remoteRequest.get(confPath, null, this);
 	}
 	
@@ -40,11 +41,13 @@ public class RadiusConfController implements RequestCallback {
 	
 
 	public void onError(Request request, Throwable exception) {
-		MessageConsole.setText("RadiusConfController 执行错误");
+		MessageConsole.setText("提取认证配置数据失败");
 	}
 
 
-	public void onResponseReceived(Request request, Response response) {
+	public void onResponseReceived(Request request, Response response)
+	{
+		MessageConsole.setText("获得认证配置数据");
 		data.parseXML(response.getText());
 		view.render(data);
 	}

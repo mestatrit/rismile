@@ -16,6 +16,7 @@ import com.google.gwt.user.client.ui.HTMLTable.Cell;
 import com.risetek.rismile.client.control.RismileTableController;
 import com.risetek.rismile.client.model.RismileTable;
 import com.risetek.rismile.client.utils.IPConvert;
+import com.risetek.rismile.client.utils.MessageConsole;
 import com.risetek.rismile.client.utils.SysLog;
 import com.risetek.rismile.client.view.RismileTableView;
 
@@ -33,6 +34,8 @@ public class RadiusBlackController extends RismileTableController {
 	}
 
 	public void load() {
+		MessageConsole.setText("提取不明用户数据");
+
 		String query = "lpage=" + data.getLimit() + "&offset="
 				+ data.getOffset();
 		remoteRequest.get(loadForm, query, this);
@@ -56,10 +59,12 @@ public class RadiusBlackController extends RismileTableController {
 	}
 
 	public void onError(Request request, Throwable exception) {
+		MessageConsole.setText("提取不明用户数据失败");
 		SysLog.log("RadiusBlackController");
 	}
 
 	public void onResponseReceived(Request request, Response response) {
+		MessageConsole.setText("获得不明用户数据");
 		data.parseXML(response.getText());
 		view.render(data);
 	}
@@ -104,17 +109,10 @@ public class RadiusBlackController extends RismileTableController {
 				BlackUserControl control = new BlackUserControl();
 				control.dialog.confirm.addClickHandler(control);
 				control.dialog.show(rowid, tips_ismi, tips_username);
-
-				// BlackUserDialog dialog = new BlackUserDialog(view,
-				// view.getGrid().getText(row, 1), view.getGrid().getText(row,
-				// 2));
-
 				break;
 			default:
 				break;
 			}
-
-					
 		}
 
 		// ----------------- 认可用户信息
