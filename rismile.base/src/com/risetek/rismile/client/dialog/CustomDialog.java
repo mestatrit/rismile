@@ -14,7 +14,6 @@ import com.google.gwt.user.client.ui.DockPanel;
 import com.google.gwt.user.client.ui.HasHorizontalAlignment;
 import com.google.gwt.user.client.ui.HasVerticalAlignment;
 import com.google.gwt.user.client.ui.Label;
-import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.gwt.user.client.ui.DockPanel.DockLayoutConstant;
 import com.risetek.rismile.client.utils.XMLDataParse;
@@ -31,7 +30,10 @@ public abstract class CustomDialog extends MyDialog implements ClickHandler {
 	 * 将自己灰色屏蔽取消。
 	 */
 	public void unmask() {
-		mask.getParentElement().removeChild(mask);
+		Element m = DOM.getElementById("maskPanel");
+		if( m != null )
+			m.removeChild(mask);
+		//mask.getParentElement().removeChild(mask);
 	}
 
 	public CustomDialog() {
@@ -127,10 +129,17 @@ public abstract class CustomDialog extends MyDialog implements ClickHandler {
 	 */
 	public void mask()
 	{
+		Element m = DOM.getElementById("maskPanel");
+		mask.getStyle().setPropertyPx("width", m.getOffsetWidth());
+		mask.getStyle().setPropertyPx("height", m.getOffsetHeight());
+		if( m != null )
+			m.appendChild(mask);
+		/*
 		Widget w = RootPanel.get("maskPanel");
 		mask.getStyle().setPropertyPx("width", w.getOffsetWidth());
 		mask.getStyle().setPropertyPx("height", w.getOffsetHeight());
 		w.getElement().appendChild(mask);
+		*/
 	}
 	
 	public boolean processResponse(Response response)
