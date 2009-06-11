@@ -30,7 +30,7 @@ public class RismileLogController extends RismileTableController implements Requ
 	}
 
 	public void load(){
-		MessageConsole.setText("提取运行记录");
+		MessageConsole.setText("提取运行记录数据");
 		String query = "lpage="+data.getLimit()+"&offset="+data.getOffset();
 		remoteRequest.get(loadForm, query, this);
 	}
@@ -65,11 +65,11 @@ public class RismileLogController extends RismileTableController implements Requ
 	}
 	
 	public void onError(Request request, Throwable exception) {
-		MessageConsole.setText("记录数据访问出错!");
+		MessageConsole.setText("提取运行记录数据失败");
 	}
 
 	public void onResponseReceived(Request request, Response response) {
-		MessageConsole.setText("提取记录数据完毕!");
+		MessageConsole.setText("获得运行记录数据");
 		data.parseXML(response.getText());
 		view.render(data);
 	}
