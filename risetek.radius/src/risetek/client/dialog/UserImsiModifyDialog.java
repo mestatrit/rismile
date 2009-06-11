@@ -19,10 +19,10 @@ public class UserImsiModifyDialog extends CustomDialog {
 		Grid gridFrame = new Grid(2, 2);
 		// Formater Debug
 		//gridFrame.setBorderWidth(1);
-		add(new Label("请输入新的IMSI："),DockPanel.NORTH);
-		gridFrame.setWidget(0, 0, new Label("当前IMSI："));
+		add(new Label("请输入新的终端号："),DockPanel.NORTH);
+		gridFrame.setWidget(0, 0, new Label("当前终端号："));
 		gridFrame.setWidget(0, 1, oldValueLabel);
-		gridFrame.setWidget(1, 0, new Label("新的IMSI："));
+		gridFrame.setWidget(1, 0, new Label("新的终端号："));
 		gridFrame.setWidget(1, 1, newValueBox);
 		
 		newValueBox.setTabIndex(1);
