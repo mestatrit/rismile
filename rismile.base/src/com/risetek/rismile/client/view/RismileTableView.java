@@ -81,12 +81,11 @@ public abstract class RismileTableView extends Composite {
 	    //grid.getRowFormatter().addStyleName(0, "header");
 	    for (int i = 0 ; i < columns.length; i++) {
 	        grid.setText(0, i, columns[i]);
-	        if (columnStyles != null) {
+            if (columnStyles != null) {
 //	            grid.getCellFormatter().setStyleName(0, i, columnStyles[i] + " header");
 	            grid.getCellFormatter().setStyleName(0, i, "header");
 	        }
 	    }
-	    
 	}
 	public abstract Grid getGrid();
 	
@@ -111,7 +110,6 @@ public abstract class RismileTableView extends Composite {
     public void render(RismileTable table)
 	{
 		String data[][] = table.getData();
-		//int total = table.getSum();
 		int destRowCount = grid.getRowCount() - 1;
 		int destColCount = grid.getCellCount(0);
 		CellFormatter formatter = grid.getCellFormatter();
@@ -126,15 +124,10 @@ public abstract class RismileTableView extends Composite {
 
 			for (int srcColIndex = 0; srcColIndex < destColCount; ++srcColIndex) {
 				String cellHTML = srcRowData[srcColIndex];
-				/*
-				if(srcColIndex == 0 && enableRowId){
-					idArray[destRowIndex] = cellHTML;
-					cellHTML = Long.toString(table.getOffset() + destRowIndex);
-				}
-				*/
 				grid.setText(destRowIndex, srcColIndex, cellHTML);
 				formatter.addStyleName(destRowIndex, srcColIndex, columnStyles[srcColIndex]);
 			}
+			grid.getRowFormatter().setStyleName(destRowIndex, "normal");
 		}
 
 		// Clear remaining table rows.
@@ -145,6 +138,7 @@ public abstract class RismileTableView extends Composite {
 			for (int destColIndex = 0; destColIndex < destColCount; ++destColIndex) {
 				grid.clearCell(destRowIndex, destColIndex);
 			}
+			grid.getRowFormatter().setStyleName(destRowIndex, "normal");
 		}
 
 		setStatisticText( table.getSum() );
