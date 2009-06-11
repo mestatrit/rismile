@@ -11,7 +11,7 @@ public class RadiusUserSink extends Sink {
 	RadiusUserController	control = new RadiusUserController();
 	
 	public static SinkInfo init() {
-		return new SinkInfo(Tag, "用户", "用户管理"){
+		return new SinkInfo(Tag, "用户", "用户管理（绿底表明用户在线）"){
 		      public Sink createInstance() {
 		          return new RadiusUserSink();
 		        }
