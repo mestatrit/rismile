@@ -14,7 +14,7 @@ import com.risetek.rismile.log.client.model.RismileLogTable;
 
 public class RismileLogView extends RismileTableView {
 	private final static String[] columns = {"序号","日期时间","运行记录"};
-	private final static String[] columnStyles = {"id","datetime","record"};
+	private final static String[] columnStyles = {"logid","datetime","record"};
 	private final static int rowCount = 20;	
 	
 	public Button TogAutoRefresh;
