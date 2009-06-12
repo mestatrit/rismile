@@ -1,6 +1,7 @@
 package risetek.client.control;
 
 import risetek.client.dialog.UserAddDialog;
+import risetek.client.dialog.UserDelDialog;
 import risetek.client.dialog.UserImsiModifyDialog;
 import risetek.client.dialog.UserIpModifyDialog;
 import risetek.client.dialog.UserNameModifyDialog;
@@ -25,7 +26,7 @@ import com.risetek.rismile.client.view.RismileTableView;
 
 public class RadiusUserController extends RismileTableController {
 	private static String emptyForm = "clearuser";
-	private static String modifyForm = "SqlUserInfoXML";
+	private static String modifyForm = "SqlUserModify";
 	RismileUserTable data = new RismileUserTable();
 
 	public UserView view;
@@ -75,7 +76,7 @@ public class RadiusUserController extends RismileTableController {
 	public void modifyNote(String rowID, String note,
 			RequestCallback callback)
 	{
-		String query = "function=modnote&id=" + rowID + "&note=" + note;
+		String query = "function=moduser&id=" + rowID + "&note=" + note;
 		remoteRequest.get(modifyForm, query, callback);
 	}
 
@@ -86,7 +87,6 @@ public class RadiusUserController extends RismileTableController {
 
 	public void onError(Request request, Throwable exception) {
 		MessageConsole.setText("提取用户数据失败");
-		//MessageConsole.setText("RadiusUserController 执行错误！");
 	}
 
 	public void onResponseReceived(Request request, Response response)
@@ -111,12 +111,17 @@ public class RadiusUserController extends RismileTableController {
 			switch (cell) {
 			case 0:
 				// 选择了删除用户。
+				/*
 				if (Window.confirm("是否要删除该用户?\n" + "用户名:"
 						+ view.getGrid().getText(row, 2) + "\n" + "IMSI:  "
 						+ view.getGrid().getText(row, 1) + "\n" + "IP地址:"
 						+ view.getGrid().getText(row, 4))) {
 					delRow(rowid, RadiusUserController.this);
 				}
+				*/
+				UserDelControl del_control = new UserDelControl();
+				del_control.dialog.confirm.addClickHandler(del_control);
+				del_control.dialog.show(rowid, tisp_value);
 				break;
 			case 1:
 				// 修改IMSI号码。
@@ -151,6 +156,30 @@ public class RadiusUserController extends RismileTableController {
 				break;
 			default:
 				break;
+			}
+		}
+
+		// ----------------- 删除用户
+		public class UserDelControl implements ClickHandler,
+				RequestCallback {
+			public UserDelDialog dialog = new UserDelDialog();
+
+			@Override
+			public void onClick(ClickEvent event) {
+				if( dialog.isValid() )
+				{
+					//SysLog.log(dialog.newValueBox.getText());
+					delRow(dialog.rowid, this);
+				}
+			}
+
+			public void onError(Request request, Throwable exception) {
+				RadiusUserController.this.onError(request, exception);
+			}
+
+			public void onResponseReceived(Request request, Response response) {
+				if( dialog.processResponse(response))
+					load();
 			}
 		}
 

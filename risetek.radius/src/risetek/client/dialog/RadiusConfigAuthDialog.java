@@ -14,6 +14,7 @@ public class RadiusConfigAuthDialog extends CustomDialog {
 		//newValueBox.setTabIndex(1);
 		add(new Label("请输入新认证端口："),DockPanel.NORTH);
 		setText("修改认证端口");
+		newValueBox.setWidth("80px");
 		
 		add(newValueBox, DockPanel.CENTER);
 	}

@@ -13,6 +13,7 @@ public class RadiusConfigAcctDialog extends CustomDialog {
 	public RadiusConfigAcctDialog(){
 		add(new Label("请输入新计费端口："),DockPanel.NORTH);
 		setText("修改计费端口");
+		newValueBox.setWidth("80px");
 		newValueBox.setTabIndex(1);
 		add(newValueBox, DockPanel.CENTER);
 	}

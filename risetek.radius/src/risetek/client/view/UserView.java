@@ -15,7 +15,7 @@ import com.risetek.rismile.client.view.RismileTableView;
 public class UserView extends RismileTableView {
 	
 	private final static String[] columns = {"序号","终端号","用户名称","口令","分配地址","备注"};
-	private final static String[] columnStyles = {"id","imsi","username","password","ipaddress","note"};
+	private final static String[] columnStyles = {"uid","imsi","username","password","ipaddress","note"};
 	
 	private final static int rowCount = 20;	
 	

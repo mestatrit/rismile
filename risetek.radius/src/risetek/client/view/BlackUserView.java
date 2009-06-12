@@ -10,8 +10,8 @@ import com.risetek.rismile.client.view.MouseEventGrid;
 import com.risetek.rismile.client.view.RismileTableView;
 
 public class BlackUserView extends RismileTableView {
-	private final static String[] columns = {"序号","IMSI","用户名称"};
-	private final static String[] columnStyles = {"id","imsi","username"};
+	private final static String[] columns = {"序号","终端号","用户名称"};
+	private final static String[] columnStyles = {"id","imsi","backusername"};
 	private final static int rowCount = 20;	
 
 	public Button clearButton = new Button("清除");

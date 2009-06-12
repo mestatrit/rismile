@@ -48,29 +48,34 @@
 }
 
 
-.rismiletable .table td.operator {
+.rismiletable .table td.uid {
+	margin-right: 40px;
 	text-align: right;
-	width: 1em;
+	width: 10%;
 }
 
 .rismiletable .table td.imsi {
-	width: 8em;
+	text-align: left;
+	width: 20%;
 }
 
 .rismiletable .table td.username {
-	width: 15em;
+	text-align: left;
+	width: 25%;
 }
 
-.rismiletable .table td.name {
-	width: 10em;
+.rismiletable .table td.backusername {
+	text-align: left;
+	border-width:1px 0px 0px 0px;
 }
 
-.rismiletable .table td.desc {
-	width: 20em;
+.rismiletable .table td.password {
+	width: 5%;
 }
 
-.rismiletable .table td.sched {
-	width: 20em;
+.rismiletable .table td.ipaddress {
+	text-align: left;
+	width: 20%;
 }
 
 .radius-config .sys-introH {
@@ -104,6 +109,7 @@
 	background-color:#BFFFDF;
 }
 .rismiletable .table td.note {
-	width: 12em;
+	text-align: left;
+	border-width:1px 0px 0px 0px;
 }
 
