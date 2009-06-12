@@ -304,7 +304,8 @@ body {
 .rismiletable .table {
 	margin-top: 10px;
 	cellspacing:1px;
-	font-size: 11pt;
+	margin-bottom: 0px;
+	font-size: 10pt;
 	width: 100%;
 	align: center;
 	white-space: nowrap;
@@ -312,13 +313,14 @@ body {
 
 .rismiletable .table td {
 	text-align: center;
-	margin:1px;
-	pading:0;
+	border:solid #8abeef;
+	border-width:1px 1px 0px 0px;
 	white-space: nowrap;
 }
 
 .rismiletable .table td.header {
 	font-weight: bold;
+	border-width:0px;
 	text-decoration: underline;
 	font-size: 13pt;
 	text-align: center;

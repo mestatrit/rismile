@@ -137,6 +137,7 @@ public abstract class RismileTableView extends Composite {
 			//isLastPage = true;
 			for (int destColIndex = 0; destColIndex < destColCount; ++destColIndex) {
 				grid.clearCell(destRowIndex, destColIndex);
+				formatter.addStyleName(destRowIndex, destColIndex, columnStyles[destColIndex]);
 			}
 			grid.getRowFormatter().setStyleName(destRowIndex, "normal");
 		}

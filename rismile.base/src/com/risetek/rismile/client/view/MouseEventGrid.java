@@ -9,8 +9,9 @@ public abstract class MouseEventGrid extends Grid{
 
 	public MouseEventGrid(){
 		super();
-		this.setCellPadding(2);
-		this.setCellSpacing(0);
+		// this.setBorderWidth(1);
+		setCellPadding(2);
+		setCellSpacing(0);
 		// 增加鼠标事件。
 		sinkEvents(Event.MOUSEEVENTS);
 	}
