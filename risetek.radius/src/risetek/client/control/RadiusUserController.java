@@ -168,7 +168,6 @@ public class RadiusUserController extends RismileTableController {
 			public void onClick(ClickEvent event) {
 				if( dialog.isValid() )
 				{
-					//SysLog.log(dialog.newValueBox.getText());
 					delRow(dialog.rowid, this);
 				}
 			}
@@ -341,11 +340,23 @@ public class RadiusUserController extends RismileTableController {
 
 	// 清除所有用户
 	public class EmptyAction implements ClickHandler {
+		class EmptyCallback implements RequestCallback {
 
+			@Override
+			public void onError(Request request, Throwable exception) {
+				MessageConsole.setText("清除用户操作失败");
+			}
+
+			@Override
+			public void onResponseReceived(Request request, Response response) {
+				load();
+			}
+			
+		}
 		@Override
 		public void onClick(ClickEvent event) {
 			if (Window.confirm("是否要清除所有用户?")) {
-				remoteRequest.get(emptyForm,null, RadiusUserController.this);
+				remoteRequest.get(emptyForm,null, new EmptyCallback());
 			}
 		}
 	}
