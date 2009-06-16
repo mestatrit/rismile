@@ -11,13 +11,14 @@ import com.google.gwt.xml.client.NodeList;
 import com.google.gwt.xml.client.XMLParser;
 
 public class Heartbeat implements RequestCallback {
-	private static RequestBuilder hb_Builder = new RequestBuilder(
-			RequestBuilder.POST, "forms/hb");
+	private static RequestBuilder hb_Builder;
 	private static Timer hbTimer;
-
 	
 	static Heartbeat response = new Heartbeat();
 	public static void startHeartbeat() {
+		hb_Builder = new RequestBuilder(RequestBuilder.POST, "forms/hb");
+		hb_Builder.setTimeoutMillis(100);
+		
 		hbTimer = new Timer() {
 			public void run() {
 				try {
