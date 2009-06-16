@@ -18,10 +18,13 @@ public abstract class MouseEventGrid extends Grid{
 	
 	public void onBrowserEvent(Event event)
     {
+	    Element td = DOM.eventGetTarget(event);
+/*		
 		Element td = getEventTargetCell(event);
         if (td == null) {
           return;
         }
+*/        
         Element tr = DOM.getParent(td);
         Element body = DOM.getParent(tr);
         int row = DOM.getChildIndex(body, tr);
