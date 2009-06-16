@@ -9,17 +9,10 @@ import com.risetek.rismile.client.utils.SysLog;
 
 public class RequestFactory {
 	private final String baseUrl;
-	private String contentType;
 	private Request request;
 	
-
 	public RequestFactory(){
-		this("forms");
-	}
-	
-	public RequestFactory(String baseUrl){
-		this.baseUrl = baseUrl;
-		contentType = "application/text";
+		this.baseUrl = "forms";
 	}
 
 	public void get( String path, String query, RequestCallback handler )
@@ -27,8 +20,14 @@ public class RequestFactory {
 		if(request != null && request.isPending()){
 			request.cancel();
 		}
+		RequestBuilder builder;
+		if( query != null )
+			builder = new RequestBuilder(RequestBuilder.GET, baseUrl+"/"+path+"?"+query);
+		else
+			builder = new RequestBuilder(RequestBuilder.GET, baseUrl+"/"+path);
 
-		RequestBuilder builder = new RequestBuilder(RequestBuilder.GET, baseUrl+"/"+path+"?"+query);
+		builder.setHeader("Content-Type", "text/plain; charset=gb2312" );
+		
 		try{
 			SysLog.log(builder.getRequestData());
 			request = builder.sendRequest( null, handler );
@@ -37,7 +36,7 @@ public class RequestFactory {
 			//handler.onError("网页内部出错!", e);
 		}
 	}
-	
+/*	
 	public void post( String path, String text, RequestCallback callback ){
 		if(request != null && request.isPending()){
 			request.cancel();
@@ -52,8 +51,7 @@ public class RequestFactory {
 			request = builder.sendRequest( text,  callback );
 		} catch (RequestException e){ 
 			GWT.log( "error", e); 
-			//handler.onError("网页内部出错!");
 		}
 	}
-	
+	*/
 }
