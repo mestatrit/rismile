@@ -220,6 +220,7 @@ body {
 
 .rismile .system .gwt-Button {
 	padding-top:3px;
+	padding-bottom: 0px;
 	width: 8em;
 	background-color: #E2EAF5;
 	cursor: pointer;
@@ -265,21 +266,23 @@ body {
 
 .rismiletable {
 	width: 100%;
-	border: 1px solid #ACA899;
+	border: 0px
 }
 
 
 .rismiletable .navbar {
-	padding-top: 4px;
-	padding-bottom: 4px;
-	border-top: 1px solid #2a8ebf;
+/*	border-top: 1px solid #2a8ebf; */
 	border-bottom: 1px solid #2a8ebf;
 	width: 100%;
 	vertical-align: middle;
 	background: url(images/system_blue_gradient.gif) repeat-x top left;
+	padding-top: 4px;
+	padding-bottom: 4px;
 }
 
 .rismiletable .navbar .gwt-Button {
+	padding-top: 1px;
+	padding-bottom: 1px;
     height: 25px;
 	width: 6em;
 	background-color: #E2EAF5;
@@ -289,7 +292,7 @@ body {
 
 .rismiletable .navbar .gwt-Button-dir {
 	font-weight: bold;
-	width: 4em;
+	width: 3em;
 }
 
 .rismiletable .navbar .status {
