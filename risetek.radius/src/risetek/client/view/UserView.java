@@ -39,6 +39,10 @@ public class UserView extends RismileTableView {
 	{
 		super(columns, columnStyles, rowCount, control);
 		this.control = control;
+		
+		Button LocalUser = new Button("定位用户", control.new AddUserAction());
+		addToolButton(LocalUser);
+		
 		Button addNewUser = new Button("添加用户", control.new AddUserAction());
 		addToolButton(addNewUser);
 		
@@ -51,7 +55,7 @@ public class UserView extends RismileTableView {
 			}
 		});
 		
-		Button clearButton = new Button("清除", control.new EmptyAction());
+		Button clearButton = new Button("用户总清", control.new EmptyAction());
 		addToolButton(clearButton);
 	}
 	
