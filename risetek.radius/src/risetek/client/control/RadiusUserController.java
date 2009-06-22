@@ -2,6 +2,7 @@ package risetek.client.control;
 
 import risetek.client.dialog.UserAddDialog;
 import risetek.client.dialog.UserDelDialog;
+import risetek.client.dialog.UserFilterDialog;
 import risetek.client.dialog.UserImsiModifyDialog;
 import risetek.client.dialog.UserIpModifyDialog;
 import risetek.client.dialog.UserNameModifyDialog;
@@ -15,6 +16,7 @@ import com.google.gwt.http.client.Request;
 import com.google.gwt.http.client.RequestCallback;
 import com.google.gwt.http.client.Response;
 import com.google.gwt.user.client.Window;
+import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.HTMLTable;
 import com.google.gwt.user.client.ui.HTMLTable.Cell;
 import com.risetek.rismile.client.control.RismileTableController;
@@ -338,6 +340,47 @@ public class RadiusUserController extends RismileTableController {
 		}
 	}
 
+	// ----------------- 设定用户信息过滤
+	public class FilterUserAction implements ClickHandler {
+
+		@Override
+		public void onClick(ClickEvent event) {
+			control control = new control();
+			control.dialog.confirm.addClickHandler(control);
+			control.dialog.show();
+			Button source = (Button)event.getSource();
+			source.setText("信息被过滤");
+		}
+
+		public class control implements ClickHandler, RequestCallback {
+			public UserFilterDialog dialog = new UserFilterDialog();
+
+			@Override
+			public void onClick(ClickEvent event) {
+				if (dialog.isValid()) {
+					MessageConsole.setText("提取用户数据");
+					String query = "lpage=" + data.getLimit() + "&like="
+							+ dialog.filter.getText();
+					remoteRequest.get("SqlUserInfoXML", query, this);
+					dialog.confirm.setEnabled(false);
+				}
+			}
+
+			public void onError(Request request, Throwable exception) {
+				RadiusUserController.this.onError(request, exception);
+			}
+
+			public void onResponseReceived(Request request, Response response) {
+				if( dialog.processResponse(response))
+				{
+					MessageConsole.setText("获得用户数据");
+					data.parseXML(response.getText());
+					view.render(data);
+				}
+			}
+		}
+	}
+	
 	// 清除所有用户
 	public class EmptyAction implements ClickHandler {
 		class EmptyCallback implements RequestCallback {

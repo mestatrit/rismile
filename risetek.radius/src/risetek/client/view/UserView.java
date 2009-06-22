@@ -40,8 +40,8 @@ public class UserView extends RismileTableView {
 		super(columns, columnStyles, rowCount, control);
 		this.control = control;
 		
-		Button LocalUser = new Button("定位用户", control.new AddUserAction());
-		addToolButton(LocalUser);
+		Button FilterUser = new Button("过滤信息", control.new FilterUserAction());
+		addToolButton(FilterUser);
 		
 		Button addNewUser = new Button("添加用户", control.new AddUserAction());
 		addToolButton(addNewUser);
