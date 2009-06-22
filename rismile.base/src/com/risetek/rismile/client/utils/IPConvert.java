@@ -16,7 +16,8 @@ public class IPConvert {
 			+ Long.toString(((ip >> 8 ) & 0xff)) + "." + Long.toString(((ip ) & 0xff));
 	}
 	
-	public static String long2IPString(String ipaddress){
+	public static String long2IPString(String ipaddress)
+	{
 		return Long.toString(ip2i(ipaddress));
 	}
 
