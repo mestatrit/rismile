@@ -16,6 +16,7 @@ public class RadiusConfigAcctDialog extends CustomDialog {
 		newValueBox.setWidth("80px");
 		newValueBox.setTabIndex(1);
 		add(newValueBox, DockPanel.CENTER);
+		setSize("220","180");
 	}
 
 	public void show(String value) {

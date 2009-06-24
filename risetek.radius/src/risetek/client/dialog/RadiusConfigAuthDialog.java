@@ -17,6 +17,7 @@ public class RadiusConfigAuthDialog extends CustomDialog {
 		newValueBox.setWidth("80px");
 		
 		add(newValueBox, DockPanel.CENTER);
+		setSize("220","180");
 	}
 
 	public void show(String value) {
