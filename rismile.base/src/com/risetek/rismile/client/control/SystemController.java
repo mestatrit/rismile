@@ -281,7 +281,7 @@ public class SystemController implements RequestCallback {
 		}
 	}
 
-	// -- 管理员维护
+	// -- 管理员维护：删除管理员
 	public class delAdminClickHandler implements ClickHandler {
 
 		public void onClick(ClickEvent event) {
@@ -312,7 +312,7 @@ public class SystemController implements RequestCallback {
 		}
 	}
 
-	// -------------------------
+	// 管理员维护 ：添加管理员
 	public class addAdminClickHandler implements ClickHandler {
 
 		public void onClick(ClickEvent event) {
@@ -322,7 +322,7 @@ public class SystemController implements RequestCallback {
 		}
 
 		public class Control implements ClickHandler, RequestCallback {
-			public AdminDialog dialog = new AdminDialog(AdminDialog.DEL);
+			public AdminDialog dialog = new AdminDialog(AdminDialog.ADD);
 
 			public void onClick(ClickEvent event) {
 				if( dialog.isValid())
