@@ -1,6 +1,7 @@
 package risetek.client.view;
 
 import risetek.client.control.RadiusUserController;
+
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.DOM;
@@ -18,7 +19,7 @@ public class UserView extends RismileTableView {
 	private final static String[] columnStyles = {"uid","imsi","username","password","ipaddress","note"};
 	
 	private final static int rowCount = 20;	
-	
+	String banner_tips = "";
 	private final static String[] banner_text = {
 		"点击删除该条记录.",
 		"点击修改IMSI号码.",
@@ -28,6 +29,13 @@ public class UserView extends RismileTableView {
 		"点击修改备注信息."
 	};
 
+	
+	public void setBannerTips(String tips)
+	{
+		banner_tips = tips;
+		setInfo(banner_tips);
+	}
+	
 	public  RadiusUserController control;
 
 	public UserView(RadiusUserController control) {
@@ -85,7 +93,7 @@ public class UserView extends RismileTableView {
 		public void onMouseOut(Element td, int column) {
 			DOM.setStyleAttribute(td, "color", "");
 			DOM.setStyleAttribute(td, "cursor", "pointer");
-			setInfo("");
+			setInfo(banner_tips);
 
             Element tr = DOM.getParent(td);
             Element body = DOM.getParent(tr);

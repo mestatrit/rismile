@@ -8,7 +8,7 @@ import com.risetek.rismile.client.utils.IPConvert;
 import com.risetek.rismile.client.utils.XMLDataParse;
 
 public class RismileUserTable extends RismileTable {
-
+	public String filter = "";
 	public void parseXML(String text)
 	{
 		Element entryElement = XMLParser.parse( text ).getDocumentElement();

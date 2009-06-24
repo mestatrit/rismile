@@ -15,18 +15,17 @@ public class UserFilterDialog extends CustomDialog {
 	private final FocusPanel focusPanel = new FocusPanel();
 	
 	public UserFilterDialog(){
-		add(new Label("请输入过滤信息："),DockPanel.NORTH);
-		
-		Grid gridFrame = new Grid(2, 1);
-		
-		gridFrame.setWidget(1,0,filter);
-		
+		add(new Label("输入的信息会匹配终端号、用户名称和备注"),DockPanel.NORTH);
+		add(new Label("通过输入空白来清除过滤的限定"),DockPanel.NORTH);
+		// add(new Label("请输入关注的字符串："),DockPanel.NORTH);
+		Grid gridFrame = new Grid(1, 1);
+		gridFrame.setWidget(0,0,filter);
 		filter.setTabIndex(1);
 		
 		focusPanel.add(gridFrame);
 		add(focusPanel,DockPanel.CENTER);
 
-		setSize("280","200");
+		setSize("340","200");
 	}
 	
 	public void show(){
@@ -37,7 +36,7 @@ public class UserFilterDialog extends CustomDialog {
 	public boolean isValid()
 	{
 		String text = filter.getText();
-		if ( null == text || "".equals(text))
+		if ( null == text )
 		{
 			setMessage("过滤设定不能为空");
 			return false;

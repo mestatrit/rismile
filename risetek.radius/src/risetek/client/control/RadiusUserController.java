@@ -10,13 +10,13 @@ import risetek.client.dialog.UserNoteModifyDialog;
 import risetek.client.dialog.UserPasswordModifyDialog;
 import risetek.client.model.RismileUserTable;
 import risetek.client.view.UserView;
+
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.http.client.Request;
 import com.google.gwt.http.client.RequestCallback;
 import com.google.gwt.http.client.Response;
 import com.google.gwt.user.client.Window;
-import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.HTMLTable;
 import com.google.gwt.user.client.ui.HTMLTable.Cell;
 import com.risetek.rismile.client.control.RismileTableController;
@@ -41,7 +41,7 @@ public class RadiusUserController extends RismileTableController {
 	public void load() {
 		MessageConsole.setText("提取用户数据");
 		String query = "lpage=" + data.getLimit() + "&offset="
-				+ data.getOffset();
+				+ data.getOffset() + "&like=" +data.filter ;
 		remoteRequest.get("SqlUserInfoXML", query, this);
 	}
 
@@ -348,34 +348,21 @@ public class RadiusUserController extends RismileTableController {
 			control control = new control();
 			control.dialog.confirm.addClickHandler(control);
 			control.dialog.show();
-			Button source = (Button)event.getSource();
-			source.setText("信息被过滤");
 		}
 
-		public class control implements ClickHandler, RequestCallback {
+		public class control implements ClickHandler { //, RequestCallback {
 			public UserFilterDialog dialog = new UserFilterDialog();
 
 			@Override
 			public void onClick(ClickEvent event) {
 				if (dialog.isValid()) {
-					MessageConsole.setText("提取用户数据");
-					String query = "lpage=" + data.getLimit() + "&like="
-							+ dialog.filter.getText();
-					remoteRequest.get("SqlUserInfoXML", query, this);
-					dialog.confirm.setEnabled(false);
-				}
-			}
-
-			public void onError(Request request, Throwable exception) {
-				RadiusUserController.this.onError(request, exception);
-			}
-
-			public void onResponseReceived(Request request, Response response) {
-				if( dialog.processResponse(response))
-				{
-					MessageConsole.setText("获得用户数据");
-					data.parseXML(response.getText());
-					view.render(data);
+					data.filter = dialog.filter.getText();
+					dialog.hide();
+					if(!("".equalsIgnoreCase(data.filter)))
+						view.setBannerTips("用户信息被过滤");
+					else
+						view.setBannerTips("");
+					load();
 				}
 			}
 		}
