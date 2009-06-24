@@ -1,16 +1,17 @@
 package com.risetek.rismile.log.client.control;
 
+import com.google.gwt.event.dom.client.ClickEvent;
+import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.http.client.Request;
 import com.google.gwt.http.client.RequestCallback;
 import com.google.gwt.http.client.Response;
 import com.google.gwt.user.client.Window;
-import com.google.gwt.event.dom.client.ClickEvent;
-import com.google.gwt.event.dom.client.ClickHandler;
 import com.risetek.rismile.client.control.RismileTableController;
 import com.risetek.rismile.client.model.RismileTable;
 import com.risetek.rismile.client.utils.MessageConsole;
 import com.risetek.rismile.client.view.RismileTableView;
 import com.risetek.rismile.log.client.model.RismileLogTable;
+import com.risetek.rismile.log.client.view.LogFilterDialog;
 import com.risetek.rismile.log.client.view.RismileLogView;
 
 public class RismileLogController extends RismileTableController implements RequestCallback {
@@ -31,7 +32,7 @@ public class RismileLogController extends RismileTableController implements Requ
 
 	public void load(){
 		MessageConsole.setText("提取运行记录数据");
-		String query = "lpage="+data.getLimit()+"&offset="+data.getOffset();
+		String query = "lpage="+data.getLimit()+"&offset="+data.getOffset()+"&like="+data.message_filer;
 		remoteRequest.get(loadForm, query, this);
 	}
 	
@@ -63,6 +64,36 @@ public class RismileLogController extends RismileTableController implements Requ
 			}
 		}
 	}
+	
+	
+	// ----------------- 设定用户信息过滤
+	public class FilterLogAction implements ClickHandler {
+
+		@Override
+		public void onClick(ClickEvent event) {
+			control control = new control();
+			control.dialog.confirm.addClickHandler(control);
+			control.dialog.show();
+		}
+
+		public class control implements ClickHandler { //, RequestCallback {
+			public LogFilterDialog dialog = new LogFilterDialog();
+
+			@Override
+			public void onClick(ClickEvent event) {
+				if (dialog.isValid()) {
+					data.message_filer = dialog.filter.getText();
+					dialog.hide();
+					if(!("".equalsIgnoreCase(data.message_filer)))
+						view.setBannerTips("记录信息被过滤");
+					else
+						view.setBannerTips("");
+					load();
+				}
+			}
+		}
+	}
+	
 	
 	public void onError(Request request, Throwable exception) {
 		MessageConsole.setText("提取运行记录数据失败");

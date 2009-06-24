@@ -1,5 +1,4 @@
 package com.risetek.rismile.log.client.view;
-
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.Element;
@@ -20,7 +19,14 @@ public class RismileLogView extends RismileTableView {
 	public Button TogAutoRefresh;
 	public Button clearButton;
 	public RismileLogController control;
+	String banner_tips = "";
 
+	public void setBannerTips(String tips)
+	{
+		banner_tips = tips;
+		setInfo(banner_tips);
+	}
+	
 	Timer refreshTimer = new Timer() {
 		public void run() {
 			control.load();
@@ -35,6 +41,8 @@ public class RismileLogView extends RismileTableView {
 	private RismileLogView(String[] columns, String[] columnStyles, int rowCount, RismileLogController control) {
 		super(columns, columnStyles, rowCount, control);
 		this.control = control;
+		Button FilterLog = new Button("过滤信息", control.new FilterLogAction());
+		addToolButton(FilterLog);
 		TogAutoRefresh = new Button("查看历史", control.new AutoRefreshClick());
 		addToolButton(TogAutoRefresh);
 		//TogAutoRefresh.addStyleName("toolbutton");
