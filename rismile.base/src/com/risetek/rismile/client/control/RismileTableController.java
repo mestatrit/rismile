@@ -1,8 +1,8 @@
 package com.risetek.rismile.client.control;
 
-import com.google.gwt.http.client.RequestCallback;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.http.client.RequestCallback;
 import com.risetek.rismile.client.http.RequestFactory;
 import com.risetek.rismile.client.model.RismileTable;
 import com.risetek.rismile.client.view.RismileTableView;
