@@ -148,8 +148,10 @@ body {
 
 .rismile-dialog {
 	z-index:20003;
-	background-color: white;
-	border: 1px solid #2a8ebf;
+	/* background-color: white; */
+	/* border: 1px solid #2a8ebf; */
+	background: d3e9ff;
+	border: 5px solid #c3d9ff;
 }
 
 .rismile-dialog .caption {
