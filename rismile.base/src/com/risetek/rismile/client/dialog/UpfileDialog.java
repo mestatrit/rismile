@@ -34,7 +34,7 @@ public class UpfileDialog extends CustomDialog {
 		//checkBox.setName("force_remove");
 		
 		Grid gridFrame = new Grid(3, 2);
-		gridFrame.setWidget(0, 0, new Label("文件：", false));
+		gridFrame.setWidget(0, 0, new Label("程序：", false));
 		gridFrame.setWidget(0, 1, fileUpload);
 		//gridFrame.setWidget(1, 0, checkLabel);
 		//gridFrame.setWidget(1, 1, checkBox);
@@ -67,6 +67,7 @@ public class UpfileDialog extends CustomDialog {
 		});
 
 		panel.add(formPanel, DockPanel.NORTH);
+		panel.add(new HTML("请谨慎使用该功能!"), DockPanel.SOUTH);
 		
 		html.addStyleName("info-Label");
 		panel.add(html, DockPanel.SOUTH);
@@ -76,8 +77,8 @@ public class UpfileDialog extends CustomDialog {
 		confirm.setVisible(false);
 		
 		add(panel,DockPanel.CENTER);
-		setText("上传文件");
-		setSize("320","240");
+		setText("升级程序");
+		setSize("340","130");
 	}
 	public Widget getFirstTabIndex() {
 		return null;
