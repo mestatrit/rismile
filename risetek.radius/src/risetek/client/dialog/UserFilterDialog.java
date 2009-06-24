@@ -10,20 +10,11 @@ public class UserFilterDialog extends CustomDialog {
 
 	public final TextBox filter = new TextBox();
 	
-	//private final FocusPanel focusPanel = new FocusPanel();
-	
 	public UserFilterDialog(){
 		add(new Label("输入的信息会匹配终端号、用户名称和备注"),DockPanel.NORTH);
 		add(new Label("通过输入空白来清除过滤的限定"),DockPanel.NORTH);
 		add(filter,DockPanel.NORTH);
-
-		//Grid gridFrame = new Grid(1, 1);
-		//gridFrame.setWidget(0,0,filter);
 		filter.setTabIndex(1);
-		
-		//focusPanel.add(gridFrame);
-		//add(focusPanel,DockPanel.CENTER);
-
 		setSize("340","200");
 	}
 	
