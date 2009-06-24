@@ -15,7 +15,7 @@ public class LogFilterDialog extends CustomDialog {
 	private final FocusPanel focusPanel = new FocusPanel();
 	
 	public LogFilterDialog(){
-		add(new Label("输入的信息会匹配终端号、用户名称和备注"),DockPanel.NORTH);
+		add(new Label("输入的信息会匹配运行记录"),DockPanel.NORTH);
 		add(new Label("通过输入空白来清除过滤的限定"),DockPanel.NORTH);
 		// add(new Label("请输入关注的字符串："),DockPanel.NORTH);
 		Grid gridFrame = new Grid(1, 1);
