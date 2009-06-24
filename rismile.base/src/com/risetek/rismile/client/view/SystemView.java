@@ -24,6 +24,7 @@ public class SystemView extends Composite {
 	final Grid routeGrid = new Grid(2,5);
 
 	final VerticalPanel panel = new VerticalPanel();
+	final Grid adminGrid = new Grid(2,3);
 	
 	SystemController control;
 	
@@ -123,7 +124,6 @@ public class SystemView extends Composite {
 		mPanel.setHeight("100%");
 		mPanel.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_CENTER);
 		mPanel.setVerticalAlignment(HasVerticalAlignment.ALIGN_TOP);
-		final Grid adminGrid = new Grid(2,3);
 		mPanel.add(adminGrid);
 		//adminGrid.setBorderWidth(1);
 		mPanel.setStyleName("manage");
@@ -144,29 +144,11 @@ public class SystemView extends Composite {
 
 		final Button restartButton = new Button("重启设备", control.new resetClickHandler());
 		adminGrid.setWidget(1, 2, restartButton);
-		
-		
-		//----------------------
-		//adminGrid.setWidget(1, 0, new HTML("<a href=\"forms/SwingPinger\">设备监视工具</a>"));
-
-
 	}
 
 	protected void onLoad() {
 		control.load();
 	}
-	/*
-	private void renderServiceTable(Service service) {
-		dateGrid.setText(0, 0, "当前日期:" + data.getDate());
-		dateGrid.setText(0, 1, "当前时间:" + data.getTime());
-		serviceGrid.setText(1, 0, service.getName());
-		serviceGrid.setText(1, 1, service.getVersion());
-		serviceGrid.setText(1, 2, service.getStatus());
-
-	}
-	*/
-	//public String ip_address;
-	//public String ip_mask;
 
 	private void renderNetworkTable(List<InterfEntry> interfList) {
 
@@ -203,8 +185,12 @@ public class SystemView extends Composite {
 	}
 	public void render(SystemDataModel data)
 	{
-		//renderServiceTable(data.getService());
 		renderNetworkTable(data.getInterfList());
 		renderRouterTable(data.getRouteList());
+		if( data.rmon )
+		{
+			final Button rmonButton = new Button("下载监控程序", control.new rmonClickHandler());
+			adminGrid.setWidget(1, 1, rmonButton);
+		}
 	}
 }

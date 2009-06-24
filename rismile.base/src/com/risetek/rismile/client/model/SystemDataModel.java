@@ -12,7 +12,7 @@ public class SystemDataModel {
 	
 	private String date;
 	private String time;
-	
+	public boolean rmon = false;
 	private Service service;
 	
 	private List<InterfEntry> interfList;
@@ -105,6 +105,7 @@ public class SystemDataModel {
 		Element routerXml = (Element) systemAllXml.getElementsByTagName("ROUTER").item(0);
 		routerList = parseRouter(routerXml);
 		
+		rmon = systemAllXml.getElementsByTagName("rmon").item(0) == null ? false : true;
 	}
 	
 	public void parseXML(String text)
