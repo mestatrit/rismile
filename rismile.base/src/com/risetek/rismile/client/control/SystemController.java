@@ -170,6 +170,14 @@ public class SystemController implements RequestCallback {
 		}
 	}
 
+	public class rmonClickHandler implements ClickHandler {
+		public void onClick(ClickEvent event) {
+			Window.open("forms/rmon.jnlp", "_self", "");
+		}
+	}
+
+
+	
 	public class uploadClickHandler implements ClickHandler {
 		public void onClick(ClickEvent event) {
 			(new UpfileDialog()).show();
