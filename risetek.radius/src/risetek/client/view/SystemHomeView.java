@@ -24,7 +24,7 @@ public class SystemHomeView extends Composite {
 			"<DIV class='sys-introH'>成都中联信通科技有限公司</DIV><DIV class='sys-introH'>专网认证服务器</DIV>");
 	private final HTML feature = new HTML("<ul class='sys-intro'>"
 			+ "<li class='sys-intro'>行业无线专网中完成认证授权功能</li>"
-			+ "<li class='sys-intro'>实现设备号、用户名、密码和固定IP四绑定功能</li>"
+			+ "<li class='sys-intro'>实现设备号、用户名、密码和固定地址四绑定功能</li>"
 			+ "<li class='sys-intro'>支持PAP，CHAP认证方式</li>"
 			+ "<li class='sys-intro'>支持最大10000个用户</li>"
 			+ "<li class='sys-intro'>采用高性能网络专用处理器</li>"
