@@ -17,7 +17,7 @@ public class Heartbeat implements RequestCallback {
 	static Heartbeat response = new Heartbeat();
 	public static void startHeartbeat() {
 		hb_Builder = new RequestBuilder(RequestBuilder.POST, "forms/hb");
-		hb_Builder.setTimeoutMillis(100);
+		hb_Builder.setTimeoutMillis(1000);
 		
 		hbTimer = new Timer() {
 			public void run() {
