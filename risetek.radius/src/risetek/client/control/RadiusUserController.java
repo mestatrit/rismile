@@ -104,13 +104,14 @@ public class RadiusUserController extends RismileTableController {
 		public void onClick(ClickEvent event) {
 			HTMLTable table = (HTMLTable)event.getSource();
 			Cell Mycell = table.getCellForEvent(event);
+			if( Mycell == null ) return;
 			int row = Mycell.getRowIndex();
-			int cell = Mycell.getCellIndex();
-
+			int col = Mycell.getCellIndex();
+            
 			// 在第一列中的是数据的内部序号，我们的操作都针对这个号码。
-			String rowid = view.getGrid().getText(row, 0);
-			String tisp_value = view.getGrid().getText(row, cell);
-			switch (cell) {
+			String rowid = table.getText(row, 0);
+			String tisp_value = table.getText(row, col);
+			switch (col) {
 			case 0:
 				// 选择了删除用户。
 				/*
