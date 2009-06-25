@@ -125,6 +125,10 @@ public abstract class RismileTableView extends Composite {
 			for (int srcColIndex = 0; srcColIndex < destColCount; ++srcColIndex) {
 				String cellHTML = srcRowData[srcColIndex];
 				grid.setText(destRowIndex, srcColIndex, cellHTML);
+				// ie 下的边框表现不正常。
+				if( "".equalsIgnoreCase( cellHTML ))
+					grid.clearCell(destRowIndex, srcColIndex);
+					
 				formatter.addStyleName(destRowIndex, srcColIndex, columnStyles[srcColIndex]);
 			}
 			grid.getRowFormatter().setStyleName(destRowIndex, "normal");
