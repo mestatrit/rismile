@@ -83,6 +83,8 @@ public class RismileLogController extends RismileTableController implements Requ
 			public void onClick(ClickEvent event) {
 				if (dialog.isValid()) {
 					data.message_filer = dialog.filter.getText();
+					// 查询条件变更，需要归位。
+					data.setOffset(0);
 					dialog.hide();
 					if(!("".equalsIgnoreCase(data.message_filer)))
 						view.setBannerTips("记录信息被过滤");

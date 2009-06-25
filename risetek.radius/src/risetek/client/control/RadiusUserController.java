@@ -358,6 +358,8 @@ public class RadiusUserController extends RismileTableController {
 			public void onClick(ClickEvent event) {
 				if (dialog.isValid()) {
 					data.filter = dialog.filter.getText();
+					// 查询条件变更，需要归位。
+					data.setOffset(0);
 					dialog.hide();
 					if(!("".equalsIgnoreCase(data.filter)))
 						view.setBannerTips("用户信息被过滤");
