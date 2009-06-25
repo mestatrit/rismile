@@ -382,6 +382,7 @@ public class RadiusUserController extends RismileTableController {
 
 			@Override
 			public void onResponseReceived(Request request, Response response) {
+				data.setOffset(0);
 				load();
 			}
 			

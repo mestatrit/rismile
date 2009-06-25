@@ -70,15 +70,36 @@ public class RadiusBlackController extends RismileTableController {
 	}
 
 	public class EmptyAction implements ClickHandler {
+		class EmptyCallback implements RequestCallback {
+
+			@Override
+			public void onError(Request request, Throwable exception) {
+				MessageConsole.setText("清除不明用户操作失败");
+			}
+
+			@Override
+			public void onResponseReceived(Request request, Response response) {
+				data.setOffset(0);
+				load();
+			}
+			
+		}
 		@Override
 		public void onClick(ClickEvent event) {
 			if (Window.confirm("是否要清除所有不明用户?")) {
-				view.clearButton.setEnabled(false);
-				empty();
+				remoteRequest.get(emptyForm,null, new EmptyCallback());
 			}
 		}
 	}
 	
+	public class refreshAction implements ClickHandler {
+		@Override
+		public void onClick(ClickEvent event) {
+			data.setOffset(0);
+			load();
+			}
+	}
+
 	public class TableAction implements ClickHandler {
 
 		@Override

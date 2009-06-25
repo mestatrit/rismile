@@ -15,6 +15,7 @@ public class BlackUserView extends RismileTableView {
 	private final static int rowCount = 20;	
 
 	public Button clearButton = new Button("清除");
+	public Button refreshButton = new Button("刷新");
 	private final static String[] banner_text = {
 		"点击删除该条记录.",
 		"点击导入该用户为合法用户.",
@@ -33,7 +34,12 @@ public class BlackUserView extends RismileTableView {
 		this.control = control;
 		
 		super.addToolButton(clearButton);
-		//clearButton.addStyleName("toolbutton");
+		clearButton.addClickHandler(control.new EmptyAction());
+
+		super.addToolButton(refreshButton);
+		refreshButton.addClickHandler(control.new refreshAction());
+		
+		
 		grid.addClickHandler(control.new TableAction());
 
 	}
