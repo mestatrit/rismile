@@ -2,6 +2,9 @@ package com.risetek.pinger;
 
 import java.awt.Dimension;
 import java.awt.EventQueue;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import javax.jnlp.ServiceManager;
 import javax.jnlp.SingleInstanceListener;
@@ -20,7 +23,11 @@ public class RisetekMonitor {
 	private JFrame frame;
 	private JTextArea textArea;
 	//private PingerTray pingerTray;
+	static final private DateFormat formatTime = new SimpleDateFormat(
+	"yy/MM/dd HH:mm:ss");
 
+	
+	public MonitorState State = new MonitorState();
 	/**
 	 * Create the application
 	 */
@@ -45,8 +52,13 @@ public class RisetekMonitor {
 	}
 
 	public void log(String message) {
+		Date date = new Date(System.currentTimeMillis());
 		int line = textArea.getLineCount();
-		textArea.append(line + message);
+		if( line > 20 )
+		{
+			textArea.setRows(10);
+		}
+		textArea.append("["+formatTime.format(date) + "] " + message);
 	}
 
 	private static String tagetAddress = "10.0.0.10";

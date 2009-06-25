@@ -173,19 +173,26 @@ public class PingerTray {
 				try {
 					connection.connect();
 					// System.out.println(connection.getResponseMessage());
+					Date date = new Date(System.currentTimeMillis());
+					setTooltip("监控目标："+mainWin.target()+"\r\n最新监测时间：" + formatTime.format(date));
+
+					// mainWin.log(connection.getResponseMessage());
+					
 					if ("OK".equals(connection.getResponseMessage())) {
 						setImage(CONNECTED_ICON.getImage());
-						Date date = new Date(System.currentTimeMillis());
-						setTooltip("最新监测时间：\r\n" + formatTime.format(date));
-						mainWin.log("最新监测时间：" + formatTime.format(date) + "\r\n");
-					} else
+						mainWin.log("目标："+mainWin.target()+ " 正常应答\r\n");
+						mainWin.State.setStateOK();
+					}
+					else
 					{
 						setImage(DISCONNECT_ICON.getImage());
-						Date date = new Date(System.currentTimeMillis());
-						mainWin.log("最新监测时间：" + formatTime.format(date) + "\r\n");
+						mainWin.log("目标："+mainWin.target()+ " 应答失败\r\n");
+						mainWin.State.setStateError();
 					}
 				} catch (IOException e) {
 					setImage(DISCONNECT_ICON.getImage());
+					mainWin.log("目标："+mainWin.target()+ " 应答失败\r\n");
+					mainWin.State.setStateError();
 				}
 			} catch (IOException e) {
 				e.printStackTrace();
