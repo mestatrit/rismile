@@ -181,18 +181,18 @@ public class PingerTray {
 					if ("OK".equals(connection.getResponseMessage())) {
 						setImage(CONNECTED_ICON.getImage());
 						mainWin.log("目标："+mainWin.target()+ " 正常应答\r\n");
-						mainWin.State.setStateOK();
+						mainWin.setStateOK();
 					}
 					else
 					{
 						setImage(DISCONNECT_ICON.getImage());
 						mainWin.log("目标："+mainWin.target()+ " 应答失败\r\n");
-						mainWin.State.setStateError();
+						mainWin.setStateError();
 					}
 				} catch (IOException e) {
 					setImage(DISCONNECT_ICON.getImage());
 					mainWin.log("目标："+mainWin.target()+ " 应答失败\r\n");
-					mainWin.State.setStateError();
+					mainWin.setStateError();
 				}
 			} catch (IOException e) {
 				e.printStackTrace();
