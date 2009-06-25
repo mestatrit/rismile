@@ -54,15 +54,13 @@ public abstract class RismileTableView extends Composite {
 	    
 	    toolPanel.add(navbar, DockPanel.EAST);
 	    
-	    statisticLabel.setWidth("5em");
-	    statisticLabel.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_CENTER);
-	    toolPanel.add(statisticLabel, DockPanel.EAST);
 	    // 总数提示
-	    Label l = new Label("总数:", false);
-	    l.setWidth("4em");
-	    l.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_RIGHT);
-	    toolPanel.add(l, DockPanel.EAST);
-
+	    Grid total = new Grid(1,1);
+	    //total.setBorderWidth(1);
+	    total.setWidth("7em");
+	    toolPanel.add(total, DockPanel.EAST);
+	    statisticLabel.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_CENTER);
+	    total.setWidget(0, 0, statisticLabel);
 	    
 		toolPanel.add(buttonsPanel, DockPanel.EAST);
 	    toolPanel.setCellHorizontalAlignment(buttonsPanel, DockPanel.ALIGN_RIGHT);
@@ -104,7 +102,7 @@ public abstract class RismileTableView extends Composite {
 	}
 
     public void setStatisticText(int total){
-    	statisticLabel.setText(Integer.toString(total));
+    	statisticLabel.setText("总数："+Integer.toString(total));
     }
 
     public void render(RismileTable table)
