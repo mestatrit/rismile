@@ -2,6 +2,7 @@ package com.risetek.rismile.client.dialog;
 
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.DockPanel;
 import com.google.gwt.user.client.ui.FileUpload;
@@ -41,10 +42,13 @@ public class UpfileDialog extends CustomDialog {
 		
 		Button submit = new Button("开始上传文件");
 		gridFrame.setWidget(2, 1, submit);
-		submit.setWidth("7em");
+		submit.setWidth("10em");
 		submit.addClickHandler(new ClickHandler(){
 			public void onClick(ClickEvent event) {
-				formPanel.submit();
+				if( fileUpload.getFilename().length() != 0 )
+					formPanel.submit();
+				else
+					Window.alert("请选择上传的文件!");
 			}
 		});
 
