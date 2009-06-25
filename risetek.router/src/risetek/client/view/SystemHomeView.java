@@ -21,8 +21,8 @@ public class SystemHomeView extends Composite {
 	private final Grid status = new Grid(1, 2);
 
 	private final HTML title = new HTML(
-			"<DIV class='sys-introH'>成都中联信通科技有限公司</DIV><DIV class='sys-introH'>专网认证服务器</DIV>");
-	private final HTML feature = new HTML("<ul class='sys-intro'>" + "<li class='sys-intro'>性能平滑</li>"
+			"<DIV class='sys-introH'>成都中联信通科技有限公司</DIV><DIV class='sys-introH'>无线广域路由器</DIV>");
+	private final HTML feature = new HTML("<ul class='sys-intro'>" + "<li class='sys-intro'>高速、高效、性能平滑</li>"
 				+ "<li class='sys-intro'>支持多接口</li>"
 				+ "<li class='sys-intro'>MPPC压缩算法</li>"
 				+ "<li class='sys-intro'>PPTP、PPPoE等协议</li>"
