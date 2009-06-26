@@ -7,7 +7,7 @@ package com.risetek.pinger;
 import java.util.Date;
 import java.util.Vector;
 
-public class MonitorState {
+public abstract class MonitorState {
 
 	long startTimestamp;
 	long lastOk;
@@ -16,6 +16,11 @@ public class MonitorState {
 	long monitor_tick = 0;
 	long monitor_ok_tick = 0;
 	long monitor_error_tick = 0;
+	
+	boolean status_ok_error = true;
+	
+	public abstract void setUIStateOK();
+	public abstract void setUIStateError();
 	
 	public MonitorState()
 	{
@@ -27,6 +32,8 @@ public class MonitorState {
 		lastOk =System.currentTimeMillis();
 		monitor_tick++;
 		monitor_ok_tick++;
+		status_ok_error = true;
+		setUIStateOK();
 	}
 	
 	public void setStateError()
@@ -34,6 +41,8 @@ public class MonitorState {
 		lastError =System.currentTimeMillis();
 		monitor_tick++;
 		monitor_error_tick++;
+		status_ok_error = false;
+		setUIStateError();
 	}
 
 	public void setStateStart()

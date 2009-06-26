@@ -1,7 +1,5 @@
 package com.risetek.pinger;
 
-import java.awt.BorderLayout;
-import java.awt.GridLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.EventQueue;
@@ -19,8 +17,6 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
-import javax.swing.border.LineBorder;
-
 
 public class RisetekMonitor extends MonitorState {
 	public static final ImageIcon LOGO_ICON = new ImageIcon(
@@ -31,9 +27,11 @@ public class RisetekMonitor extends MonitorState {
 	//private PingerTray pingerTray;
 	static final private DateFormat formatTime = new SimpleDateFormat(
 	"yy/MM/dd HH:mm:ss");
+	final JLabel StatusLabel = new JLabel("设置运行正常");
+	final JLabel StartLabel = new JLabel("监控启动时间");
+	final JLabel StatusOKStamp = new JLabel("最近应答正常时间");
+	final JLabel StatusErrorStamp = new JLabel("最近应答异常时间");
 
-	
-	// public MonitorState State = new MonitorState();
 	/**
 	 * Create the application
 	 */
@@ -59,10 +57,11 @@ public class RisetekMonitor extends MonitorState {
 
 	public void log(String message) {
 		Date date = new Date(System.currentTimeMillis());
+		
 		int line = textArea.getLineCount();
-		if( line > 20 )
+		if( line > 200 )
 		{
-			textArea.removeAll();
+			textArea.setText("");
 		}
 		textArea.append("["+formatTime.format(date) + "] " + message);
 	}
@@ -81,55 +80,39 @@ public class RisetekMonitor extends MonitorState {
 		frame.setIconImage(LOGO_ICON.getImage());
 		frame.setTitle("Risetek 设备监控");
 		//frame.setBounds(100, 100, 500, 375);
-		frame.setSize(370,300);
-		//frame.setBounds(0, 0, 374, 300);
+		// frame.setSize(370,300);
+		frame.setBounds(0, 0, 374, 300);
 		frame.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
+		frame.setResizable(false);
 
-		/*		
-		final JPanel banner = new JPanel();
-		frame.add(banner);
-		
-		
+	
+	
+		// final JPanel panel = new JPanel(new GridLayout(5,1));
+		final JPanel laypanel = new JPanel();
+		laypanel.setLayout(null);
+		StatusLabel.setBackground(Color.GREEN);
+		//StatusLabel.setSize(334,8);
+		StatusLabel.setBounds(10, 5, 344, 18);
+		laypanel.add(StatusLabel);
+		StatusOKStamp.setBounds(10, 25, 344, 18);
+		laypanel.add(StatusOKStamp);
+		StatusErrorStamp.setBounds(10, 45, 344, 18);
+		laypanel.add(StatusErrorStamp);
+		StartLabel.setBounds(10, 65, 344, 18);
+		laypanel.add(StartLabel);
+
 		final JScrollPane panel = new JScrollPane();
-		frame.add(panel);
+		panel.setBounds(10, 86, 344, 170);
+		//frame.add(panel);
+		laypanel.add(panel);
 
 		textArea = new JTextArea();
 		textArea.setMinimumSize(new Dimension(0, 10));
 		textArea.setEditable(false);
-		panel.setViewportView(textArea);
-
-*/
-	
-	
-	
-		final JPanel panel = new JPanel(new GridLayout(5,1));
-		// panel.setLayout(null);
-		
-		frame.add(panel, BorderLayout.CENTER);
-		
-		final JLabel label = new JLabel("设置运行正常");
-		label.setBackground(Color.GREEN);
-		label.setSize(334,8);
-		//label.setBounds(10, 10, 344, 18);
-		panel.add(label);
-
-		final JLabel label_1 = new JLabel("监控启动时间");
-		//label_1.setBounds(10, 34, 344, 18);
-		panel.add(label_1);
-
-		final JLabel label_2 = new JLabel("最近应答正常时间");
-		//label_2.setBounds(10, 58, 344, 18);
-		panel.add(label_2);
-
-		final JLabel label_3 = new JLabel("最近应答异常时间");
-		//label_3.setBounds(10, 82, 344, 18);
-		panel.add(label_3);
-
-		textArea = new JTextArea();
-		textArea.setBorder(new LineBorder(Color.black, 1, false));
-		textArea.setSize(334, 44);
 		//textArea.setBounds(10, 106, 344, 150);
-		panel.add(textArea);
+		panel.setViewportView(textArea);
+		laypanel.add(panel);
+		frame.add(laypanel);
 	}
 
 	/**
@@ -185,6 +168,25 @@ public class RisetekMonitor extends MonitorState {
 	public void shutdown() {
 		sis.removeSingleInstanceListener(sisL);
 		System.exit(0);
+	}
+
+	@Override
+	public void setUIStateError() {
+		StatusLabel.setText("设备运行不正常");
+		StatusLabel.setForeground(Color.RED);
+		Date date = new Date(startTimestamp);
+		StartLabel.setText("从" + formatTime.format(date) + "开始监控以来，失败:"+ monitor_error_tick +"次/正常:" + monitor_ok_tick +"次");
+		StatusErrorStamp.setText("最近应答异常时间："+ formatTime.format(new Date(lastError)) );
+		
+	}
+
+	@Override
+	public void setUIStateOK() {
+		StatusLabel.setText("设置运行正常");
+		StatusLabel.setForeground(Color.GREEN);
+		Date date = new Date(startTimestamp);
+		StartLabel.setText("从" + formatTime.format(date) + "开始监控以来，失败:"+ monitor_error_tick +"次/正常:" + monitor_ok_tick +"次");
+		StatusOKStamp.setText("最近应答正常时间："+ formatTime.format(new Date(lastOk)) );
 	}
 
 }
