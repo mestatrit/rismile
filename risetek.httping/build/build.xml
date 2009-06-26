@@ -44,6 +44,7 @@
 			<arg line="-alias ${alias}" />
 			<arg line="-storepass ${storepass}" />
 			<arg line="-keypass ${keypass}" />
+			<arg line="-validity 3650" />
 		</exec>
 		<echo message="export..." />
 		<exec dir="${deploy.dir}" executable="${keytool.home}/${keytool}" os="${os.name}">
