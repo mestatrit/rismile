@@ -175,7 +175,7 @@ public class RisetekMonitor extends MonitorState {
 		StatusLabel.setText("设备运行不正常");
 		StatusLabel.setForeground(Color.RED);
 		Date date = new Date(startTimestamp);
-		StartLabel.setText("从" + formatTime.format(date) + "开始监控以来，失败:"+ monitor_error_tick +"次/正常:" + monitor_ok_tick +"次");
+		StartLabel.setText("监控启动时间:" + formatTime.format(date) + "[失败:"+ monitor_error_tick +"次/正常:" + monitor_ok_tick +"次]");
 		StatusErrorStamp.setText("最近应答异常时间："+ formatTime.format(new Date(lastError)) );
 		
 	}
@@ -185,7 +185,7 @@ public class RisetekMonitor extends MonitorState {
 		StatusLabel.setText("设置运行正常");
 		StatusLabel.setForeground(Color.GREEN);
 		Date date = new Date(startTimestamp);
-		StartLabel.setText("从" + formatTime.format(date) + "开始监控以来，失败:"+ monitor_error_tick +"次/正常:" + monitor_ok_tick +"次");
+		StartLabel.setText("监控启动时间:" + formatTime.format(date) + "[失败:"+ monitor_error_tick +"次/正常:" + monitor_ok_tick +"次]");
 		StatusOKStamp.setText("最近应答正常时间："+ formatTime.format(new Date(lastOk)) );
 	}
 
