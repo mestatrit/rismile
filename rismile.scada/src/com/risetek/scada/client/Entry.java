@@ -48,13 +48,16 @@ public abstract class Entry implements EntryPoint{
 	private final HorizontalPanel descriptionPanel = new HorizontalPanel();
 
 	private final VerticalPanel panel = new VerticalPanel();
-	private final Grid titlePanel = new Grid(1,2);
+	private final Grid titlePanel = new Grid(1,1);
 	private final DockPanel sinkContainer = new DockPanel();
 	private final DecoratorPanel sinkContainerOut = new DecoratorPanel();
 	private final FlowPanel maskPanel = new FlowPanel();
 	private final Grid headPanel = new Grid(1,2);
 	private final HTML message = new HTML("hello");
 
+	private final DockPanel nav = new DockPanel();
+	
+	
 	public void onHistoryChanged(String token) {
 		// Find the SinkInfo associated with the history context. If one is
 		// found, show it (It may not be found, for example, when the user mis-
@@ -76,44 +79,40 @@ public abstract class Entry implements EntryPoint{
 		// Load all the sinks.
 		
 		loadSinks();
-		titlePanel.setWidget(0,0,images.gwtLogo().createImage());
 		message.setStyleName("http-message");
 		DOM.setElementProperty(message.getElement(), "id", "message");
-		titlePanel.setWidget(0,1,message);
-		titlePanel.getCellFormatter().setWidth(0, 0, "240px");
+		titlePanel.setWidget(0,0,message);
 		
-		
+		nav.setWidth("240px");
 		
 		panel.add(titlePanel);
 		titlePanel.setWidth("100%");
-		
-		headPanel.setWidth("100%");
-		headPanel.getCellFormatter().setWidth(0, 0, "20%");
-		headPanel.getCellFormatter().setWidth(0, 1, "80%");
-		headPanel.setWidget(0, 0, list);
 
 		//headPanel.setBorderWidth(1);
 		headPanel.setCellPadding(0);
 		headPanel.setCellSpacing(0);
 
+		nav.add(images.gwtLogo().createImage(),DockPanel.NORTH);
+		nav.add(list, DockPanel.CENTER);
+		headPanel.setWidget(0, 0, nav);
+		nav.setHeight("100%");
 		// description.setStyleName("description");
 		description.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_RIGHT);
 		descriptionPanel.setWidth("100%");
 		descriptionPanel.add(description);
 		maskPanel.setWidth("100%");
-		//DOM.setStyleAttribute(maskPanel.getElement(), "position", "relative");
+		DOM.setStyleAttribute(maskPanel.getElement(), "position", "relative");
 		DOM.setElementProperty(maskPanel.getElement(), "id", "maskPanel");
 		sinkContainer.add(descriptionPanel, DockPanel.NORTH);
-		sinkContainerOut.add(sinkContainer);
-
 		DOM.setStyleAttribute(sinkContainer.getElement(), "backgroundColor", "#E0ECFF");
+
+		sinkContainerOut.add(sinkContainer);
 		headPanel.setWidget(0, 1, sinkContainerOut);
-		sinkContainer.setWidth("640px");
-		sinkContainer.setHeight("400px");
+		sinkContainer.setWidth("800px");
+		sinkContainer.setHeight("600px");
 		maskPanel.add(headPanel);
 		
 		panel.add(maskPanel);
-		panel.setWidth("100%");
 
 		History.addValueChangeHandler(new ValueChangeHandler<String>() {
 			public void onValueChange(ValueChangeEvent<String> event) {
