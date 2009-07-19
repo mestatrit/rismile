@@ -96,22 +96,20 @@ public abstract class Entry implements EntryPoint{
 		headPanel.setCellPadding(0);
 		headPanel.setCellSpacing(0);
 
-		sinkContainer.setWidth("100%");
-
 		// description.setStyleName("description");
 		description.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_RIGHT);
 		descriptionPanel.setWidth("100%");
 		descriptionPanel.add(description);
 		maskPanel.setWidth("100%");
-		DOM.setStyleAttribute(maskPanel.getElement(), "position", "relative");
+		//DOM.setStyleAttribute(maskPanel.getElement(), "position", "relative");
 		DOM.setElementProperty(maskPanel.getElement(), "id", "maskPanel");
 		sinkContainer.add(descriptionPanel, DockPanel.NORTH);
 		sinkContainerOut.add(sinkContainer);
 
 		DOM.setStyleAttribute(sinkContainer.getElement(), "backgroundColor", "#E0ECFF");
-
 		headPanel.setWidget(0, 1, sinkContainerOut);
 		sinkContainer.setWidth("640px");
+		sinkContainer.setHeight("400px");
 		maskPanel.add(headPanel);
 		
 		panel.add(maskPanel);
@@ -164,9 +162,8 @@ public abstract class Entry implements EntryPoint{
 
 		// Display the new sink.
 		curSink.setVisible(false);
-		sinkContainer.add(curSink, DockPanel.CENTER);
-		sinkContainer.setCellHorizontalAlignment(curSink,
-				VerticalPanel.ALIGN_CENTER);
+		sinkContainer.add(curSink, DockPanel.SOUTH);
+		//sinkContainer.setCellHorizontalAlignment(curSink,VerticalPanel.ALIGN_CENTER);
 		curSink.setVisible(true);
 		curSink.onShow();
 	}
