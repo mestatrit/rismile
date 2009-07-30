@@ -31,6 +31,11 @@
     <servlet-class>com.risetek.scada.server.cameraPostServiceImpl</servlet-class>
   </servlet>
 
+  <servlet>
+    <servlet-name>gpsServlet</servlet-name>
+    <servlet-class>com.risetek.scada.server.gpsQueryServiceImpl</servlet-class>
+  </servlet>
+
   <servlet-mapping>
     <servlet-name>greetServlet</servlet-name>
     <url-pattern>/scada/greet</url-pattern>
@@ -49,4 +54,9 @@
     <servlet-name>takeServlet</servlet-name>
     <url-pattern>/scada/take</url-pattern>
   </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>gpsServlet</servlet-name>
+    <url-pattern>/scada/getGPS</url-pattern>
+  </servlet-mapping>
+
 </web-app>

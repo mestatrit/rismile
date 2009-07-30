@@ -65,6 +65,7 @@ public class mapsView extends Composite {
 	        }
 	      });
 	
+	    Control.getTracter();
 	}
 
 	class RisetekMarkerClickHandler implements MarkerClickHandler {
