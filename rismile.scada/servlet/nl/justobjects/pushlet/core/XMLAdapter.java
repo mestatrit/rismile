@@ -3,11 +3,12 @@
 
 package nl.justobjects.pushlet.core;
 
-import nl.justobjects.pushlet.util.Log;
+import java.io.IOException;
 
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
+
+import nl.justobjects.pushlet.util.Log;
 
 /**
  * ClientAdapter that sends Events as XML.

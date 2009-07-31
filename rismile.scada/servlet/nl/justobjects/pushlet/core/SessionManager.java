@@ -3,13 +3,17 @@
 
 package nl.justobjects.pushlet.core;
 
+import java.util.Collections;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Timer;
+import java.util.TimerTask;
+
 import nl.justobjects.pushlet.util.Log;
 import nl.justobjects.pushlet.util.PushletException;
 import nl.justobjects.pushlet.util.Rand;
 import nl.justobjects.pushlet.util.Sys;
-
-import java.rmi.server.UID;
-import java.util.*;
 
 /**
  * Manages lifecycle of Sessions.
@@ -44,7 +48,7 @@ public class SessionManager implements ConfigDefs {
 	/**
 	 * Map of active sessions, keyed by their id.
 	 */
-	private Map sessions = Collections.synchronizedMap(new HashMap(13));
+	private Map<String, Session> sessions = Collections.synchronizedMap(new HashMap(13));
 
 	/**
 	 * Shadow cache of active Sessions.
@@ -269,42 +273,3 @@ public class SessionManager implements ConfigDefs {
 		}
 	}
 }
-
-/*
- * $Log: SessionManager.java,v $
- * Revision 1.11  2007/11/23 14:33:07  justb
- * core classes now configurable through factory
- *
- * Revision 1.10  2007/11/10 14:47:45  justb
- * make session key generation configurable (can use uuid)
- *
- * Revision 1.9  2007/11/10 14:17:18  justb
- * minor cosmetic changes just commit now
- *
- * Revision 1.8  2007/07/02 08:12:16  justb
- * redo to original version of session cache (with break, but nullify array first)
- *
- * Revision 1.7  2007/07/02 07:33:02  justb
- * small fix in sessionmgr for holes in sessioncache array (continue i.s.o. break)
- *
- * Revision 1.6  2006/11/18 12:13:47  justb
- * made SessionManager constructor protected to allow constructing derived classes
- *
- * Revision 1.5  2005/02/28 15:58:05  justb
- * added SimpleListener example
- *
- * Revision 1.4  2005/02/28 12:45:59  justb
- * introduced Command class
- *
- * Revision 1.3  2005/02/28 09:14:55  justb
- * sessmgr/dispatcher factory/singleton support
- *
- * Revision 1.2  2005/02/25 15:13:01  justb
- * session id generation more robust
- *
- * Revision 1.1  2005/02/21 16:59:09  justb
- * SessionManager and session lease introduced
- *
-
- *
- */

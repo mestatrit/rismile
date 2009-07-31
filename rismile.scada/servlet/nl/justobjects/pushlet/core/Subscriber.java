@@ -3,14 +3,13 @@
 
 package nl.justobjects.pushlet.core;
 
-import nl.justobjects.pushlet.util.PushletException;
-import nl.justobjects.pushlet.util.Rand;
-import nl.justobjects.pushlet.util.Sys;
-
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
-import java.net.URLEncoder;
+
+import nl.justobjects.pushlet.util.PushletException;
+import nl.justobjects.pushlet.util.Rand;
+import nl.justobjects.pushlet.util.Sys;
 
 /**
  * Handles data channel between dispatcher and client.

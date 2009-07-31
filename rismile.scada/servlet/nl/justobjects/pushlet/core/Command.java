@@ -3,11 +3,11 @@
 
 package nl.justobjects.pushlet.core;
 
-import nl.justobjects.pushlet.util.PushletException;
-import nl.justobjects.pushlet.util.Servlets;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import nl.justobjects.pushlet.util.PushletException;
+import nl.justobjects.pushlet.util.Servlets;
 
 /**
  * Wraps pushlet request/response data.
@@ -140,19 +140,3 @@ public class Command implements Protocol {
 
 }
 
-/*
-  * $Log: Command.java,v $
-  * Revision 1.4  2007/11/23 14:33:07  justb
-  * core classes now configurable through factory
-  *
-  * Revision 1.3  2005/05/06 19:44:00  justb
-  * added xml-strict format
-  *
-  * Revision 1.2  2005/02/28 17:25:15  justb
-  * commented
-  *
-  * Revision 1.1  2005/02/28 12:45:59  justb
-  * introduced Command class
-  *
-  *
-  */
