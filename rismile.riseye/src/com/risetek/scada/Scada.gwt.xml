@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE module PUBLIC "-//Google Inc.//DTD Google Web Toolkit 1.6.4//EN" "http://google-web-toolkit.googlecode.com/svn/tags/1.6.4/distro-source/core/src/gwt-module.dtd">
+<module rename-to='scada'>
+	<inherits name='com.google.gwt.user.User'/>
+	<inherits name="com.google.gwt.xml.XML"/>
+	<inherits name="com.google.gwt.maps.GoogleMaps" />
+	<inherits name='com.google.gwt.user.theme.standard.Standard'/>
+	<entry-point class='com.risetek.scada.client.Scada'/>
+	<script src="http://maps.google.com/maps?gwt=1&amp;file=api&amp;v=2&amp;key=ABQIAAAAoiHOFQ7jEVP1x4Zss-4uIxQm6qxDPwKzX1Pmw1m0gavR2NcZdxRUYCSva-HddVYfC8YEzkueB4o1Ww" />
+</module>
