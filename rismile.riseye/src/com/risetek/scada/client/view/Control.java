@@ -13,7 +13,7 @@ public class Control implements RequestCallback {
 	@Override
 	public void onError(Request request, Throwable exception) {
 		MessageConsole.setText("没有GPS数据...");
-		hbTimer.run();
+		//hbTimer.run();
 		hbTimer.schedule(3000);
 	}
 
@@ -23,7 +23,7 @@ public class Control implements RequestCallback {
 		{
 			GWT.log(response.getText(),null);
 			MessageConsole.setText("获取最新GPS数据..."+response.getText());
-			hbTimer.run();
+			hbTimer.schedule(1000);
 		}
 		else
 		{
@@ -35,7 +35,7 @@ public class Control implements RequestCallback {
 	private static RequestBuilder hb_Builder;
 	private static Timer hbTimer;
 	private static Control control = new Control();
-	private static int times = 0;
+	//private static int times = 0;
 	public static void getTracter() {
 		
 		hb_Builder = new RequestBuilder(RequestBuilder.GET, "/scada/getGPS");
