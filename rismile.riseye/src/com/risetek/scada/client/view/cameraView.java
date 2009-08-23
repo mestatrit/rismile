@@ -8,22 +8,20 @@ import com.google.gwt.event.dom.client.LoadHandler;
 import com.google.gwt.user.client.Timer;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.Image;
-import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.DockPanel;
 import com.risetek.scada.client.Entry;
 
 public class cameraView extends Composite {
 
-	TextBox userLabel = new TextBox();
-	TextBox serialLabel = new TextBox();
 	private final DockPanel frame = new DockPanel();
-	private static Timer hbTimer;
+	private static Timer hbTimer = null;
 
 	Image photo = new Image();
 
 	public cameraView() {
 
 		GWT.log("get picture", null);
+		//frame.setBorderWidth(1);
 		frame.add(photo, DockPanel.CENTER);
 		frame.setHeight(Entry.SinkHeight);
 		initWidget(frame);
@@ -32,20 +30,23 @@ public class cameraView extends Composite {
 		photo.addLoadHandler(new LoadHandler(){
 			public void onLoad(LoadEvent event) {
 				MessageConsole.setText("图片得到 ");
-				//hbTimer.schedule(1000);
-				hbTimer.run();
+				if( hbTimer != null)
+					hbTimer.run();
 			}});
 		
 		photo.addErrorHandler(new ErrorHandler(){
 
 			public void onError(ErrorEvent event) {
 				MessageConsole.setText("图片未得到 ");
-				hbTimer.run();
+				if( hbTimer != null)
+					hbTimer.run();
 			}
 			
 		});
-		//photo.setUrl("/scada/camera");
-		//hbTimer.run();
+
+	}
+
+	public void show(){
 		hbTimer = new Timer() {
 			public void run() {
 				String imgname = "/scada/camera?id="+System.currentTimeMillis();
@@ -53,13 +54,17 @@ public class cameraView extends Composite {
 				GWT.log("获取图片: " + imgname ,null);
 				photo.setUrl(imgname);
 				//photo.prefetch(url);
-				//hbTimer.schedule(3000);
 			}
 		};
-	}
-
-	public void onshow(){
 		hbTimer.run();
 	}
 
+	public void hide(){
+		if( hbTimer != null )
+		{
+			hbTimer.cancel();
+			hbTimer = null;
+			MessageConsole.setText("终止图片获取");
+		}
+	}
 }
