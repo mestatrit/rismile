@@ -18,8 +18,6 @@ public class ImageCache {
 	private Cache images;
 
 	
-	// TODO: 我们需要一个缺省的图片！
-	
 	private ImageCache() {
 
 		try {
@@ -66,7 +64,7 @@ public class ImageCache {
 		putImage(cachebuf);
 	}
 	
-	public void putImage(byte[] image)
+	public synchronized void putImage(byte[] image)
 	{
 		if(image == null) return;
 		try {
@@ -76,7 +74,7 @@ public class ImageCache {
 		}
 	}
 	
-	public byte[] getImage()
+	public synchronized byte[] getImage()
 	{
 		try {
 			return (byte[])images.get("image");
