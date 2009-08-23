@@ -19,7 +19,12 @@ public class cameraSink extends Sink {
 	}
 
 	public void onShow() {
-		view.onshow();
+		view.show();
 	}
 
+	public void onHide() {
+		view.hide();
+	}
+	
+	
 }
