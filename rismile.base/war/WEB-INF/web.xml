@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app>
+  <!-- Servlets -->
+  <servlet>
+    <servlet-name>HeartbeatServlet</servlet-name>
+    <servlet-class>com.risetek.rismile.server.HeartbeatServiceImpl</servlet-class>
+  </servlet>
+  
+  <servlet-mapping>
+    <servlet-name>HeartbeatServlet</servlet-name>
+    <url-pattern>/rismile/forms/hb</url-pattern>
+  </servlet-mapping>
+</web-app>
