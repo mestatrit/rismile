@@ -24,7 +24,14 @@ import com.risetek.rismile.client.utils.Heartbeat;
  * Entry point classes define <code>onModuleLoad()</code>.
  */
 public abstract class Entry implements EntryPoint{
-
+	public enum OEM
+	{
+		risetek,
+		tongfa
+	};
+	
+	public static OEM OEMFlag = OEM.risetek;
+	
 	public static String SinkHeight = "470px";
 
 	/**
@@ -32,12 +39,19 @@ public abstract class Entry implements EntryPoint{
 	 */
 	public interface Images extends ImageBundle {
 		AbstractImagePrototype gwtLogo();
+		AbstractImagePrototype tongfaLogo();
 	}
 
 	private static final Images images = (Images) GWT.create(Images.class);
 
 	// 导航条
+	/*
 	public SinkList list = new SinkList(images.gwtLogo().createImage());
+	*/
+
+	public SinkList list =	(OEMFlag == OEM.risetek) ? 
+			new SinkList(images.gwtLogo().createImage()) :
+			new SinkList(images.tongfaLogo().createImage());			
 
 	private SinkInfo curInfo;
 	private Sink curSink;
