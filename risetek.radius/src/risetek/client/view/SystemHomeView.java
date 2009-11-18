@@ -20,8 +20,9 @@ public class SystemHomeView extends Composite {
 	private final Grid serial = new Grid(1, 1);
 	private final Grid status = new Grid(1, 2);
 
-	private final HTML title = new HTML(
-			"<DIV class='sys-introH'>成都中联信通科技有限公司</DIV><DIV class='sys-introH'>专网认证服务器</DIV>");
+	private final HTML title = (Entry.OEMFlag == Entry.OEM.risetek) ? 
+			new HTML("<DIV class='sys-introH'>成都中联信通科技有限公司</DIV><DIV class='sys-introH'>专网认证服务器</DIV>" )
+			: new HTML("<DIV class='sys-introH'>四川通发电信股份有限公司</DIV><DIV class='sys-introH'>专网认证服务器</DIV>");
 	private final HTML feature = new HTML("<ul class='sys-intro'>"
 			+ "<li class='sys-intro'>行业无线专网中完成认证授权功能</li>"
 			+ "<li class='sys-intro'>实现设备号、用户名、密码和固定地址四绑定功能</li>"
