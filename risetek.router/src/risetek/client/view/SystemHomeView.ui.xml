@@ -1,0 +1,40 @@
+<ui:UiBinder xmlns:ui='urn:ui:com.google.gwt.uibinder'
+	xmlns:g='urn:import:com.google.gwt.user.client.ui'>
+	<ui:with field='res' type='risetek.client.view.SystemHomeView.Images' />
+	<g:HTMLPanel>
+		<TABLE HEIGHT="100%" WIDTH="100%">
+			<TR>
+				<TD>
+					<TABLE class="images-table" HEIGHT="100%" WIDTH="100%">
+						<TR><TD><g:Image resource='{res.p2}' /></TD></TR>
+						<TR><TD><g:Image resource='{res.p3}' /></TD></TR>
+						<TR><TD><g:Image resource='{res.p4}' /></TD></TR>
+						<TR><TD><g:Image resource='{res.p5}' /></TD></TR>
+					</TABLE>
+				</TD>
+				<TD>
+					<TABLE HEIGHT="100%" WIDTH="100%">
+					<TR><TD ALIGN="right"><DIV class="info-table">产品系列号：<span ui:field="serial" /></DIV></TD></TR>
+						<TR><TD>
+								<DIV class='sys-introH'>成都中联信通科技有限公司</DIV>
+								<DIV class='sys-introH'>多协议无线广域路由器</DIV>
+						</TD></TR>
+						<TR>
+							<TD>
+								<ul class='sys-intro'>
+									<li class='sys-intro'>高速、高效、性能平滑</li>
+									<li class='sys-intro'>支持多接口</li>
+									<li class='sys-intro'>MPPC压缩算法</li>
+									<li class='sys-intro'>PPTP、PPPoE等协议</li>
+									<li class='sys-intro'>多重拨号</li>
+									<li class='sys-intro'>按需拨号</li>
+								</ul>
+							</TD>
+						</TR>
+					<TR><TD><DIV ALIGN="right"><span ui:field="status" /></DIV></TD></TR>
+					</TABLE>
+				</TD>
+			</TR>
+		</TABLE>
+	</g:HTMLPanel>
+</ui:UiBinder>

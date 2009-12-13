@@ -4,89 +4,44 @@ import risetek.client.control.ProduceHomeController;
 import risetek.client.model.ProduceData;
 
 import com.google.gwt.core.client.GWT;
-import com.google.gwt.user.client.ui.AbstractImagePrototype;
+import com.google.gwt.dom.client.SpanElement;
+import com.google.gwt.resources.client.ClientBundle;
+import com.google.gwt.resources.client.ImageResource;
+import com.google.gwt.uibinder.client.UiBinder;
+import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.ui.Composite;
-import com.google.gwt.user.client.ui.Grid;
-import com.google.gwt.user.client.ui.HTML;
-import com.google.gwt.user.client.ui.HasHorizontalAlignment;
-import com.google.gwt.user.client.ui.ImageBundle;
+import com.google.gwt.user.client.ui.Widget;
 import com.risetek.rismile.client.Entry;
 
 public class SystemHomeView extends Composite {
 
-	private final Grid table = new Grid(1,2);
-	private final Grid table2 = new Grid(4,1);
-	private final Grid table1 = new Grid(4,1);
-	private final Grid serial = new Grid(1, 1);
-	private final Grid status = new Grid(1, 2);
-
-	private final HTML title = new HTML(
-			"<DIV class='sys-introH'>成都中联信通科技有限公司</DIV><DIV class='sys-introH'>无线广域路由器</DIV>");
-	private final HTML feature = new HTML("<ul class='sys-intro'>" + "<li class='sys-intro'>高速、高效、性能平滑</li>"
-				+ "<li class='sys-intro'>支持多接口</li>"
-				+ "<li class='sys-intro'>MPPC压缩算法</li>"
-				+ "<li class='sys-intro'>PPTP、PPPoE等协议</li>"
-				+ "<li class='sys-intro'>多重拨号</li>"
-				+ "<li class='sys-intro'>按需拨号</li>" + "</ul>");
-
+	interface ProudceUiBinder extends UiBinder<Widget, SystemHomeView> {}
+	private static ProudceUiBinder uiBinder = GWT.create(ProudceUiBinder.class);
+	
+	@UiField SpanElement serial;
+	@UiField SpanElement status;
+	
 	public ProduceHomeController control;
 
-	public interface Images extends ImageBundle {
-
-		AbstractImagePrototype p2();
-
-		AbstractImagePrototype p3();
-
-		AbstractImagePrototype p4();
-
-		AbstractImagePrototype p5();
+	public interface Images extends ClientBundle  {
+		@Source("p2.jpg")		ImageResource  p2();
+		@Source("p3.jpg")		ImageResource  p3();
+		@Source("p4.jpg")		ImageResource  p4();
+		@Source("p5.jpg")		ImageResource  p5();
 	}
-
-	private static final Images images = (Images) GWT.create(Images.class);
 
 	public SystemHomeView(ProduceHomeController control) {
 		this.control = control;
-		serial.setStyleName("info-table");
-		// serial.setWidth("100%");
-		// for debug layout.
-/*
-		table.setBorderWidth(1);
-		table2.setBorderWidth(1);
-		table1.setBorderWidth(1);
-*/
-		table.setWidth("90%");
-		table2.setWidth("100%");
-		// table2.setCellPadding(10);
-
-		table1.setStyleName("images-table");
-		table1.setHeight("100%");
-		table1.setWidth("100%");
-		// table3.setCellPadding(14);
-		//table1.setWidget(0, 0, serial);
-		table1.setWidget(0, 0, images.p2().createImage());
-		table1.setWidget(1, 0, images.p5().createImage());
-		table1.setWidget(2, 0, images.p4().createImage());
-		table1.setWidget(3, 0, images.p3().createImage());
-
-		table2.getCellFormatter().setHorizontalAlignment(0,0,HasHorizontalAlignment.ALIGN_RIGHT);
-		table2.getCellFormatter().setHorizontalAlignment(3,0,HasHorizontalAlignment.ALIGN_RIGHT);
-		table2.setWidget(0, 0, serial);
-		table2.setWidget(1, 0, title);
-		table2.setWidget(2, 0, feature);
-		table2.setWidget(3, 0, status);
-
-		table.setWidget(0, 0, table1);
-		table.setWidget(0, 1, table2);
-
-		table.setHeight(Entry.SinkHeight);
-		initWidget(table);
+		Widget w = uiBinder.createAndBindUi(this);
+		w.setHeight(Entry.SinkHeight);
+		w.setWidth("90%");
+		initWidget(w);
 		setStyleName("router-config");
 	}
 
 	public void render(ProduceData data) {
-		serial.setText(0, 0, "产品系列号：" + data.serial);
-		//info.setText(1, 0, data.version);
-		status.setText(0, 0, data.status);
+		serial.setInnerText(data.serial);
+		status.setInnerText(data.status);
 	}
 
 	public void onLoad() {
