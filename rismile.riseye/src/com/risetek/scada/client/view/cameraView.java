@@ -18,6 +18,8 @@ public class cameraView extends Composite {
 
 	Image photo = new Image();
 
+	static long last = 0;
+	
 	public cameraView() {
 
 		GWT.log("get picture", null);
@@ -30,20 +32,34 @@ public class cameraView extends Composite {
 		photo.addLoadHandler(new LoadHandler(){
 			public void onLoad(LoadEvent event) {
 				MessageConsole.setText("图片得到 ");
+
+				int sc;
+				if( System.currentTimeMillis() - last > 500)
+					sc = 1;
+				else
+					sc = 500;
+
+				last = System.currentTimeMillis();
 				if( hbTimer != null)
-					hbTimer.run();
+					hbTimer.schedule(sc);
+					// hbTimer.run();
 			}});
 		
 		photo.addErrorHandler(new ErrorHandler(){
 
 			public void onError(ErrorEvent event) {
 				MessageConsole.setText("图片未得到 ");
-				if( hbTimer != null)
-					hbTimer.run();
-			}
-			
-		});
+				int sc;
+				if( System.currentTimeMillis() - last > 500)
+					sc = 500;
+				else
+					sc = 1000;
 
+				last = System.currentTimeMillis();
+				if( hbTimer != null)
+					hbTimer.schedule(sc);
+					// hbTimer.run();
+			}});
 	}
 
 	public void show(){
