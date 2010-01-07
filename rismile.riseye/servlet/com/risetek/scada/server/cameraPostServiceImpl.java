@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.google.gwt.core.client.GWT;
 import com.risetek.scada.db.dao.ImageCache;
+import com.risetek.scada.db.dao.ImgPack;
 
 @SuppressWarnings("serial")
 public class cameraPostServiceImpl extends HttpServlet {
@@ -18,12 +19,17 @@ public class cameraPostServiceImpl extends HttpServlet {
 			throws ServletException, IOException {
 		int ContentLength = req.getContentLength();
 		GWT.log("Posted picture content is: "+ContentLength, null);
-		byte[] cachebuf = new byte[ContentLength];
+		String seq = req.getHeader("sq");
+		String ident = req.getHeader("id");
+		String stamp = req.getHeader("timestamp");
+		
+		ImgPack img = new ImgPack(ident, seq, stamp, ContentLength);
+		
 		InputStream imgData =  req.getInputStream();
 		try {
-			imgData.read(cachebuf);
+			imgData.read(img.image);
 			imgData.close();
-			ImageCache.imageCache.putImage(cachebuf);
+			ImageCache.imageCache.putImage("", img);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

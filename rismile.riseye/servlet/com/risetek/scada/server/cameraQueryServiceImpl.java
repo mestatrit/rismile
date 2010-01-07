@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import com.google.gwt.core.client.GWT;
 import com.risetek.scada.db.dao.ImageCache;
+import com.risetek.scada.db.dao.ImgPack;
 
 @SuppressWarnings("serial")
 public class cameraQueryServiceImpl extends HttpServlet {
@@ -20,8 +21,18 @@ public class cameraQueryServiceImpl extends HttpServlet {
 		//resp.setHeader("Cache-Control", "no-store, no-cache, must-revalidate");
 		resp.setCharacterEncoding("UTF-8");
 		resp.setContentType("image/jpg");
+
+		ImgPack img = ImageCache.imageCache.getImage();
+		if(img == null)
+			return;
+		
+		resp.setHeader("id", img.id);
+		resp.setHeader("seq", img.seq);
+		resp.setHeader("stamp", img.stamp);
+		GWT.log("ident is:"+img.id+" seq is:"+img.seq+" stamp is:"+img.stamp, null);
 		ServletOutputStream out = resp.getOutputStream();
-		byte[] data = ImageCache.imageCache.getImage();
+		
+		byte[] data = img.image;
 		if( data != null )
 			out.write(data, 0, data.length);
 		out.flush();
