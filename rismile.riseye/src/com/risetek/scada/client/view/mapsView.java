@@ -64,7 +64,6 @@ public class mapsView extends Composite {
 	        }
 	      });
 	
-	    Control.getTracter();
 	}
 
 	class RisetekMarkerClickHandler implements MarkerClickHandler {
@@ -73,7 +72,6 @@ public class mapsView extends Composite {
 		public void onClick(MarkerClickEvent event) {
 			MessageConsole.setText("click!");
 			//Marker marker = event.getSender();
-		
 		}
 		
 	}
@@ -89,10 +87,15 @@ public class mapsView extends Composite {
 		
 	}
 	
-	public void onshow(){
+	public void show(){
 		//map.setSize("100%", "100%");
 //		map.checkResize();
 	    map.checkResizeAndCenter();
+	   Control.startTracert();
+	}
+
+	public void hide() {
+		Control.stopTracert();
 	}
 
 }

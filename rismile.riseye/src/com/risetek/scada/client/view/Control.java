@@ -32,16 +32,13 @@ public class Control implements RequestCallback {
 		}
 	}
 
+	
 	private static RequestBuilder hb_Builder;
 	private static Timer hbTimer;
-	private static Control control = new Control();
-	//private static int times = 0;
-	public static void getTracter() {
-		
+	static { 
 		hb_Builder = new RequestBuilder(RequestBuilder.GET, "/scada/getGPS");
 		// 设定 5 秒钟
 		hb_Builder.setTimeoutMillis(5000);
-		
 		hbTimer = new Timer() {
 			public void run() {
 				try {
@@ -52,7 +49,16 @@ public class Control implements RequestCallback {
 				}
 			}
 		};
+	}
+
+	
+	private static Control control = new Control();
+	//private static int times = 0;
+	public static void startTracert() {
 		hbTimer.run();
 	}
 	
+	public static void stopTracert() {
+		hbTimer.cancel();
+	}
 }
