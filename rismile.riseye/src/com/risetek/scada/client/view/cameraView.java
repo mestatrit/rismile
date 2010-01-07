@@ -10,24 +10,24 @@ import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.rpc.RemoteService;
 import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
 import com.google.gwt.user.client.ui.Composite;
-import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.DockPanel;
+import com.google.gwt.user.client.ui.Image;
 import com.risetek.scada.client.Entry;
-import com.risetek.scada.db.dao.ImgPack;
+import com.risetek.scada.client.RCPImage;
 
 public class cameraView extends Composite {
 
 	@RemoteServiceRelativePath("photo")
 	public interface PhotoService extends RemoteService {
-		ImgPack getPhoto(String id);
+		RCPImage getPhoto(String id);
 	}	
-	
+
 	public interface PhotoServiceAsync {
-		void getPhoto(String id, AsyncCallback<ImgPack> callback);
+		void getPhoto(String id, AsyncCallback<RCPImage> callback);
 	}
-	
+
 	PhotoServiceAsync photoService = (PhotoServiceAsync)GWT.create(PhotoService.class);
-	 
+
 	private final DockPanel frame = new DockPanel();
 	private static Timer hbTimer = null;
 
@@ -48,47 +48,45 @@ public class cameraView extends Composite {
 			public void onLoad(LoadEvent event) {
 				MessageConsole.setText("图片得到 ");
 
+				long ti = System.currentTimeMillis() - last;
 				int sc;
-				if( System.currentTimeMillis() - last > 500)
-					sc = 1;
-				else
+				if( ti > 500 )
 					sc = 500;
+				else
+					sc = (int)ti + 1;
 
 				last = System.currentTimeMillis();
 				if( hbTimer != null)
 					hbTimer.schedule(sc);
-					// hbTimer.run();
 			}});
 		
 		photo.addErrorHandler(new ErrorHandler(){
 
 			public void onError(ErrorEvent event) {
 				MessageConsole.setText("图片未得到 ");
+				long ti = System.currentTimeMillis() - last;
 				int sc;
-				if( System.currentTimeMillis() - last > 500)
-					sc = 500;
-				else
+				if( ti > 1000 )
 					sc = 1000;
-
+				else
+					sc = (int)ti + 500;
 				last = System.currentTimeMillis();
 				if( hbTimer != null)
 					hbTimer.schedule(sc);
-					// hbTimer.run();
 			}});
 		
-		
-		AsyncCallback<ImgPack> callback = new AsyncCallback<ImgPack>() {
-		    public void onSuccess(ImgPack img) {
-		      // do some UI stuff to show success
-		    }
-
-		    public void onFailure(Throwable caught) {
-		      // do some UI stuff to show failure
-		    }
-		  };	
-		
-		  photoService.getPhoto("abc", callback);
 	}
+
+	AsyncCallback<RCPImage> callback = new AsyncCallback<RCPImage>() {
+	    public void onSuccess(RCPImage img) {
+	    	GWT.log("Get ImgPack id is:"+img.id+" seq is:"+img.seq+" stamp is:"+img.stamp +" length is:"+img.image.length, null);
+	      // do some UI stuff to show success
+	    }
+
+	    public void onFailure(Throwable caught) {
+	    	GWT.log("Failed ImgPack", null);
+	    }
+	  };	
 
 	public void show(){
 		hbTimer = new Timer() {
@@ -97,7 +95,7 @@ public class cameraView extends Composite {
 				MessageConsole.setText("获取图片: " + imgname );
 				GWT.log("获取图片: " + imgname ,null);
 				photo.setUrl(imgname);
-				//photo.prefetch(url);
+				photoService.getPhoto("abc", callback);
 			}
 		};
 		hbTimer.run();
