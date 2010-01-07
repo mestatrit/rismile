@@ -40,4 +40,15 @@
     <url-pattern>/scada/getGPS</url-pattern>
   </servlet-mapping>
 
+  <servlet>
+    <servlet-name>photo</servlet-name>
+    <servlet-class>com.risetek.scada.server.PhotoServiceImpl</servlet-class>
+  </servlet>
+
+  <servlet-mapping>
+    <servlet-name>photo</servlet-name>
+    <url-pattern>/scada/photo</url-pattern>
+  </servlet-mapping>
+
+
 </web-app>
