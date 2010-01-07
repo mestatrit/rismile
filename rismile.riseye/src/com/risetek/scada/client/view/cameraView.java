@@ -6,13 +6,28 @@ import com.google.gwt.event.dom.client.ErrorHandler;
 import com.google.gwt.event.dom.client.LoadEvent;
 import com.google.gwt.event.dom.client.LoadHandler;
 import com.google.gwt.user.client.Timer;
+import com.google.gwt.user.client.rpc.AsyncCallback;
+import com.google.gwt.user.client.rpc.RemoteService;
+import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.DockPanel;
 import com.risetek.scada.client.Entry;
+import com.risetek.scada.db.dao.ImgPack;
 
 public class cameraView extends Composite {
 
+	@RemoteServiceRelativePath("photo")
+	public interface PhotoService extends RemoteService {
+		ImgPack getPhoto(String id);
+	}	
+	
+	public interface PhotoServiceAsync {
+		void getPhoto(String id, AsyncCallback<ImgPack> callback);
+	}
+	
+	PhotoServiceAsync photoService = (PhotoServiceAsync)GWT.create(PhotoService.class);
+	 
 	private final DockPanel frame = new DockPanel();
 	private static Timer hbTimer = null;
 
@@ -60,6 +75,19 @@ public class cameraView extends Composite {
 					hbTimer.schedule(sc);
 					// hbTimer.run();
 			}});
+		
+		
+		AsyncCallback<ImgPack> callback = new AsyncCallback<ImgPack>() {
+		    public void onSuccess(ImgPack img) {
+		      // do some UI stuff to show success
+		    }
+
+		    public void onFailure(Throwable caught) {
+		      // do some UI stuff to show failure
+		    }
+		  };	
+		
+		  photoService.getPhoto("abc", callback);
 	}
 
 	public void show(){
