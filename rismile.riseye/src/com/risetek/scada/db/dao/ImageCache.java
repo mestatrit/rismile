@@ -47,8 +47,6 @@ public class ImageCache {
 
 				img_stub = new ImgPack("id", "seq", "stamp", cachebuf.length);
 				System.arraycopy(cachebuf, 0, img_stub.image, 0, cachebuf.length);
-				//putImage("", cachebuf);
-				// putImage("", img);
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
@@ -96,7 +94,6 @@ public class ImageCache {
 
 				ImgPack img = new ImgPack("id", "seq", "stamp", cachebuf.length);
 				System.arraycopy(cachebuf, 0, img.image, 0, cachebuf.length);
-				//putImage("", cachebuf);
 				putImage("", img);
 			} catch (IOException e) {
 				e.printStackTrace();
