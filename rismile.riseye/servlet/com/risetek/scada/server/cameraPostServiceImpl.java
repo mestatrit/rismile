@@ -19,9 +19,18 @@ public class cameraPostServiceImpl extends HttpServlet {
 			throws ServletException, IOException {
 		int ContentLength = req.getContentLength();
 		GWT.log("Posted picture content is: "+ContentLength, null);
-		String seq = req.getHeader("sq");
-		String ident = req.getHeader("id");
-		String stamp = req.getHeader("timestamp");
+
+		String ident = req.getParameter("id");
+		if( ident == null )
+			ident = "no id";
+		
+		String seq = req.getParameter("sq");
+		if( seq == null )
+			seq = "no seq";
+
+		String stamp = req.getParameter("timestamp");
+		if( stamp == null )
+			stamp = "local:"+ new Long(System.currentTimeMillis()).toString();
 		
 		ImgPack img = new ImgPack(ident, seq, stamp, ContentLength);
 		
