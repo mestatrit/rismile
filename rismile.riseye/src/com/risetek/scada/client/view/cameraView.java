@@ -5,17 +5,24 @@ import com.google.gwt.event.dom.client.ErrorEvent;
 import com.google.gwt.event.dom.client.ErrorHandler;
 import com.google.gwt.event.dom.client.LoadEvent;
 import com.google.gwt.event.dom.client.LoadHandler;
+import com.google.gwt.uibinder.client.UiBinder;
+import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.Timer;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.rpc.RemoteService;
 import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
 import com.google.gwt.user.client.ui.Composite;
-import com.google.gwt.user.client.ui.DockPanel;
 import com.google.gwt.user.client.ui.Image;
+import com.google.gwt.user.client.ui.Label;
+import com.google.gwt.user.client.ui.Widget;
 import com.risetek.scada.client.Entry;
 import com.risetek.scada.client.RCPImage;
 
 public class cameraView extends Composite {
+	private static cameraViewUiBinder uiBinder = GWT.create(cameraViewUiBinder.class);
+
+	interface cameraViewUiBinder extends UiBinder<Widget, cameraView> {
+	}
 
 	@RemoteServiceRelativePath("photo")
 	public interface PhotoService extends RemoteService {
@@ -28,21 +35,35 @@ public class cameraView extends Composite {
 
 	PhotoServiceAsync photoService = (PhotoServiceAsync)GWT.create(PhotoService.class);
 
-	private final DockPanel frame = new DockPanel();
 	private static Timer hbTimer = null;
 
-	Image photo = new Image();
+	
+	@UiField
+	Image photo;// = new Image();
 
+	@UiField
+	Label title;
+
+	@UiField
+	Label ident;
+
+	@UiField
+	Label seq;
+
+	@UiField
+	Label timestamp;
+
+	@UiField
+	Label picsize;
+	
 	static long last = 0;
 	
 	public cameraView() {
-
+		Widget w = uiBinder.createAndBindUi(this);
+		w.setHeight(Entry.SinkHeight);
+		initWidget(w);
 		GWT.log("get picture", null);
 		//frame.setBorderWidth(1);
-		frame.add(photo, DockPanel.CENTER);
-		frame.setHeight(Entry.SinkHeight);
-		initWidget(frame);
-		frame.setWidth("100%");
 
 		photo.addLoadHandler(new LoadHandler(){
 			public void onLoad(LoadEvent event) {
@@ -80,7 +101,11 @@ public class cameraView extends Composite {
 	AsyncCallback<RCPImage> callback = new AsyncCallback<RCPImage>() {
 	    public void onSuccess(RCPImage img) {
 	    	GWT.log("Get ImgPack id is:"+img.id+" seq is:"+img.seq+" stamp is:"+img.stamp +" length is:"+img.image.length, null);
-	      // do some UI stuff to show success
+//	    	title.setText("id is:"+img.id+"\r\n seq is:"+img.seq+" stamp is:"+img.stamp +" length is:"+img.image.length);
+	    	ident.setText("识别号："+img.id);
+	    	seq.setText("摄像头序列："+img.seq);
+	    	picsize.setText("图片大小："+img.image.length);
+	    	timestamp.setText("上传时间："+img.stamp);
 	    }
 
 	    public void onFailure(Throwable caught) {
@@ -95,7 +120,7 @@ public class cameraView extends Composite {
 				MessageConsole.setText("获取图片: " + imgname );
 				GWT.log("获取图片: " + imgname ,null);
 				photo.setUrl(imgname);
-				photoService.getPhoto("abc", callback);
+				photoService.getPhoto(new Long(System.currentTimeMillis()).toString(), callback);
 			}
 		};
 		hbTimer.run();
