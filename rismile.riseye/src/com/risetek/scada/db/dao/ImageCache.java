@@ -1,11 +1,10 @@
 package com.risetek.scada.db.dao;
 
-import java.io.ByteArrayInputStream;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.io.ObjectInputStream;
 import java.util.Collections;
+
 import javax.cache.Cache;
 import javax.cache.CacheException;
 import javax.cache.CacheFactory;
@@ -109,7 +108,7 @@ public class ImageCache {
 	{
 		if(image == null) return;
 		try {
-			images.put("image", image.toBytes());
+			images.put("image", image);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -117,23 +116,10 @@ public class ImageCache {
 	
 	public synchronized ImgPack getImage()
 	{
-		try {
-			byte[] obj = (byte[])images.get("image");
-			if( obj == null)
-				return img_stub;
-
-			 // Deserialize from a byte array
-			ObjectInputStream in = new ObjectInputStream(new ByteArrayInputStream(obj));
-			ImgPack img = (ImgPack) in.readObject();
-		    in.close();			
-
-			if( img == null )
-				return img_stub;
-			return img;
-		} catch (Exception e) {
-			e.printStackTrace();
+		ImgPack i = (ImgPack) images.get("image");
+		if( i == null )
 			return img_stub;
-		}
+		return i;
 	}
 	
 }

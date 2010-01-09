@@ -1,8 +1,5 @@
 package com.risetek.scada.db.dao;
 
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.ObjectOutputStream;
 import java.io.Serializable;
 
 public class ImgPack implements Serializable{
@@ -25,20 +22,4 @@ public class ImgPack implements Serializable{
 		this.stamp = stamp;
 		image = new byte[length];
 	}
-	
-	public byte[] toBytes()
-	{
-		// Serialize to a byte array
-	    ByteArrayOutputStream bos = new ByteArrayOutputStream() ;
-	    try {
-			ObjectOutputStream out = new ObjectOutputStream(bos) ;
-			out.writeObject(this);
-			out.close();
-		} catch (IOException e) {
-			e.printStackTrace();
-			return null;
-		}
-	    return bos.toByteArray();
-	}
-	
 }
