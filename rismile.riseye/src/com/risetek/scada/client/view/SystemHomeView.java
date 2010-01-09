@@ -1,12 +1,13 @@
 package com.risetek.scada.client.view;
 
 import com.google.gwt.core.client.GWT;
-import com.google.gwt.user.client.ui.AbstractImagePrototype;
+import com.google.gwt.resources.client.ClientBundle;
+import com.google.gwt.resources.client.ImageResource;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.Grid;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.HasHorizontalAlignment;
-import com.google.gwt.user.client.ui.ImageBundle;
+import com.google.gwt.user.client.ui.Image;
 import com.risetek.scada.client.Entry;
 
 public class SystemHomeView extends Composite {
@@ -26,17 +27,13 @@ public class SystemHomeView extends Composite {
 				+ "<li class='sys-intro'>多重拨号</li>"
 				+ "<li class='sys-intro'>按需拨号</li>" + "</ul>");
 
-	public interface Images extends ImageBundle {
-
-		AbstractImagePrototype p2();
-
-		AbstractImagePrototype p3();
-
-		AbstractImagePrototype p4();
-
-		AbstractImagePrototype p5();
+	public interface Images extends ClientBundle  {
+		@Source("p2.jpg")		ImageResource  p2();
+		@Source("p3.jpg")		ImageResource  p3();
+		@Source("p4.jpg")		ImageResource  p4();
+		@Source("p5.jpg")		ImageResource  p5();
 	}
-
+	
 	private static final Images images = (Images) GWT.create(Images.class);
 
 	public SystemHomeView() {
@@ -54,10 +51,10 @@ public class SystemHomeView extends Composite {
 		table1.setWidth("100%");
 		// table3.setCellPadding(14);
 		//table1.setWidget(0, 0, serial);
-		table1.setWidget(0, 0, images.p2().createImage());
-		table1.setWidget(1, 0, images.p5().createImage());
-		table1.setWidget(2, 0, images.p4().createImage());
-		table1.setWidget(3, 0, images.p3().createImage());
+		table1.setWidget(0, 0, new Image(images.p2()));
+		table1.setWidget(1, 0, new Image(images.p5()));
+		table1.setWidget(2, 0, new Image(images.p4()));
+		table1.setWidget(3, 0, new Image(images.p3()));
 
 		table2.getCellFormatter().setHorizontalAlignment(0,0,HasHorizontalAlignment.ALIGN_RIGHT);
 		table2.getCellFormatter().setHorizontalAlignment(3,0,HasHorizontalAlignment.ALIGN_RIGHT);
