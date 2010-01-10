@@ -43,9 +43,21 @@ public class ImageCache {
 				}				
 				
 				imgfile.close();
-
-				img_stub = new ImgPack("id", "seq", "stamp", cachebuf.length);
+				
+/*				
+				img_stub = new ImgPack("img_stub", "seq", "stamp", cachebuf);
+*/
+/*
+				img_stub = new ImgPack("img_stub", "seq", "stamp", cachebuf.length);
 				System.arraycopy(cachebuf, 0, img_stub.image, 0, cachebuf.length);
+				*/
+
+				img_stub = new ImgPack();
+				img_stub.id = "img_stub";
+				img_stub.seq = "seq";
+				img_stub.stamp = "stamp";
+				img_stub.image = cachebuf;
+
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
@@ -90,9 +102,20 @@ public class ImageCache {
 				}				
 				
 				imgfile.close();
-
-				ImgPack img = new ImgPack("id", "seq", "stamp", cachebuf.length);
+/*				
+				ImgPack img = new ImgPack("img_cache", "seq", "stamp", cachebuf);
+*/
+/*				
+				ImgPack img = new ImgPack("img_cache", "seq", "stamp", cachebuf.length);
 				System.arraycopy(cachebuf, 0, img.image, 0, cachebuf.length);
+*/				
+
+				ImgPack img = new ImgPack();
+				img.id = "img_cache";
+				img.seq = "seq";
+				img.stamp = "stamp";
+				img.image = cachebuf;
+
 				putImage("", img);
 			} catch (IOException e) {
 				e.printStackTrace();

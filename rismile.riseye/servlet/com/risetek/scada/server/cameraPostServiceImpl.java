@@ -32,12 +32,21 @@ public class cameraPostServiceImpl extends HttpServlet {
 		if( stamp == null )
 			stamp = "local:"+ new Long(System.currentTimeMillis()).toString();
 		
-		ImgPack img = new ImgPack(ident, seq, stamp, ContentLength);
+//		ImgPack img = new ImgPack(ident, seq, stamp, ContentLength);
+		
+		byte[] remoteImg = new byte[ContentLength];
 		
 		InputStream imgData =  req.getInputStream();
 		try {
-			imgData.read(img.image);
+			imgData.read(remoteImg);
 			imgData.close();
+			
+			ImgPack img = new ImgPack();
+			img.id = ident;
+			img.seq = seq;
+			img.stamp = stamp;
+			img.image = remoteImg;
+			
 			ImageCache.imageCache.putImage("", img);
 		} catch (IOException e) {
 			e.printStackTrace();
