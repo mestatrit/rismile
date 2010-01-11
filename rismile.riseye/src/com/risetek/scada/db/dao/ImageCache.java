@@ -11,6 +11,7 @@ import javax.cache.CacheFactory;
 import javax.cache.CacheManager;
 
 import com.google.gwt.core.client.GWT;
+import com.risetek.scada.client.ImgPack;
 public class ImageCache {
 
 	public static ImageCache imageCache = new ImageCache();
@@ -44,14 +45,6 @@ public class ImageCache {
 				
 				imgfile.close();
 				
-/*				
-				img_stub = new ImgPack("img_stub", "seq", "stamp", cachebuf);
-*/
-/*
-				img_stub = new ImgPack("img_stub", "seq", "stamp", cachebuf.length);
-				System.arraycopy(cachebuf, 0, img_stub.image, 0, cachebuf.length);
-				*/
-
 				img_stub = new ImgPack();
 				img_stub.id = "img_stub";
 				img_stub.seq = "seq";
@@ -102,13 +95,6 @@ public class ImageCache {
 				}				
 				
 				imgfile.close();
-/*				
-				ImgPack img = new ImgPack("img_cache", "seq", "stamp", cachebuf);
-*/
-/*				
-				ImgPack img = new ImgPack("img_cache", "seq", "stamp", cachebuf.length);
-				System.arraycopy(cachebuf, 0, img.image, 0, cachebuf.length);
-*/				
 
 				ImgPack img = new ImgPack();
 				img.id = "img_cache";

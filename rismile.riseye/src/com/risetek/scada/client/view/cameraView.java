@@ -16,7 +16,7 @@ import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
 import com.risetek.scada.client.Entry;
-import com.risetek.scada.client.RCPImage;
+import com.risetek.scada.client.ImgPack;
 
 public class cameraView extends Composite {
 	private static cameraViewUiBinder uiBinder = GWT.create(cameraViewUiBinder.class);
@@ -26,11 +26,11 @@ public class cameraView extends Composite {
 
 	@RemoteServiceRelativePath("photo")
 	public interface PhotoService extends RemoteService {
-		RCPImage getPhoto(String id);
+		ImgPack getPhoto(String id);
 	}	
 
 	public interface PhotoServiceAsync {
-		void getPhoto(String id, AsyncCallback<RCPImage> callback);
+		void getPhoto(String id, AsyncCallback<ImgPack> callback);
 	}
 
 	PhotoServiceAsync photoService = (PhotoServiceAsync)GWT.create(PhotoService.class);
@@ -98,8 +98,8 @@ public class cameraView extends Composite {
 		
 	}
 
-	AsyncCallback<RCPImage> callback = new AsyncCallback<RCPImage>() {
-	    public void onSuccess(RCPImage img) {
+	AsyncCallback<ImgPack> callback = new AsyncCallback<ImgPack>() {
+	    public void onSuccess(ImgPack img) {
 	    	GWT.log("Get ImgPack id is:"+img.id+" seq is:"+img.seq+" stamp is:"+img.stamp +" length is:"+img.image.length, null);
 //	    	title.setText("id is:"+img.id+"\r\n seq is:"+img.seq+" stamp is:"+img.stamp +" length is:"+img.image.length);
 	    	ident.setText("识别号："+img.id);

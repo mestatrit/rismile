@@ -1,4 +1,4 @@
-package com.risetek.scada.db.dao;
+package com.risetek.scada.client;
 
 import java.io.Serializable;
 

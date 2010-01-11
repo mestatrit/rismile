@@ -8,8 +8,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.google.gwt.core.client.GWT;
+import com.risetek.scada.client.ImgPack;
 import com.risetek.scada.db.dao.ImageCache;
-import com.risetek.scada.db.dao.ImgPack;
 
 @SuppressWarnings("serial")
 public class cameraPostServiceImpl extends HttpServlet {
@@ -32,12 +32,10 @@ public class cameraPostServiceImpl extends HttpServlet {
 		if( stamp == null )
 			stamp = "local:"+ new Long(System.currentTimeMillis()).toString();
 		
-//		ImgPack img = new ImgPack(ident, seq, stamp, ContentLength);
-		
-		byte[] remoteImg = new byte[ContentLength];
 		
 		InputStream imgData =  req.getInputStream();
 		try {
+			byte[] remoteImg = new byte[ContentLength];
 			imgData.read(remoteImg);
 			imgData.close();
 			
