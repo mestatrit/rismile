@@ -18,9 +18,10 @@ public class UserNoteModifyDialog extends CustomDialog {
 		setSize("320","140");
 	}
 
-	public void show(String tips_id, String tisp_value){
+	public void show(String tips_id, String tips_value){
 		rowid = tips_id;
 		setText("记录序号：" + tips_id);
+		note.setText(tips_value);
 		super.show();
 		note.setFocus(true);
 	}
