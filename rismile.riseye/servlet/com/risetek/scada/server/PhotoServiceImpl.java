@@ -11,7 +11,10 @@ public class PhotoServiceImpl extends RemoteServiceServlet implements	PhotoServi
 
 	@Override
 	public ImgPack getPhoto(String id) {
-		return ImageCache.imageCache.getImage();
+		ImgPack img = ImageCache.imageCache.getImage();
+		img.GPS = ImageCache.imageCache.getGPS().GPS;
+		//img.image = null;
+		return img;
 	}
 
 }

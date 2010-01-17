@@ -27,8 +27,8 @@ public class cameraQueryServiceImpl extends HttpServlet {
 			return;
 		
 		resp.setHeader("id", img.id);
-		resp.setHeader("seq", img.seq);
-		resp.setHeader("stamp", img.stamp);
+//		resp.setHeader("seq", img.seq);
+//		resp.setHeader("stamp", img.stamp);
 		GWT.log("ident is:"+img.id+" seq is:"+img.seq+" stamp is:"+img.stamp, null);
 		ServletOutputStream out = resp.getOutputStream();
 		

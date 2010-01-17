@@ -14,18 +14,11 @@ public class ImgPack implements Serializable{
 	public String seq;
 	public String stamp;
 	public byte[] image;
-
+	public String GPS;
+	
 	public ImgPack()
 	{
 		
-	}
-
-	public ImgPack(String id, String seq, String stamp, int length)
-	{
-		this.id = id;
-		this.seq = seq;
-		this.stamp = stamp;
-		image = new byte[length];
 	}
 
 	public ImgPack(String id, String seq, String stamp, byte[] img)

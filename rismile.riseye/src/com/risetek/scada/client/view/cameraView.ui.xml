@@ -9,11 +9,12 @@
 	<g:HTMLPanel width="100%" ui:field="frame">
 	<g:DecoratorPanel>
 	<g:VerticalPanel>
-	<g:Image ui:field="photo" title="riseye"></g:Image>
+	<g:HTMLPanel>	<span ui:field='mphoto'/> </g:HTMLPanel>
 	<g:Label ui:field="title"></g:Label>
 	<g:Label ui:field="ident"></g:Label>
 	<g:Label ui:field="seq"></g:Label>
 	<g:Label ui:field="picsize"></g:Label>
+	<g:Label ui:field="gps"></g:Label>
 
 	<g:Label ui:field="timestamp"></g:Label>
 	</g:VerticalPanel>

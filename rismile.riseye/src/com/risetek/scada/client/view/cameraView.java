@@ -1,10 +1,7 @@
 package com.risetek.scada.client.view;
 
 import com.google.gwt.core.client.GWT;
-import com.google.gwt.event.dom.client.ErrorEvent;
-import com.google.gwt.event.dom.client.ErrorHandler;
-import com.google.gwt.event.dom.client.LoadEvent;
-import com.google.gwt.event.dom.client.LoadHandler;
+import com.google.gwt.dom.client.SpanElement;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.Timer;
@@ -12,9 +9,9 @@ import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.rpc.RemoteService;
 import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
 import com.google.gwt.user.client.ui.Composite;
-import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
+import com.risetek.scada.client.Base64Encoder;
 import com.risetek.scada.client.Entry;
 import com.risetek.scada.client.ImgPack;
 
@@ -38,9 +35,8 @@ public class cameraView extends Composite {
 	private static Timer hbTimer = null;
 
 	
-	@UiField
-	Image photo;// = new Image();
-
+	@UiField SpanElement mphoto;
+	
 	@UiField
 	Label title;
 
@@ -56,6 +52,8 @@ public class cameraView extends Composite {
 	@UiField
 	Label picsize;
 	
+	@UiField	Label gps;
+	
 	static long last = 0;
 	
 	public cameraView() {
@@ -64,52 +62,45 @@ public class cameraView extends Composite {
 		initWidget(w);
 		GWT.log("get picture", null);
 		//frame.setBorderWidth(1);
-
-		photo.addLoadHandler(new LoadHandler(){
-			public void onLoad(LoadEvent event) {
-				MessageConsole.setText("图片得到 ");
-
-				long ti = System.currentTimeMillis() - last;
-				int sc;
-				if( ti > 500 )
-					sc = 500;
-				else
-					sc = (int)ti + 1;
-
-				last = System.currentTimeMillis();
-				if( hbTimer != null)
-					hbTimer.schedule(sc);
-			}});
-		
-		photo.addErrorHandler(new ErrorHandler(){
-
-			public void onError(ErrorEvent event) {
-				MessageConsole.setText("图片未得到 ");
-				long ti = System.currentTimeMillis() - last;
-				int sc;
-				if( ti > 1000 )
-					sc = 1000;
-				else
-					sc = (int)ti + 500;
-				last = System.currentTimeMillis();
-				if( hbTimer != null)
-					hbTimer.schedule(sc);
-			}});
-		
 	}
 
 	AsyncCallback<ImgPack> callback = new AsyncCallback<ImgPack>() {
 	    public void onSuccess(ImgPack img) {
 	    	GWT.log("Get ImgPack id is:"+img.id+" seq is:"+img.seq+" stamp is:"+img.stamp +" length is:"+img.image.length, null);
-//	    	title.setText("id is:"+img.id+"\r\n seq is:"+img.seq+" stamp is:"+img.stamp +" length is:"+img.image.length);
 	    	ident.setText("识别号："+img.id);
 	    	seq.setText("摄像头序列："+img.seq);
 	    	picsize.setText("图片大小："+img.image.length);
 	    	timestamp.setText("上传时间："+img.stamp);
+	    	gps.setText("GPS："+img.GPS);
+	    	mphoto.setInnerHTML("<img src='data:image/jpeg;base64," + Base64Encoder.toBase64String(img.image) + "'/>");
+	    	
+			MessageConsole.setText("图片得到 ");
+
+			long ti = System.currentTimeMillis() - last;
+			int sc;
+			if( ti > 500 )
+				sc = 500;
+			else
+				sc = (int)ti + 1;
+
+			last = System.currentTimeMillis();
+			if( hbTimer != null)
+				hbTimer.schedule(sc);
+	    	
 	    }
 
 	    public void onFailure(Throwable caught) {
 	    	GWT.log("Failed ImgPack", null);
+			MessageConsole.setText("图片未得到 ");
+			long ti = System.currentTimeMillis() - last;
+			int sc;
+			if( ti > 1000 )
+				sc = 1000;
+			else
+				sc = (int)ti + 500;
+			last = System.currentTimeMillis();
+			if( hbTimer != null)
+				hbTimer.schedule(sc);
 	    }
 	  };	
 
@@ -119,7 +110,6 @@ public class cameraView extends Composite {
 				String imgname = "/scada/camera?id="+System.currentTimeMillis();
 				MessageConsole.setText("获取图片: " + imgname );
 				GWT.log("获取图片: " + imgname ,null);
-				photo.setUrl(imgname);
 				photoService.getPhoto(new Long(System.currentTimeMillis()).toString(), callback);
 			}
 		};

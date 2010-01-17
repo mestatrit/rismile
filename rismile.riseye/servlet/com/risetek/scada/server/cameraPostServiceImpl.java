@@ -44,6 +44,7 @@ public class cameraPostServiceImpl extends HttpServlet {
 			img.seq = seq;
 			img.stamp = stamp;
 			img.image = remoteImg;
+			img.GPS = "nogps";
 			
 			ImageCache.imageCache.putImage("", img);
 		} catch (IOException e) {
