@@ -12,11 +12,6 @@
   
   <!-- Servlets -->
   <servlet>
-    <servlet-name>cameraServlet</servlet-name>
-    <servlet-class>com.risetek.scada.server.cameraQueryServiceImpl</servlet-class>
-  </servlet>
-
-  <servlet>
     <servlet-name>takeServlet</servlet-name>
     <servlet-class>com.risetek.scada.server.cameraPostServiceImpl</servlet-class>
   </servlet>
@@ -26,10 +21,6 @@
     <servlet-class>com.risetek.scada.server.gpsQueryServiceImpl</servlet-class>
   </servlet>
 
-  <servlet-mapping>
-    <servlet-name>cameraServlet</servlet-name>
-    <url-pattern>/scada/camera</url-pattern>
-  </servlet-mapping>
 
   <servlet-mapping>
     <servlet-name>takeServlet</servlet-name>
