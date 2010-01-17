@@ -122,7 +122,17 @@ public class ImageCache {
 			e.printStackTrace();
 		}
 	}
-	
+
+	public synchronized void putGPS(String id, ImgPack image)
+	{
+		if(image == null) return;
+		try {
+			images.put("gps", image);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
 	public synchronized ImgPack getImage()
 	{
 		ImgPack i = (ImgPack) images.get("image");
@@ -131,4 +141,11 @@ public class ImageCache {
 		return i;
 	}
 	
+	public synchronized ImgPack getGPS()
+	{
+		ImgPack i = (ImgPack) images.get("gps");
+		if( i == null )
+			return img_stub;
+		return i;
+	}
 }
