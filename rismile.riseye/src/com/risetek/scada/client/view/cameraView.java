@@ -66,15 +66,23 @@ public class cameraView extends Composite {
 
 	AsyncCallback<ImgPack> callback = new AsyncCallback<ImgPack>() {
 	    public void onSuccess(ImgPack img) {
-	    	GWT.log("Get ImgPack id is:"+img.id+" seq is:"+img.seq+" stamp is:"+img.stamp +" length is:"+img.image.length, null);
-	    	ident.setText("识别号："+img.id);
-	    	seq.setText("摄像头序列："+img.seq);
-	    	picsize.setText("图片大小："+img.image.length);
-	    	timestamp.setText("上传时间："+img.stamp);
-	    	gps.setText("GPS："+img.GPS);
-	    	mphoto.setInnerHTML("<img src='data:image/jpeg;base64," + Base64Encoder.toBase64String(img.image) + "'/>");
-	    	
-			MessageConsole.setText("图片得到 ");
+    		String localid = mphoto.getId();
+    		if( localid != null )
+    			GWT.log("Local ID: "+localid + "  Remote: "+ img.Cookie, null);
+	    	if( img.Cookie != mphoto.getId() && (img.image != null))
+	    	{
+		    	GWT.log("Get ImgPack id is:"+img.id+" seq is:"+img.seq+" stamp is:"+img.stamp +" length is:"+img.image.length, null);
+		    	ident.setText("识别号："+img.id);
+		    	seq.setText("摄像头序列："+img.seq);
+		    	picsize.setText("图片大小："+img.image.length);
+		    	timestamp.setText("上传时间："+img.stamp);
+		    	gps.setText("GPS："+img.GPS);
+		    	mphoto.setInnerHTML("<img src='data:image/jpeg;base64," + Base64Encoder.toBase64String(img.image) + "'/>");
+		    	mphoto.setId(img.Cookie);
+				MessageConsole.setText("图片得到 ");
+	    	}
+	    	else 
+	    		MessageConsole.setText("图片无变化");
 
 			long ti = System.currentTimeMillis() - last;
 			int sc;
@@ -110,7 +118,7 @@ public class cameraView extends Composite {
 				String imgname = "/scada/camera?id="+System.currentTimeMillis();
 				MessageConsole.setText("获取图片: " + imgname );
 				GWT.log("获取图片: " + imgname ,null);
-				photoService.getPhoto(new Long(System.currentTimeMillis()).toString(), callback);
+				photoService.getPhoto(mphoto.getId(), callback);
 			}
 		};
 		hbTimer.run();

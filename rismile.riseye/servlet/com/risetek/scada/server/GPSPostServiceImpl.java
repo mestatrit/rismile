@@ -23,8 +23,8 @@ public class GPSPostServiceImpl extends HttpServlet {
 		
 		String gps_message = req.getParameter("gps");
 		if( gps_message == null )
-			gps_message = "no gps";
-
+			return;
+		
 		ImgPack img = new ImgPack();
 		img.GPS = gps_message;
 		ImageCache.imageCache.putGPS("", img);

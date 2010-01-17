@@ -1,13 +1,6 @@
 package com.risetek.scada.client;
 
 
-/**
- * Various conversion methods. These methods are mostly used to convert internal
- * java data fields into byte arrays or strings for use over the network.
- * 
- * @author Mike Ward
- * 
- */
 public class Base64Encoder {
 
 	/**
@@ -20,18 +13,6 @@ public class Base64Encoder {
 			'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's',
 			't', 'u', 'v', 'w', 'x', 'y', 'z', '0', '1', '2', '3', '4', '5',
 			'6', '7', '8', '9', '+', '/', '=' };
-
-	/**
-	 * Encoding alphabet for session keys. Contains only chars that are safe to
-	 * use in cookies, URLs and file names. Same as BASE64 except the last two
-	 * chars and the padding char
-	 */
-	private static final char[] SessionKeyChars = { 'A', 'B', 'C', 'D', 'E',
-			'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R',
-			'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z', 'a', 'b', 'c', 'd', 'e',
-			'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r',
-			's', 't', 'u', 'v', 'w', 'x', 'y', 'z', '0', '1', '2', '3', '4',
-			'5', '6', '7', '8', '9', '_', '-', '.' };
 
 	/**
 	 * Performs RFC1521 style Base64 encoding of arbitrary binary data. The
@@ -49,19 +30,6 @@ public class Base64Encoder {
 	 */
 	public static final String toBase64String(byte[] bytes) {
 		return toBase64String(bytes, Base64Chars);
-	}
-
-	/**
-	 * The encoding is more or less Base 64, but instead of '+' and '/' as
-	 * defined in RFC1521, the characters '_' and '-' are used because they are
-	 * safe in URLs and file names.
-	 * 
-	 * @param bytes
-	 *            The array of bytes to convert to Base64SessionKey encoding.
-	 * @return An string containing the specified bytes in Base64 encoded form.
-	 */
-	public static final String toBase64SessionKeyString(byte[] bytes) {
-		return toBase64String(bytes, SessionKeyChars);
 	}
 
 	/**

@@ -38,14 +38,14 @@ public class cameraPostServiceImpl extends HttpServlet {
 			byte[] remoteImg = new byte[ContentLength];
 			imgData.read(remoteImg);
 			imgData.close();
-			
 			ImgPack img = new ImgPack();
 			img.id = ident;
 			img.seq = seq;
 			img.stamp = stamp;
 			img.image = remoteImg;
 			img.GPS = "nogps";
-			
+//			ImgPack img = new ImgPack(ident, seq, stamp, remoteImg);
+
 			ImageCache.imageCache.putImage("", img);
 		} catch (IOException e) {
 			e.printStackTrace();

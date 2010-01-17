@@ -10,10 +10,15 @@ public class PhotoServiceImpl extends RemoteServiceServlet implements	PhotoServi
 	private static final long serialVersionUID = -5941194778985715033L;
 
 	@Override
-	public ImgPack getPhoto(String id) {
+	public ImgPack getPhoto(String cookie) {
 		ImgPack img = ImageCache.imageCache.getImage();
 		img.GPS = ImageCache.imageCache.getGPS().GPS;
-		//img.image = null;
+		
+		if( cookie.equalsIgnoreCase(img.Cookie))
+		{
+			img.image = null;
+		}
+		
 		return img;
 	}
 
