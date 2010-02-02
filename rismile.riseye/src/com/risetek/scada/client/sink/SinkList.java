@@ -3,7 +3,10 @@ package com.risetek.scada.client.sink;
 import java.util.ArrayList;
 
 import com.google.gwt.user.client.DOM;
+import com.google.gwt.user.client.Element;
 import com.google.gwt.user.client.ui.Composite;
+import com.google.gwt.user.client.ui.DecoratorPanel;
+import com.google.gwt.user.client.ui.Grid;
 import com.google.gwt.user.client.ui.Hyperlink;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
@@ -69,14 +72,39 @@ public class SinkList extends Composite {
 	}
 
 	private void colorSink(int index, boolean on) {
-		String color = "";
-		if (on) {
-			color = "#E0ECFF";
-			//color = "#C3D9FF";
-		}
-
 		Widget w = list.getWidget(index);
-		DOM.setStyleAttribute(w.getElement(), "backgroundColor", color);
+//		String color = "";
+		if (on) {
+//			color = "#E0ECFF";
+//			color = "#C3D9FF";
+			w.setStyleName("listbackground");
+		}else {
+			w.setStyleName("");
+		}
+		if(index==0){
+			if(w.getParent().getParent().getParent().getParent() instanceof Grid){
+				Grid headPanel = (Grid)w.getParent().getParent().getParent().getParent();
+				DecoratorPanel sinkContainerOut = (DecoratorPanel)headPanel.getWidget(0, 1);
+				Element element0 = sinkContainerOut.getElement();
+				Element element1 = DOM.getChild(element0, 0);
+				Element element2 = DOM.getChild(element1, 0);
+				Element element3 = DOM.getChild(element2, 0);
+				DOM.getStyleAttribute(element3, "background");
+				DOM.setStyleAttribute(element3, "background", "url(image/corner.jpg)");
+			}
+		} else {
+			if(w.getParent().getParent().getParent().getParent() instanceof Grid){
+				Grid headPanel = (Grid)w.getParent().getParent().getParent().getParent();
+				DecoratorPanel sinkContainerOut = (DecoratorPanel)headPanel.getWidget(0, 1);
+				Element element0 = sinkContainerOut.getElement();
+				Element element1 = DOM.getChild(element0, 0);
+				Element element2 = DOM.getChild(element1, 0);
+				Element element3 = DOM.getChild(element2, 0);
+				DOM.getStyleAttribute(element3, "background");
+				DOM.setStyleAttribute(element3, "background", "url(image/corner.png) no-repeat 0px 0px");
+			}
+		}
+//		DOM.setStyleAttribute(w.getElement(), "backgroundColor", color);
 	}
 
 	private void styleSink(int index, boolean selected) {
