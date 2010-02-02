@@ -53,7 +53,7 @@ public abstract class Entry implements EntryPoint{
 	private final HorizontalPanel descriptionPanel = new HorizontalPanel();
 
 	private final VerticalPanel panel = new VerticalPanel();
-	private final Grid titlePanel = new Grid(1,1);
+	private final Grid titlePanel = new Grid(1,2);
 	private final DockPanel sinkContainer = new DockPanel();
 	private final DecoratorPanel sinkContainerOut = new DecoratorPanel();
 	private final FlowPanel maskPanel = new FlowPanel();
@@ -77,31 +77,35 @@ public abstract class Entry implements EntryPoint{
 
 	public void onModuleLoad() {
 		
-		//panel.setBorderWidth(1);
-		//sinkContainer.setBorderWidth(1);
-		//sinkContainerOut.setWidth("600px");
-		//titlePanel.setBorderWidth(1);
-		// Load all the sinks.
+		Grid mainTable = new Grid(3, 1);
+//		mainTable.setBorderWidth(1);
 		
-		loadSinks();
+//		panel.setBorderWidth(1);
+//		sinkContainer.setBorderWidth(1);
+//		sinkContainerOut.setWidth("600px");
+//		titlePanel.setBorderWidth(1);
+		titlePanel.setWidget(0, 0, new Image(images.gwtLogo()));
+		titlePanel.getCellFormatter().setStyleName(0, 0, "logo");
 		message.setStyleName("http-message");
 		DOM.setElementProperty(message.getElement(), "id", "message");
-		titlePanel.setWidget(0,0,message);
-		
-		nav.setWidth("240px");
-		
-		panel.add(titlePanel);
+		titlePanel.setWidget(0,1,message);
 		titlePanel.setWidth("100%");
+		
+		mainTable.setWidget(0, 0, titlePanel);
+//		panel.add(titlePanel);
 
-		//headPanel.setBorderWidth(1);
+//		headPanel.setBorderWidth(1);
 		headPanel.setCellPadding(0);
 		headPanel.setCellSpacing(0);
 
-		nav.add(new Image(images.gwtLogo()),DockPanel.NORTH);
+		nav.setWidth("240px");
+//		nav.add(new Image(images.gwtLogo()),DockPanel.NORTH);
 		nav.add(list, DockPanel.CENTER);
-		headPanel.setWidget(0, 0, nav);
 		nav.setHeight("100%");
-		// description.setStyleName("description");
+		headPanel.setWidget(0, 0, nav);
+		headPanel.getCellFormatter().setStyleName(0, 0, "menuList");
+		
+//		description.setStyleName("description");
 		description.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_RIGHT);
 		descriptionPanel.setWidth("100%");
 		descriptionPanel.add(description);
@@ -119,6 +123,9 @@ public abstract class Entry implements EntryPoint{
 		
 		panel.add(maskPanel);
 
+		// Load all the sinks.
+		loadSinks();
+		
 		History.addValueChangeHandler(new ValueChangeHandler<String>() {
 			public void onValueChange(ValueChangeEvent<String> event) {
 				String token = event.getValue();
@@ -131,7 +138,9 @@ public abstract class Entry implements EntryPoint{
 			}
 		});
 
-		RootPanel.get("root").add(panel);
+		mainTable.setWidget(1, 0, panel);
+		
+		RootPanel.get("root").add(mainTable);
 
 		// Show the initial screen.
 		String initToken = History.getToken();
