@@ -86,7 +86,7 @@ public class AdminDialog extends CustomDialog {
 			return false;
 		}
 		
-		if (!pwdBox.getText().equals(pwdBoxSe.getText())) {
+		if((code == ADD) && !pwdBox.getText().equals(pwdBoxSe.getText())) {
 			pwdBox.setText("");
 			pwdBoxSe.setText("");
 			pwdBox.setFocus(true);
