@@ -1,0 +1,115 @@
+.radius-config {
+	vertical-align: middle;
+	text-align: center;
+}
+
+.radius-config .title {
+	text-indent: 1em;
+	padding-top: 4px;
+	padding-bottom: 4px;
+	font-size: larger;
+	font-weight: bold;
+	border-top:1px solid #2a8ebf;
+	border-bottom:1px solid #2a8ebf;
+	text-align: left;
+	background: url(images/system_blue_gradient.gif) repeat-x top left;
+}
+
+.radius-config .conf-table {
+	background-color: white;
+	background: white;
+	border:1px solid #999;
+	border-collapse: collapse;
+	text-align: center;
+}
+
+.radius-config .conf-table td {
+	width: 8em;
+	border:solid #999;
+	border-width:1px 1px 1px 1px;
+	padding-top:4px;
+	padding-left: 3px;
+    padding-bottom: 2px;
+	vertical-align: middle;
+	text-align: center;
+}
+
+.radius-config .conf-Button {
+	height: 25px;
+	width: 6em;
+	padding-top:1px;
+	background-color: #E2EAF5;
+	cursor: pointer;
+    cursor: hand;
+}
+.radius-config .conf-version {
+	margin-top: 1mm;
+	margin-bottom: 1mm;
+}
+
+
+.rismiletable .table td.uid {
+	margin-right: 40px;
+	text-align: right;
+	width: 10%;
+}
+
+.rismiletable .table td.imsi {
+	text-align: left;
+	width: 20%;
+}
+
+.rismiletable .table td.username {
+	text-align: left;
+	width: 25%;
+}
+
+.rismiletable .table td.backusername {
+	text-align: left;
+	border-width:1px 0px 0px 0px;
+}
+
+.rismiletable .table td.password {
+	width: 5%;
+}
+
+.rismiletable .table td.ipaddress {
+	text-align: left;
+	width: 20%;
+}
+
+.radius-config .sys-introH {
+  font-size: 22pt;
+  font-weight: bold;
+  padding-top: 4px;
+  padding-left: 16px;
+  padding-right: 16px;
+  margin-right: 3px;
+  text-align: center;
+}
+
+.radius-config .sys-intro {
+  font-size: 18pt;
+  padding-top: 4px;
+  padding-left: 16px;
+  padding-right: 16px;
+  margin-left: 1em;  
+}
+
+.radius-config .images-table {
+	text-align: right;
+}
+
+.radius-config .info-table {
+	font-size: 10px;
+	border:1px solid #999;
+}
+
+.rismiletable .table tr.green {
+	background-color:#BFFFDF;
+}
+.rismiletable .table td.note {
+	text-align: left;
+	border-width:1px 0px 0px 0px;
+}
+
