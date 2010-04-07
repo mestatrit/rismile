@@ -6,9 +6,11 @@ import com.google.gwt.http.client.Request;
 import com.google.gwt.http.client.RequestCallback;
 import com.google.gwt.http.client.Response;
 import com.google.gwt.user.client.Window;
+import com.risetek.rismile.client.Entry;
 import com.risetek.rismile.client.control.RismileTableController;
 import com.risetek.rismile.client.model.RismileTable;
 import com.risetek.rismile.client.utils.MessageConsole;
+import com.risetek.rismile.client.utils.UI;
 import com.risetek.rismile.client.view.RismileTableView;
 import com.risetek.rismile.log.client.model.RismileLogTable;
 import com.risetek.rismile.log.client.view.LogFilterDialog;
@@ -58,6 +60,10 @@ public class RismileLogController extends RismileTableController implements Requ
 
 		@Override
 		public void onClick(ClickEvent event) {
+			if(!Entry.login){
+				Window.alert(UI.errInfo);
+				return;
+			}
 			if (Window.confirm("是否要清除日志?")) {
 				view.clearButton.setEnabled(false);
 				remoteRequest.get(emptyForm, null, this);

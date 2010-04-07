@@ -13,11 +13,13 @@ import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.HTMLTable;
 import com.google.gwt.user.client.ui.HTMLTable.Cell;
+import com.risetek.rismile.client.Entry;
 import com.risetek.rismile.client.control.RismileTableController;
 import com.risetek.rismile.client.model.RismileTable;
 import com.risetek.rismile.client.utils.IPConvert;
 import com.risetek.rismile.client.utils.MessageConsole;
 import com.risetek.rismile.client.utils.SysLog;
+import com.risetek.rismile.client.utils.UI;
 import com.risetek.rismile.client.view.RismileTableView;
 
 public class RadiusBlackController extends RismileTableController {
@@ -86,6 +88,10 @@ public class RadiusBlackController extends RismileTableController {
 		}
 		@Override
 		public void onClick(ClickEvent event) {
+			if(!Entry.login){
+				Window.alert(UI.errInfo);
+				return;
+			}
 			if (Window.confirm("是否要清除所有不明用户?")) {
 				remoteRequest.get(emptyForm,null, new EmptyCallback());
 			}
@@ -104,6 +110,10 @@ public class RadiusBlackController extends RismileTableController {
 
 		@Override
 		public void onClick(ClickEvent event) {
+			if(!Entry.login){
+				Window.alert(UI.errInfo);
+				return;
+			}
 			HTMLTable table = (HTMLTable)event.getSource();
 			Cell Mycell = table.getCellForEvent(event);
 			int row = Mycell.getRowIndex();

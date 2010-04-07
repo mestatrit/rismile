@@ -7,6 +7,7 @@ import com.google.gwt.http.client.RequestCallback;
 import com.google.gwt.http.client.Response;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Button;
+import com.risetek.rismile.client.Entry;
 import com.risetek.rismile.client.dialog.AddOrModifyIpDialog;
 import com.risetek.rismile.client.dialog.AddRouteDialog;
 import com.risetek.rismile.client.dialog.AdminDialog;
@@ -15,6 +16,7 @@ import com.risetek.rismile.client.http.RequestFactory;
 import com.risetek.rismile.client.model.SystemDataModel;
 import com.risetek.rismile.client.utils.IPConvert;
 import com.risetek.rismile.client.utils.MessageConsole;
+import com.risetek.rismile.client.utils.UI;
 import com.risetek.rismile.client.view.SystemView;
 
 public class SystemController implements RequestCallback {
@@ -106,6 +108,10 @@ public class SystemController implements RequestCallback {
 		}
 
 		public void onClick(ClickEvent event) {
+			if(!Entry.login){
+				Window.alert(UI.errInfo);
+				return;
+			}
 			if (Window.confirm("是否要删除?\n" + "IP地址:" + ip + "\n" + "掩码:" + mask)) {
 				String requestData = "ip_address=" + ip + "&mask_address=" + mask;
 				remoteRequest.get(delRouterPath, requestData, this);
@@ -131,6 +137,10 @@ public class SystemController implements RequestCallback {
 		}
 
 		public void onClick(ClickEvent event) {
+			if(!Entry.login){
+				Window.alert(UI.errInfo);
+				return;
+			}
 			if (Window.confirm("是否要删除?\n" + "IP地址:" + ip)) {
 				String requestData = "ip_address=" + ip;
 				remoteRequest.get(delIpPath, requestData, this);
@@ -152,7 +162,10 @@ public class SystemController implements RequestCallback {
 
 		public void onClick(ClickEvent event) {
 			// Window.open("forms/restart", "_blank", "");
-
+			if(!Entry.login){
+				Window.alert(UI.errInfo);
+				return;
+			}
 			if (Window.confirm("是否要恢复出厂参数？\n" + "恢复出厂参数后，IP地址为192.168.0.1 。")) {
 				// TODO: 如何重定位到 192.168.0.1 首页？
 				remoteRequest.get(restoreParaPath, null, SystemController.this);
@@ -172,6 +185,10 @@ public class SystemController implements RequestCallback {
 
 	public class rmonClickHandler implements ClickHandler {
 		public void onClick(ClickEvent event) {
+			if(!Entry.login){
+				Window.alert(UI.errInfo);
+				return;
+			}
 			Window.open("forms/rmon.jnlp", "_self", "");
 		}
 	}
@@ -180,6 +197,10 @@ public class SystemController implements RequestCallback {
 	
 	public class uploadClickHandler implements ClickHandler {
 		public void onClick(ClickEvent event) {
+			if(!Entry.login){
+				Window.alert(UI.errInfo);
+				return;
+			}
 			(new UpfileDialog()).show();
 		}
 	}
@@ -226,6 +247,10 @@ public class SystemController implements RequestCallback {
 		}
 
 		public void onClick(ClickEvent event) {
+			if(!Entry.login){
+				Window.alert(UI.errInfo);
+				return;
+			}
 			Control control = new Control();
 			control.dialog.confirm.addClickHandler(control);
 			control.dialog.show(ipadd, ipmask);

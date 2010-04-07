@@ -2,11 +2,18 @@ package com.risetek.rismile.client;
 
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.event.dom.client.ClickEvent;
+import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.logical.shared.ValueChangeEvent;
 import com.google.gwt.event.logical.shared.ValueChangeHandler;
+import com.google.gwt.http.client.Request;
+import com.google.gwt.http.client.RequestCallback;
+import com.google.gwt.http.client.Response;
 import com.google.gwt.user.client.DOM;
 import com.google.gwt.user.client.History;
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.AbstractImagePrototype;
+import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.DockPanel;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.HTML;
@@ -15,15 +22,19 @@ import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.ImageBundle;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.VerticalPanel;
+import com.risetek.rismile.client.dialog.AdminDialog;
+import com.risetek.rismile.client.http.RequestFactory;
 import com.risetek.rismile.client.sink.Sink;
 import com.risetek.rismile.client.sink.SinkList;
 import com.risetek.rismile.client.sink.Sink.SinkInfo;
 import com.risetek.rismile.client.utils.Heartbeat;
+import com.risetek.rismile.client.utils.MessageConsole;
 
 /**
  * Entry point classes define <code>onModuleLoad()</code>.
  */
-public abstract class Entry implements EntryPoint{
+@SuppressWarnings("deprecation")
+public abstract class Entry implements EntryPoint, RequestCallback{
 	public enum OEM
 	{
 		risetek,
@@ -33,6 +44,9 @@ public abstract class Entry implements EntryPoint{
 	public static OEM OEMFlag = OEM.risetek;
 	
 	public static String SinkHeight = "470px";
+	
+	private RequestFactory remoteRequest = new RequestFactory();
+	private String checkPath = "penable";
 
 	/**
 	 * An image provider to make available images to Sinks.
@@ -66,6 +80,9 @@ public abstract class Entry implements EntryPoint{
 	private final FlowPanel headPanel = new FlowPanel();
 	private final HTML hbMessage = new HTML();
 	private final HTML message = new HTML();
+	public final Button enable = new Button();
+	
+	public static boolean login = false;
 
 	public void onHistoryChanged(String token) {
 		// Find the SinkInfo associated with the history context. If one is
@@ -82,13 +99,14 @@ public abstract class Entry implements EntryPoint{
 	public void onModuleLoad() {
 		// Load all the sinks.
 		loadSinks();
+		enable.setText("特权登录");
+		enable.setStyleName("enable-button");
 		panel.setStyleName("rismile");
 
 		headPanel.setWidth("100%");
 		// DOM.setStyleAttribute(headPanel.getElement(), "position",
 		// "relative");
 		headPanel.add(list);
-
 		headPanel.add(hbMessage);
 		hbMessage.setStyleName("hb-message");
 		DOM.setElementProperty(hbMessage.getElement(), "id", "hbMessage");
@@ -135,7 +153,9 @@ public abstract class Entry implements EntryPoint{
 		});
 
 		RootPanel.get("root").add(panel);
-
+//		RootLayoutPanel root = RootLayoutPanel.get();
+//		root.add(panel);
+		
 		// Show the initial screen.
 		String initToken = History.getToken();
 		if (initToken.length() > 0) {
@@ -145,6 +165,17 @@ public abstract class Entry implements EntryPoint{
 		}
 		// 启动对web服务的poll动作，以确定web是否正确服务。
 		Heartbeat.startHeartbeat();
+		
+		enable.addClickHandler(new ClickHandler() {
+			public void onClick(ClickEvent event) {
+				load();
+				if(login){
+					login = false;
+					enable.setText("特权登录");
+					Window.Location.reload();
+				}
+			}
+		});
 	}
 
 	public void show(SinkInfo info, boolean affectHistory) {
@@ -188,5 +219,39 @@ public abstract class Entry implements EntryPoint{
 	// 目前采用各个项目自己构造自己的Home界面来实现这个要求。by ychun.w
 	private void showInfo() {
 		show(list.find("Home"), false);
+	}
+	
+	public void load() {
+		MessageConsole.setText("提取系统配置");
+		remoteRequest.get(checkPath, null, this);
+	}
+	
+	public class Control implements ClickHandler, RequestCallback {
+		public AdminDialog dialog = new AdminDialog(AdminDialog.LOGIN);
+
+		public void onClick(ClickEvent event) {
+			if( dialog.isValid())
+			{
+				login(dialog.pwdBox.getText(), this);
+			}
+		}
+
+		public void onError(Request request, Throwable exception) {
+			
+		}
+
+		public void onResponseReceived(Request request, Response response) {
+			if( dialog.processResponse(response)){
+				login = true;
+				enable.setText("退出特权");
+			}
+//				load();
+		}
+		
+		public void login(String password, RequestCallback callback) {
+			String requestData = "password=" + password;
+			remoteRequest.get(checkPath, requestData, callback);
+
+		}
 	}
 }

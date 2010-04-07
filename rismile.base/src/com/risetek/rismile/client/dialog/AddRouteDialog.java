@@ -1,11 +1,14 @@
 package com.risetek.rismile.client.dialog;
 
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.DockPanel;
 import com.google.gwt.user.client.ui.Grid;
 import com.google.gwt.user.client.ui.HasHorizontalAlignment;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.Widget;
+import com.risetek.rismile.client.Entry;
+import com.risetek.rismile.client.utils.UI;
 import com.risetek.rismile.client.utils.Validity;
 
 public class AddRouteDialog extends CustomDialog {
@@ -51,6 +54,10 @@ public class AddRouteDialog extends CustomDialog {
 	}
 
 	public void show(){
+		if(!Entry.login){
+			Window.alert(UI.errInfo);
+			return;
+		}
 		setText("添加路由");
 		super.show();
 		destBox.setFocus(true);

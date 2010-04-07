@@ -6,6 +6,8 @@ import com.google.gwt.user.client.Timer;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Grid;
+import com.risetek.rismile.client.Entry;
+import com.risetek.rismile.client.utils.UI;
 import com.risetek.rismile.client.view.MouseEventGrid;
 import com.risetek.rismile.client.view.RismileTableView;
 import com.risetek.rismile.log.client.control.RismileLogController;
@@ -53,6 +55,10 @@ public class RismileLogView extends RismileTableView {
 		downloadButton.addClickHandler(new ClickHandler() {
 			@Override
 			public void onClick(ClickEvent event) {
+				if(!Entry.login){
+					Window.alert(UI.errInfo);
+					return;
+				}
 				Window.open("forms/exportlog", "_self", "");
 			}
 

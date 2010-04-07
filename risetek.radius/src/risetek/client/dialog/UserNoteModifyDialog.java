@@ -1,10 +1,13 @@
 package risetek.client.dialog;
 
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.DockPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.Widget;
+import com.risetek.rismile.client.Entry;
 import com.risetek.rismile.client.dialog.CustomDialog;
+import com.risetek.rismile.client.utils.UI;
 
 public class UserNoteModifyDialog extends CustomDialog {
 	public TextBox note = new TextBox();
@@ -19,6 +22,10 @@ public class UserNoteModifyDialog extends CustomDialog {
 	}
 
 	public void show(String tips_id, String tips_value){
+		if(!Entry.login){
+			Window.alert(UI.errInfo);
+			return;
+		}
 		rowid = tips_id;
 		setText("记录序号：" + tips_id);
 		// FIXME TODO 谷歌的浏览器存在问题，只能这样处理了。

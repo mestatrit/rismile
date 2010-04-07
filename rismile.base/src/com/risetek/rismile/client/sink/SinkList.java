@@ -136,4 +136,8 @@ public class SinkList extends Composite {
 
 		colorSink(index, selected);
 	}
+	
+	public void addWidget(Widget w){
+		list.add(w);
+	}
 }

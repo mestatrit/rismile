@@ -12,6 +12,7 @@ import com.google.gwt.user.client.ui.HasHorizontalAlignment;
 import com.google.gwt.user.client.ui.ImageBundle;
 import com.risetek.rismile.client.Entry;
 
+@SuppressWarnings("deprecation")
 public class SystemHomeView extends Composite {
 
 	private final Grid table = new Grid(1,2);

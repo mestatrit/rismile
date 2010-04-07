@@ -1,10 +1,13 @@
 package risetek.client.dialog;
 
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.DockPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.Widget;
+import com.risetek.rismile.client.Entry;
 import com.risetek.rismile.client.dialog.CustomDialog;
+import com.risetek.rismile.client.utils.UI;
 
 public class RadiusConfigAuthDialog extends CustomDialog {
 	
@@ -21,6 +24,10 @@ public class RadiusConfigAuthDialog extends CustomDialog {
 	}
 
 	public void show(String value) {
+		if(!Entry.login){
+			Window.alert(UI.errInfo);
+			return;
+		}
 		newValueBox.setText(value);
 		super.show();
 		newValueBox.setFocus(true);

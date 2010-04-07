@@ -1,9 +1,12 @@
 package risetek.client.dialog;
 
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.DockPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
+import com.risetek.rismile.client.Entry;
 import com.risetek.rismile.client.dialog.CustomDialog;
+import com.risetek.rismile.client.utils.UI;
 
 public class UserDelDialog extends CustomDialog {
 
@@ -19,6 +22,10 @@ public class UserDelDialog extends CustomDialog {
 	}
 
 	public void show(String tips_id, String tips_imsi) {
+		if(!Entry.login){
+			Window.alert(UI.errInfo);
+			return;
+		}
 		rowid = tips_id;
 		setText("记录序号：" + tips_id);
 		super.show();

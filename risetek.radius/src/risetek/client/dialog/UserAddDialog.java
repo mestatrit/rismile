@@ -1,5 +1,6 @@
 package risetek.client.dialog;
 
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.DockPanel;
 import com.google.gwt.user.client.ui.FocusPanel;
 import com.google.gwt.user.client.ui.Grid;
@@ -7,7 +8,9 @@ import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.PasswordTextBox;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.Widget;
+import com.risetek.rismile.client.Entry;
 import com.risetek.rismile.client.dialog.CustomDialog;
+import com.risetek.rismile.client.utils.UI;
 import com.risetek.rismile.client.utils.Validity;
 
 public class UserAddDialog extends CustomDialog {
@@ -44,6 +47,10 @@ public class UserAddDialog extends CustomDialog {
 	}
 	
 	public void show(){
+		if(!Entry.login){
+			Window.alert(UI.errInfo);
+			return;
+		}
 		show("新加一个用户");
 		IMSI.setFocus(true);
 	}

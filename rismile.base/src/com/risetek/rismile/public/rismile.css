@@ -338,3 +338,17 @@ body {
 	background-color:#CCCCFC;
 }
 
+.enablePanel {
+	padding-top: 20px;
+	padding-left: 10px;
+}
+
+.enable-button {
+	padding-top: 1px;
+	padding-bottom: 1px;
+    height: 25px;
+	width: 6em;
+	background-color: #E2EAF5;
+	cursor: pointer;
+    cursor: hand;
+}

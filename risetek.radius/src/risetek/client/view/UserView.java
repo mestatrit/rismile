@@ -9,7 +9,9 @@ import com.google.gwt.user.client.Element;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Grid;
+import com.risetek.rismile.client.Entry;
 import com.risetek.rismile.client.model.RismileTable;
+import com.risetek.rismile.client.utils.UI;
 import com.risetek.rismile.client.view.MouseEventGrid;
 import com.risetek.rismile.client.view.RismileTableView;
 
@@ -59,6 +61,10 @@ public class UserView extends RismileTableView {
 		downloadButton.addClickHandler(new ClickHandler()
 		{
 			public void onClick(ClickEvent event) {
+				if(!Entry.login){
+					Window.alert(UI.errInfo);
+					return;
+				}
 				Window.open("forms/exportusers", "_self", "");
 			}
 		});
@@ -83,7 +89,7 @@ public class UserView extends RismileTableView {
     	super.render(table);
     	String[][] d = table.getData();
     	for(int loop = 0; loop < d.length; loop++)
-    		if("1".equalsIgnoreCase(d[loop][6]))
+    		if("0".equalsIgnoreCase(d[loop][6]))
     			grid.getRowFormatter().setStyleName(loop+1, "green");
 	}
     
@@ -101,7 +107,7 @@ public class UserView extends RismileTableView {
             if(row == 0) return;
             String d[][] = control.getTable().getData();
 
-            if( "1".equalsIgnoreCase(d[row-1][6]))
+            if( "0".equalsIgnoreCase(d[row-1][6]))
             	getRowFormatter().setStyleName(row, "green");
 		
 		}

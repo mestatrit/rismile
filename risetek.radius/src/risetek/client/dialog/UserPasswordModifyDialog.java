@@ -1,10 +1,13 @@
 package risetek.client.dialog;
 
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.DockPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.PasswordTextBox;
 import com.google.gwt.user.client.ui.Widget;
+import com.risetek.rismile.client.Entry;
 import com.risetek.rismile.client.dialog.CustomDialog;
+import com.risetek.rismile.client.utils.UI;
 import com.risetek.rismile.client.utils.Validity;
 
 public class UserPasswordModifyDialog extends CustomDialog {
@@ -19,6 +22,10 @@ public class UserPasswordModifyDialog extends CustomDialog {
 	}
 
 	public void show(String tips_id){
+		if(!Entry.login){
+			Window.alert(UI.errInfo);
+			return;
+		}
 		rowid = tips_id;
 		setText("记录序号：" + tips_id);
 		super.show();

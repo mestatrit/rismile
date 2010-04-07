@@ -5,6 +5,9 @@ import com.google.gwt.user.client.ui.Grid;
 import com.google.gwt.user.client.ui.HTML;
 
 public class UI {
+	
+	public static final String errInfo = "未登录特权模式\r\n无权进行该项操作！";
+	
 	public static String createHeaderHTML(String caption) {
 		Grid captionGrid = new Grid(1,2);
 		captionGrid.setWidth("100%");
