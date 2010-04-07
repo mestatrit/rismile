@@ -1,0 +1,340 @@
+body {
+  background-color: white;
+  font-family: GB2312, Helvetica, Arial, sans-serif;
+  margin: 20px 20px 20px 20px;
+}
+
+.rismile .hb-message {
+	color: crimson;
+	font-size: 10pt;
+	position: absolute;
+	text-align: right;
+	top: -20px;
+	width: 100%;
+	height: 20px;
+}
+.rismile .http-message {
+	color: crimson;
+	font-size: 10pt;
+	position: absolute;
+	text-align: right;
+	top: 0;
+	width: 100%;
+}
+
+.rismile .copyright {
+	background: #2a8ebf;
+	color: yellow;
+	text-align: center;
+	height: 45px;
+}
+
+.rismile .mask{
+  z-index:20000;
+  position:absolute;
+  top:0;
+  left:0;
+  -moz-opacity:0.5;
+  opacity:.50;
+  filter:alpha(opacity=50);
+  background-color:#CCC;
+  width:100%;
+  height:auto;
+  zoom:1;
+}
+
+.rismile .description {
+	padding: 10px 0px 10px 0px;
+	margin-bottom: 0px;
+	color: yellow;
+	font-size: 10pt;
+	background: #2a8ebf;
+	width: 100%
+}
+
+.rismile .description .gwt-HTML {
+	margin-right: 0.7cm;
+}
+
+.rismile .Sink {
+	width: 100%;
+	border: 1px solid #2a8ebf;
+	background: #E8EEF7;
+	position: relative;
+}
+
+.rismile .SinkList {
+  font-size: 10pt;
+  color: white;
+}
+
+.rismile .SinkList .ks-External {
+  /* background: #c6cab7; */
+  color: crimson;
+  padding: 4px;
+  padding-left: 16px;
+  padding-right: 16px;
+  margin-right: 3px;
+  border-bottom: 1px solid white;
+  cursor: pointer;
+  cursor: hand;
+}
+
+.rismile .SinkList .gwt-Image {
+  position: relative;
+  top: 0px;
+}
+
+.rismile .SinkList .ks-SinkItem a {
+  text-decoration: none;
+  color: white;
+}
+
+.rismile .SinkList .ks-FirstSinkItem a {
+  text-decoration: none;
+  color: white;
+}
+
+.rismile .SinkList .ks-SinkItem {
+	background: #c6cab7;
+  padding: 4px;
+  padding-left: 16px;
+  padding-right: 16px;
+  margin-right: 3px;
+  border-bottom: 1px solid white;
+  cursor: pointer;
+  cursor: hand;
+}
+
+.rismile .SinkList .ks-SinkItem-selected {
+  background: #c6cab7;
+  padding: 4px;
+  padding-left: 16px;
+  padding-right: 16px;
+  margin-right: 3px;
+  padding-bottom: 7px;
+}
+
+.rismile .SinkList .ks-SinkItem-selected a {
+  text-decoration: none;
+  color: white;
+}
+
+
+.rismile .SinkList .ks-FirstSinkItem {
+  background: #c6cab7 url(images/corner.gif) no-repeat top left;
+  padding: 4px;
+  padding-left: 16px;
+  padding-right: 16px;
+  margin-right: 3px;
+  border-bottom: 1px solid white;
+  cursor: pointer;
+  cursor: hand;
+}
+
+.rismile .SinkList .ks-FirstSinkItem-selected {
+  background: #c3d9ff url(images/corner.gif) no-repeat top left;
+  padding: 4px;
+  padding-left: 16px;
+  padding-right: 16px;
+  margin-right: 3px;
+  padding-bottom: 7px;
+}
+
+.rismile .SinkList .ks-FirstSinkItem-selected a {
+  text-decoration: none;
+  color: white;
+}
+
+.rismile-dialog {
+	z-index:20003;
+	/* background-color: white; */
+	/* border: 1px solid #2a8ebf; */
+	background: d3e9ff;
+	border: 5px solid #c3d9ff;
+}
+
+.rismile-dialog .caption {
+  background: url(images/system_blue_gradient.gif) repeat-x top left;
+  padding: 2px 2px;
+  font-weight: bold;
+  cursor: default;
+  white-space:nowrap;
+  border-bottom: 1px solid #2a8ebf;
+}
+
+.rismile-dialog .close {
+	height: 20px;
+	width: 20px;
+ 	background: url(images/dialog_close.gif) repeat-x center center;
+ 	cursor: pointer;
+    cursor: hand;
+	border: 0px 0px 0px 0px;
+}
+
+.rismile-dialog .button {
+	height: 25px;
+	width: 4em;
+	padding-top:3px;
+	background-color: #E2EAF5;
+	border-top: #FFFFFF 1px solid;
+	border-right: #797979 2px solid;
+	border-bottom: #797979 2px solid;
+	border-left: #FFFFFF 1px solid;
+	cursor: pointer;
+    cursor: hand;
+}
+
+
+.rismile-dialog .message {
+	color: crimson;
+}
+
+.rismile .system .gray table {
+	cellspacing:2px;
+	cellpading:2px;
+	margin-top: 1cm;
+	border: 1px solid #999;
+	background-color: white;
+	border-collapse: collapse;
+}
+
+.rismile .system .gray table td {
+	border:solid #999;
+	border-width:1px 1px 1px 1px;
+	padding:3px;
+}
+
+.rismile .system .gray table .head {
+	font-weight: bold;
+	background: #F4F7FB;
+}
+
+.rismile .system .manage table {
+	margin-top: 1cm;
+ 	vertical-align: middle;
+	text-align: center;
+}
+
+.rismile .system .manage table td {
+	padding:10px;
+}
+
+.rismile .system .gwt-Button {
+	padding-top:3px;
+	padding-bottom: 0px;
+	width: 8em;
+	background-color: #E2EAF5;
+	cursor: pointer;
+    cursor: hand;
+}
+
+.rismile .system .info-Label {
+	color: crimson;
+}
+
+.rismile .system .gwt-StackPanel .gwt-StackPanelItem .gwt-HTML {
+	text-indent: 1em;
+	font-size: larger;
+	font-weight: bold;
+}
+
+.rismile .system .gwt-StackPanel .gwt-StackPanelItem {
+	background: url(images/system_blue_gradient.gif) repeat-x top left;
+	border-top: 1px solid #2a8ebf;
+	cursor: pointer;
+	cursor: hand;
+	padding-top: 4px;
+	padding-bottom: 4px;
+}
+
+.rismile .system .gwt-StackPanel .gwt-StackPanelItem .stack-figure {
+  background: url(images/system_plus.gif) no-repeat 0;
+}
+
+.rismile .system .gwt-StackPanel .gwt-StackPanelItem-selected {
+  border-bottom: 1px solid #2a8ebf;
+}
+
+.rismile .system .gwt-StackPanel .gwt-StackPanelItem-selected  .stack-figure {
+  background: url(images/system_minus.gif) no-repeat 0;
+}
+
+.rismile-system .date-table {
+	margin-left: 5mm;
+	margin-top: 1cm;
+	margin-bottom: 2mm;
+}
+
+.rismiletable {
+	width: 100%;
+	border: 0px
+}
+
+
+.rismiletable .navbar {
+/*	border-top: 1px solid #2a8ebf; */
+	border-bottom: 1px solid #2a8ebf;
+	width: 100%;
+	vertical-align: middle;
+	background: url(images/system_blue_gradient.gif) repeat-x top left;
+	padding-top: 4px;
+	padding-bottom: 4px;
+}
+
+.rismiletable .navbar .gwt-Button {
+	padding-top: 1px;
+	padding-bottom: 1px;
+    height: 25px;
+	width: 6em;
+	background-color: #E2EAF5;
+	cursor: pointer;
+    cursor: hand;
+}
+
+.rismiletable .navbar .gwt-Button-dir {
+	font-weight: bold;
+	width: 3em;
+}
+
+.rismiletable .navbar .status {
+	vertical-align: middle;
+	padding-right: 10px;
+}
+
+.rismiletable .navbar .info-Label {
+	color: crimson;
+}
+
+.rismiletable .table {
+	margin-top: 10px;
+	cellspacing:1px;
+	margin-bottom: 0px;
+	font-size: 10pt;
+	width: 100%;
+	align: center;
+	white-space: nowrap;
+}
+
+.rismiletable .table td {
+	text-align: center;
+	border:solid #8abeef;
+	border-width:1px 1px 0px 0px;
+	white-space: nowrap;
+}
+
+.rismiletable .table td.header {
+	font-weight: bold;
+	border-width:0px;
+	text-decoration: underline;
+	font-size: 13pt;
+	text-align: center;
+}
+
+.rismiletable .table tr.normal {
+}
+
+.rismiletable .table tr.light {
+	background-color:#CCCCFC;
+}
+
