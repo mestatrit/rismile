@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?><Risetek>
+<rowid>7098<logTIME>2008-02-19 11:32:45</logTIME><message>Radius Server Initialization OK.</message></rowid>
+<rowid>7097<logTIME>2008-02-18 13:02:35</logTIME><message>Radius Server Initialization OK.</message></rowid>
+<rowid>7096<logTIME>2008-02-18 13:00:48</logTIME><message>Radius Server Initialization OK.</message></rowid>
+<rowid>7095<logTIME>2008-02-18 12:58:24</logTIME><message>Radius Server Initialization OK.</message></rowid>
+<rowid>7094<logTIME>2008-02-15 12:20:56</logTIME><message>Radius Server Initialization OK.</message></rowid>
+<rowid>7093<logTIME>2008-02-14 17:10:22</logTIME><message>Radius Server Initialization OK.</message></rowid>
+<rowid>7092<logTIME>2008-02-14 14:29:20</logTIME><message>Radius Server Initialization OK.</message></rowid>
+<rowid>7091<logTIME>2008-02-04 15:46:11</logTIME><message>很长很长很长很长user:user0008@risetek.com,imsi:000000000000008,off line</message></rowid>
+<rowid>7090<logTIME>2008-02-04 15:46:08</logTIME><message>user:user0008@risetek.com,imsi:000000000000008,off line</message></rowid>
+<rowid>7089<logTIME>2008-02-04 15:46:05</logTIME><message>user:user0008@risetek.com,imsi:000000000000008,off line</message></rowid>
+<rowid>7088<logTIME>2008-02-04 15:46:02</logTIME><message>user:user0008@risetek.com,imsi:000000000000008,on line</message></rowid>
+<rowid>7087<logTIME>2008-02-04 15:45:59</logTIME><message>user:user0008@risetek.com,imsi:000000000000008,on line</message></rowid>
+<rowid>7086<logTIME>2008-02-04 15:45:56</logTIME><message>user:user0008@risetek.com,imsi:000000000000008,on line</message></rowid>
+<rowid>7085<logTIME>2008-02-04 15:45:53</logTIME><message>user:user0008@risetek.com,imsi:000000000000008,off line</message></rowid>
+<rowid>7084<logTIME>2008-02-04 15:45:50</logTIME><message>user:user0008@risetek.com,imsi:000000000000008,off line</message></rowid>
+<rowid>7083<logTIME>2008-02-04 15:45:48</logTIME><message>user:user0008@risetek.com,imsi:000000000000008,off line</message></rowid>
+<rowid>7082<logTIME>2008-02-04 15:44:44</logTIME><message>user:user0008@risetek.com,imsi:000000000000008,off line</message></rowid>
+<rowid>7081<logTIME>2008-02-04 15:44:41</logTIME><message>user:user0008@risetek.com,imsi:000000000000008,off line</message></rowid>
+<rowid>7080<logTIME>2008-02-04 15:44:38</logTIME><message>user:user0008@risetek.com,imsi:000000000000008,off line</message></rowid>
+<rowid>7079<logTIME>2008-02-04 15:44:35</logTIME><message>user:user0008@risetek.com,imsi:000000000000008,on line</message></rowid>
+<rowid>7078<logTIME>2008-02-04 15:44:32</logTIME><message>user:user0008@risetek.com,imsi:000000000000008,on line</message></rowid>
+<rowid>7077<logTIME>2008-02-04 15:44:29</logTIME><message>user:user0008@risetek.com,imsi:000000000000008,on line</message></rowid>
+<rowid>7076<logTIME>2008-02-04 15:44:26</logTIME><message>user:user0008@risetek.com,imsi:000000000000008,off line</message></rowid>
+<rowid>7075<logTIME>2008-02-04 15:44:23</logTIME><message>user:user0008@risetek.com,imsi:000000000000008,off line</message></rowid>
+<rowid>7074<logTIME>2008-02-04 15:44:21</logTIME><message>user:user0008@risetek.com,imsi:000000000000008,off line</message></rowid>
+<rowid>7073<logTIME>2008-02-04 15:43:17</logTIME><message>user:user0008@risetek.com,imsi:000000000000008,off line</message></rowid>
+<rowid>7072<logTIME>2008-02-04 15:43:14</logTIME><message>user:user0008@risetek.com,imsi:000000000000008,off line</message></rowid>
+<rowid>7071<logTIME>2008-02-04 15:43:11</logTIME><message>user:user0008@risetek.com,imsi:000000000000008,off line</message></rowid>
+<rowid>7070<logTIME>2008-02-04 15:43:08</logTIME><message>user:user0008@risetek.com,imsi:000000000000008,on line</message></rowid>
+<rowid>7069<logTIME>2008-02-04 15:43:05</logTIME><message>user:user0008@risetek.com,imsi:000000000000008,on line</message></rowid>
+<rowid>7068<logTIME>2008-02-04 15:43:02</logTIME><message>user:user0008@risetek.com,imsi:000000000000008,on line</message></rowid>
+<rowid>7067<logTIME>2008-02-04 15:42:59</logTIME><message>user:user0008@risetek.com,imsi:000000000000008,off line</message></rowid>
+<rowid>7066<logTIME>2008-02-04 15:42:56</logTIME><message>user:user0008@risetek.com,imsi:000000000000008,off line</message></rowid>
+<rowid>7065<logTIME>2008-02-04 15:42:54</logTIME><message>user:user0008@risetek.com,imsi:000000000000008,off line</message></rowid>
+<rowid>7064<logTIME>2008-02-04 15:41:50</logTIME><message>user:user0008@risetek.com,imsi:000000000000008,off line</message></rowid>
+<rowid>7063<logTIME>2008-02-04 15:41:47</logTIME><message>user:user0008@risetek.com,imsi:000000000000008,off line</message></rowid>
+<rowid>7062<logTIME>2008-02-04 15:41:44</logTIME><message>user:user0008@risetek.com,imsi:000000000000008,off line</message></rowid>
+<rowid>7061<logTIME>2008-02-04 15:41:41</logTIME><message>user:user0008@risetek.com,imsi:000000000000008,on line</message></rowid>
+<rowid>7060<logTIME>2008-02-04 15:41:38</logTIME><message>user:user0008@risetek.com,imsi:000000000000008,on line</message></rowid>
+<rowid>7059<logTIME>2008-02-04 15:41:35</logTIME><message>user:user0008@risetek.com,imsi:000000000000008,on line</message></rowid>
+<CONTROL>CONTROL<TOTAL>7098</TOTAL><OFFSET>0</OFFSET></CONTROL></Risetek>
