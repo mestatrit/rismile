@@ -22,7 +22,7 @@ public class UserNoteModifyDialog extends CustomDialog {
 		rowid = tips_id;
 		setText("记录序号：" + tips_id);
 		// FIXME TODO 谷歌的浏览器存在问题，只能这样处理了。
-		if( tips_value.length() != 1 && tips_value.charAt(0) != '\160')
+//		if( tips_value.length() != 1 && tips_value.charAt(0) != '\160')  //wangx
 			note.setText(tips_value);
 		super.show();
 		note.setFocus(true);

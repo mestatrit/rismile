@@ -13,12 +13,12 @@ import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.HTMLTable;
 import com.google.gwt.user.client.ui.HTMLTable.Cell;
-import com.risetek.rismile.client.control.RismileTableController;
-import com.risetek.rismile.client.model.RismileTable;
 import com.risetek.rismile.client.utils.IPConvert;
 import com.risetek.rismile.client.utils.MessageConsole;
 import com.risetek.rismile.client.utils.SysLog;
-import com.risetek.rismile.client.view.RismileTableView;
+import com.risetek.rismile.log.client.control.RismileTableController;
+import com.risetek.rismile.log.client.model.RismileTable;
+import com.risetek.rismile.log.client.view.RismileTableView;
 
 public class RadiusBlackController extends RismileTableController {
 	private static String loadForm = "SqlBlackUserInfoXML";

@@ -34,8 +34,6 @@ public class UserFilterDialog extends CustomDialog {
 
 		return true;
 	}
-
-	@Override
 	public Widget getFirstTabIndex() {
 		return filter;
 	}

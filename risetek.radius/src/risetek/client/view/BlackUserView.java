@@ -6,8 +6,8 @@ import com.google.gwt.user.client.DOM;
 import com.google.gwt.user.client.Element;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Grid;
-import com.risetek.rismile.client.view.MouseEventGrid;
-import com.risetek.rismile.client.view.RismileTableView;
+import com.risetek.rismile.log.client.view.MouseEventGrid;
+import com.risetek.rismile.log.client.view.RismileTableView;
 
 public class BlackUserView extends RismileTableView {
 	private final static String[] columns = {"序号","终端号","用户名称"};

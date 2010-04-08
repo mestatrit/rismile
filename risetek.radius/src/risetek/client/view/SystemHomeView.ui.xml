@@ -1,0 +1,78 @@
+<ui:UiBinder xmlns:ui='urn:ui:com.google.gwt.uibinder'
+	xmlns:g='urn:import:com.google.gwt.user.client.ui'>
+	<ui:with field='res' type='risetek.client.view.SystemHomeView.Images' />
+<ui:style>
+	.sys-introH {
+		font-size: 22px;
+		font-weight: bold;
+		padding: 4px;
+		padding-left: 16px;
+		padding-right: 16px;
+		margin-right: 3px;
+		text-align: center;
+	}
+	
+	.sys-intro {
+		font-size: 18px;
+		padding: 4px;
+		padding-left: 8px;
+		padding-right: 8px;
+		margin-right: 3px;
+		text-align: left;
+	}
+	
+	.images-table {
+		text-align: right;
+	}
+	
+	.info-table {
+		font-size: 10px;
+		border: 1px solid #999;
+	}
+</ui:style>
+	<g:HTMLPanel width="100%">
+		<TABLE HEIGHT="100%" WIDTH="90%" border="0px" ALIGN="CENTER">
+			<TR>
+				<TD ALIGN="CENTER" height="100%">
+					<TABLE class="{style.images-table}" HEIGHT="100%" WIDTH="95%" border="0px">
+						<TR><TD><g:Image resource='{res.p2}' /></TD></TR>
+						<TR><TD><g:Image resource='{res.p3}' /></TD></TR>
+						<TR><TD><g:Image resource='{res.p4}' /></TD></TR>
+						<TR><TD><g:Image resource='{res.p5}' /></TD></TR>
+					</TABLE>	
+				</TD>
+				<TD ALIGN="CENTER" height="100%">
+					<TABLE HEIGHT="100%" WIDTH="90%">
+					<TR><TD ALIGN="right"><SPAN class="{style.info-table}">产品系列号：<span ui:field="serial" /></SPAN></TD></TR>
+						<TR><TD>
+								<DIV class='{style.sys-introH}'>成都中联信通科技有限公司</DIV>
+								<DIV class='{style.sys-introH}'>专网认证服务器</DIV>
+						</TD></TR>
+						<TR>
+							<TD>
+								<ul class='{style.sys-intro}'>
+									<li>行业无线专网中完成认证授权功能</li>
+									<br />
+									<li>实现设备号、用户名、密码和固定地址四绑定功能</li>
+									<br />
+									<li>支持PAP，CHAP认证方式</li>
+									<br />
+									<li>支持最大10000个用户</li>
+									<br />
+									<li>采用高性能网络专用处理器</li>
+									<br />
+									<li>平均认证时间约500毫秒</li>
+									<br />
+									<li>超过一万条日志记录</li>
+									<br />
+									<li>快速热备份切换</li>
+								</ul>
+							</TD>
+						</TR>
+					<TR><TD><DIV ALIGN="right"><span ui:field="status" /></DIV></TD></TR>
+					</TABLE>
+				</TD>
+			</TR>
+		</TABLE>
+	</g:HTMLPanel>
+</ui:UiBinder>

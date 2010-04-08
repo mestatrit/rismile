@@ -19,12 +19,12 @@ import com.google.gwt.http.client.Response;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.HTMLTable;
 import com.google.gwt.user.client.ui.HTMLTable.Cell;
-import com.risetek.rismile.client.control.RismileTableController;
-import com.risetek.rismile.client.model.RismileTable;
 import com.risetek.rismile.client.utils.IPConvert;
 import com.risetek.rismile.client.utils.MessageConsole;
 import com.risetek.rismile.client.utils.SysLog;
-import com.risetek.rismile.client.view.RismileTableView;
+import com.risetek.rismile.log.client.control.RismileTableController;
+import com.risetek.rismile.log.client.model.RismileTable;
+import com.risetek.rismile.log.client.view.RismileTableView;
 
 public class RadiusUserController extends RismileTableController {
 	private static String emptyForm = "clearuser";
@@ -93,7 +93,7 @@ public class RadiusUserController extends RismileTableController {
 
 	public void onResponseReceived(Request request, Response response)
 	{
-		MessageConsole.setText("获得用户数据");
+		MessageConsole.setText("获得用户数据"); //wangx
 		data.parseXML(response.getText());
 		view.render(data);
 	}

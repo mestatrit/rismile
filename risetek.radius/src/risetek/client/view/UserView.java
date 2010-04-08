@@ -9,9 +9,9 @@ import com.google.gwt.user.client.Element;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Grid;
-import com.risetek.rismile.client.model.RismileTable;
-import com.risetek.rismile.client.view.MouseEventGrid;
-import com.risetek.rismile.client.view.RismileTableView;
+import com.risetek.rismile.log.client.model.RismileTable;
+import com.risetek.rismile.log.client.view.MouseEventGrid;
+import com.risetek.rismile.log.client.view.RismileTableView;
 
 public class UserView extends RismileTableView {
 	
@@ -83,7 +83,7 @@ public class UserView extends RismileTableView {
     	super.render(table);
     	String[][] d = table.getData();
     	for(int loop = 0; loop < d.length; loop++)
-    		if("1".equalsIgnoreCase(d[loop][6]))
+    		if("0".equalsIgnoreCase(d[loop][6]))
     			grid.getRowFormatter().setStyleName(loop+1, "green");
 	}
     
@@ -101,7 +101,7 @@ public class UserView extends RismileTableView {
             if(row == 0) return;
             String d[][] = control.getTable().getData();
 
-            if( "1".equalsIgnoreCase(d[row-1][6]))
+            if( "0".equalsIgnoreCase(d[row-1][6]))
             	getRowFormatter().setStyleName(row, "green");
 		
 		}

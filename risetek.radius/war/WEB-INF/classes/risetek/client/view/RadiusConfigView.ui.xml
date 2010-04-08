@@ -1,0 +1,128 @@
+<ui:UiBinder xmlns:ui='urn:ui:com.google.gwt.uibinder'
+	xmlns:g='urn:import:com.google.gwt.user.client.ui'>
+
+	<ui:style>
+		.title {
+			text-indent: 1em;
+			padding-top: 5px;
+			padding-bottom: 5px;
+			font-size: 14px;
+			font-weight: bold;
+			text-align: left;
+			background: url(images/blue.gif) repeat-x top left;
+			border-top: 1px solid #2a8ebf;
+			width: 100%;
+		}
+		
+		.area {
+			border-top: 1px solid #2a8ebf;
+		}
+		
+		.conf-table {
+			background-color: white;
+			background: white;
+			border: 1px solid #999;
+			border-collapse: collapse;
+			text-align: center;
+		}
+		
+		.conf-table td {
+			width: 8em;
+			border: solid #999;
+			border-width: 1px 1px 1px 1px;
+			padding-top: 4px;
+			padding-left: 3px;
+			padding-bottom: 2px;
+		}
+		
+		.conf-table button {
+			width: 6em;
+			cursor: pointer;
+			cursor: hand;
+		}
+	</ui:style>
+
+	<g:HTMLPanel width="100%">
+		<TABLE height="100%" width="100%" cellspacing="0px" cellpadding="0px" border="0px">
+			<TR>
+				<TD width="100%" height="25%">
+					<TABLE height="100%" width="100%" cellspacing="0px" cellpadding="0px" border="0px">
+						<TR height="33px">
+							<TD><g:HTML styleName="{style.title}">认证端口配置</g:HTML></TD>
+						</TR>
+						<TR><TD class='{style.area}'>
+								<TABLE class="{style.conf-table}" width="70%" ALIGN="CENTER">
+									<TR>
+										<TD>认证端口</TD>
+										<TD><span ui:field="authPort"></span></TD>
+										<TD><g:Button ui:field="authButton">修改</g:Button></TD>
+									</TR>
+								</TABLE>
+							</TD>
+						</TR>
+					</TABLE>
+				</TD>
+			</TR>
+			<TR>
+				<TD width="100%" height="25%">
+					<TABLE height="100%" width="100%" cellspacing="0px" cellpadding="0px" border="0px">
+						<TR height="33px">
+							<TD><g:HTML styleName="{style.title}">计费端口配置</g:HTML></TD>
+						</TR>
+						<TR><TD class='{style.area}'>
+								<TABLE class="{style.conf-table}" width="70%" ALIGN="CENTER">
+									<TR>
+										<TD>计费端口</TD>
+										<TD><span ui:field="acctPort"></span></TD>
+										<TD><g:Button ui:field="acctButton">修改</g:Button></TD>
+									</TR>
+								</TABLE>
+							</TD>
+						</TR>
+					</TABLE>
+				</TD>
+			</TR>
+			<TR>
+				<TD width="100%" height="25%">
+					<TABLE height="100%" width="100%" cellspacing="0px" cellpadding="0px" border="0px">
+						<TR height="33px">
+							<TD><g:HTML styleName="{style.title}">共享密匙配置</g:HTML></TD>
+						</TR>
+						<TR><TD class='{style.area}'>
+								<TABLE class="{style.conf-table}" width="70%" ALIGN="CENTER">
+									<TR>
+										<TD>共享密匙</TD>
+										<TD><span ui:field="secretPort"></span></TD>
+										<TD><g:Button ui:field="secretButton">修改</g:Button></TD>
+									</TR>
+								</TABLE>
+							</TD>
+						</TR>
+					</TABLE>
+				</TD>
+			</TR>
+			<TR>
+				<TD width="100%" height="25%">
+					<TABLE height="100%" width="100%" cellspacing="0px" cellpadding="0px" border="0px">
+						<TR height="33px">
+							<TD><g:HTML styleName="{style.title}">产品序列号</g:HTML></TD>
+						</TR>
+						<TR><TD class='{style.area}'>
+								<TABLE class="{style.conf-table}" width="70%" ALIGN="CENTER">
+									<TR>
+										<TD><span ui:field="versionLabel"></span></TD>
+										<TD>（授权用户数:<span ui:field="versionNoteLabel"></span>）</TD>
+										<!-- 
+										<TD><g:Button ui:field="licenseButton">授权</g:Button></TD>
+										 -->
+									</TR>
+								</TABLE>
+							</TD>
+						</TR>
+					</TABLE>
+				</TD>
+			</TR>
+		</TABLE>
+	</g:HTMLPanel>
+
+</ui:UiBinder>

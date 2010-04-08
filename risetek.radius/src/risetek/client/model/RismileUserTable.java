@@ -3,9 +3,9 @@ package risetek.client.model;
 import com.google.gwt.xml.client.Element;
 import com.google.gwt.xml.client.NodeList;
 import com.google.gwt.xml.client.XMLParser;
-import com.risetek.rismile.client.model.RismileTable;
 import com.risetek.rismile.client.utils.IPConvert;
 import com.risetek.rismile.client.utils.XMLDataParse;
+import com.risetek.rismile.log.client.model.RismileTable;
 
 public class RismileUserTable extends RismileTable {
 	public String filter = "";
