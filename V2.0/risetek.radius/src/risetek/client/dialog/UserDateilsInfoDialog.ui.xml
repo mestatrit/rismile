@@ -1,0 +1,82 @@
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
+	xmlns:g="urn:import:com.google.gwt.user.client.ui">
+	<ui:style type="risetek.client.dialog.UserDateilsInfoDialog.UserStatusDialogStyle">
+		.StatusOK {
+			background-color:#BFFFDF;
+		}
+		.StatusWarning {
+			background-color:#FFCCFF;
+		}
+		.StatusNormal {
+			background-color:#E8EEF7;
+		}
+		.light {
+			background-color:#CCCCFC;
+		}
+		.head {
+			font-size: 14px;
+			font-weight: bold;
+			height: 26px;
+		}
+		.table-title{
+			font-weight: bold;
+			font-size: 16px;
+		}
+		.rismiletable {
+			width: 100%;
+			border: 0px;
+			background-color: #E8EEF7
+		}
+		
+		.rismiletable .table {
+			margin-top: 10px;
+			cellspacing:1px;
+			margin-bottom: 0px;
+			font-size: 10pt;
+			width: 100%;
+			align: center;
+			white-space: nowrap;
+			border: solid #8abeef;
+			border-width: 0px 0px 1px 1px;
+		}
+		
+		.rismiletable .table td {
+			text-align: center;
+			border:solid #8abeef;
+			border-width:1px 1px 0px 0px;
+			white-space: nowrap;
+		}
+		
+		.rismiletable .table td.header {
+			font-weight: bold;
+			border-width:0px;
+			text-decoration: underline;
+			font-size: 13pt;
+			text-align: center;
+		}
+	
+		.rismiletable .table tr.normal {
+		}
+		
+		.rismiletable .table tr.light {
+			background-color:#CCCCFC;
+		}
+	</ui:style>
+	<g:DockLayoutPanel styleName='{style.rismiletable}'>
+		<g:center>
+			<g:Grid ui:field="grid" styleName='{style.table}'></g:Grid>
+		</g:center>
+		<g:south size="30">
+			<g:HTMLPanel>
+				<TABLE width="100%" height="100%" vertical-align="center">
+					<TR align="center">
+						<TD width="40" align="center">
+							<g:Button ui:field="button" />
+						</TD>
+					</TR>
+				</TABLE>
+			</g:HTMLPanel>
+		</g:south>
+	</g:DockLayoutPanel>
+</ui:UiBinder>

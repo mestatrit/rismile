@@ -1,0 +1,1 @@
+@java -Xmx256M -cp "%~dp0\src;%~dp0\bin;../rismile.base/gwtools/gwt-user.jar;../rismile.base/gwtools/gwt-dev-windows.jar;../rismile.system/src;../rismile.log/src;../rismile.base/src" com.google.gwt.dev.GWTCompiler -out "%~dp0\www" %* risetek.index
