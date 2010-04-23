@@ -23,9 +23,21 @@ public class licenseView extends Composite {
 
 		@Override
 		public void onClick(ClickEvent event) {
-			String scode = userLabel.getText() + serialLabel.getText() + userLabel.getText();
-			MD5 m = new MD5();
-			code.setText("CODE:   " + m.calcMD5(scode).substring(0, 18));
+			int numberOfUsers;
+			try {
+				numberOfUsers = Integer.parseInt(userLabel.getText().trim());
+				String Serial = serialLabel.getText().trim();
+				if( Serial.length() == 12 )
+				{
+				String scode = numberOfUsers + serialLabel.getText().trim() + numberOfUsers;
+				MD5 m = new MD5();
+				code.setText("["+scode+"]   CODE:   " + m.calcMD5(scode).substring(0, 18));
+				}
+				else
+					code.setText("错误的序列号输入");
+			} catch (NumberFormatException e) {
+				code.setText("错误的数量输入");
+			}
 		}
 	}
 	
