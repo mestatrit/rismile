@@ -37,7 +37,7 @@ public class index extends  Entry{
 		String resule = XMLDataParse.getElementText(response.getText(), "NONE");
 		if("NULL".equals(resule)){
 			login = true;
-			enable.setText("ÍË³öÌØÈ¨");
+			enable.setText("é€€å‡ºç‰¹æƒ");
 		} else {
 			Control control = new Control();
 			control.dialog.confirm.addClickHandler(control);
