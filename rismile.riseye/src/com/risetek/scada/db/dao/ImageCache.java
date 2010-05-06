@@ -3,17 +3,41 @@ package com.risetek.scada.db.dao;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.util.Collections;
+import java.util.ArrayList;
+import java.util.Iterator;
 
-import javax.cache.Cache;
-import javax.cache.CacheException;
-import javax.cache.CacheFactory;
-import javax.cache.CacheManager;
-
-import com.google.gwt.core.client.GWT;
 import com.risetek.scada.client.ImgPack;
 public class ImageCache {
 
+	public static ArrayList<ImgPack> list = new ArrayList<ImgPack>();
+	
+	public static void flushImg(ImgPack img) {
+		Iterator<ImgPack>  i = list.iterator();
+		while( i.hasNext() )
+		{
+			ImgPack l = i.next();
+			if( l.id.equalsIgnoreCase(img.id) && l.seq.equalsIgnoreCase(img.seq) )
+			{
+				img.GPS = l.GPS;
+				list.remove(l);
+				break;
+			}
+		}
+		list.add(img);
+	}
+
+	public static void flushGPS(String ident, String gps) {
+		Iterator<ImgPack>  i = list.iterator();
+		while( i.hasNext() )
+		{
+			ImgPack l = i.next();
+			if( l.id.equalsIgnoreCase(ident) )
+			{
+				l.GPS = gps;
+			}
+		}
+	}
+	
 	static ImgPack img_stub;
 	// http://forums.smartclient.com/showthread.php?t=5258
 	static {
@@ -47,8 +71,6 @@ public class ImageCache {
 				img_stub.stamp = "stamp";
 				img_stub.image = cachebuf;
 				
-//				img_stub = new ImgPack("img_stub", "seq", "stamp", cachebuf);
-				
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
@@ -58,54 +80,35 @@ public class ImageCache {
 		}
 	}
 	
-	public static ImageCache imageCache = new ImageCache();
-
-	
-	private Cache images;
-	private ImageCache() {
-
-		try {
-			CacheFactory cacheFactory = CacheManager.getInstance().getCacheFactory();
-			images = cacheFactory.createCache(Collections.emptyMap());
-			putImage("", img_stub);
-		} catch (CacheException e) {
-			GWT.log("Create image cache failed", e);
-		}
-	}
-	
-	public synchronized void putImage(String id, ImgPack image)
+	public static synchronized ArrayList<ImgPack> getGPS()
 	{
-		if(image == null) return;
-		try {
-			images.put("image", image);
-		} catch (Exception e) {
-			e.printStackTrace();
+		ArrayList<ImgPack> result = new ArrayList<ImgPack>();
+		
+		Iterator<ImgPack>  i = list.iterator();
+		while( i.hasNext() )
+		{
+			ImgPack l = i.next();
+			result.add(l.clone(false));
 		}
-	}
+		return result;
 
-	public synchronized void putGPS(String id, ImgPack image)
-	{
-		if(image == null) return;
-		try {
-			images.put("gps", image);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
-
-	public synchronized ImgPack getImage()
-	{
-		ImgPack i = (ImgPack) images.get("image");
-		if( i == null )
-			return img_stub;
-		return i;
 	}
 	
-	public synchronized ImgPack getGPS()
-	{
-		ImgPack i = (ImgPack) images.get("gps");
-		if( i == null )
-			return img_stub;
-		return i;
+//	public static synchronized ArrayList<ImgPack> getList(String Ident, String Cookie) {
+	public static synchronized ArrayList<ImgPack> getList(String Ident, long Cookie) {
+		ArrayList<ImgPack> result = new ArrayList<ImgPack>();
+		
+		Iterator<ImgPack>  i = list.iterator();
+		while( i.hasNext() )
+		{
+			ImgPack l = i.next();
+//			if( Ident.equalsIgnoreCase(l.id+":"+l.seq)  && !Cookie.equalsIgnoreCase(l.Cookie) )
+			if( Ident.equalsIgnoreCase(l.id+":"+l.seq)  && (Cookie != l.Cookie) )
+				result.add(l.clone(true));
+			else
+				result.add(l.clone(false));
+		}
+		return result;
 	}
+	
 }
