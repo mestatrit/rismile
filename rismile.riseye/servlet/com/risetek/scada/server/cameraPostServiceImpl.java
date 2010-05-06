@@ -2,6 +2,7 @@ package com.risetek.scada.server;
 
 import java.io.IOException;
 import java.io.InputStream;
+
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -43,10 +44,7 @@ public class cameraPostServiceImpl extends HttpServlet {
 			img.seq = seq;
 			img.stamp = stamp;
 			img.image = remoteImg;
-			img.GPS = "nogps";
-//			ImgPack img = new ImgPack(ident, seq, stamp, remoteImg);
-
-			ImageCache.imageCache.putImage("", img);
+			ImageCache.flushImg(img);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

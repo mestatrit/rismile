@@ -1,5 +1,7 @@
 package com.risetek.scada.server;
 
+import java.util.ArrayList;
+
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 import com.risetek.scada.client.ImgPack;
 import com.risetek.scada.client.view.cameraView.PhotoService;
@@ -10,16 +12,8 @@ public class PhotoServiceImpl extends RemoteServiceServlet implements	PhotoServi
 	private static final long serialVersionUID = -5941194778985715033L;
 
 	@Override
-	public ImgPack getPhoto(String cookie) {
-		ImgPack img = ImageCache.imageCache.getImage();
-		img.GPS = ImageCache.imageCache.getGPS().GPS;
-		
-		if( cookie.equalsIgnoreCase(img.Cookie))
-		{
-			img.image = null;
-		}
-		
-		return img;
+	public ArrayList<ImgPack> getPhoto(String ident, long cookie) {
+		return ImageCache.getList(ident, cookie);
 	}
 
 }

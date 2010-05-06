@@ -18,16 +18,12 @@ public class GPSPostServiceImpl extends HttpServlet {
 			throws ServletException, IOException {
 
 		String ident = req.getParameter("id");
-		if( ident == null )
-			ident = "no id";
-		
-		String gps_message = req.getParameter("gps");
-		if( gps_message == null )
-			return;
-		
-		ImgPack img = new ImgPack();
-		img.GPS = gps_message;
-		ImageCache.imageCache.putGPS("", img);
+		if( ident != null )
+		{
+			String gps_message = req.getParameter("gps");
+			if( gps_message != null ) 
+				ImageCache.flushGPS(ident, gps_message);
+		}
 	}
 
 }
