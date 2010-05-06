@@ -1,7 +1,15 @@
 package com.risetek.scada.client.view;
 
+import java.util.ArrayList;
+import java.util.Iterator;
+
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.SpanElement;
+import com.google.gwt.event.dom.client.ClickEvent;
+import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.maps.client.geom.LatLng;
+import com.google.gwt.maps.client.overlay.Marker;
+import com.google.gwt.maps.client.overlay.MarkerOptions;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.Timer;
@@ -9,8 +17,10 @@ import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.rpc.RemoteService;
 import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
 import com.google.gwt.user.client.ui.Composite;
+import com.google.gwt.user.client.ui.Grid;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
+import com.google.gwt.user.client.ui.HTMLTable.Cell;
 import com.risetek.scada.client.Base64Encoder;
 import com.risetek.scada.client.Entry;
 import com.risetek.scada.client.ImgPack;
@@ -23,18 +33,17 @@ public class cameraView extends Composite {
 
 	@RemoteServiceRelativePath("photo")
 	public interface PhotoService extends RemoteService {
-		ImgPack getPhoto(String id);
+		ArrayList<ImgPack> getPhoto(String ident, long cookie);
 	}	
 
 	public interface PhotoServiceAsync {
-		void getPhoto(String id, AsyncCallback<ImgPack> callback);
+		void getPhoto(String ident, long cookie, AsyncCallback<ArrayList<ImgPack>> callback);
 	}
 
 	PhotoServiceAsync photoService = (PhotoServiceAsync)GWT.create(PhotoService.class);
 
-	private static Timer hbTimer = null;
+	private static Timer PhotoTimer = null;
 
-	
 	@UiField SpanElement mphoto;
 	
 	@UiField
@@ -53,6 +62,10 @@ public class cameraView extends Composite {
 	Label picsize;
 	
 	@UiField	Label gps;
+	@UiField	Label gps2;
+	@UiField	Label	currentident;
+	
+	@UiField Grid identlist;
 	
 	static long last = 0;
 	
@@ -62,28 +75,76 @@ public class cameraView extends Composite {
 		initWidget(w);
 		GWT.log("get picture", null);
 		//frame.setBorderWidth(1);
+		identlist.resize(10, 3);
+		identlist.setBorderWidth(1);
+		
+
+		identlist.addClickHandler(new ClickHandler(){
+
+			@Override
+			public void onClick(ClickEvent event) {
+				Cell c = identlist.getCellForEvent(event);
+				int index = c.getRowIndex();
+				cIdent = identlist.getText(index, 0)+":"+identlist.getText(index, 1);
+				MessageConsole.setText("CLICKED:"+ cIdent);
+				currentident.setText("您点击了:"+ cIdent);
+			}
+			
+		});
 	}
 
-	AsyncCallback<ImgPack> callback = new AsyncCallback<ImgPack>() {
-	    public void onSuccess(ImgPack img) {
+	AsyncCallback<ArrayList<ImgPack>> callback = new AsyncCallback<ArrayList<ImgPack>>() {
+	    public void onSuccess(ArrayList<ImgPack> l) {
+			MessageConsole.setText("数据得到 ");
     		String localid = mphoto.getId();
-    		if( localid != null )
-    			GWT.log("Local ID: "+localid + "  Remote: "+ img.Cookie, null);
-	    	if( img.Cookie != mphoto.getId() && (img.image != null))
-	    	{
-		    	GWT.log("Get ImgPack id is:"+img.id+" seq is:"+img.seq+" stamp is:"+img.stamp +" length is:"+img.image.length, null);
-		    	ident.setText("识别号："+img.id);
-		    	seq.setText("摄像头序列："+img.seq);
-		    	picsize.setText("图片大小："+img.image.length);
-		    	timestamp.setText("上传时间："+img.stamp);
-		    	gps.setText("GPS："+img.GPS);
-		    	mphoto.setInnerHTML("<img src='data:image/jpeg;base64," + Base64Encoder.toBase64String(img.image) + "'/>");
-		    	mphoto.setId(img.Cookie);
-				MessageConsole.setText("图片得到 ");
-	    	}
-	    	else 
-	    		MessageConsole.setText("图片无变化");
+			int loop = 0;
+    		Iterator<ImgPack> i = l.iterator();
+    		while(i.hasNext()) {
+    			ImgPack img = i.next();
+    			if( img.image != null ) {
+    	    		if( localid != null )
+    	    			GWT.log("Local ID: "+localid + "  Remote: "+ img.Cookie, null);
+			    	GWT.log("Get ImgPack id is:"+img.id+" seq is:"+img.seq+" stamp is:"+img.stamp +" length is:"+img.image.length, null);
+			    	ident.setText("识别号："+img.id);
+			    	seq.setText("摄像头序列："+img.seq);
+			    	picsize.setText("图片大小："+img.image.length);
+			    	timestamp.setText("上传时间："+img.stamp);
+			    	mphoto.setInnerHTML("<img src='data:image/jpeg;base64," + Base64Encoder.toBase64String(img.image) + "'/>");
+			    	mphoto.setId(new Long(img.Cookie).toString());
+					MessageConsole.setText("图片得到 ");
+		    		if( img.GPS != null ) {
+						GWTStringTokenizer tokenizer = new GWTStringTokenizer(img.GPS, ",", false);
+						String token = tokenizer.nextToken();
+						if (token.equals("$GPRMC")) {
+							token = tokenizer.nextToken();
+							token = tokenizer.nextToken();
+							if (token.equalsIgnoreCase("A")) {
+								String lattitude = tokenizer.nextToken();
+								token = tokenizer.nextToken();
+								String longitude = tokenizer.nextToken();
 
+								double dlattitude = (Double.parseDouble(lattitude)+25) / 100;
+								double dlongitude = (Double.parseDouble(longitude)+8) / 100;
+								gps.setText("经度：" + dlattitude);
+								gps2.setText("维度："+ dlongitude);
+							}
+						}		    		
+		    		}
+    			}
+
+				if( loop < 8 )
+				{
+					identlist.setText(loop, 0, img.id);
+					identlist.setText(loop, 1, img.seq);
+					long delta = System.currentTimeMillis() -  img.Cookie;
+					identlist.setText(loop, 2, new Long(delta).toString());
+				}
+				loop++;
+
+    		}
+    		
+    		
+    		
 			long ti = System.currentTimeMillis() - last;
 			int sc;
 			if( ti > 500 )
@@ -92,8 +153,8 @@ public class cameraView extends Composite {
 				sc = (int)ti + 1;
 
 			last = System.currentTimeMillis();
-			if( hbTimer != null)
-				hbTimer.schedule(sc);
+			if( PhotoTimer != null)
+				PhotoTimer.schedule(sc);
 	    	
 	    }
 
@@ -107,28 +168,34 @@ public class cameraView extends Composite {
 			else
 				sc = (int)ti + 500;
 			last = System.currentTimeMillis();
-			if( hbTimer != null)
-				hbTimer.schedule(sc);
+			if( PhotoTimer != null) 
+				PhotoTimer.schedule(sc);
 	    }
 	  };	
 
+	String cIdent = "img_stub:seq";
 	public void show(){
-		hbTimer = new Timer() {
+		PhotoTimer = new Timer() {
 			public void run() {
-				String imgname = "/scada/camera?id="+System.currentTimeMillis();
-				MessageConsole.setText("获取图片: " + imgname );
-				GWT.log("获取图片: " + imgname ,null);
-				photoService.getPhoto(mphoto.getId(), callback);
+				MessageConsole.setText("提取图片 " + mphoto.getId() == null ? "":mphoto.getId());
+				GWT.log("提取图片 " + mphoto.getId() == null ? "":mphoto.getId(), null);
+				long id = 0;
+				try {
+					id = Long.parseLong(mphoto.getId());
+				} catch (NumberFormatException e) {
+					e.printStackTrace();
+				}
+				photoService.getPhoto(cIdent, id, callback);
 			}
 		};
-		hbTimer.run();
+		PhotoTimer.run();
 	}
 
 	public void hide(){
-		if( hbTimer != null )
+		if( PhotoTimer != null )
 		{
-			hbTimer.cancel();
-			hbTimer = null;
+			PhotoTimer.cancel();
+			PhotoTimer = null;
 			MessageConsole.setText("终止图片获取");
 		}
 	}

@@ -7,6 +7,8 @@
 		}
 	</ui:style>
 	<g:HTMLPanel width="100%" ui:field="frame">
+	<TABLE width="100%" height="100%">
+	<TR><TD width="70%">
 	<g:DecoratorPanel>
 	<g:VerticalPanel>
 	<g:HTMLPanel>	<span ui:field='mphoto'/> </g:HTMLPanel>
@@ -15,9 +17,21 @@
 	<g:Label ui:field="seq"></g:Label>
 	<g:Label ui:field="picsize"></g:Label>
 	<g:Label ui:field="gps"></g:Label>
+	<g:Label ui:field="gps2"></g:Label>
 
 	<g:Label ui:field="timestamp"></g:Label>
 	</g:VerticalPanel>
 	</g:DecoratorPanel>
+	</TD>
+	<TD>
+	<g:Label>请点击列表中的摄像头标号</g:Label>
+	<g:Label ui:field="currentident">当前摄像头</g:Label>
+	<g:DecoratorPanel>
+	<g:Grid ui:field="identlist">
+	</g:Grid>
+	</g:DecoratorPanel>
+	</TD>
+	</TR>
+	</TABLE>
 	</g:HTMLPanel>
 </ui:UiBinder> 
