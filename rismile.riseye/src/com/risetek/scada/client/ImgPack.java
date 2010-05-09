@@ -10,12 +10,11 @@ public class ImgPack implements Serializable{
 	public String stamp;
 	public byte[] image;
 	public String GPS;
-	//public String Cookie;
+
 	public long Cookie;
 	
 	public ImgPack()
 	{
-		//Cookie = Long.toString(System.currentTimeMillis());
 		Cookie = System.currentTimeMillis();
 	}
 	

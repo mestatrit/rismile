@@ -38,7 +38,6 @@ public class cameraPostServiceImpl extends HttpServlet {
 		try {
 			byte[] remoteImg = new byte[ContentLength];
 			imgData.read(remoteImg);
-			imgData.close();
 			ImgPack img = new ImgPack();
 			img.id = ident;
 			img.seq = seq;
@@ -47,6 +46,8 @@ public class cameraPostServiceImpl extends HttpServlet {
 			ImageCache.flushImg(img);
 		} catch (IOException e) {
 			e.printStackTrace();
+		} finally {
+			imgData.close();
 		}
 	}
 }
