@@ -7,7 +7,6 @@ import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.SpanElement;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
-import com.google.gwt.resources.client.ImageResource;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.Timer;
@@ -57,6 +56,9 @@ public class cameraView extends Composite {
 	@UiField
 	Label timestamp;
 
+	@UiField	Image eyes;
+	
+	
 	@UiField
 	Label picsize;
 	
@@ -108,9 +110,10 @@ public class cameraView extends Composite {
 			    	picsize.setText("图片大小："+img.image.length);
 			    	timestamp.setText("上传时间："+img.stamp);
 			    	
-			//    	Image image = new Image("data:image/jpeg;base64,"+ Base64Encoder.toBase64String(img.image));
+			    	eyes.setUrl("data:image/jpeg;base64,"+ Base64Encoder.toBase64String(img.image));
 
-			    	mphoto.setInnerHTML("<img src='data:image/jpeg;base64," + Base64Encoder.toBase64String(img.image) + "'/>");
+//			    	mphoto.setInnerHTML("<img src='data:image/jpeg;base64," + Base64Encoder.toBase64String(img.image) + "'/>");
+
 			    	mphoto.setId(new Long(img.Cookie).toString());
 					MessageConsole.setText("图片得到 ");
 		    		if( img.GPS != null ) {

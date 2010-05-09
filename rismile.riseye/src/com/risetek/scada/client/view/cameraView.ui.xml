@@ -16,9 +16,7 @@
 			<TR>
 				<TD width="40%">
 					<g:DecoratorPanel>
-						<g:HTMLPanel>
-							<span ui:field='mphoto' />
-						</g:HTMLPanel>
+		<g:Image ui:field='eyes'></g:Image>
 					</g:DecoratorPanel>
 				</TD>
 				<TD width="30%">
@@ -32,6 +30,7 @@
 							<g:Label ui:field="gps2"></g:Label>
 
 							<g:Label ui:field="timestamp"></g:Label>
+							<g:HTMLPanel><span ui:field='mphoto' /> </g:HTMLPanel>
 						</g:VerticalPanel>
 					</g:DecoratorPanel>
 				</TD>
