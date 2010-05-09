@@ -7,6 +7,7 @@ import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.SpanElement;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.resources.client.ImageResource;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.Timer;
@@ -15,6 +16,7 @@ import com.google.gwt.user.client.rpc.RemoteService;
 import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.Grid;
+import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.gwt.user.client.ui.HTMLTable.Cell;
@@ -71,10 +73,9 @@ public class cameraView extends Composite {
 		w.setHeight(Entry.SinkHeight);
 		initWidget(w);
 		GWT.log("get picture", null);
-		//frame.setBorderWidth(1);
+
 		identlist.resize(10, 3);
 		identlist.setBorderWidth(1);
-		
 
 		identlist.addClickHandler(new ClickHandler(){
 
@@ -94,7 +95,7 @@ public class cameraView extends Composite {
 	    public void onSuccess(ArrayList<ImgPack> l) {
 			MessageConsole.setText("数据得到 ");
     		String localid = mphoto.getId();
-			int loop = 0;
+    		int loop = 0;
     		Iterator<ImgPack> i = l.iterator();
     		while(i.hasNext()) {
     			ImgPack img = i.next();
@@ -106,6 +107,9 @@ public class cameraView extends Composite {
 			    	seq.setText("摄像头序列："+img.seq);
 			    	picsize.setText("图片大小："+img.image.length);
 			    	timestamp.setText("上传时间："+img.stamp);
+			    	
+			//    	Image image = new Image("data:image/jpeg;base64,"+ Base64Encoder.toBase64String(img.image));
+
 			    	mphoto.setInnerHTML("<img src='data:image/jpeg;base64," + Base64Encoder.toBase64String(img.image) + "'/>");
 			    	mphoto.setId(new Long(img.Cookie).toString());
 					MessageConsole.setText("图片得到 ");
@@ -134,13 +138,16 @@ public class cameraView extends Composite {
 					identlist.setText(loop, 0, img.id);
 					identlist.setText(loop, 1, img.seq);
 					long delta = System.currentTimeMillis() -  img.Cookie;
-					identlist.setText(loop, 2, new Long(delta).toString());
+					identlist.setText(loop, 2, new Long((delta+50)/100).toString()+"ms");
 				}
 				loop++;
-
     		}
-    		
-    		
+			for( ;loop < 8;loop++ )
+			{
+				identlist.clearCell(loop, 0);
+				identlist.clearCell(loop, 1);
+				identlist.clearCell(loop, 2);
+			}
     		
 			long ti = System.currentTimeMillis() - last;
 			int sc;
