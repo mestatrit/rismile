@@ -7,6 +7,11 @@ import com.risetek.rismile.client.model.RismileTable;
 import com.risetek.rismile.client.utils.XMLDataParse;
 
 public class RismileLogTable extends RismileTable {
+	
+	public RismileLogTable(boolean dir) {
+		super(dir);
+	}
+
 	// 对应的自动刷新按键。
 	public boolean autoRefresh = true;
 	public String message_filer  = "";
