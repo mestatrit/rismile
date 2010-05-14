@@ -1,10 +1,8 @@
 package com.risetek.rismile.client.utils;
 
-import com.google.gwt.user.client.DOM;
-import com.google.gwt.user.client.ui.Grid;
-import com.google.gwt.user.client.ui.HTML;
 
 public class UI {
+/*	
 	public static String createHeaderHTML(String caption) {
 		Grid captionGrid = new Grid(1,2);
 		captionGrid.setWidth("100%");
@@ -21,5 +19,10 @@ public class UI {
 		String innerHtml = DOM.getInnerHTML(captionGrid.getElement());
 
 		return "<table width='100%' cellpadding='0' cellspacing='0'><tr><td>" + innerHtml + "</td></tr></table>";
+	}
+	*/
+	
+	public static String createHeaderHTML(String caption) {
+		return "<table width='100%' cellpadding='0' cellspacing='0'><tr><td class='Stack_Title'>" + caption + "</td></tr></table>";
 	}
 }

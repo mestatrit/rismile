@@ -3,8 +3,23 @@ package com.risetek.rismile.client.utils;
 import com.google.gwt.user.client.DOM;
 import com.google.gwt.user.client.Element;
 import com.google.gwt.user.client.Timer;
+import com.risetek.rismile.client.RismileContext;
+import com.risetek.rismile.client.RismileContext.HeartbeatEvent;
+import com.risetek.rismile.client.RismileContext.RismileHandler;
 
 public class MessageConsole{
+	
+	static {
+		RismileContext.addHeartbeatHandler(new RismileHandler(){
+
+			@Override
+			public void onHearbeatOK(HeartbeatEvent event) {
+				MessageConsole.setHbText(event.getResults());
+			}
+		});
+		
+	}
+	
 	
 	private static Element message = DOM.getElementById("message");
 	private static Element hbMessage = DOM.getElementById("hbMessage");

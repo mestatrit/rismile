@@ -12,27 +12,25 @@ public abstract class MouseEventGrid extends Grid{
 		// this.setBorderWidth(1);
 		setCellPadding(2);
 		setCellSpacing(0);
-		// 增加鼠标事件。
 		sinkEvents(Event.MOUSEEVENTS);
 	}
 	
 	public void onBrowserEvent(Event event)
     {
 	    Element td = DOM.eventGetTarget(event);
-/*		
-		Element td = getEventTargetCell(event);
-        if (td == null) {
+        if (td == null)
           return;
-        }
-*/        
+
         Element tr = DOM.getParent(td);
         Element body = DOM.getParent(tr);
         int row = DOM.getChildIndex(body, tr);
-        if(row == 0) return;
+        // 开始行是标题
+        if(row == 0)
+        	return;
+        
         int column = DOM.getChildIndex(tr, td);
 
         String index = getText(row, 0);
-
         try{
 	        int id = Integer.parseInt(index);
 	        if( id <= 0) return;

@@ -11,7 +11,6 @@ import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.gwt.user.client.ui.HTMLTable.CellFormatter;
 import com.risetek.rismile.client.Entry;
-import com.risetek.rismile.client.control.RismileTableController;
 import com.risetek.rismile.client.model.RismileTable;
 
 
@@ -24,13 +23,12 @@ public abstract class RismileTableView extends Composite {
 	private final HorizontalPanel buttonsPanel = new HorizontalPanel();
 	public final NavBar navbar;
     private final Label infoLabel = new Label("");
-    
     private final Label statisticLabel = new Label("");	
     
 	// 数据表的顺序
 	String[] columnStyles;
 
-	public RismileTableView(String[] columns, String[] columnStyles, int rowCount, RismileTableController control) {
+	public RismileTableView(String[] columns, String[] columnStyles, int rowCount) {
 		
         if (columns.length == 0) {
 	        throw new IllegalArgumentException(
@@ -42,7 +40,7 @@ public abstract class RismileTableView extends Composite {
 	    }
 	    this.columnStyles = columnStyles;
 
-	    navbar = new NavBar(control);
+	    navbar = new NavBar();
 	    
 	    //this.rowCount = rowCount;
 	    outer.setHeight(Entry.SinkHeight);
@@ -76,29 +74,21 @@ public abstract class RismileTableView extends Composite {
 	    
 	    // 初始化网格的格式
 	    grid.resize(rowCount + 1, columns.length);
-	    //grid.getRowFormatter().addStyleName(0, "header");
+
 	    for (int i = 0 ; i < columns.length; i++) {
 	        grid.setText(0, i, columns[i]);
             if (columnStyles != null) {
-//	            grid.getCellFormatter().setStyleName(0, i, columnStyles[i] + " header");
 	            grid.getCellFormatter().setStyleName(0, i, "header");
 	        }
 	    }
 	}
 	public abstract Grid getGrid();
 	
-	public void clearInfo() {
-		infoLabel.setText("");
-	}
 	public void setInfo(String text){
 		infoLabel.setText(text);
 	}
     public void addToolButton(Widget button){
 		buttonsPanel.add(button);
-	}
-
-	public void setRowCount(int rows) {
-	    grid.resizeRows(rows);
 	}
 
     public void setStatisticText(int total){

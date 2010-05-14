@@ -35,7 +35,7 @@ public class Validity {
 	}
 	
 	public static String validIMSI(String text){
-		if ( null == text || "".equals(text)) return "IMSI号码不能为空！";
+		if ( null == text || "".equals(text)) return "终端号码不能为空！";
 		return null;
 		//if( text.matches(imsi_pattern)) return null;
 		//return "IMSI号码不符合要求！";

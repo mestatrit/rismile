@@ -1,6 +1,9 @@
 package com.risetek.rismile.client.sink;
 
 import com.google.gwt.user.client.ui.Composite;
+import com.risetek.rismile.client.RismileContext;
+import com.risetek.rismile.client.RismileContext.EnablePrivateEvent;
+import com.risetek.rismile.client.control.AController;
 
 /**
  * A 'sink' is a single panel of the kitchen sink. They are meant to be lazily
@@ -14,7 +17,7 @@ public abstract class Sink extends Composite {
 	 * on startup.
 	 */
 	public abstract static class SinkInfo {
-		private Sink instance;
+		public Sink instance;
 		private String name, description;
 		private String tag;
 		public int link_index;
@@ -22,7 +25,6 @@ public abstract class Sink extends Composite {
 			this.tag = tag;
 			this.name = name;
 			description = desc;
-
 		}
 
 		public abstract Sink createInstance();
@@ -47,6 +49,8 @@ public abstract class Sink extends Composite {
 		}
 	}
 
+	public abstract AController getController();
+	
 	/**
 	 * Called just before this sink is hidden.
 	 */
@@ -56,9 +60,9 @@ public abstract class Sink extends Composite {
 	/**
 	 * Called just after this sink is shown.
 	 */
+
 	public void onShow() {
+		RismileContext.fireEvent(new EnablePrivateEvent());
 	}
 
-	public Sink() {
-	}
 }

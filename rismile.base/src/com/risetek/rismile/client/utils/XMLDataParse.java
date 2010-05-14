@@ -20,7 +20,6 @@ public class XMLDataParse {
 		String result = null;
 		NodeList itemList = item.getElementsByTagName(TagName);
 		if (itemList.getLength() > 0 ) {
-//			result = ((Element)itemList.item(0).getFirstChild()).getAttribute(Attribute);
 			result = ((Element)itemList.item(0)).getAttribute(Attribute);
 		}
 		return result;
@@ -30,5 +29,17 @@ public class XMLDataParse {
 		Document customerDom = XMLParser.parse(text);
 		Element customerElement = customerDom.getDocumentElement();
 		return getElementText(customerElement, value);
+	}
+
+	public static int getElementNumber(String text, String value) {
+		Document customerDom = XMLParser.parse(text);
+		Element customerElement = customerDom.getDocumentElement();
+		NodeList itemList = customerElement.getElementsByTagName(value);
+		return itemList.getLength();
+	}
+
+	public static int getElementNumber(Element item, String value) {
+		NodeList itemList = item.getElementsByTagName(value);
+		return itemList.getLength();
 	}
 }

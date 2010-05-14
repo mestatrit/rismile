@@ -9,21 +9,25 @@ import com.google.gwt.user.client.Timer;
 import com.google.gwt.xml.client.Document;
 import com.google.gwt.xml.client.NodeList;
 import com.google.gwt.xml.client.XMLParser;
+import com.risetek.rismile.client.RismileContext;
+import com.risetek.rismile.client.RismileContext.HeartbeatEvent;
+import com.risetek.rismile.client.RismileContext.RuntimeEvent;
 
 public class Heartbeat implements RequestCallback {
 	private static RequestBuilder hb_Builder;
 	private static Timer hbTimer;
-	
+
 	static Heartbeat response = new Heartbeat();
+
 	public static void startHeartbeat() {
 		hb_Builder = new RequestBuilder(RequestBuilder.POST, "forms/hb");
 		hb_Builder.setTimeoutMillis(1000);
-		
+
 		hbTimer = new Timer() {
 			public void run() {
 				try {
 					hb_Builder.sendRequest("code=code", response);
-					MessageConsole.setHbText("连接设备...");
+					RismileContext.fireEvent(new HeartbeatEvent("连接设备..."));
 
 				} catch (RequestException e) {
 					e.printStackTrace();
@@ -34,31 +38,39 @@ public class Heartbeat implements RequestCallback {
 	}
 
 	public void onError(Request request, Throwable exception) {
-		MessageConsole.setHbText("设备未响应！");
+		RismileContext.fireEvent(new HeartbeatEvent("设备未响应！"));
 		hbTimer.schedule(5000);
 	}
 
 	public void onResponseReceived(Request request, Response response) {
 		if (response.getStatusCode() != 12029) {
 			Document xmldoc = XMLParser.parse(response.getText());
-			com.google.gwt.xml.client.Element customerElement = xmldoc.getDocumentElement();
+			com.google.gwt.xml.client.Element customerElement = xmldoc
+					.getDocumentElement();
 			NodeList ok = customerElement.getElementsByTagName("OK");
 			if (ok != null) {
-				NodeList nopass = customerElement.getElementsByTagName("nopassword");
+				NodeList nopass = customerElement
+						.getElementsByTagName("nopassword");
 				if (nopass != null && nopass.item(0) != null) {
-					String nopassword = nopass.item(0).getFirstChild().getNodeValue();
+					String nopassword = nopass.item(0).getFirstChild()
+							.getNodeValue();
 					MessageConsole.setHbText(nopassword);
 				} else {
-					MessageConsole.setHbText("网络正常！");
+					RismileContext.fireEvent(new HeartbeatEvent("网络正常！"));
 				}
 
 			} else {
-				MessageConsole.setHbText("网络正常！");
+				RismileContext.fireEvent(new HeartbeatEvent("网络正常！"));
 			}
+			
+			String runtime = XMLDataParse.getElementText(customerElement, "run_time");
+			RismileContext.fireEvent(new RuntimeEvent(runtime));
+			
 			hbTimer.schedule(20000);
 		} else {
-			MessageConsole.setHbText("设备响应异常！");
+			RismileContext.fireEvent(new HeartbeatEvent("设备响应异常！"));
 			hbTimer.schedule(5000);
 		}
 	}
+
 }

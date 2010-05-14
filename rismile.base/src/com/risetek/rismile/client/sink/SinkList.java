@@ -136,4 +136,10 @@ public class SinkList extends Composite {
 
 		colorSink(index, selected);
 	}
+	
+	// TODO: FIXME: urgly
+	public void addWidget(Widget w){
+		list.add(w);
+	}
+
 }

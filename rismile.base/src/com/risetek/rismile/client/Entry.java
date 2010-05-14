@@ -2,19 +2,27 @@ package com.risetek.rismile.client;
 
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.event.dom.client.ClickEvent;
+import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.logical.shared.ValueChangeEvent;
 import com.google.gwt.event.logical.shared.ValueChangeHandler;
+import com.google.gwt.resources.client.ClientBundle;
+import com.google.gwt.resources.client.ImageResource;
 import com.google.gwt.user.client.DOM;
 import com.google.gwt.user.client.History;
-import com.google.gwt.user.client.ui.AbstractImagePrototype;
+import com.google.gwt.user.client.Window;
+import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.DockPanel;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.HasHorizontalAlignment;
 import com.google.gwt.user.client.ui.HorizontalPanel;
-import com.google.gwt.user.client.ui.ImageBundle;
+import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.VerticalPanel;
+import com.risetek.rismile.client.RismileContext.EnablePrivateEvent;
+import com.risetek.rismile.client.RismileContext.EnablePrivateHandler;
+import com.risetek.rismile.client.control.EntryController;
 import com.risetek.rismile.client.sink.Sink;
 import com.risetek.rismile.client.sink.SinkList;
 import com.risetek.rismile.client.sink.Sink.SinkInfo;
@@ -23,38 +31,30 @@ import com.risetek.rismile.client.utils.Heartbeat;
 /**
  * Entry point classes define <code>onModuleLoad()</code>.
  */
-public abstract class Entry implements EntryPoint{
-	public enum OEM
-	{
-		risetek,
-		tongfa
-	};
-	
-	public static OEM OEMFlag = OEM.risetek;
+public abstract class Entry implements EntryPoint {
 	
 	public static String SinkHeight = "470px";
 
 	/**
 	 * An image provider to make available images to Sinks.
 	 */
-	public interface Images extends ImageBundle {
-		AbstractImagePrototype gwtLogo();
-		AbstractImagePrototype tongfaLogo();
+	public interface Resources extends ClientBundle {
+		final static Resources INSTANCE = GWT.create(Resources.class);
+		
+		@Source("gwtLogo.jpg")
+		ImageResource gwtLogo();
+		
+		@Source("tongfaLogo.jpg")
+		ImageResource tongfaLogo();
 	}
 
-	private static final Images images = (Images) GWT.create(Images.class);
-
 	// 导航条
-	/*
-	public SinkList list = new SinkList(images.gwtLogo().createImage());
-	*/
-
-	public SinkList list =	(OEMFlag == OEM.risetek) ? 
-			new SinkList(images.gwtLogo().createImage()) :
-			new SinkList(images.tongfaLogo().createImage());			
-
+	public SinkList list =	(RismileContext.OEMFlag == RismileContext.OEM.risetek) ? 
+			new SinkList(new Image(Resources.INSTANCE.gwtLogo())) :
+			new SinkList(new Image(Resources.INSTANCE.tongfaLogo()));			
+			
 	private SinkInfo curInfo;
-	private Sink curSink;
+	private static Sink curSink;
 	// 操作提示
 	private HTML description = new HTML();
 
@@ -62,10 +62,13 @@ public abstract class Entry implements EntryPoint{
 
 	private final VerticalPanel panel = new VerticalPanel();
 	private final DockPanel sinkContainer = new DockPanel();
-	private final FlowPanel maskPanel = new FlowPanel();
+//	private final FlowPanel maskPanel = new FlowPanel();
 	private final FlowPanel headPanel = new FlowPanel();
 	private final HTML hbMessage = new HTML();
 	private final HTML message = new HTML();
+
+	public	static final Button enable = new Button();
+	public	static boolean login = false;
 
 	public void onHistoryChanged(String token) {
 		// Find the SinkInfo associated with the history context. If one is
@@ -80,42 +83,53 @@ public abstract class Entry implements EntryPoint{
 	}
 
 	public void onModuleLoad() {
-		// Load all the sinks.
-		loadSinks();
+	    Window.enableScrolling(true);
+	    
 		panel.setStyleName("rismile");
+		// Load all the sinks.
+		
+		loadSinks();
+		
+		FlowPanel btn = new FlowPanel();
+		btn.add(enable);
+		btn.setStyleName("enablePanel");
+		list.addWidget(btn);
+		enable.setText("特权登录");
 
 		headPanel.setWidth("100%");
-		// DOM.setStyleAttribute(headPanel.getElement(), "position",
-		// "relative");
 		headPanel.add(list);
-
-		headPanel.add(hbMessage);
-		hbMessage.setStyleName("hb-message");
+		panel.add(hbMessage);
+		hbMessage.setStyleName("http-message");
 		DOM.setElementProperty(hbMessage.getElement(), "id", "hbMessage");
-		headPanel.add(message);
-		// message.setWidth("100%");
+		panel.add(message);
 		message.setStyleName("http-message");
 		DOM.setElementProperty(message.getElement(), "id", "message");
 
 		sinkContainer.setStyleName("Sink");
 		sinkContainer.setWidth("100%");
 
-		// description.setStyleName("description");
 		description.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_RIGHT);
 		descriptionPanel.setWidth("100%");
 		descriptionPanel.setStyleName("description");
 		descriptionPanel.add(description);
-		maskPanel.setWidth("100%");
-		DOM.setStyleAttribute(maskPanel.getElement(), "position", "relative");
-		DOM.setElementProperty(maskPanel.getElement(), "id", "maskPanel");
-		maskPanel.add(headPanel);
-		maskPanel.add(descriptionPanel);
-		maskPanel.add(sinkContainer);
-
-		panel.add(maskPanel);
+		
+		panel.add(headPanel);
+		panel.add(descriptionPanel);
+		panel.add(sinkContainer);
 		panel.setWidth("100%");
-		// panel.setBorderWidth(1);
+//		panel.setBorderWidth(1);
+		
+		RismileContext.addEnablePrivaterHandler( new EnablePrivateHandler() {
+			@Override
+			public void onEnablePrivate(EnablePrivateEvent event) {
+				if( login )
+					curSink.getController().enablePrivate();
+				else
+					curSink.getController().disablePrivate();
+			}
+		});
 
+		
 		History.addValueChangeHandler(new ValueChangeHandler<String>() {
 			public void onValueChange(ValueChangeEvent<String> event) {
 				// Find the SinkInfo associated with the history context. If one
@@ -135,6 +149,8 @@ public abstract class Entry implements EntryPoint{
 		});
 
 		RootPanel.get("root").add(panel);
+//	    RootLayoutPanel root = RootLayoutPanel.get();
+//	    root.add(new HTML());
 
 		// Show the initial screen.
 		String initToken = History.getToken();
@@ -145,6 +161,20 @@ public abstract class Entry implements EntryPoint{
 		}
 		// 启动对web服务的poll动作，以确定web是否正确服务。
 		Heartbeat.startHeartbeat();
+		
+		enable.addClickHandler(new ClickHandler() {
+			public void onClick(ClickEvent event) {
+				if(login){
+					login = false;
+					enable.setText("特权登录");
+					RismileContext.fireEvent(new EnablePrivateEvent());
+				}
+				else
+					EntryController.load();
+			}
+		});
+
+		
 	}
 
 	public void show(SinkInfo info, boolean affectHistory) {
@@ -189,4 +219,5 @@ public abstract class Entry implements EntryPoint{
 	private void showInfo() {
 		show(list.find("Home"), false);
 	}
+
 }
