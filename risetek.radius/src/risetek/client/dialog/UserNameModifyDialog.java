@@ -1,6 +1,5 @@
 package risetek.client.dialog;
 
-import com.google.gwt.user.client.ui.DockPanel;
 import com.google.gwt.user.client.ui.Grid;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.TextBox;
@@ -14,14 +13,20 @@ public class UserNameModifyDialog extends CustomDialog {
 	public String rowid;
 
 	public UserNameModifyDialog() {
-		add(new Label("请输入新的用户名："),DockPanel.NORTH);
+		// 修改宽度，以适应显示需要。
+		mainPanel.setWidth("380px");
+		// 宽度修改后需要重新定位显示位置。
+		center();
+		
+		label.setText("请输入新的用户名：");
 		Grid gridFrame = new Grid(2, 2);
-		gridFrame.setWidget(0, 0, new Label("当前用户名："));
+		gridFrame.setWidget(0, 0, new Label("当前用户名：", false));
 		gridFrame.setWidget(0, 1, oldValueLabel);
-		gridFrame.setWidget(1, 0, new Label("新的用户名："));
+		gridFrame.setWidget(1, 0, new Label("新的用户名：", false));
+		newValueBox.setWidth("240px");
 		gridFrame.setWidget(1, 1, newValueBox);
 		newValueBox.setTabIndex(1);
-		add(gridFrame, DockPanel.CENTER);
+		mainPanel.add(gridFrame);
 	}
 
 	public void show(String tips_id, String tips_value) {

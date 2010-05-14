@@ -4,14 +4,16 @@ import risetek.client.control.RadiusBlackController;
 
 import com.google.gwt.user.client.DOM;
 import com.google.gwt.user.client.Element;
+import com.google.gwt.user.client.Event;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Grid;
+import com.risetek.rismile.client.view.IRisetekView;
 import com.risetek.rismile.client.view.MouseEventGrid;
 import com.risetek.rismile.client.view.RismileTableView;
 
-public class BlackUserView extends RismileTableView {
+public class BlackUserView extends RismileTableView implements IRisetekView {
 	private final static String[] columns = {"序号","终端号","用户名称"};
-	private final static String[] columnStyles = {"id","imsi","backusername"};
+	private final static String[] columnStyles = {"uid","imsi","backusername"};
 	private final static int rowCount = 20;	
 
 	public Button clearButton = new Button("清除");
@@ -21,29 +23,17 @@ public class BlackUserView extends RismileTableView {
 		"点击导入该用户为合法用户.",
 		"点击导入该用户为合法用户.",
 	};
-	public RadiusBlackController  control;
 	
-	public BlackUserView(RadiusBlackController control)
+	public BlackUserView()
 	{
-		this(columns, columnStyles, rowCount, control);
+		super(columns, columnStyles, rowCount);
+		addToolButton(clearButton);
+		clearButton.addClickHandler(new RadiusBlackController.EmptyAction());
+		addToolButton(refreshButton);
+		refreshButton.addClickHandler(new RadiusBlackController.refreshAction());
+		grid.addClickHandler(new RadiusBlackController.TableAction());
 	}
 	
-	public BlackUserView(String[] columns, String[] columnStyles, int rowCount, RadiusBlackController control) {
-
-		super(columns, columnStyles, rowCount, control);
-		this.control = control;
-		
-		super.addToolButton(clearButton);
-		clearButton.addClickHandler(control.new EmptyAction());
-
-		super.addToolButton(refreshButton);
-		refreshButton.addClickHandler(control.new refreshAction());
-		
-		
-		grid.addClickHandler(control.new TableAction());
-
-	}
-
 	public Grid getGrid() {
 		if (grid != null)
 			return grid;
@@ -66,7 +56,18 @@ public class BlackUserView extends RismileTableView {
 
 	public void onLoad()
 	{
-		control.load();
+		RadiusBlackController.load();
 	}
 	
+	public void disablePrivate() {
+		grid.unsinkEvents( Event.ONCLICK );
+		grid.unsinkEvents( Event.ONMOUSEOVER );
+		grid.unsinkEvents( Event.ONMOUSEOUT );
+	}
+
+	public void enablePrivate() {
+		grid.sinkEvents( Event.ONCLICK );
+		grid.sinkEvents( Event.ONMOUSEOVER );
+		grid.sinkEvents( Event.ONMOUSEOUT );
+	}
 }

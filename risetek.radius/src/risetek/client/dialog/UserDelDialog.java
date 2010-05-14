@@ -1,6 +1,5 @@
 package risetek.client.dialog;
 
-import com.google.gwt.user.client.ui.DockPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
 import com.risetek.rismile.client.dialog.CustomDialog;
@@ -12,10 +11,8 @@ public class UserDelDialog extends CustomDialog {
 	public String rowid;
 
 	public UserDelDialog() {
-		// Formater Debug
 		//gridFrame.setBorderWidth(1);
-		add(info,DockPanel.NORTH);
-		setSize("200","120");
+		mainPanel.add(info);
 	}
 
 	public void show(String tips_id, String tips_imsi) {

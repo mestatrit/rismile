@@ -6,33 +6,54 @@ import risetek.client.view.SystemHomeView;
 import com.google.gwt.http.client.Request;
 import com.google.gwt.http.client.RequestCallback;
 import com.google.gwt.http.client.Response;
+import com.risetek.rismile.client.control.AController;
 import com.risetek.rismile.client.http.RequestFactory;
 import com.risetek.rismile.client.utils.MessageConsole;
+import com.risetek.rismile.client.view.IRisetekView;
 
-public class ProduceHomeController implements RequestCallback {
+public class ProduceHomeController extends AController {
 
-	private RequestFactory remoteRequest = new RequestFactory();
-
+	private ProduceHomeController(){}
+	public static ProduceHomeController INSTANCE = new ProduceHomeController();
+	private static RequestFactory remoteRequest = new RequestFactory();
 	private ProduceData data = new ProduceData();
+	public SystemHomeView view = new SystemHomeView();
 
-	public SystemHomeView view;
+	
+	private static final RequestCallback RemoteCaller = INSTANCE.new RemoteRequestCallback();
+	class RemoteRequestCallback implements RequestCallback {
 
-	public ProduceHomeController() {
-		view = new SystemHomeView(this);
+		@Override
+		public void onError(Request request, Throwable exception) {
+			MessageConsole.setText("提取产品信息失败数据");
+		}
+
+		@Override
+		public void onResponseReceived(Request request, Response response) {
+			MessageConsole.setText("获得产品信息数据");
+			data.parseXML(response.getText());
+			view.render(data);
+		}
 	}
-
-	public void load() {
+	
+	
+	public static void load() {
 		MessageConsole.setText("提取产品信息数据");
-		remoteRequest.get("SysStateXML", null, this);
+		remoteRequest.get("SysStateXML", null, RemoteCaller);
 	}
 
-	public void onResponseReceived(Request request, Response response) {
-		MessageConsole.setText("获得产品信息数据");
-		data.parseXML(response.getText());
-		view.render(data);
+	@Override
+	public void disablePrivate() {
+		view.disablePrivate();
 	}
 
-	public void onError(Request request, Throwable exception) {
-		MessageConsole.setText("提取产品信息失败数据");
+	@Override
+	public void enablePrivate() {
+		view.enablePrivate();
+	}
+
+	@Override
+	public IRisetekView getView() {
+		return view;
 	}
 }

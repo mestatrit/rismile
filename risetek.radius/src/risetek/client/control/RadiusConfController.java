@@ -12,54 +12,60 @@ import com.google.gwt.http.client.Request;
 import com.google.gwt.http.client.RequestCallback;
 import com.google.gwt.http.client.Response;
 import com.google.gwt.user.client.ui.Button;
+import com.risetek.rismile.client.control.AController;
 import com.risetek.rismile.client.http.RequestFactory;
 import com.risetek.rismile.client.utils.MessageConsole;
 import com.risetek.rismile.client.utils.SysLog;
+import com.risetek.rismile.client.view.IRisetekView;
 
 
-public class RadiusConfController implements RequestCallback {
-	private RequestFactory remoteRequest = new RequestFactory();
-	private String confPath = "radiuscfg";
+public class RadiusConfController extends AController {
+	private RadiusConfController(){}
 	
-	public RadiusConfigView view;
+	public static RadiusConfController INSTANCE = new RadiusConfController();
+	
+	private static RequestFactory remoteRequest = new RequestFactory();
+	private final static String confPath = "radiuscfg";
+	
+	public RadiusConfigView view = new RadiusConfigView();
 	RadiusConfModel data = new RadiusConfModel();
 	
-	public RadiusConfController(){
-		view = new RadiusConfigView(this);
+	private static final RequestCallback RemoteCaller = INSTANCE.new RemoteRequestCallback();
+	class RemoteRequestCallback implements RequestCallback {
+
+		@Override
+		public void onError(Request request, Throwable exception) {
+			MessageConsole.setText("提取认证配置数据失败");
+		}
+
+		@Override
+		public void onResponseReceived(Request request, Response response) {
+			MessageConsole.setText("获得认证配置数据");
+			data.parseXML(response.getText());
+			view.render(data);
+		}
 	}
 	
-	public void load()
+	
+	public static void load()
 	{
 		MessageConsole.setText("提取认证配置数据");
-		remoteRequest.get(confPath, null, this);
+		remoteRequest.get(confPath, null, RemoteCaller);
 	}
 	
 
-	public void modify(String query, RequestCallback callback){
+	public static void modify(String query, RequestCallback callback){
 		remoteRequest.get(confPath, query, callback);
 	}
 	
-
-	public void onError(Request request, Throwable exception) {
-		MessageConsole.setText("提取认证配置数据失败");
-	}
-
-
-	public void onResponseReceived(Request request, Response response)
-	{
-		MessageConsole.setText("获得认证配置数据");
-		data.parseXML(response.getText());
-		view.render(data);
-	}
-	
 	//--------- Auth 修改控制
-	public class authModifyClickListen implements ClickHandler
+	public static class authModifyClickListen implements ClickHandler
 	{
 		public class Control implements ClickHandler, RequestCallback {
 			public RadiusConfigAuthDialog dialog = new RadiusConfigAuthDialog();
 
 			public void onError(Request request, Throwable exception) {
-				RadiusConfController.this.onError(request, exception);
+				RemoteCaller.onError(request, exception);
 			}
 
 			public void onResponseReceived(Request request, Response response) {
@@ -69,12 +75,12 @@ public class RadiusConfController implements RequestCallback {
 
 			@Override
 			public void onClick(ClickEvent event) {
-				String value = dialog.newValueBox.getText();
 				if( dialog.isValid() )
 				{
+					String value = dialog.newValueBox.getText();
 					SysLog.log(value);
 					modify("authport=" + value , this);
-					((Button)event.getSource()).setEnabled(false);
+					dialog.submit.setEnabled(false);
 				}
 			}
 		}
@@ -83,33 +89,35 @@ public class RadiusConfController implements RequestCallback {
 		public void onClick(ClickEvent event) {
 			Control control = new Control();
 			RadiusConfigAuthDialog dialog = control.dialog;
-			dialog.confirm.addClickHandler(control);
-			dialog.show(data.getAuthPort());
+			dialog.submit.addClickHandler(control);
+			dialog.show(INSTANCE.data.getAuthPort());
 		}
 	}
 	
 	//--------- Acct 修改控制
-	public class acctModifyClickListen implements ClickHandler
+	public static class acctModifyClickListen implements ClickHandler
 	{
 		@Override
 		public void onClick(ClickEvent event) {
 			Control control = new Control();
 			RadiusConfigAcctDialog dialog = control.dialog;
-			dialog.confirm.addClickHandler(control);
-			dialog.show(data.getAcctPort());
+			dialog.submit.addClickHandler(control);
+			dialog.show(INSTANCE.data.getAcctPort());
 		}
 		public class Control implements ClickHandler, RequestCallback {
 			public RadiusConfigAcctDialog dialog = new RadiusConfigAcctDialog();
 			@Override
 			public void onClick(ClickEvent event) {
-				String value = dialog.newValueBox.getText();
-				SysLog.log(value);
-				modify("accport=" + value , this);
-				dialog.confirm.setEnabled(false);
+				if( dialog.isValid() ){
+					String value = dialog.newValueBox.getText();
+					SysLog.log(value);
+					modify("accport=" + value , this);
+					dialog.submit.setEnabled(false);
+				}
 			}
 
 			public void onError(Request request, Throwable exception) {
-				RadiusConfController.this.onError(request, exception);
+				RemoteCaller.onError(request, exception);
 			}
 
 			public void onResponseReceived(Request request, Response response) {
@@ -121,14 +129,15 @@ public class RadiusConfController implements RequestCallback {
 	}
 	
 	//--------- Secret 修改控制
-	public class secretModifyClickListen implements ClickHandler
+	public static class secretModifyClickListen implements ClickHandler
 	{
 		@Override
 		public void onClick(ClickEvent event) {
 			Control control = new Control();
 			RadiusConfigSecretDialog dialog = control.dialog;
-			dialog.confirm.addClickHandler(control);
-			dialog.show(data.getSecretKey());
+			dialog.submit.setText("修改");
+			dialog.submit.addClickHandler(control);
+			dialog.show(INSTANCE.data.getSecretKey());
 		}
 
 		class Control implements ClickHandler, RequestCallback {
@@ -145,7 +154,7 @@ public class RadiusConfController implements RequestCallback {
 			}
 
 			public void onError(Request request, Throwable exception) {
-				RadiusConfController.this.onError(request, exception);
+				RemoteCaller.onError(request, exception);
 			}
 
 			public void onResponseReceived(Request request, Response response) {
@@ -154,6 +163,20 @@ public class RadiusConfController implements RequestCallback {
 			}
 			
 		}
-		
+	}
+
+	@Override
+	public void disablePrivate() {
+		view.disablePrivate();
+	}
+
+	@Override
+	public void enablePrivate() {
+		view.enablePrivate();
+	}
+
+	@Override
+	public IRisetekView getView() {
+		return view;
 	}
 }

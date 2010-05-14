@@ -13,39 +13,68 @@ import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.HTMLTable;
 import com.google.gwt.user.client.ui.HTMLTable.Cell;
-import com.risetek.rismile.client.control.RismileTableController;
-import com.risetek.rismile.client.model.RismileTable;
+import com.risetek.rismile.client.control.AController;
+import com.risetek.rismile.client.http.RequestFactory;
 import com.risetek.rismile.client.utils.IPConvert;
 import com.risetek.rismile.client.utils.MessageConsole;
 import com.risetek.rismile.client.utils.SysLog;
-import com.risetek.rismile.client.view.RismileTableView;
+import com.risetek.rismile.client.view.IRisetekView;
+import com.risetek.rismile.client.view.NavBar.NavEvent;
+import com.risetek.rismile.client.view.NavBar.NavHandler;
 
-public class RadiusBlackController extends RismileTableController {
-	private static String loadForm = "SqlBlackUserInfoXML";
-	private static String emptyForm = "clearblack";
-	private static String modifyForm = "SqlBlackUserInfoXML";
+public class RadiusBlackController extends AController {
+	
+	public static final RadiusBlackController INSTANCE = new RadiusBlackController();
+	private static final RequestFactory remoteRequest = new RequestFactory();
+	public final BlackUserView view = new BlackUserView();
+	final RismileBlackUserTable data = new RismileBlackUserTable(true);
+	
+	protected static final RequestCallback RemoteCaller = INSTANCE.new RemoteRequestCallback();
+	class RemoteRequestCallback implements RequestCallback {
 
-	RismileBlackUserTable data = new RismileBlackUserTable();
-	public BlackUserView view;
+		@Override
+		public void onError(Request request, Throwable exception) {
+			MessageConsole.setText("提取不明用户数据失败");
+			SysLog.log("RadiusBlackController");
+		}
 
-	public RadiusBlackController() {
-		view = new BlackUserView(this);
+		@Override
+		public void onResponseReceived(Request request, Response response) {
+			MessageConsole.setText("获得不明用户数据");
+			data.parseXML(response.getText());
+			view.render(data);
+		}
+	}
+	
+	private static final String loadForm = "SqlBlackUserInfoXML";
+	private static final String emptyForm = "clearblack";
+	private static final String modifyForm = "SqlBlackUserInfoXML";
+
+
+	private RadiusBlackController() {
+
 		data.setLimit( view.grid.getRowCount() - 1 );
+
+		view.navbar.addNavHandler(new NavHandler(){
+
+			@Override
+			public void onNav(NavEvent event) {
+				data.moveDir(event.getResult());
+				load();
+			}
+
+		});
 	}
 
-	public void load() {
+	public static void load() {
 		MessageConsole.setText("提取不明用户数据");
 
-		String query = "lpage=" + data.getLimit() + "&offset="
-				+ data.getOffset();
-		remoteRequest.get(loadForm, query, this);
+		String query = "lpage=" + INSTANCE.data.getLimit() + "&offset="
+				+ INSTANCE.data.getOffset();
+		remoteRequest.get(loadForm, query, RemoteCaller);
 	}
 
-	public void empty() {
-		remoteRequest.get(emptyForm, null, this);
-	}
-
-	public void add(String rowID, String name, String imsi, String password,
+	public static void add(String rowID, String name, String imsi, String password,
 			String ip, RequestCallback callbak) {
 		String query = "function=newuser&id=" + rowID + "&username=" + name
 				+ "&imsicode=" + imsi + "&password=" + password + "&ipaddress="
@@ -53,23 +82,12 @@ public class RadiusBlackController extends RismileTableController {
 		remoteRequest.get(modifyForm, query, callbak);
 	}
 
-	public void delRow(String rowID) {
+	public static void delRow(String rowID) {
 		String query = "function=deluser&id=" + rowID;
-		remoteRequest.get(modifyForm, query, this);
+		remoteRequest.get(modifyForm, query, RemoteCaller);
 	}
 
-	public void onError(Request request, Throwable exception) {
-		MessageConsole.setText("提取不明用户数据失败");
-		SysLog.log("RadiusBlackController");
-	}
-
-	public void onResponseReceived(Request request, Response response) {
-		MessageConsole.setText("获得不明用户数据");
-		data.parseXML(response.getText());
-		view.render(data);
-	}
-
-	public class EmptyAction implements ClickHandler {
+	public static class EmptyAction implements ClickHandler {
 		class EmptyCallback implements RequestCallback {
 
 			@Override
@@ -79,7 +97,7 @@ public class RadiusBlackController extends RismileTableController {
 
 			@Override
 			public void onResponseReceived(Request request, Response response) {
-				data.setOffset(0);
+				INSTANCE.data.setOffset(0);
 				load();
 			}
 			
@@ -92,15 +110,15 @@ public class RadiusBlackController extends RismileTableController {
 		}
 	}
 	
-	public class refreshAction implements ClickHandler {
+	public static class refreshAction implements ClickHandler {
 		@Override
 		public void onClick(ClickEvent event) {
-			data.setOffset(0);
+			INSTANCE.data.setOffset(0);
 			load();
-			}
+		}
 	}
 
-	public class TableAction implements ClickHandler {
+	public static class TableAction implements ClickHandler {
 
 		@Override
 		public void onClick(ClickEvent event) {
@@ -111,9 +129,9 @@ public class RadiusBlackController extends RismileTableController {
 			
 
 			// 在第一列中的是数据的内部序号，我们的操作都针对这个号码。
-			String rowid = view.getGrid().getText(row, 0);
-			String tips_ismi = view.getGrid().getText(row, 1);
-			String tips_username = view.getGrid().getText(row, 2);
+			String rowid = INSTANCE.view.getGrid().getText(row, 0);
+			String tips_ismi = INSTANCE.view.getGrid().getText(row, 1);
+			String tips_username = INSTANCE.view.getGrid().getText(row, 2);
 			switch (cell) {
 			case 0:
 				// 选择了删除用户。
@@ -128,7 +146,8 @@ public class RadiusBlackController extends RismileTableController {
 			case 2:
 				// 导入用户为合法用户。
 				BlackUserControl control = new BlackUserControl();
-				control.dialog.confirm.addClickHandler(control);
+				control.dialog.submit.setText("导入");
+				control.dialog.submit.addClickHandler(control);
 				control.dialog.show(rowid, tips_ismi, tips_username);
 				break;
 			default:
@@ -141,7 +160,7 @@ public class RadiusBlackController extends RismileTableController {
 			public BlackUserDialog dialog = new BlackUserDialog();
 
 			public void onError(Request request, Throwable exception) {
-				RadiusBlackController.this.onError(request,exception);
+				RemoteCaller.onError(request,exception);
 			}
 
 			public void onResponseReceived(Request request, Response response) {
@@ -163,11 +182,18 @@ public class RadiusBlackController extends RismileTableController {
 
 	}
 
-	public RismileTable getTable() {
-		return data;
+	@Override
+	public void disablePrivate() {
+		view.disablePrivate();
 	}
 
-	public RismileTableView getView() {
+	@Override
+	public void enablePrivate() {
+		view.enablePrivate();
+	}
+
+	@Override
+	public IRisetekView getView() {
 		return view;
 	}
 

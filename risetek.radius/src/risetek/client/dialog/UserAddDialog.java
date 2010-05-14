@@ -1,6 +1,5 @@
 package risetek.client.dialog;
 
-import com.google.gwt.user.client.ui.DockPanel;
 import com.google.gwt.user.client.ui.FocusPanel;
 import com.google.gwt.user.client.ui.Grid;
 import com.google.gwt.user.client.ui.Label;
@@ -19,10 +18,10 @@ public class UserAddDialog extends CustomDialog {
 	private final FocusPanel focusPanel = new FocusPanel();
 	
 	public UserAddDialog(){
-		add(new Label("请输入用户信息："),DockPanel.NORTH);
+		label.setText("请输入用户信息：");
 		
 		Grid gridFrame = new Grid(4, 2);
-		gridFrame.setWidget(0,0,new Label("IMSI号码：",false));
+		gridFrame.setWidget(0,0,new Label("终端号码：",false));
 		gridFrame.setWidget(1,0,new Label("用户名称：",false));
 		gridFrame.setWidget(2,0,new Label("用户口令：",false));
 		gridFrame.setWidget(3,0,new Label("分配地址：",false));
@@ -32,20 +31,26 @@ public class UserAddDialog extends CustomDialog {
 		gridFrame.setWidget(2,1,passwordbox);
 		gridFrame.setWidget(3,1,ipaddress);
 		
+		passwordbox.setWidth("240");
+		usernamebox.setWidth("240");
+		ipaddress.setWidth("240");
+		IMSI.setWidth("240");
+		
 		IMSI.setTabIndex(1);
 		usernamebox.setTabIndex(2);
 		passwordbox.setTabIndex(3);
 		ipaddress.setTabIndex(4);
 		
 		focusPanel.add(gridFrame);
-		add(focusPanel,DockPanel.CENTER);
-
-		setSize("280","200");
+		mainPanel.add(focusPanel);
 	}
 	
 	public void show(){
-		show("新加一个用户");
-		IMSI.setFocus(true);
+		setText("新加一个用户");
+		super.show();
+		if(null != IMSI){
+			IMSI.setFocus(true);
+		}
 	}
 
 	public Widget getFirstTabIndex() {

@@ -1,6 +1,5 @@
 package risetek.client.dialog;
 
-import com.google.gwt.user.client.ui.DockPanel;
 import com.google.gwt.user.client.ui.Grid;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.TextBox;
@@ -17,17 +16,16 @@ public class UserImsiModifyDialog extends CustomDialog {
 
 	public UserImsiModifyDialog() {
 		Grid gridFrame = new Grid(2, 2);
-		// Formater Debug
 		//gridFrame.setBorderWidth(1);
-		add(new Label("请输入新的终端号："),DockPanel.NORTH);
+		label.setText("请输入新的终端号：");
 		gridFrame.setWidget(0, 0, new Label("当前终端号："));
 		gridFrame.setWidget(0, 1, oldValueLabel);
 		gridFrame.setWidget(1, 0, new Label("新的终端号："));
 		gridFrame.setWidget(1, 1, newValueBox);
-		
+		newValueBox.setWidth("220");
 		newValueBox.setTabIndex(1);
 		
-		add(gridFrame, DockPanel.CENTER);
+		mainPanel.add(gridFrame);
 	}
 
 	public void show(String tips_id, String tips_imsi) {

@@ -8,6 +8,10 @@ import com.risetek.rismile.client.utils.XMLDataParse;
 
 public class RismileBlackUserTable extends RismileTable {
 
+	public RismileBlackUserTable(boolean dir) {
+		super(dir);
+	}
+
 	public void parseXML(String text)
 	{
 		//  TODO: 如果没有数据或者数据错误，这个parse过程会抛出错误，没有处理?

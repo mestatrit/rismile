@@ -1,7 +1,5 @@
 package risetek.client.dialog;
 
-import com.google.gwt.user.client.ui.DockPanel;
-import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.Widget;
 import com.risetek.rismile.client.dialog.CustomDialog;
@@ -11,11 +9,10 @@ public class UserNoteModifyDialog extends CustomDialog {
 
 	public String rowid;
 	public UserNoteModifyDialog() {
-		add(new Label("请输入新备注："),DockPanel.NORTH);
+		label.setText("请输入新备注：");
 		note.setWidth("260px");
-		add(note,DockPanel.CENTER);
 		note.setTabIndex(1);
-		setSize("320","140");
+		mainPanel.add(note);
 	}
 
 	public void show(String tips_id, String tips_value){

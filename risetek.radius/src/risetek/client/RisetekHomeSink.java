@@ -2,17 +2,16 @@ package risetek.client;
 
 import risetek.client.control.ProduceHomeController;
 
-import com.risetek.rismile.client.Entry;
+import com.risetek.rismile.client.RismileContext;
+import com.risetek.rismile.client.control.AController;
 import com.risetek.rismile.client.sink.Sink;
 
 
 public class RisetekHomeSink extends Sink {
 	public static final String Tag = "Home";
 	
-	ProduceHomeController control = new ProduceHomeController();
-	
 	public static SinkInfo init() {
-		if(Entry.OEMFlag == Entry.OEM.risetek )
+		if(RismileContext.OEMFlag == RismileContext.OEM.risetek )
 		return new SinkInfo(Tag, "欢迎", "欢迎使用成都中联信通科技有限公司产品") {
 			public Sink createInstance() {
 				return new RisetekHomeSink();
@@ -27,6 +26,11 @@ public class RisetekHomeSink extends Sink {
 			
 	}
 	public RisetekHomeSink(){
-		initWidget(control.view);
+		initWidget(ProduceHomeController.INSTANCE.view);
+	}
+
+	@Override
+	public AController getController() {
+		return ProduceHomeController.INSTANCE;
 	}
 }

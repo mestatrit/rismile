@@ -1,6 +1,5 @@
 package risetek.client.dialog;
 
-import com.google.gwt.user.client.ui.DockPanel;
 import com.google.gwt.user.client.ui.Grid;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.TextBox;
@@ -16,9 +15,8 @@ public class UserIpModifyDialog extends CustomDialog {
 	public String rowid;
 
 	public UserIpModifyDialog() {
-
 		Grid gridFrame = new Grid(2, 2);
-		add(new Label("请输入新的IP："),DockPanel.NORTH);
+		label.setText("请输入新的IP：");
 		gridFrame.setWidget(0, 0, new Label("当前IP："));
 		gridFrame.setWidget(0, 1, oldValueLabel);
 		gridFrame.setWidget(1, 0, new Label("新的IP："));
@@ -26,7 +24,7 @@ public class UserIpModifyDialog extends CustomDialog {
 		
 		newValueBox.setTabIndex(1);
 		
-		add(gridFrame, DockPanel.CENTER);
+		mainPanel.add(gridFrame);
 	}
 
 	public void show(String tips_id, String tips_value) {

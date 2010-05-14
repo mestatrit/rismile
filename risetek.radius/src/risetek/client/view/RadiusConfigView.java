@@ -11,8 +11,9 @@ import com.google.gwt.user.client.ui.HasHorizontalAlignment;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.risetek.rismile.client.Entry;
+import com.risetek.rismile.client.view.IRisetekView;
 
-public class RadiusConfigView extends Composite {
+public class RadiusConfigView extends Composite  implements IRisetekView {
 	final Grid authGrid = new Grid(1,3);
 	final Grid acctGrid = new Grid(1,3);
 	final Grid secretGrid = new Grid(1,3);
@@ -22,11 +23,11 @@ public class RadiusConfigView extends Composite {
 
 	final VerticalPanel flexTable = new VerticalPanel();
 	
-	private RadiusConfController control;
+	final Button authButton;
+	final Button acctBotton;
+	final Button secretBotton;
 	
-	public RadiusConfigView( RadiusConfController control) {
-		this.control = control;
-	
+	public RadiusConfigView() {
 		flexTable.setWidth("100%");
 		flexTable.setHeight(Entry.SinkHeight);
 		flexTable.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_CENTER);
@@ -44,8 +45,8 @@ public class RadiusConfigView extends Composite {
 		authGrid.setText(0, 0, "认证端口");
 		authGrid.setStyleName("conf-table");
 		authGrid.setBorderWidth(1);
-		final Button authButton = new Button("修改", control.new authModifyClickListen());
-		authButton.setStyleName("conf-Button");
+		authButton = new Button("修改", new RadiusConfController.authModifyClickListen());
+		authButton.addStyleName("conf-Button");
 		authGrid.setWidget( 0, 2, authButton);
 
 		final HTML acctTitleHTML = new HTML("计费端口配置");
@@ -57,8 +58,8 @@ public class RadiusConfigView extends Composite {
 		acctGrid.setText(0, 0, "计费端口");
 		acctGrid.setStyleName("conf-table");
 
-		final Button acctBotton = new Button("修改", control.new acctModifyClickListen());
-		acctBotton.setStyleName("conf-Button");
+		acctBotton = new Button("修改", new RadiusConfController.acctModifyClickListen());
+		acctBotton.addStyleName("conf-Button");
 		acctGrid.setWidget(0, 2, acctBotton);
 
 		final HTML secretTitleHTML = new HTML("共享密匙配置");
@@ -70,8 +71,8 @@ public class RadiusConfigView extends Composite {
 		secretGrid.setText(0, 0, "共享密匙");
 		secretGrid.setStyleName("conf-table");
 		
-		final Button secretBotton = new Button("修改" , control.new secretModifyClickListen());
-		secretBotton.setStyleName("conf-Button");
+		secretBotton = new Button("修改" , new RadiusConfController.secretModifyClickListen());
+		secretBotton.addStyleName("conf-Button");
 		secretGrid.setWidget(0,2,secretBotton);
 
 		final HTML versionTileHTML = new HTML("产品序列号");
@@ -102,7 +103,19 @@ public class RadiusConfigView extends Composite {
 	
 	protected void onLoad() {
 		//请求的数据不能为空，
-		control.load();
+		RadiusConfController.load();
 	}
 
+	public void disablePrivate() {
+		authButton.setEnabled(false);
+		acctBotton.setEnabled(false);
+		secretBotton.setEnabled(false);
+	}
+
+	public void enablePrivate() {
+		authButton.setEnabled(true);
+		acctBotton.setEnabled(true);
+		secretBotton.setEnabled(true);
+	}
+	
 }
