@@ -13,7 +13,7 @@
  */
 
 body, table td, select {
-  font-family: Arial Unicode MS, Arial, sans-serif;
+  font-family: GB2312, Helvetica, Arial, sans-serif;
   font-size: small;
 }
 pre {
@@ -27,7 +27,10 @@ body {
   padding: 0px;
   background: #fff;
   direction: ltr;
+  background-color: white;
+  margin: 20px 20px 20px 20px;
 }
+
 a, a:visited, a:hover {
   color: #0000AA;
 }
@@ -63,6 +66,8 @@ a, a:visited, a:hover {
 .gwt-Button[disabled] {
   cursor: default;
   color: #888;
+  background: url("");
+  background-color: #e0e0e0;
 }
 .gwt-Button[disabled]:hover {
   border: 1px outset #ccc;

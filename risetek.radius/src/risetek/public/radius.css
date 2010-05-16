@@ -35,8 +35,6 @@
 }
 
 .radius-config .gwt-Button {
-	cursor: pointer;
-	cursor: hand;
 	height: 25px;
 	width: 8em;
 }
