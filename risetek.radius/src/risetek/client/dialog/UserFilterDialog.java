@@ -20,7 +20,7 @@ public class UserFilterDialog extends CustomDialog {
 		grid.getCellFormatter().setHorizontalAlignment(0, 0, HorizontalPanel.ALIGN_CENTER);
 		grid.getCellFormatter().setHorizontalAlignment(1, 0, HorizontalPanel.ALIGN_CENTER);
 		filter.setTabIndex(1);
-		filter.setWidth("320");
+		filter.setWidth("320px");
 		mainPanel.add(grid);
 	}
 	

@@ -31,10 +31,10 @@ public class BlackUserDialog extends CustomDialog {
 		gridFrame.getCellFormatter().setHorizontalAlignment(2, 0, HorizontalPanel.ALIGN_RIGHT);
 		gridFrame.getCellFormatter().setHorizontalAlignment(3, 0, HorizontalPanel.ALIGN_RIGHT);
 		
-		passwordBox.setWidth("220");
-		usernameBox.setWidth("220");
-		ipaddressBox.setWidth("220");
-		imsiBox.setWidth("220");
+		passwordBox.setWidth("220px");
+		usernameBox.setWidth("220px");
+		ipaddressBox.setWidth("220px");
+		imsiBox.setWidth("220px");
 		
 		imsiBox.setReadOnly(true);
 		gridFrame.setWidget(0,1,imsiBox);

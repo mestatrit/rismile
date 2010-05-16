@@ -29,9 +29,9 @@ public class AdminDialog extends CustomDialog {
 		}else{
 			gridFrame = new Grid(2, 2);
 		}
-		nameBox.setWidth("240");
-		pwdBox.setWidth("240");
-		pwdBoxSe.setWidth("240");
+		nameBox.setWidth("240px");
+		pwdBox.setWidth("240px");
+		pwdBoxSe.setWidth("240px");
 		gridFrame.setWidget(0,0,new Label("管理员名称：",false));
 		gridFrame.setWidget(1,0,new Label("密码：",false));
 		gridFrame.setWidget(0,1,nameBox);

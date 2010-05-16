@@ -12,7 +12,7 @@ public class UserPasswordModifyDialog extends CustomDialog {
 	public UserPasswordModifyDialog() {
 		label.setText("请输入新口令：");
 		mainPanel.add(passwordbox);
-		passwordbox.setWidth("200");
+		passwordbox.setWidth("200px");
 		passwordbox.setTabIndex(1);
 	}
 

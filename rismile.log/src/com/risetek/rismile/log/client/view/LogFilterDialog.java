@@ -19,7 +19,7 @@ public class LogFilterDialog extends CustomDialog {
 		grid.setWidget(1, 0, filter);
 		grid.getCellFormatter().setHorizontalAlignment(0, 0, HorizontalPanel.ALIGN_CENTER);
 		grid.getCellFormatter().setHorizontalAlignment(1, 0, HorizontalPanel.ALIGN_CENTER);
-		filter.setWidth("320");
+		filter.setWidth("320px");
 		filter.setTabIndex(1);
 		mainPanel.add(grid);
 	}

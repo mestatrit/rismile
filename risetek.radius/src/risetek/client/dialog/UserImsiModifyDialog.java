@@ -22,7 +22,7 @@ public class UserImsiModifyDialog extends CustomDialog {
 		gridFrame.setWidget(0, 1, oldValueLabel);
 		gridFrame.setWidget(1, 0, new Label("新的终端号："));
 		gridFrame.setWidget(1, 1, newValueBox);
-		newValueBox.setWidth("220");
+		newValueBox.setWidth("220px");
 		newValueBox.setTabIndex(1);
 		
 		mainPanel.add(gridFrame);

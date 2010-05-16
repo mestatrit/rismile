@@ -31,10 +31,10 @@ public class UserAddDialog extends CustomDialog {
 		gridFrame.setWidget(2,1,passwordbox);
 		gridFrame.setWidget(3,1,ipaddress);
 		
-		passwordbox.setWidth("240");
-		usernamebox.setWidth("240");
-		ipaddress.setWidth("240");
-		IMSI.setWidth("240");
+		passwordbox.setWidth("240px");
+		usernamebox.setWidth("240px");
+		ipaddress.setWidth("240px");
+		IMSI.setWidth("240px");
 		
 		IMSI.setTabIndex(1);
 		usernamebox.setTabIndex(2);

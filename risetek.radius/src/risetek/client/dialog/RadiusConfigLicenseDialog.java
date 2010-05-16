@@ -26,7 +26,7 @@ public class RadiusConfigLicenseDialog extends CustomDialog {
 		gridFrame.setWidget(1,1,licenseBox);
 		
 		newValueBox.setTabIndex(1);
-		newValueBox.setWidth("340");
+		newValueBox.setWidth("340px");
 		mainPanel.add(gridFrame);
 	}
 

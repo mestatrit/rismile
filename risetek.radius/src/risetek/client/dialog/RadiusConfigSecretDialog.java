@@ -12,7 +12,7 @@ public class RadiusConfigSecretDialog extends CustomDialog {
 		newValueBox.setTabIndex(1);
 		label.setText("请输入新共享密钥：");
 		setText("修改共享密钥");
-		newValueBox.setWidth("340");
+		newValueBox.setWidth("340px");
 		mainPanel.add(newValueBox);
 	}
 
