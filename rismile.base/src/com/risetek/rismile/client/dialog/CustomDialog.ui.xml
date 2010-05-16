@@ -43,10 +43,10 @@
 			</tr>
 			<tr align="center">
 				<td width="50%">
-					<g:Button ui:field="submit" styleName="{style.anniu}"></g:Button>
+					<g:Button ui:field="submit" styleName="gwt-Button {style.anniu}"></g:Button>
 				</td>
 				<td>
-					<g:Button ui:field="cancel" styleName="{style.anniu}">取消</g:Button>
+					<g:Button ui:field="cancel" styleName="gwt-Button {style.anniu}">取消</g:Button>
 				</td>
 			</tr>
 		</table>
