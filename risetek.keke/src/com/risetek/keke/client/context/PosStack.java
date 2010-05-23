@@ -30,7 +30,6 @@ import java.util.Stack;
  * the user wants to correct a dialog, the clear key will restore
  * the processed to pending.
  *
- * @author  Quentin Olson
  */
 public class PosStack {
 
@@ -97,17 +96,6 @@ public class PosStack {
      * Pop the pending, push it on the processed and return it.
      */
     protected Object popPending() {
-
-        // 		Object o;
-
-        // 		if (pending.size () > 1) {
-        // 			o =  pending.pop ();
-        // 			processed.push (o);
-        // 		}
-        // 		else {
-        // 			o = pending.peek ();
-        // 		}
-
         if (pending.size() == 0)
             return null;
         return pending.pop();

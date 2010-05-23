@@ -20,7 +20,6 @@
 package com.risetek.keke.client.events;
 
 
-import com.risetek.keke.client.context.PosContext;
 
 /**
  * PosEvent for handling errors. Typically another
@@ -79,17 +78,13 @@ public class PosError extends PosEvent {
         return prompttext;
     }
 
-    /** Simple constructor */
-    public PosError() {
-    }
-
     /**
      * Constructor with error code. Depending on
      * code (switch) set up promptText ().
      */
-    public PosError(PosContext context, int code) {
+    public PosError(int code) {
 
-        setContext(context);
+        super();
         errorcode = code;
 
         switch (errorcode) {

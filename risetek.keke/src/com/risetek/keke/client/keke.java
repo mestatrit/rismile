@@ -9,7 +9,7 @@ import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Widget;
-import com.risetek.keke.client.datamodel.Kekes;
+import com.risetek.keke.client.events.PosEvent;
 
 public class keke extends Composite {
 	interface ProudceUiBinder extends UiBinder<Widget, keke> {}
@@ -29,25 +29,24 @@ public class keke extends Composite {
 	@UiField SpanElement brief;
 	@UiField Image img;
 
-	public keke(Kekes brief) {
+	public PosEvent event;
+	public keke(String title, String imgName, PosEvent event) {
+		this.event = event;
 		Widget w = uiBinder.createAndBindUi(this);
 		
-		if( brief.imgName.equalsIgnoreCase("p3"))
+		if( imgName.equalsIgnoreCase("p3"))
 			img.setResource(imgSrc.p3());
-		else if( brief.imgName.equalsIgnoreCase("p2"))
+		else if( imgName.equalsIgnoreCase("p2"))
 			img.setResource(imgSrc.p2());
-		else if( brief.imgName.equalsIgnoreCase("p4"))
+		else if( imgName.equalsIgnoreCase("p4"))
 			img.setResource(imgSrc.p4());
 		else
 			img.setResource(imgSrc.p5());
 
-		this.brief.setInnerText(brief.name);
+		this.brief.setInnerText(title);
 		initWidget(w);
 	}
-
-	public void render() {
-	}
-
+	
 	public void onLoad() {
 	}
 }

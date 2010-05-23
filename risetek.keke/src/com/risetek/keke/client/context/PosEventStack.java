@@ -31,7 +31,6 @@ import com.risetek.keke.client.events.PosException;
  * complex operations for loading and executing events/dialogs
  * (nextEvent () and loadDialog ()).
  *
- * @author  Quentin Olson
  */
 public class PosEventStack extends PosStack {
 

@@ -19,7 +19,13 @@
 
 package com.risetek.keke.client.context;
 
+import java.util.Vector;
+
+import com.google.gwt.user.client.ui.HTML;
+import com.risetek.keke.client.Risetek_keke;
+import com.risetek.keke.client.keke;
 import com.risetek.keke.client.data.PosConfig;
+import com.risetek.keke.client.events.PosEvent;
 /**
  *
  * A pos context is initially created with a site, pos number anda config ID.
@@ -35,7 +41,14 @@ public class PosContext {
     private StringBuffer inputline;
     private PosEventStack eventstack;
     private boolean locked;
+	public Vector<keke> kekes;
 
+    public void loadEvent(PosEvent event)
+    {
+    	eventStack().pushEvent(event);
+    	event.setContext(this);
+    }
+    
     /** Configuration object. */
     public PosConfig config() {
         return config;
@@ -45,12 +58,7 @@ public class PosContext {
         return locked;
     }
 
-    /** The lock thread object. */
-    /*
-    public LockThread lockThread() {
-        return lockthread;
-    }
-	*/
+
     /** The event stack for this context. */
     public PosEventStack eventStack() {
         return eventstack;
@@ -70,10 +78,14 @@ public class PosContext {
     public PosContext() {
         inputline = new StringBuffer();
         eventstack = new PosEventStack();
+        kekes = new Vector<keke>();
     }
 
-    // *** Main initializtion, transaction start and finish methods ***
-
+    public void clearKekes()
+    {
+        kekes = new Vector<keke>();
+        currentKeke = -1;
+    }
     /**
      * Converts the input buffer to an int.
      */
@@ -171,6 +183,48 @@ public class PosContext {
         inputline = null;
         eventstack = null;
     }
+    
+	public static int maxKeke = 5 - 1;
+	public int currentKeke = -1;
+    
+	public void renderKekes()
+	{
+		// 应该计算多少个可可，然后安排合适的位置进行显示。
+		if( kekes.size() == 0 )
+			return;
+
+		// 首先清除显示内容。
+		for( int spacekeke = 0; spacekeke < maxKeke; spacekeke++ )
+		{
+			Risetek_keke.keke.setWidget(spacekeke, 0, new HTML(" "));
+		}
+		
+		
+		int mid = maxKeke /2 ;
+
+		if( currentKeke == -1 )
+		{
+			currentKeke = kekes.size() > maxKeke ? maxKeke : kekes.size() - 1;
+			currentKeke = currentKeke / 2;
+		}
+
+		int index = currentKeke -1;
+		for( int spacekeke = mid-1; spacekeke >= 0 && index >= 0; spacekeke--, index-- )
+		{
+			Risetek_keke.keke.setWidget(spacekeke, 0, (kekes.elementAt(index)));
+		}
+
+		index = currentKeke+1;
+		for( int spacekeke = mid+1; spacekeke < maxKeke && index < kekes.size(); spacekeke++, index++ )
+		{
+			Risetek_keke.keke.setWidget(spacekeke, 0, (kekes.elementAt(index)));
+		}
+		
+		Risetek_keke.keke.setWidget(mid, 0, (kekes.elementAt(currentKeke)));
+		Risetek_keke.keke.getRowFormatter().setStyleName(mid, Risetek_keke.style.hilight());
+	}
+
+    
 }
 
 

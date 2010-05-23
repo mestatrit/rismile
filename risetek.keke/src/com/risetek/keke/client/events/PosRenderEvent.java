@@ -1,9 +1,7 @@
 package com.risetek.keke.client.events;
 
-import com.risetek.keke.client.Risetek_keke;
-import com.risetek.keke.client.datamodel.Kekes;
 
-public class PosInitDialogEvent extends PosDialogEvent {
+public class PosRenderEvent extends PosEvent {
 
 	@Override
 	public void clear() {
@@ -13,7 +11,8 @@ public class PosInitDialogEvent extends PosDialogEvent {
 
 	@Override
 	public void engage(int value) throws PosException {
-	    Risetek_keke.renderKekes(Kekes.grand);
+		context().renderKekes();
+	    //Risetek_keke.renderKekes(Kekes.grand);
 	}
 
 	@Override
