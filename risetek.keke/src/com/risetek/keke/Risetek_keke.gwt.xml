@@ -2,6 +2,7 @@
 <module rename-to='risetek_keke'>
   <inherits name='com.google.gwt.user.User'/>
   <inherits name='com.google.gwt.user.theme.standard.Standard'/>
+  
   <entry-point class='com.risetek.keke.client.Risetek_keke'/>
 
   <!-- Specify the paths for translatable code                    -->

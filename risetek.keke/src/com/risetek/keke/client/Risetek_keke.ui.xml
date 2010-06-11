@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <ui:UiBinder xmlns:ui='urn:ui:com.google.gwt.uibinder'
-	xmlns:g='urn:import:com.google.gwt.user.client.ui'>
+	xmlns:g='urn:import:com.google.gwt.user.client.ui'
+	xmlns:keke='urn:import:com.risetek.keke.client.ui'>
 	<ui:style type="com.risetek.keke.client.Risetek_keke.ViewStyle">
 		.risefront {
 			background: #aa8ebf;
@@ -136,6 +137,7 @@
 								</TR>
 							</TABLE>
 						</TD>
+						<TD><keke:ControlPanel></keke:ControlPanel></TD>
 					</TR>
 				</TABLE>
 			</g:HTMLPanel>
