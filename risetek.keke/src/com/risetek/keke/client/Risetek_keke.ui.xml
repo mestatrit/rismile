@@ -137,7 +137,7 @@
 								</TR>
 							</TABLE>
 						</TD>
-						<TD><keke:ControlPanel></keke:ControlPanel></TD>
+						<TD><keke:HIDComposite></keke:HIDComposite></TD>
 					</TR>
 				</TABLE>
 			</g:HTMLPanel>

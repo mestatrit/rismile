@@ -2,15 +2,21 @@ package com.risetek.keke.server.node;
 
 import com.google.gwt.core.client.GWT;
 
+/*
+ * 这个结构用来表达一系列串联的节点。并能存储到数据库中。这是一种变异了的树形结构。
+ */
+
 public class Node implements INodeCallback {
-	Node parent;
+//	Node parent;
 	Node children;
-	Node brother;
+	Node next;
+	
+
 	/*
 	 * 持久存储本节点
 	 */
 	public void save() {
-		
+
 	}
 	/*
 	 * 链接一个节点到本节点的子孙
@@ -19,30 +25,20 @@ public class Node implements INodeCallback {
 		if( children == null )
 			children = node;
 		else
-			children.addBrotherNode(node);
+			children.addNextNode(node);
 	}
 	
 	/*
 	 * 链接一个弟兄到本节点
 	 */
 	
-	public void addBrotherNode(Node node) {
-		if( brother == null )
-			brother = node;
+	private void addNextNode(Node node) {
+		if( next == null )
+			next = node;
 		else
-			brother.addBrotherNode(node);
+			next.addNextNode(node);
 	}
 
-	/*
-	 * 构造一个新的节点，并关联到父节点
-	 */
-	public static Node registeNode(Node node) {
-		Node n = new Node();
-		n.parent = node;
-		node.addChildrenNode(n);
-		return n;
-	}
-	
 	public void callback() {
 		if( this instanceof NamedNode) {
 			/*
@@ -60,7 +56,7 @@ public class Node implements INodeCallback {
 		nodecallback.callback();
 		if( children != null )
 			children.travelNode(nodecallback);
-		if( brother != null)
-			brother.travelNode(nodecallback);
+		if( next != null)
+			next.travelNode(nodecallback);
 	}
 }
