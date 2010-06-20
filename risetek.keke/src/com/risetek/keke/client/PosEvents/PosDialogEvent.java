@@ -17,7 +17,7 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
 
-package com.risetek.keke.client.events;
+package com.risetek.keke.client.PosEvents;
 
 
 import com.google.gwt.core.client.GWT;

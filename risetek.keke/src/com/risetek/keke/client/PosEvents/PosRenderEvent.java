@@ -1,7 +1,7 @@
-package com.risetek.keke.client.events;
+package com.risetek.keke.client.PosEvents;
 
 
-public class PosMoveRightEvent extends PosEvent {
+public class PosRenderEvent extends PosEvent {
 
 	@Override
 	public void clear() {
@@ -11,12 +11,11 @@ public class PosMoveRightEvent extends PosEvent {
 
 	@Override
 	public void engage(int value) throws PosException {
-		context().rightKeke(value);
+		context().renderKekes();
 	}
 
 	@Override
 	public boolean validTransition(String event) {
-		// TODO Auto-generated method stub
 		return false;
 	}
 

@@ -1,4 +1,4 @@
-package com.risetek.keke.client.events;
+package com.risetek.keke.client.PosEvents;
 
 import com.risetek.keke.client.keke;
 
