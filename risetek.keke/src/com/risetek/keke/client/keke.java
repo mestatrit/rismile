@@ -9,7 +9,7 @@ import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Widget;
-import com.risetek.keke.client.events.PosEvent;
+import com.risetek.keke.client.PosEvents.PosEvent;
 
 public class keke extends Composite {
 	interface ProudceUiBinder extends UiBinder<Widget, keke> {}

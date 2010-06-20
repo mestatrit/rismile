@@ -5,8 +5,8 @@ import java.util.Vector;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.Grid;
 import com.google.gwt.user.client.ui.HTMLPanel;
-import com.risetek.keke.client.UiKeke;
 import com.risetek.keke.client.keke;
+import com.risetek.keke.client.context.UiKeke;
 
 public class KekesComposite extends Composite implements UiKeke {
 

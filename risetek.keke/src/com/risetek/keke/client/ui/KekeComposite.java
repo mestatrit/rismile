@@ -4,7 +4,7 @@ import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Label;
-import com.risetek.keke.client.events.PosEvent;
+import com.risetek.keke.client.PosEvents.PosEvent;
 
 public class KekeComposite extends Composite {
 	

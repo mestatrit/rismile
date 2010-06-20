@@ -22,8 +22,14 @@ package com.risetek.keke.client.context;
 import java.util.Vector;
 
 import com.google.gwt.core.client.GWT;
-import com.risetek.keke.client.Risetek_keke;
 import com.risetek.keke.client.keke;
+import com.risetek.keke.client.PosEvents.PosEvent;
+import com.risetek.keke.client.PosEvents.PosException;
+import com.risetek.keke.client.PosEvents.PosInitEvent;
+import com.risetek.keke.client.PosEvents.PosMoveDownEvent;
+import com.risetek.keke.client.PosEvents.PosMoveRightEvent;
+import com.risetek.keke.client.PosEvents.PosMoveUpEvent;
+import com.risetek.keke.client.PosEvents.PosRenderEvent;
 import com.risetek.keke.client.context.ClientEventBus.HIDCARDEvent;
 import com.risetek.keke.client.context.ClientEventBus.HIDCARDHandler;
 import com.risetek.keke.client.context.ClientEventBus.HIDDOWNEvent;
@@ -36,12 +42,7 @@ import com.risetek.keke.client.context.ClientEventBus.HIDUPEvent;
 import com.risetek.keke.client.context.ClientEventBus.HIDUPHandler;
 import com.risetek.keke.client.data.PosConfig;
 import com.risetek.keke.client.datamodel.Kekes;
-import com.risetek.keke.client.events.PosEvent;
-import com.risetek.keke.client.events.PosException;
-import com.risetek.keke.client.events.PosMoveDownEvent;
-import com.risetek.keke.client.events.PosMoveRightEvent;
-import com.risetek.keke.client.events.PosMoveUpEvent;
-import com.risetek.keke.client.events.PosRenderEvent;
+import com.risetek.keke.client.ui.KekesComposite;
 /**
  *
  * A pos context is initially created with a site, pos number anda config ID.
@@ -149,7 +150,10 @@ public class PosContext {
      * Constructor PosContext with the site ID, the POS number and the
      * PosConfig ID.
      */
-    public PosContext() {
+    KekesComposite view;
+    
+    public PosContext(KekesComposite view) {
+    	this.view = view;
         inputline = new StringBuffer();
         eventstack = new PosEventStack();
         kekes = new Vector<keke>();
@@ -158,6 +162,10 @@ public class PosContext {
         ClientEventBus.INSTANCE.addHandler(lefthandle, HIDLEFTEvent.TYPE);
         ClientEventBus.INSTANCE.addHandler(righthandler, HIDRIGHTEvent.TYPE);
         ClientEventBus.INSTANCE.addHandler(cardhandler, HIDCARDEvent.TYPE);
+        
+	    loadEvent(new PosInitEvent());
+	    eventStack().nextEvent();
+        
     }
 
     public void clearKekes()
@@ -267,7 +275,7 @@ public class PosContext {
 
 	public void renderKekes()
 	{
-		Risetek_keke.kekeComposite.renderKekes(kekes, currentKeke);
+		view.renderKekes(kekes, currentKeke);
 	}
 	
 	public void downKeke(int value) throws PosException {

@@ -21,9 +21,9 @@ package com.risetek.keke.client.context;
 
 
 import com.google.gwt.core.client.GWT;
-import com.risetek.keke.client.events.PosDialogEvent;
-import com.risetek.keke.client.events.PosEvent;
-import com.risetek.keke.client.events.PosException;
+import com.risetek.keke.client.PosEvents.PosDialogEvent;
+import com.risetek.keke.client.PosEvents.PosEvent;
+import com.risetek.keke.client.PosEvents.PosException;
 
 /**
  * Implements a stack of POS events by extending PosStack. Manages

@@ -8,25 +8,23 @@ import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.RootLayoutPanel;
 import com.google.gwt.user.client.ui.Widget;
 import com.risetek.keke.client.context.PosContext;
-import com.risetek.keke.client.events.PosInitEvent;
 import com.risetek.keke.client.ui.KekesComposite;
 
 /**
  * Entry point classes define <code>onModuleLoad()</code>.
  */
-public class Risetek_keke implements EntryPoint, UiKeke {
+public class Risetek_keke implements EntryPoint {
 	interface localUiBinder extends UiBinder<Widget, Risetek_keke> {}
 	private static localUiBinder uiBinder = GWT.create(localUiBinder.class);
-	@UiField public static KekesComposite kekeComposite;
+	@UiField KekesComposite kekeComposite;
 	int kekesIndex = 0;
-    PosContext context = new PosContext();
 	
 	public void onModuleLoad() {
 		Window.enableScrolling(false);
 		Widget outer = uiBinder.createAndBindUi(this);
 	    RootLayoutPanel root = RootLayoutPanel.get();
 	    root.add(outer);
-	    context.loadEvent(new PosInitEvent());
-	    context.eventStack().nextEvent();
+	    // 构造上下文，并将视图传递给上下文控制。
+	    new PosContext(kekeComposite);
 	}
 }
