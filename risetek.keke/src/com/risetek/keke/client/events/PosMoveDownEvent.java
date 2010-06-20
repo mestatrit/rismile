@@ -11,13 +11,7 @@ public class PosMoveDownEvent extends PosEvent {
 
 	@Override
 	public void engage(int value) throws PosException {
-		context().currentKeke++;
-		
-		if( context().currentKeke >= context().kekes.size() )
-			context().currentKeke = context().kekes.size() - 1;
-		
-	    context().loadEvent(new PosRenderEvent());
-	    context().eventStack().nextEvent();
+		context().downKeke(value);
 	}
 
 	@Override

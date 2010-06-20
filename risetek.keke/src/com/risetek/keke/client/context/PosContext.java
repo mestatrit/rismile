@@ -21,11 +21,27 @@ package com.risetek.keke.client.context;
 
 import java.util.Vector;
 
-import com.google.gwt.user.client.ui.HTML;
+import com.google.gwt.core.client.GWT;
 import com.risetek.keke.client.Risetek_keke;
 import com.risetek.keke.client.keke;
+import com.risetek.keke.client.context.ClientEventBus.HIDCARDEvent;
+import com.risetek.keke.client.context.ClientEventBus.HIDCARDHandler;
+import com.risetek.keke.client.context.ClientEventBus.HIDDOWNEvent;
+import com.risetek.keke.client.context.ClientEventBus.HIDDOWNHandler;
+import com.risetek.keke.client.context.ClientEventBus.HIDLEFTEvent;
+import com.risetek.keke.client.context.ClientEventBus.HIDLEFTHandler;
+import com.risetek.keke.client.context.ClientEventBus.HIDRIGHTEvent;
+import com.risetek.keke.client.context.ClientEventBus.HIDRIGHTHandler;
+import com.risetek.keke.client.context.ClientEventBus.HIDUPEvent;
+import com.risetek.keke.client.context.ClientEventBus.HIDUPHandler;
 import com.risetek.keke.client.data.PosConfig;
+import com.risetek.keke.client.datamodel.Kekes;
 import com.risetek.keke.client.events.PosEvent;
+import com.risetek.keke.client.events.PosException;
+import com.risetek.keke.client.events.PosMoveDownEvent;
+import com.risetek.keke.client.events.PosMoveRightEvent;
+import com.risetek.keke.client.events.PosMoveUpEvent;
+import com.risetek.keke.client.events.PosRenderEvent;
 /**
  *
  * A pos context is initially created with a site, pos number anda config ID.
@@ -42,6 +58,64 @@ public class PosContext {
     private PosEventStack eventstack;
     private boolean locked;
 	public Vector<keke> kekes;
+
+	public static void Log(String message) {
+		GWT.log(message);
+	}
+	
+	// 对事件处理的函数：
+	HIDUPHandler uphanlde = new HIDUPHandler(){
+		@Override
+		public void onEvent(HIDUPEvent event) {
+		    loadEvent(new PosMoveUpEvent());
+		    eventStack().nextEvent();
+		}
+	};
+	
+	HIDDOWNHandler downhanlde = new HIDDOWNHandler(){
+
+		@Override
+		public void onEvent(HIDDOWNEvent event) {
+		    loadEvent(new PosMoveDownEvent());
+		    eventStack().nextEvent();
+		}
+	};
+	
+	HIDLEFTHandler lefthandle = new HIDLEFTHandler() {
+
+		@Override
+		public void onEvent(HIDLEFTEvent event) {
+		    loadEvent(new PosRenderEvent());
+		    eventStack().nextEvent();
+		}
+		
+	};
+	
+	HIDRIGHTHandler righthandler = new HIDRIGHTHandler() {
+
+		@Override
+		public void onEvent(HIDRIGHTEvent event) {
+		    loadEvent(new PosMoveRightEvent());
+		    eventStack().nextEvent();
+		}
+		
+	};
+	
+	HIDCARDHandler cardhandler = new HIDCARDHandler() {
+
+		@Override
+		public void onEvent(HIDCARDEvent event) {
+		//	if( Kekes.current.defaultOption instanceof CardKeke )
+			{
+				// Kekes.current.moveRight();
+				Kekes.current.defaultOption.card();
+			    loadEvent(new PosRenderEvent());
+			    eventStack().nextEvent();
+			}
+		}
+		
+	};
+	
 
     public void loadEvent(PosEvent event)
     {
@@ -79,12 +153,17 @@ public class PosContext {
         inputline = new StringBuffer();
         eventstack = new PosEventStack();
         kekes = new Vector<keke>();
+        ClientEventBus.INSTANCE.addHandler(uphanlde, HIDUPEvent.TYPE);
+        ClientEventBus.INSTANCE.addHandler(downhanlde, HIDDOWNEvent.TYPE);
+        ClientEventBus.INSTANCE.addHandler(lefthandle, HIDLEFTEvent.TYPE);
+        ClientEventBus.INSTANCE.addHandler(righthandler, HIDRIGHTEvent.TYPE);
+        ClientEventBus.INSTANCE.addHandler(cardhandler, HIDCARDEvent.TYPE);
     }
 
     public void clearKekes()
     {
         kekes = new Vector<keke>();
-        currentKeke = -1;
+        currentKeke = 0;
     }
     /**
      * Converts the input buffer to an int.
@@ -184,47 +263,40 @@ public class PosContext {
         eventstack = null;
     }
     
-	public static int maxKeke = 5 - 1;
-	public int currentKeke = -1;
-    
+	private int currentKeke = 0;
+
 	public void renderKekes()
 	{
-		// 应该计算多少个可可，然后安排合适的位置进行显示。
-		if( kekes.size() == 0 )
-			return;
-
-		// 首先清除显示内容。
-		for( int spacekeke = 0; spacekeke < maxKeke; spacekeke++ )
-		{
-			Risetek_keke.keke.setWidget(spacekeke, 0, new HTML(" "));
-		}
+		Risetek_keke.kekeComposite.renderKekes(kekes, currentKeke);
+	}
+	
+	public void downKeke(int value) throws PosException {
+		currentKeke++;
 		
+		if( currentKeke >= kekes.size() )
+			currentKeke = kekes.size() - 1;
 		
-		int mid = maxKeke /2 ;
-
-		if( currentKeke == -1 )
-		{
-			currentKeke = kekes.size() > maxKeke ? maxKeke : kekes.size() - 1;
-			currentKeke = currentKeke / 2;
-		}
-
-		int index = currentKeke -1;
-		for( int spacekeke = mid-1; spacekeke >= 0 && index >= 0; spacekeke--, index-- )
-		{
-			Risetek_keke.keke.setWidget(spacekeke, 0, (kekes.elementAt(index)));
-		}
-
-		index = currentKeke+1;
-		for( int spacekeke = mid+1; spacekeke < maxKeke && index < kekes.size(); spacekeke++, index++ )
-		{
-			Risetek_keke.keke.setWidget(spacekeke, 0, (kekes.elementAt(index)));
-		}
+	    loadEvent(new PosRenderEvent());
+	    eventStack().nextEvent();
+	}
+	
+	public void rightKeke(int value) throws PosException {
 		
-		Risetek_keke.keke.setWidget(mid, 0, (kekes.elementAt(currentKeke)));
-		Risetek_keke.keke.getRowFormatter().setStyleName(mid, Risetek_keke.style.hilight());
+		keke k = kekes.elementAt(currentKeke);
+	    loadEvent(k.event);
+	    eventStack().nextEvent();
+	}
+	
+	public void upKeke(int value) throws PosException {
+		currentKeke--;
+	
+		if( currentKeke < 0 )
+			currentKeke = 0;
+		
+	    loadEvent(new PosRenderEvent());
+	    eventStack().nextEvent();
 	}
 
-    
 }
 
 

@@ -31,3 +31,54 @@ h1 {
 #closeButton {
   margin: 15px 6px 6px;
 }
+
+.risefront {
+	background: #aa8ebf;
+	text-align: center;
+	cellspacing: 0px;
+	cellpading: 0px;
+}
+
+.risefront td {
+	border: solid white;
+	border-width: 0px;
+}
+
+.machine {
+	background: #2a8ebf;
+	text-align: center;
+	cellspacing: 0px;
+	cellpading: 0px;
+}
+
+.machine td {
+	border: solid white;
+	border-width: 1px;
+}
+
+.keke-table {
+	border: 1px solid #999;
+	border-collapse: collapse;
+	text-align: center;
+	cellspacing: 0px;
+	cellpading: 0px;
+}
+
+.keke-table td {
+	width: 32em;
+	height: 6em;
+	border: solid #999;
+	border-width: 0px;
+	padding-top: 0px;
+	padding-left: 0px;
+	padding-bottom: 0px;
+	padding-right: 0px;
+}
+
+.hilight {
+	background: yellow;
+}
+
+.HID .gwt-Button {
+	width: 6em;
+}

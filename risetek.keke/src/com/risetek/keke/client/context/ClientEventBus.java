@@ -30,7 +30,7 @@ public class ClientEventBus {
 	}
 	
 	public static class HIDUPEvent extends GwtEvent<HIDUPHandler> {
-		private static Type<HIDUPHandler> TYPE = new Type<HIDUPHandler>();
+		public static Type<HIDUPHandler> TYPE = new Type<HIDUPHandler>();
 
 		@Override
 		public final Type<HIDUPHandler> getAssociatedType() {
@@ -49,7 +49,7 @@ public class ClientEventBus {
 	}
 	
 	public static class HIDDOWNEvent extends GwtEvent<HIDDOWNHandler> {
-		private static Type<HIDDOWNHandler> TYPE = new Type<HIDDOWNHandler>();
+		public static Type<HIDDOWNHandler> TYPE = new Type<HIDDOWNHandler>();
 
 		@Override
 		public final Type<HIDDOWNHandler> getAssociatedType() {
@@ -68,7 +68,7 @@ public class ClientEventBus {
 	}
 	
 	public static class HIDLEFTEvent extends GwtEvent<HIDLEFTHandler> {
-		private static Type<HIDLEFTHandler> TYPE = new Type<HIDLEFTHandler>();
+		public static Type<HIDLEFTHandler> TYPE = new Type<HIDLEFTHandler>();
 
 		@Override
 		public final Type<HIDLEFTHandler> getAssociatedType() {
@@ -87,7 +87,7 @@ public class ClientEventBus {
 	}
 	
 	public static class HIDRIGHTEvent extends GwtEvent<HIDRIGHTHandler> {
-		private static Type<HIDRIGHTHandler> TYPE = new Type<HIDRIGHTHandler>();
+		public static Type<HIDRIGHTHandler> TYPE = new Type<HIDRIGHTHandler>();
 
 		@Override
 		public final Type<HIDRIGHTHandler> getAssociatedType() {
@@ -100,6 +100,33 @@ public class ClientEventBus {
 		}
 	}
 
+	// 处理  刷卡 事件
+	public interface HIDCARDHandler extends EventHandler {
+		void onEvent(HIDCARDEvent event);
+	}
+	
+	public static class HIDCARDEvent extends GwtEvent<HIDCARDHandler> {
+		public static Type<HIDCARDHandler> TYPE = new Type<HIDCARDHandler>();
 
+		private String magic;
+		public HIDCARDEvent(String magic) {
+			this.magic = magic;
+		}
+		
+		public String getMagic() {
+			return magic;
+		}
+		
+		@Override
+		public final Type<HIDCARDHandler> getAssociatedType() {
+			return TYPE;
+		}
+
+		@Override
+		protected void dispatch(HIDCARDHandler handler) {
+			handler.onEvent(this);
+		}
+	}
+	
 }
 

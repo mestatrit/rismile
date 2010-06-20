@@ -1,7 +1,7 @@
 package com.risetek.keke.client.datamodel;
 
 import com.google.gwt.core.client.GWT;
-import com.risetek.keke.client.Risetek_keke;
+import com.risetek.keke.client.context.PosContext;
 
 public class XinYunKeke extends Kekes {
 
@@ -13,6 +13,6 @@ public class XinYunKeke extends Kekes {
 	{
 		super.ability();
 		GWT.log("输出能力展示");
-		Risetek_keke.logger.setInnerText("我一直都是幸运的！");
+		PosContext.Log("我一直都是幸运的！");
 	}
 }

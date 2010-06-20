@@ -1,7 +1,7 @@
 package com.risetek.keke.client.datamodel;
 
 import com.google.gwt.core.client.GWT;
-import com.risetek.keke.client.Risetek_keke;
+import com.risetek.keke.client.context.PosContext;
 
 public class CardKeke extends Kekes {
 
@@ -17,11 +17,11 @@ public class CardKeke extends Kekes {
 		if( carded )
 		{
 			super.ability();
-			Risetek_keke.logger.setInnerText("刷卡完成了！");
+			PosContext.Log("刷卡完成了！");
 		}
 		else
 		{
-			Risetek_keke.logger.setInnerText("您还没完成刷卡！");
+			PosContext.Log("您还没完成刷卡！");
 		}
 	}
 

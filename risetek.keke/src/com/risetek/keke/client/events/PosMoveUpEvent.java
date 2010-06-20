@@ -10,13 +10,7 @@ public class PosMoveUpEvent extends PosEvent {
 
 	@Override
 	public void engage(int value) throws PosException {
-			context().currentKeke--;
-		
-		if( context().currentKeke < 0 )
-			context().currentKeke = 0;
-		
-	    context().loadEvent(new PosRenderEvent());
-	    context().eventStack().nextEvent();
+		context().upKeke(value);
 	}
 
 	@Override

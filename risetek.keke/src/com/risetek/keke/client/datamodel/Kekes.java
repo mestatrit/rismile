@@ -2,8 +2,8 @@ package com.risetek.keke.client.datamodel;
 
 import java.util.Vector;
 
-import com.risetek.keke.client.Risetek_keke;
 import com.risetek.keke.client.keke;
+import com.risetek.keke.client.context.PosContext;
 
 public class Kekes {
 	public Vector<keke> kekes = new Vector<keke>();
@@ -35,14 +35,9 @@ public class Kekes {
 	
 	public void ability()
 	{
-		Risetek_keke.logger.setInnerText("玩玩");
+		PosContext.Log("玩玩");
 		if( current.defaultOption.options.size() > 0 )
 			current = current.defaultOption;
-	}
-	
-	public void showMe(String message)
-	{
-		Risetek_keke.logger.setInnerText(message);
 	}
 	
 	public void card()
