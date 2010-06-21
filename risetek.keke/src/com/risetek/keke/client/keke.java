@@ -46,7 +46,4 @@ public class keke extends Composite {
 		this.brief.setInnerText(title);
 		initWidget(w);
 	}
-	
-	public void onLoad() {
-	}
 }

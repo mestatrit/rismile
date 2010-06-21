@@ -5,4 +5,8 @@ package com.risetek.keke.server.node;
  */
 public class NamedNode extends Node {
 
+	public NamedNode(String ticker, String promotion) {
+		super(ticker, promotion);
+	}
+
 }

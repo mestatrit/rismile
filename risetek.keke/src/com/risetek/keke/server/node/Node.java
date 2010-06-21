@@ -10,8 +10,14 @@ public class Node implements INodeCallback {
 //	Node parent;
 	Node children;
 	Node next;
-	
+	String Ticker;
+	String Promotion;
 
+	public Node(String ticker, String promotion) {
+		Ticker = ticker;
+		Promotion = promotion;
+	}
+	
 	/*
 	 * 持久存储本节点
 	 */
@@ -21,11 +27,12 @@ public class Node implements INodeCallback {
 	/*
 	 * 链接一个节点到本节点的子孙
 	 */
-	public void addChildrenNode(Node node) {
+	public Node addChildrenNode(Node node) {
 		if( children == null )
 			children = node;
 		else
 			children.addNextNode(node);
+		return node;
 	}
 	
 	/*

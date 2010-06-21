@@ -40,9 +40,11 @@ import com.risetek.keke.client.context.ClientEventBus.HIDRIGHTEvent;
 import com.risetek.keke.client.context.ClientEventBus.HIDRIGHTHandler;
 import com.risetek.keke.client.context.ClientEventBus.HIDUPEvent;
 import com.risetek.keke.client.context.ClientEventBus.HIDUPHandler;
+import com.risetek.keke.client.data.LoginWidget;
 import com.risetek.keke.client.data.PosConfig;
 import com.risetek.keke.client.datamodel.Kekes;
 import com.risetek.keke.client.ui.KekesComposite;
+import com.risetek.keke.server.node.Node;
 /**
  *
  * A pos context is initially created with a site, pos number anda config ID.
@@ -60,6 +62,8 @@ public class PosContext {
     private boolean locked;
 	public Vector<keke> kekes;
 
+	Node	kekeTree;
+	
 	public static void Log(String message) {
 		GWT.log(message);
 	}
@@ -162,6 +166,8 @@ public class PosContext {
         ClientEventBus.INSTANCE.addHandler(lefthandle, HIDLEFTEvent.TYPE);
         ClientEventBus.INSTANCE.addHandler(righthandler, HIDRIGHTEvent.TYPE);
         ClientEventBus.INSTANCE.addHandler(cardhandler, HIDCARDEvent.TYPE);
+        
+        kekeTree = LoginWidget.INSTANCE.getNode();
         
 	    loadEvent(new PosInitEvent());
 	    eventStack().nextEvent();

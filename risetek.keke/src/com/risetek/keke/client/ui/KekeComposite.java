@@ -13,8 +13,7 @@ public class KekeComposite extends Composite {
 	HTMLPanel outPanel = new HTMLPanel("");
 	public PosEvent event;
 
-	public KekeComposite(String title, String imgName, PosEvent event) {
-		this.event = event;
+	public KekeComposite(String title, String imgName, String eventName) {
 		brief.setText(title);
 		outPanel.add(brief);
 		initWidget(outPanel);
