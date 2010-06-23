@@ -1,4 +1,4 @@
-package com.risetek.keke.server.node;
+package com.risetek.keke.client.nodes;
 
 public interface INodeCallback {
 	void callback();

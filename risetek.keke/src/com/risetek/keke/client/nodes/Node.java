@@ -1,4 +1,4 @@
-package com.risetek.keke.server.node;
+package com.risetek.keke.client.nodes;
 
 import com.google.gwt.core.client.GWT;
 

@@ -1,4 +1,5 @@
-package com.risetek.keke.server.node;
+package com.risetek.keke.client.nodes;
+
 
 /*
  * 命名节点，是大量重复使用的结构化节点组。
