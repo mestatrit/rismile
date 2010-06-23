@@ -1,20 +1,49 @@
 package com.risetek.keke.client.context;
 
+import com.google.gwt.event.dom.client.KeyCodes;
 import com.google.gwt.event.shared.EventHandler;
 import com.google.gwt.event.shared.GwtEvent;
 import com.google.gwt.event.shared.HandlerManager;
 import com.google.gwt.event.shared.HandlerRegistration;
+import com.google.gwt.user.client.Event;
+import com.google.gwt.user.client.Event.NativePreviewEvent;
+import com.google.gwt.user.client.Event.NativePreviewHandler;
 
 public class ClientEventBus {
 
 	public static ClientEventBus INSTANCE = new ClientEventBus();
 	
+	private class kekeNativePreviewHandler implements NativePreviewHandler {
+
+		@Override
+		public void onPreviewNativeEvent(NativePreviewEvent event) {
+			switch(event.getNativeEvent().getKeyCode()) {
+			case KeyCodes.KEY_DOWN:
+				ClientEventBus.INSTANCE.fireEvent(new ClientEventBus.HIDDOWNEvent());
+				break;
+			case KeyCodes.KEY_UP:
+				ClientEventBus.INSTANCE.fireEvent(new ClientEventBus.HIDUPEvent());
+				break;
+			case KeyCodes.KEY_LEFT:
+				ClientEventBus.INSTANCE.fireEvent(new ClientEventBus.HIDLEFTEvent());
+				break;
+			case KeyCodes.KEY_RIGHT:
+				ClientEventBus.INSTANCE.fireEvent(new ClientEventBus.HIDRIGHTEvent());
+				break;
+			default:
+				break;
+			}
+		}
+	}
+	
+	NativePreviewHandler nphandler = new kekeNativePreviewHandler();
+	
 	private ClientEventBus(){
-		
+		Event.addNativePreviewHandler(nphandler);
 	}
 	
 	HandlerManager handleManager = new HandlerManager(this);
-
+	
 	public void fireEvent(GwtEvent<?> event) {
 		handleManager.fireEvent(event);
 	}

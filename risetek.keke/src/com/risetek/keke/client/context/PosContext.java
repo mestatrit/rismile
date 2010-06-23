@@ -43,8 +43,8 @@ import com.risetek.keke.client.context.ClientEventBus.HIDUPHandler;
 import com.risetek.keke.client.data.LoginWidget;
 import com.risetek.keke.client.data.PosConfig;
 import com.risetek.keke.client.datamodel.Kekes;
+import com.risetek.keke.client.nodes.Node;
 import com.risetek.keke.client.ui.KekesComposite;
-import com.risetek.keke.server.node.Node;
 /**
  *
  * A pos context is initially created with a site, pos number anda config ID.

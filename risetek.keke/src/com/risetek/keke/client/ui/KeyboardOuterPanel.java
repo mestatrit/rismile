@@ -4,7 +4,6 @@ import com.google.gwt.event.dom.client.KeyDownEvent;
 import com.google.gwt.event.dom.client.KeyDownHandler;
 import com.google.gwt.event.shared.HandlerRegistration;
 import com.google.gwt.user.client.ui.FocusPanel;
-import com.risetek.keke.client.context.ClientEventBus;
 
 public class KeyboardOuterPanel extends FocusPanel {
 
@@ -14,6 +13,7 @@ public class KeyboardOuterPanel extends FocusPanel {
 	}
 
 	public KeyboardOuterPanel() {
+		/*
 	    addKeyDownHandler(new KeyDownHandler(){
 			@Override
 			public void onKeyDown(KeyDownEvent event) {
@@ -26,6 +26,7 @@ public class KeyboardOuterPanel extends FocusPanel {
 				else if( event.isLeftArrow())
 					ClientEventBus.INSTANCE.fireEvent(new ClientEventBus.HIDLEFTEvent());
 			}});
+			*/
 	}
 	
 }

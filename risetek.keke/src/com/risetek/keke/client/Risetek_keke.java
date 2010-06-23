@@ -4,9 +4,6 @@ import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
-import com.google.gwt.user.client.DOM;
-import com.google.gwt.user.client.Event;
-import com.google.gwt.user.client.EventPreview;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.RootLayoutPanel;
 import com.google.gwt.user.client.ui.Widget;
@@ -27,6 +24,7 @@ public class Risetek_keke implements EntryPoint {
 		Widget outer = uiBinder.createAndBindUi(this);
 	    RootLayoutPanel root = RootLayoutPanel.get();
 	    root.add(outer);
+	    /*
 	    DOM.addEventPreview(new EventPreview(){
 
 			@Override
@@ -34,6 +32,8 @@ public class Risetek_keke implements EntryPoint {
 				// TODO Auto-generated method stub
 				return false;
 			}});
+	    */
+	    
 	    // 构造上下文，并将视图传递给上下文控制。
 	    new PosContext(kekeComposite);
 	}

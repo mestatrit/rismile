@@ -1,10 +1,9 @@
 package com.risetek.keke.client.data;
 
-import com.google.gwt.dev.util.collect.HashMap;
 
 public class LocalWidgets {
 	
-	HashMap<String, String[][]> widgets =  new HashMap<String, String[][]>();
+//	HashMap<String, String[][]> widgets =  new HashMap<String, String[][]>();
 	
 	String[][] login = {
 			{"PromotionTicker", "登录ePay"},
@@ -16,7 +15,7 @@ public class LocalWidgets {
 	
 	
 	private LocalWidgets() {
-		widgets.put("epay.local.login", login);
+//		widgets.put("epay.local.login", login);
 	}
 	
 	public static LocalWidgets INSTANCE = new LocalWidgets();
