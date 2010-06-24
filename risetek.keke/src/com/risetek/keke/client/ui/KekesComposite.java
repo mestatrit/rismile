@@ -7,7 +7,6 @@ import com.google.gwt.user.client.ui.Grid;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.risetek.keke.client.keke;
 import com.risetek.keke.client.context.UiKeke;
-import com.risetek.keke.client.nodes.Node;
 
 public class KekesComposite extends Composite implements UiKeke {
 
