@@ -7,6 +7,7 @@ import com.google.gwt.user.client.ui.Grid;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.risetek.keke.client.keke;
 import com.risetek.keke.client.context.UiKeke;
+import com.risetek.keke.client.nodes.Node;
 
 public class KekesComposite extends Composite implements UiKeke {
 
@@ -18,6 +19,15 @@ public class KekesComposite extends Composite implements UiKeke {
 	    keke.setCellSpacing(0);
 	}
 
+	public void clearStickers() {
+		for( int spacekeke = 0; spacekeke < maxKeke; spacekeke++ )
+		{
+			HTMLPanel p = new HTMLPanel("");
+			p.setPixelSize(kekeWidth, kekeHeight);
+			keke.setWidget(spacekeke, 0, p);
+		}
+	}
+	
 	public void renderKekes(Vector<keke> kekes, int currentKeke)
 	{
 		int mid = hiKeke;
@@ -27,12 +37,7 @@ public class KekesComposite extends Composite implements UiKeke {
 			return;
 
 		// 首先清除显示内容。
-		for( int spacekeke = 0; spacekeke < maxKeke; spacekeke++ )
-		{
-			HTMLPanel p = new HTMLPanel("");
-			p.setPixelSize(UiKeke.kekeWidth, UiKeke.kekeHeight);
-			keke.setWidget(spacekeke, 0, p);
-		}
+		clearStickers();
 		
 		// 显示活动Keke前的Kekes
 		int index = currentKeke-1;

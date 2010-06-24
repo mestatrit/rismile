@@ -26,9 +26,7 @@ import com.risetek.keke.client.keke;
 import com.risetek.keke.client.PosEvents.PosEvent;
 import com.risetek.keke.client.PosEvents.PosException;
 import com.risetek.keke.client.PosEvents.PosInitEvent;
-import com.risetek.keke.client.PosEvents.PosMoveDownEvent;
 import com.risetek.keke.client.PosEvents.PosMoveRightEvent;
-import com.risetek.keke.client.PosEvents.PosMoveUpEvent;
 import com.risetek.keke.client.PosEvents.PosRenderEvent;
 import com.risetek.keke.client.context.ClientEventBus.HIDCARDEvent;
 import com.risetek.keke.client.context.ClientEventBus.HIDCARDHandler;
@@ -44,6 +42,7 @@ import com.risetek.keke.client.data.LoginWidget;
 import com.risetek.keke.client.data.PosConfig;
 import com.risetek.keke.client.datamodel.Kekes;
 import com.risetek.keke.client.nodes.Node;
+import com.risetek.keke.client.presenter.Presenter;
 import com.risetek.keke.client.ui.KekesComposite;
 /**
  *
@@ -72,8 +71,7 @@ public class PosContext {
 	HIDUPHandler uphanlde = new HIDUPHandler(){
 		@Override
 		public void onEvent(HIDUPEvent event) {
-		    loadEvent(new PosMoveUpEvent());
-		    eventStack().nextEvent();
+			upKeke(0);
 		}
 	};
 	
@@ -81,8 +79,7 @@ public class PosContext {
 
 		@Override
 		public void onEvent(HIDDOWNEvent event) {
-		    loadEvent(new PosMoveDownEvent());
-		    eventStack().nextEvent();
+			downKeke(0);
 		}
 	};
 	
@@ -90,8 +87,8 @@ public class PosContext {
 
 		@Override
 		public void onEvent(HIDLEFTEvent event) {
-		    loadEvent(new PosRenderEvent());
-		    eventStack().nextEvent();
+		    //loadEvent(new PosRenderEvent());
+		    //eventStack().nextEvent();
 		}
 		
 	};
@@ -155,7 +152,7 @@ public class PosContext {
      * PosConfig ID.
      */
     KekesComposite view;
-    
+    Presenter	presenter;
     public PosContext(KekesComposite view) {
     	this.view = view;
         inputline = new StringBuffer();
@@ -168,12 +165,20 @@ public class PosContext {
         ClientEventBus.INSTANCE.addHandler(cardhandler, HIDCARDEvent.TYPE);
         
         kekeTree = LoginWidget.INSTANCE.getNode();
+        presenter = new Presenter(view);
         
 	    loadEvent(new PosInitEvent());
 	    eventStack().nextEvent();
         
     }
 
+    /*
+     * 界面发生变化，更新界面。
+     */
+    public void Updates() {
+    	
+    }
+    
     public void clearKekes()
     {
         kekes = new Vector<keke>();
@@ -284,14 +289,11 @@ public class PosContext {
 		view.renderKekes(kekes, currentKeke);
 	}
 	
-	public void downKeke(int value) throws PosException {
+	public void downKeke(int value) {
 		currentKeke++;
-		
 		if( currentKeke >= kekes.size() )
 			currentKeke = kekes.size() - 1;
-		
-	    loadEvent(new PosRenderEvent());
-	    eventStack().nextEvent();
+		renderKekes();
 	}
 	
 	public void rightKeke(int value) throws PosException {
@@ -301,14 +303,13 @@ public class PosContext {
 	    eventStack().nextEvent();
 	}
 	
-	public void upKeke(int value) throws PosException {
+	public void upKeke(int value) {
 		currentKeke--;
 	
 		if( currentKeke < 0 )
 			currentKeke = 0;
-		
-	    loadEvent(new PosRenderEvent());
-	    eventStack().nextEvent();
+
+		renderKekes();
 	}
 
 }
