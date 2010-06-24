@@ -6,6 +6,7 @@
 <web-app>
   
   <!-- Servlets -->
+  <!-- 
   <servlet>
     <servlet-name>greetServlet</servlet-name>
     <servlet-class>com.risetek.keke.server.GreetingServiceImpl</servlet-class>
@@ -15,7 +16,7 @@
     <servlet-name>greetServlet</servlet-name>
     <url-pattern>/risetek_keke/greet</url-pattern>
   </servlet-mapping>
-  
+   -->
   <!-- Default page to serve -->
   <welcome-file-list>
     <welcome-file>Risetek_keke.html</welcome-file>
