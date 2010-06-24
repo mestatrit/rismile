@@ -1,13 +1,12 @@
 <ui:UiBinder xmlns:ui='urn:ui:com.google.gwt.uibinder'
 	xmlns:g='urn:import:com.google.gwt.user.client.ui'>
-	<ui:with field='res' type='com.risetek.keke.client.keke.Images' />
 	<ui:style>
 	</ui:style>
 	<g:HTMLPanel width="100%">
 		<TABLE HEIGHT="100%" WIDTH="100%" border="0px" ALIGN="CENTER">
 			<TR>
-				<TD ALIGN="CENTER" width="25%" height="100%">
-					<g:Image ui:field="img" resource='{res.p2}' />
+				<TD ALIGN="CENTER" width="15%" height="100%">
+					<g:Image ui:field="img" />
 				</TD>
 				<TD ALIGN="CENTER" height="100%">
 						<DIV><span ui:field="brief" /></DIV>

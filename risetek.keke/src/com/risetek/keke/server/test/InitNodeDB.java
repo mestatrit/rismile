@@ -1,7 +1,5 @@
 package com.risetek.keke.server.test;
 
-import com.risetek.keke.server.node.NamedNode;
-import com.risetek.keke.server.node.Node;
 /*
  * 测试用途：
  * 创建一个命名树。
@@ -13,8 +11,6 @@ public class InitNodeDB {
 
 	
 	public void initTestNodes1() {
-		Node node = new NamedNode("测试1");
-		node.addChildrenNode(new Node("第一节点"));
 	}
 	
 	

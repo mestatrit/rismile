@@ -1,7 +1,5 @@
 package com.risetek.keke.server.db;
 
-import java.util.Date;
-
 import javax.jdo.annotations.IdGeneratorStrategy;
 import javax.jdo.annotations.IdentityType;
 import javax.jdo.annotations.PersistenceCapable;
@@ -17,14 +15,18 @@ public class DBNode {
     private Long id;
 
     @Persistent
-    private String firstName;
+    private String nodeName;
 
+    @Persistent
+    private Long nodeNameID;
+    
+/*
     @Persistent
     private String lastName;
 
     @Persistent
     private Date hireDate;
-
+*/
     @Persistent
     private Long parentNode;
     
@@ -33,22 +35,14 @@ public class DBNode {
     
     @Persistent
     private Long brotherNode;
+
+    @Persistent
+    private Long versionNode;
     
-    public DBNode(String firstName, String lastName, Date hireDate) {
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.hireDate = hireDate;
+    @Persistent
+    private Long actionNode;
+
+    public DBNode(String nodeName) {
+        this.nodeName = nodeName;
     }
-
-    // Accessors for the fields.  JDO doesn't use these, but your application does.
-
-    public Long getId() {
-        return id;
-    }
-
-    public String getFirstName() {
-        return firstName;
-    } 
-
-    // ... other accessors...
 }

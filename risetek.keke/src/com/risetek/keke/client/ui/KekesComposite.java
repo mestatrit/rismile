@@ -29,7 +29,9 @@ public class KekesComposite extends Composite implements UiKeke {
 		// 首先清除显示内容。
 		for( int spacekeke = 0; spacekeke < maxKeke; spacekeke++ )
 		{
-			keke.setWidget(spacekeke, 0, new HTMLPanel(" "));
+			HTMLPanel p = new HTMLPanel("");
+			p.setPixelSize(UiKeke.kekeWidth, UiKeke.kekeHeight);
+			keke.setWidget(spacekeke, 0, p);
 		}
 		
 		// 显示活动Keke前的Kekes
