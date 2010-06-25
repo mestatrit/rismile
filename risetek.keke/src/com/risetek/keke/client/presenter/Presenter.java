@@ -1,6 +1,7 @@
 package com.risetek.keke.client.presenter;
 
 import com.risetek.keke.client.context.ClientEventBus;
+import com.risetek.keke.client.context.PosContext;
 import com.risetek.keke.client.context.ClientEventBus.HIDCARDEvent;
 import com.risetek.keke.client.context.ClientEventBus.HIDCARDHandler;
 import com.risetek.keke.client.context.ClientEventBus.HIDDOWNEvent;
@@ -52,8 +53,12 @@ public class Presenter {
 
 		@Override
 		public void onEvent(HIDLEFTEvent event) {
-		    //loadEvent(new PosRenderEvent());
-		    //eventStack().nextEvent();
+			if( PosContext.NodesStack.size() > 0 ) {
+				Node p = PosContext.NodesStack.pop();
+				setParentNode(p);
+				setCurrentNode(p.children);
+				upDate();
+			}
 		}
 		
 	};
@@ -62,6 +67,12 @@ public class Presenter {
 
 		@Override
 		public void onEvent(HIDRIGHTEvent event) {
+			if( current.children != null ) {
+				PosContext.NodesStack.push(current);
+				setParentNode(current);
+				setCurrentNode(current.children);
+				upDate();
+			}
 		}
 		
 	};

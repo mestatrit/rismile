@@ -50,64 +50,11 @@ public class PosContext {
 
 	Node	kekeTree;
 	Node	currentNode;
-	Stack<Node>	NodesStack = new Stack<Node>();
+	public static Stack<Node>	NodesStack = new Stack<Node>();
 	
 	public static void Log(String message) {
 		GWT.log(message);
 	}
-	
-	/*
-	// 对事件处理的函数：
-	HIDUPHandler uphanlde = new HIDUPHandler(){
-		@Override
-		public void onEvent(HIDUPEvent event) {
-			upKeke(0);
-		}
-	};
-	
-	HIDDOWNHandler downhanlde = new HIDDOWNHandler(){
-
-		@Override
-		public void onEvent(HIDDOWNEvent event) {
-			downKeke(0);
-		}
-	};
-	
-	HIDLEFTHandler lefthandle = new HIDLEFTHandler() {
-
-		@Override
-		public void onEvent(HIDLEFTEvent event) {
-		    //loadEvent(new PosRenderEvent());
-		    //eventStack().nextEvent();
-		}
-		
-	};
-	
-	HIDRIGHTHandler righthandler = new HIDRIGHTHandler() {
-
-		@Override
-		public void onEvent(HIDRIGHTEvent event) {
-		    loadEvent(new PosMoveRightEvent());
-		    eventStack().nextEvent();
-		}
-		
-	};
-	
-	HIDCARDHandler cardhandler = new HIDCARDHandler() {
-
-		@Override
-		public void onEvent(HIDCARDEvent event) {
-		//	if( Kekes.current.defaultOption instanceof CardKeke )
-			{
-				// Kekes.current.moveRight();
-				Kekes.current.defaultOption.card();
-			    loadEvent(new PosRenderEvent());
-			    eventStack().nextEvent();
-			}
-		}
-		
-	};
-	*/
 
     public void loadEvent(PosEvent event)
     {
@@ -148,13 +95,6 @@ public class PosContext {
         inputline = new StringBuffer();
         eventstack = new PosEventStack();
         kekes = new Vector<keke>();
-        /*
-        ClientEventBus.INSTANCE.addHandler(uphanlde, HIDUPEvent.TYPE);
-        ClientEventBus.INSTANCE.addHandler(downhanlde, HIDDOWNEvent.TYPE);
-        ClientEventBus.INSTANCE.addHandler(lefthandle, HIDLEFTEvent.TYPE);
-        ClientEventBus.INSTANCE.addHandler(righthandler, HIDRIGHTEvent.TYPE);
-        ClientEventBus.INSTANCE.addHandler(cardhandler, HIDCARDEvent.TYPE);
-        */
         
         kekeTree = LoginWidget.INSTANCE.getNode();
         NodesStack.push(kekeTree);
@@ -291,20 +231,22 @@ public class PosContext {
 	{
 		view.renderKekes(kekes, currentKeke);
 	}
-	
+	/*
 	public void downKeke(int value) {
 		currentKeke++;
 		if( currentKeke >= kekes.size() )
 			currentKeke = kekes.size() - 1;
 		renderKekes();
 	}
-	
+	*/
+	/*
 	public void rightKeke(int value) throws PosException {
 		keke k = kekes.elementAt(currentKeke);
 	    loadEvent(k.event);
 	    eventStack().nextEvent();
 	}
-	
+	*/
+	/*
 	public void upKeke(int value) {
 		currentKeke--;
 	
@@ -313,7 +255,7 @@ public class PosContext {
 
 		renderKekes();
 	}
-
+	*/
 }
 
 
