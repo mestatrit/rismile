@@ -18,22 +18,26 @@ import com.risetek.keke.client.ui.KekesComposite;
 
 public class Presenter {
     KekesComposite view;
-	Node	parent;
+//	Node	parent;
 	Node	current;
 
 	// 对事件处理的函数：
 	HIDUPHandler uphanlde = new HIDUPHandler(){
 		@Override
 		public void onEvent(HIDUPEvent event) {
-
-			Node p = parent.children;
-			if( p == current )
-				return;
-			while( p.next != current )
-				p = p.next;
-			
-			current = p;
-			upDate();
+			if( PosContext.NodesStack.size() > 0 ) {
+				Node p = PosContext.NodesStack.pop();
+				PosContext.NodesStack.push(p);
+				
+				p = p.children;
+				if( p == current )
+					return;
+				while( p.next != current )
+					p = p.next;
+				
+				current = p;
+				upDate();
+			}
 			
 		}
 	};
@@ -53,10 +57,8 @@ public class Presenter {
 
 		@Override
 		public void onEvent(HIDLEFTEvent event) {
-			if( PosContext.NodesStack.size() > 0 ) {
-				Node p = PosContext.NodesStack.pop();
-				setParentNode(p);
-				setCurrentNode(p.children);
+			if( PosContext.NodesStack.size() > 1 ) {
+				current = PosContext.NodesStack.pop();
 				upDate();
 			}
 		}
@@ -69,8 +71,7 @@ public class Presenter {
 		public void onEvent(HIDRIGHTEvent event) {
 			if( current.children != null ) {
 				PosContext.NodesStack.push(current);
-				setParentNode(current);
-				setCurrentNode(current.children);
+				current = null;
 				upDate();
 			}
 		}
@@ -106,14 +107,22 @@ public class Presenter {
 	
 	public void upDate() {
 		clearView();
-		view.renderKekes( (parent != null ? parent.children : current), current);
+		if( PosContext.NodesStack.size() > 0 ) {
+			Node p = PosContext.NodesStack.pop();
+			PosContext.NodesStack.push(p);
+			if( current == null )
+				current = p.children;
+			view.renderKekes( p.children , current);
+		}
 	}
-	
+/*	
 	public void setParentNode(Node node) {
 		parent = node;
 	}
-	
+*/
+	/*
 	public void setCurrentNode(Node node) {
 		current = node;
 	}
+	*/
 }

@@ -101,7 +101,7 @@ public class PosContext {
         currentNode = kekeTree.children;
         presenter = new Presenter(view);
         
-	    Updates();
+        presenter.upDate();
         
         /*
 	    loadEvent(new PosInitEvent());
@@ -109,19 +109,6 @@ public class PosContext {
 	    */
     }
 
-    /*
-     * 界面发生变化，更新界面。
-     */
-    public void Updates() {
-    	
-    	Node p = null ;
-    	if( NodesStack.size() > 0)
-    		p = NodesStack.lastElement();
-    	presenter.setParentNode(p);
-    	presenter.setCurrentNode(currentNode);
-    	presenter.upDate();
-    }
-    
     public void clearKekes()
     {
         kekes = new Vector<keke>();
