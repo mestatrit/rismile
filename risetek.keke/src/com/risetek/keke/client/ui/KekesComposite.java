@@ -7,6 +7,7 @@ import com.google.gwt.user.client.ui.Grid;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.risetek.keke.client.keke;
 import com.risetek.keke.client.context.UiKeke;
+import com.risetek.keke.client.nodes.Node;
 
 public class KekesComposite extends Composite implements UiKeke {
 
@@ -57,4 +58,47 @@ public class KekesComposite extends Composite implements UiKeke {
 		keke.getRowFormatter().setStyleName(mid, "hilight");
 	}
 
+	
+	public void renderKekes(Node head, Node current)
+	{
+		int numberOfNodes = 0;
+		int numberToCurrentNodes = 0;
+		Node p = head;
+		while( p != null ) {
+			numberOfNodes++;
+			p = p.next;
+		}
+		
+		p = head;
+		while( (p != current) && (p != null) ) {
+			numberToCurrentNodes++;
+			p = p.next;
+		}
+		
+		Node firstRender = null ;
+		for( int loop = 0; ((loop < numberToCurrentNodes) && (firstRender != null)) ; loop++) {
+			if( firstRender == null )
+				firstRender = head;
+			else
+				firstRender = firstRender.next;
+		}
+		// 显示活动前的Nodes
+		int index = 0;
+		while( firstRender != null ) {
+			keke.setWidget(index++, 0, new KekeComposite(firstRender, "3"));
+			firstRender = firstRender.next;
+		}
+		// 绘制当前有效的Node
+		keke.setWidget(1, 0, new KekeComposite(current, "3"));
+		keke.getRowFormatter().setStyleName(1, "hilight");
+		
+		index = 2;
+		p = current.next;
+		while( ( p != null ) && ( index < maxKeke ) ) {
+			keke.setWidget(index, 0, new KekeComposite(p, "3"));
+			index++;
+			p = p.next; 
+		}		
+	}
+	
 }

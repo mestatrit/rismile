@@ -8,14 +8,22 @@ import com.google.gwt.core.client.GWT;
 
 public class Node implements INodeCallback {
 //	Node parent;
-	Node children;
-	Node next;
+	public Node children;
+	public Node next;
 	String Ticker;
-	String Promotion;
+	public String Promotion;
+	public String imgName;
 
 	public Node(String ticker, String promotion) {
 		Ticker = ticker;
 		Promotion = promotion;
+		imgName = "p2";
+	}
+
+	public Node(String ticker, String promotion, String imgName) {
+		Ticker = ticker;
+		Promotion = promotion;
+		this.imgName = imgName;
 	}
 	
 	/*

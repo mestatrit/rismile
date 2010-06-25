@@ -19,28 +19,15 @@
 
 package com.risetek.keke.client.context;
 
+import java.util.Stack;
 import java.util.Vector;
 
 import com.google.gwt.core.client.GWT;
 import com.risetek.keke.client.keke;
 import com.risetek.keke.client.PosEvents.PosEvent;
 import com.risetek.keke.client.PosEvents.PosException;
-import com.risetek.keke.client.PosEvents.PosInitEvent;
-import com.risetek.keke.client.PosEvents.PosMoveRightEvent;
-import com.risetek.keke.client.PosEvents.PosRenderEvent;
-import com.risetek.keke.client.context.ClientEventBus.HIDCARDEvent;
-import com.risetek.keke.client.context.ClientEventBus.HIDCARDHandler;
-import com.risetek.keke.client.context.ClientEventBus.HIDDOWNEvent;
-import com.risetek.keke.client.context.ClientEventBus.HIDDOWNHandler;
-import com.risetek.keke.client.context.ClientEventBus.HIDLEFTEvent;
-import com.risetek.keke.client.context.ClientEventBus.HIDLEFTHandler;
-import com.risetek.keke.client.context.ClientEventBus.HIDRIGHTEvent;
-import com.risetek.keke.client.context.ClientEventBus.HIDRIGHTHandler;
-import com.risetek.keke.client.context.ClientEventBus.HIDUPEvent;
-import com.risetek.keke.client.context.ClientEventBus.HIDUPHandler;
 import com.risetek.keke.client.data.LoginWidget;
 import com.risetek.keke.client.data.PosConfig;
-import com.risetek.keke.client.datamodel.Kekes;
 import com.risetek.keke.client.nodes.Node;
 import com.risetek.keke.client.presenter.Presenter;
 import com.risetek.keke.client.ui.KekesComposite;
@@ -62,11 +49,14 @@ public class PosContext {
 	public Vector<keke> kekes;
 
 	Node	kekeTree;
+	Node	currentNode;
+	Stack<Node>	NodesStack = new Stack<Node>();
 	
 	public static void Log(String message) {
 		GWT.log(message);
 	}
 	
+	/*
 	// 对事件处理的函数：
 	HIDUPHandler uphanlde = new HIDUPHandler(){
 		@Override
@@ -117,7 +107,7 @@ public class PosContext {
 		}
 		
 	};
-	
+	*/
 
     public void loadEvent(PosEvent event)
     {
@@ -158,18 +148,25 @@ public class PosContext {
         inputline = new StringBuffer();
         eventstack = new PosEventStack();
         kekes = new Vector<keke>();
+        /*
         ClientEventBus.INSTANCE.addHandler(uphanlde, HIDUPEvent.TYPE);
         ClientEventBus.INSTANCE.addHandler(downhanlde, HIDDOWNEvent.TYPE);
         ClientEventBus.INSTANCE.addHandler(lefthandle, HIDLEFTEvent.TYPE);
         ClientEventBus.INSTANCE.addHandler(righthandler, HIDRIGHTEvent.TYPE);
         ClientEventBus.INSTANCE.addHandler(cardhandler, HIDCARDEvent.TYPE);
+        */
         
         kekeTree = LoginWidget.INSTANCE.getNode();
+        NodesStack.push(kekeTree);
+        currentNode = kekeTree.children;
         presenter = new Presenter(view);
         
+	    Updates();
+        
+        /*
 	    loadEvent(new PosInitEvent());
 	    eventStack().nextEvent();
-        
+	    */
     }
 
     /*
@@ -177,6 +174,12 @@ public class PosContext {
      */
     public void Updates() {
     	
+    	Node p = null ;
+    	if( NodesStack.size() > 0)
+    		p = NodesStack.lastElement();
+    	presenter.setParentNode(p);
+    	presenter.setCurrentNode(currentNode);
+    	presenter.upDate();
     }
     
     public void clearKekes()
@@ -297,7 +300,6 @@ public class PosContext {
 	}
 	
 	public void rightKeke(int value) throws PosException {
-		
 		keke k = kekes.elementAt(currentKeke);
 	    loadEvent(k.event);
 	    eventStack().nextEvent();

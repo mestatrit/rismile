@@ -17,6 +17,10 @@ public class ClientEventBus {
 
 		@Override
 		public void onPreviewNativeEvent(NativePreviewEvent event) {
+			
+			if (event.getTypeInt() == Event.ONKEYUP )
+				return;
+			
 			switch(event.getNativeEvent().getKeyCode()) {
 			case KeyCodes.KEY_DOWN:
 				ClientEventBus.INSTANCE.fireEvent(new ClientEventBus.HIDDOWNEvent());
@@ -48,7 +52,7 @@ public class ClientEventBus {
 		handleManager.fireEvent(event);
 	}
 
-	final <H extends EventHandler> HandlerRegistration addHandler(
+	public final <H extends EventHandler> HandlerRegistration addHandler(
 			final H handler, GwtEvent.Type<H> type) {
 		return handleManager.addHandler(type, handler);
 	}
