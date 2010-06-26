@@ -12,9 +12,9 @@ public class LoginWidget extends AWidget {
 		widget.addChildrenNode(new Node("PromotionTicker", "送生活"));
 		widget.addChildrenNode(new Node("PromotionTicker", "送安全"));
 
-		n.addChildrenNode(new Node("UsernameTicker", "输入用户名称"));
-		n.addChildrenNode(new Node("PasswordTicker", "输入登录密码"));
-		n.addChildrenNode(new Node("PromotionTicker", "登录ePay"));
+		n = n.addChildrenNode(new Node("UsernameTicker", "输入用户名称"));
+		n = n.addChildrenNode(new Node("PasswordTicker", "输入登录密码"));
+		n = n.addChildrenNode(new Node("PromotionTicker", "登录ePay"));
 		n.addChildrenNode(new Node("LoginTicker", "链接网络"));
 	}
 	

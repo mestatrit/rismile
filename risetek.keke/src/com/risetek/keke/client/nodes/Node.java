@@ -10,7 +10,7 @@ public class Node implements INodeCallback {
 //	Node parent;
 	public Node children;
 	public Node next;
-	String Ticker;
+	public String Ticker;
 	public String Promotion;
 	public String imgName;
 

@@ -115,14 +115,4 @@ public class Presenter {
 			view.renderKekes( p.children , current);
 		}
 	}
-/*	
-	public void setParentNode(Node node) {
-		parent = node;
-	}
-*/
-	/*
-	public void setCurrentNode(Node node) {
-		current = node;
-	}
-	*/
 }

@@ -8,6 +8,7 @@ import com.google.gwt.user.client.ui.HTMLPanel;
 import com.risetek.keke.client.keke;
 import com.risetek.keke.client.context.UiKeke;
 import com.risetek.keke.client.nodes.Node;
+import com.risetek.keke.client.ticker.TickerFactory;
 
 public class KekesComposite extends Composite implements UiKeke {
 
@@ -75,27 +76,25 @@ public class KekesComposite extends Composite implements UiKeke {
 			p = p.next;
 		}
 		
-		Node firstRender = null ;
-		for( int loop = 0; ((loop < numberToCurrentNodes) && (firstRender != null)) ; loop++) {
-			if( firstRender == null )
-				firstRender = head;
-			else
-				firstRender = firstRender.next;
+		Node firstRender = null;
+		while( numberToCurrentNodes-- > 0) {
+			firstRender = firstRender == null ? head : firstRender.next;
 		}
+
 		// 显示活动前的Nodes
 		int index = 0;
 		while( firstRender != null ) {
-			keke.setWidget(index++, 0, new KekeComposite(firstRender, "3"));
+			keke.setWidget(index++, 0, TickerFactory.Produce(firstRender).comp);
 			firstRender = firstRender.next;
 		}
 		// 绘制当前有效的Node
-		keke.setWidget(1, 0, new KekeComposite(current, "3"));
+		keke.setWidget(1, 0, TickerFactory.Produce(current).comp);
 		keke.getRowFormatter().setStyleName(1, "hilight");
 		
 		index = 2;
 		p = current.next;
 		while( ( p != null ) && ( index < maxKeke ) ) {
-			keke.setWidget(index, 0, new KekeComposite(p, "3"));
+			keke.setWidget(index, 0, TickerFactory.Produce(p).comp);
 			index++;
 			p = p.next; 
 		}		

@@ -24,15 +24,6 @@ public class Risetek_keke implements EntryPoint {
 		Widget outer = uiBinder.createAndBindUi(this);
 	    RootLayoutPanel root = RootLayoutPanel.get();
 	    root.add(outer);
-	    /*
-	    DOM.addEventPreview(new EventPreview(){
-
-			@Override
-			public boolean onEventPreview(Event event) {
-				// TODO Auto-generated method stub
-				return false;
-			}});
-	    */
 	    
 	    // 构造上下文，并将视图传递给上下文控制。
 	    new PosContext(kekeComposite);
