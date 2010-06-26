@@ -1,12 +1,14 @@
 package com.risetek.keke.client.nodes;
 
 import com.google.gwt.core.client.GWT;
+import com.risetek.keke.client.context.PosContext;
+import com.risetek.keke.client.data.AWidget;
 
 /*
  * 这个结构用来表达一系列串联的节点。并能存储到数据库中。这是一种变异了的树形结构。
  */
 
-public class Node implements INodeCallback {
+public class Node implements INodeCallback, IHasRight, IHasParent {
 //	Node parent;
 	public Node children;
 	public Node next;
@@ -73,5 +75,32 @@ public class Node implements INodeCallback {
 			children.travelNode(nodecallback);
 		if( next != null)
 			next.travelNode(nodecallback);
+	}
+
+	@Override
+	public int engage() {
+		if( children != null )
+			return 1;
+		return 0;
+	}
+
+	@Override
+	public Node getParent(PosContext pc) {
+		if( pc.NodesStack.size() > 0 ) {
+			Node p = pc.NodesStack.pop();
+			pc.NodesStack.push(p);
+			return p;
+		}
+		return null;
+	}
+	
+	@Override
+	public Node getParent(AWidget widget) {
+		if( widget.NodesStack.size() > 0 ) {
+			Node p = widget.NodesStack.pop();
+			widget.NodesStack.push(p);
+			return p;
+		}
+		return null;
 	}
 }

@@ -29,39 +29,9 @@ public class KekesComposite extends Composite implements UiKeke {
 		}
 	}
 	
-	public void renderKekes(Vector<keke> kekes, int currentKeke)
-	{
-		int mid = hiKeke;
-		
-		// 应该计算多少个可可，然后安排合适的位置进行显示。
-		if( kekes.size() == 0 )
-			return;
-
-		// 首先清除显示内容。
-		clearStickers();
-		
-		// 显示活动Keke前的Kekes
-		int index = currentKeke-1;
-		for( int spacekeke = mid-1; spacekeke >= 0 && index >= 0; spacekeke--, index-- )
-		{
-			keke.setWidget(spacekeke, 0, (kekes.elementAt(index)));
-		}
-
-		// 显示活动Keke后的Kekes
-		index = currentKeke+1;
-		for( int spacekeke = mid+1; spacekeke < maxKeke && index < kekes.size(); spacekeke++, index++ )
-		{
-			keke.setWidget(spacekeke, 0, (kekes.elementAt(index)));
-		}
-		
-		// 绘制当前有效的Keke。
-		keke.setWidget(mid, 0, (kekes.elementAt(currentKeke)));
-		keke.getRowFormatter().setStyleName(mid, "hilight");
-	}
-
-	
 	public void renderKekes(Node head, Node current)
 	{
+		clearStickers();
 		int numberOfNodes = 0;
 		int numberToCurrentNodes = 0;
 		Node p = head;

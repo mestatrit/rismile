@@ -1,7 +1,5 @@
 package com.risetek.keke.client.ticker;
 
-import java.util.HashMap;
-
 import com.google.gwt.core.client.GWT;
 import com.risetek.keke.client.nodes.Node;
 

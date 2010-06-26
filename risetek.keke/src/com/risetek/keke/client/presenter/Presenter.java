@@ -12,22 +12,22 @@ import com.risetek.keke.client.context.ClientEventBus.HIDRIGHTEvent;
 import com.risetek.keke.client.context.ClientEventBus.HIDRIGHTHandler;
 import com.risetek.keke.client.context.ClientEventBus.HIDUPEvent;
 import com.risetek.keke.client.context.ClientEventBus.HIDUPHandler;
+import com.risetek.keke.client.data.AWidget;
 import com.risetek.keke.client.datamodel.Kekes;
 import com.risetek.keke.client.nodes.Node;
 import com.risetek.keke.client.ui.KekesComposite;
 
 public class Presenter {
+	PosContext context;
     KekesComposite view;
-//	Node	parent;
 	Node	current;
-
+/*
 	// 对事件处理的函数：
 	HIDUPHandler uphanlde = new HIDUPHandler(){
 		@Override
 		public void onEvent(HIDUPEvent event) {
-			if( PosContext.NodesStack.size() > 0 ) {
-				Node p = PosContext.NodesStack.pop();
-				PosContext.NodesStack.push(p);
+			Node p = current.getParent(context);
+			if( p != null ) {
 				
 				p = p.children;
 				if( p == current )
@@ -57,8 +57,8 @@ public class Presenter {
 
 		@Override
 		public void onEvent(HIDLEFTEvent event) {
-			if( PosContext.NodesStack.size() > 1 ) {
-				current = PosContext.NodesStack.pop();
+			if( context.NodesStack.size() > 1 ) {
+				current = context.NodesStack.pop();
 				upDate();
 			}
 		}
@@ -69,8 +69,8 @@ public class Presenter {
 
 		@Override
 		public void onEvent(HIDRIGHTEvent event) {
-			if( current.children != null ) {
-				PosContext.NodesStack.push(current);
+			if( current.engage() != 0 ) {
+				context.NodesStack.push(current);
 				current = null;
 				upDate();
 			}
@@ -90,29 +90,34 @@ public class Presenter {
 		}
 		
 	};
-		
+*/		
 	
-	public Presenter(KekesComposite view) {
+	public Presenter(KekesComposite view, PosContext context) {
+		this.context = context;
 		this.view = view;
+		/*
         ClientEventBus.INSTANCE.addHandler(uphanlde, HIDUPEvent.TYPE);
         ClientEventBus.INSTANCE.addHandler(downhanlde, HIDDOWNEvent.TYPE);
         ClientEventBus.INSTANCE.addHandler(lefthandle, HIDLEFTEvent.TYPE);
         ClientEventBus.INSTANCE.addHandler(righthandler, HIDRIGHTEvent.TYPE);
         ClientEventBus.INSTANCE.addHandler(cardhandler, HIDCARDEvent.TYPE);
+        */
 	}
-	
-	public void clearView() {
-		view.clearStickers();
+
+	public void upDate(AWidget widget ) {
+		Node head = widget.NodesStack.pop();
+		widget.NodesStack.push(head);
+		view.renderKekes( head , widget.current);
 	}
-	
+/*
 	public void upDate() {
-		clearView();
-		if( PosContext.NodesStack.size() > 0 ) {
-			Node p = PosContext.NodesStack.pop();
-			PosContext.NodesStack.push(p);
+		if( context.NodesStack.size() > 0 ) {
+			Node p = context.NodesStack.pop();
+			context.NodesStack.push(p);
 			if( current == null )
 				current = p.children;
 			view.renderKekes( p.children , current);
 		}
 	}
+	*/
 }
