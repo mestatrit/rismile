@@ -11,6 +11,8 @@ public class TickerFactory {
 	//	Class c = tickerClasses.get(node.Ticker)
 		if("PromotionTicker".equals(node.Ticker))
 			return new PromotionTicker(node);
+		else if("UsernameTicker".equals(node.Ticker))
+			return new InputTicker(node);
 		
 		return new PromotionTicker(node);
 	}

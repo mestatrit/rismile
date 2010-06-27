@@ -9,15 +9,16 @@ import com.risetek.keke.client.ticker.TickerFactory;
 
 public class KekesComposite extends Composite implements UiKeke {
 
-	Grid keke = new Grid(maxKeke,1);
+	private Grid keke = new Grid(maxKeke,1);
 	public KekesComposite() {
 		initWidget(keke);
 		setPixelSize(kekeWidth, maxKeke*kekeHeight);
 	    keke.setCellPadding(0);
 	    keke.setCellSpacing(0);
+	    this.setStyleName("KekesComposite");
 	}
 
-	public void clearStickers() {
+	private void clearStickers() {
 		for( int spacekeke = 0; spacekeke < maxKeke; spacekeke++ )
 		{
 			HTMLPanel p = new HTMLPanel("");
@@ -51,17 +52,17 @@ public class KekesComposite extends Composite implements UiKeke {
 		// 显示活动前的Nodes
 		int index = 0;
 		while( firstRender != null ) {
-			keke.setWidget(index++, 0, TickerFactory.Produce(firstRender).comp);
+			keke.setWidget(index++, 0, firstRender.getComposite());
 			firstRender = firstRender.next;
 		}
 		// 绘制当前有效的Node
-		keke.setWidget(1, 0, TickerFactory.Produce(current).comp);
+		keke.setWidget(1, 0, current.getComposite());
 		keke.getRowFormatter().setStyleName(1, "hilight");
 		
 		index = 2;
 		p = current.next;
 		while( ( p != null ) && ( index < maxKeke ) ) {
-			keke.setWidget(index, 0, TickerFactory.Produce(p).comp);
+			keke.setWidget(index, 0, p.getComposite());
 			index++;
 			p = p.next; 
 		}		

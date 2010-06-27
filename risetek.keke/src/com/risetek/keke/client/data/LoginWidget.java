@@ -9,17 +9,17 @@ import com.risetek.keke.client.nodes.Node;
 public class LoginWidget extends AWidget {
 	
 	private LoginWidget() {
-		rootNode = new NamedNode("PromotionTicker", "Root ePay");
+		rootNode = new NamedNode("NamedNode", "Root ePay");
 
 		Node n = rootNode.addChildrenNode(new Node("PromotionTicker", "登录ePay", "p3"));
 		rootNode.addChildrenNode(new Node("PromotionTicker", "送时间", "p4"));
-		rootNode.addChildrenNode(new Node("PromotionTicker", "送生活"));
-		rootNode.addChildrenNode(new Node("PromotionTicker", "送安全"));
+		rootNode.addChildrenNode(new Node("PromotionTicker", "送生活", "p2"));
+		rootNode.addChildrenNode(new Node("PromotionTicker", "送安全", "p5"));
 
 		n = n.addChildrenNode(new Node("UsernameTicker", "输入用户名称"));
 		n = n.addChildrenNode(new Node("PasswordTicker", "输入登录密码"));
-		n = n.addChildrenNode(new Node("PromotionTicker", "登录ePay"));
-		n.addChildrenNode(new Node("LoginTicker", "链接网络"));
+		n = n.addChildrenNode(new Node("LoginTicker", "登录ePay"));
+		n.addChildrenNode(new Node("CreatorTicker", "链接网络"));
 	}
 	
 	public static LoginWidget INSTANCE = new LoginWidget();

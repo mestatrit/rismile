@@ -82,3 +82,13 @@ h1 {
 .HID .gwt-Button {
 	width: 6em;
 }
+
+.KekeComposite td {
+	border: solid white;
+	border-width: 0px;
+}
+
+.KekesComposite td {
+	border: solid yellow;
+	border-width: 0px;
+}
