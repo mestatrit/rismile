@@ -95,12 +95,11 @@ public class PosContext {
         inputline = new StringBuffer();
         eventstack = new PosEventStack();
        
- //       kekeTree = LoginWidget.INSTANCE.getNode();
- //       NodesStack.push(kekeTree);
-        presenter = new Presenter(view,this);
+        presenter = new Presenter(view);
         
         widget = LoginWidget.INSTANCE;
-        widget.Execute(this);
+        widget.Execute();
+        updateView();
         
         ClientEventBus.INSTANCE.addHandler(uphanlde, HIDUPEvent.TYPE);
         ClientEventBus.INSTANCE.addHandler(downhanlde, HIDDOWNEvent.TYPE);
@@ -110,7 +109,6 @@ public class PosContext {
         }
 
     public void updateView() {
-   //     presenter.upDate();
         presenter.upDate(widget);
     }
     /**
@@ -214,19 +212,8 @@ public class PosContext {
 	HIDUPHandler uphanlde = new HIDUPHandler(){
 		@Override
 		public void onEvent(HIDUPEvent event) {
-			Node p = widget.current.getParent(widget);
-			if( p != null ) {
-				
-				p = p.children;
-				if( p == widget.current )
-					return;
-				while( p.next != widget.current )
-					p = p.next;
-				
-				widget.current = p;
+			if( widget.move_up() == 0 )
 				updateView();
-			}
-			
 		}
 	};
 	
@@ -235,10 +222,8 @@ public class PosContext {
 
 		@Override
 		public void onEvent(HIDDOWNEvent event) {
-			if( widget.current.next != null ) {
-				widget.current = widget.current.next;
-				updateView();
-			}
+			widget.move_down();
+			updateView();
 		}
 	};
 	
@@ -246,10 +231,8 @@ public class PosContext {
 
 		@Override
 		public void onEvent(HIDLEFTEvent event) {
-			if( widget.NodesStack.size() > 1 ) {
-				widget.current = widget.NodesStack.pop();
-				updateView();
-			}
+			widget.rollback();
+			updateView();
 		}
 		
 	};
@@ -258,26 +241,16 @@ public class PosContext {
 
 		@Override
 		public void onEvent(HIDRIGHTEvent event) {
-			if( widget.current.engage() != 0 ) {
-				widget.NodesStack.push(widget.current);
-				widget.current = widget.current.children;
-				updateView();
-			}
+			widget.engage();
+			updateView();
 		}
 		
 	};
 	
 	HIDCARDHandler cardhandler = new HIDCARDHandler() {
-
 		@Override
 		public void onEvent(HIDCARDEvent event) {
-		//	if( Kekes.current.defaultOption instanceof CardKeke )
-			{
-				// Kekes.current.moveRight();
-				Kekes.current.defaultOption.card();
-			}
 		}
-		
 	};
 	
 }
