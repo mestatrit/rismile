@@ -33,10 +33,11 @@ import com.risetek.keke.client.context.ClientEventBus.HIDRIGHTEvent;
 import com.risetek.keke.client.context.ClientEventBus.HIDRIGHTHandler;
 import com.risetek.keke.client.context.ClientEventBus.HIDUPEvent;
 import com.risetek.keke.client.context.ClientEventBus.HIDUPHandler;
+import com.risetek.keke.client.context.ClientEventBus.ViewChangedEvent;
+import com.risetek.keke.client.context.ClientEventBus.ViewChangedHandler;
 import com.risetek.keke.client.data.AWidget;
 import com.risetek.keke.client.data.LoginWidget;
 import com.risetek.keke.client.data.PosConfig;
-import com.risetek.keke.client.datamodel.Kekes;
 import com.risetek.keke.client.nodes.Node;
 import com.risetek.keke.client.presenter.Presenter;
 import com.risetek.keke.client.ui.KekesComposite;
@@ -95,20 +96,20 @@ public class PosContext {
         inputline = new StringBuffer();
         eventstack = new PosEventStack();
        
-        presenter = new Presenter(view);
-        
-        widget = LoginWidget.INSTANCE;
-        widget.Execute();
-        updateView();
-        
+
         ClientEventBus.INSTANCE.addHandler(uphanlde, HIDUPEvent.TYPE);
         ClientEventBus.INSTANCE.addHandler(downhanlde, HIDDOWNEvent.TYPE);
         ClientEventBus.INSTANCE.addHandler(lefthandle, HIDLEFTEvent.TYPE);
         ClientEventBus.INSTANCE.addHandler(righthandler, HIDRIGHTEvent.TYPE);
         ClientEventBus.INSTANCE.addHandler(cardhandler, HIDCARDEvent.TYPE);
+        ClientEventBus.INSTANCE.addHandler(viewchangedhandler, ViewChangedEvent.TYPE);
+        
+        presenter = new Presenter(view);
+        widget = LoginWidget.INSTANCE;
+        widget.Execute();
         }
 
-    public void updateView() {
+    private void updateView() {
         presenter.upDate(widget);
     }
     /**
@@ -212,8 +213,7 @@ public class PosContext {
 	HIDUPHandler uphanlde = new HIDUPHandler(){
 		@Override
 		public void onEvent(HIDUPEvent event) {
-			if( widget.move_up() == 0 )
-				updateView();
+			widget.move_up();
 		}
 	};
 	
@@ -223,7 +223,6 @@ public class PosContext {
 		@Override
 		public void onEvent(HIDDOWNEvent event) {
 			widget.move_down();
-			updateView();
 		}
 	};
 	
@@ -232,7 +231,6 @@ public class PosContext {
 		@Override
 		public void onEvent(HIDLEFTEvent event) {
 			widget.rollback();
-			updateView();
 		}
 		
 	};
@@ -242,7 +240,6 @@ public class PosContext {
 		@Override
 		public void onEvent(HIDRIGHTEvent event) {
 			widget.engage();
-			updateView();
 		}
 		
 	};
@@ -253,6 +250,14 @@ public class PosContext {
 		}
 	};
 	
+	
+	ViewChangedHandler viewchangedhandler = new ViewChangedHandler() {
+
+		@Override
+		public void onEvent(ViewChangedEvent event) {
+	        updateView();
+		}
+	};
 }
 
 

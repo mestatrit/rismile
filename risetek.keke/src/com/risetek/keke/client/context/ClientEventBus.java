@@ -161,5 +161,23 @@ public class ClientEventBus {
 		}
 	}
 	
+	// 处理 界面刷新事件
+	public interface ViewChangedHandler extends EventHandler {
+		void onEvent(ViewChangedEvent event);
+	}
+	
+	public static class ViewChangedEvent extends GwtEvent<ViewChangedHandler> {
+		public static Type<ViewChangedHandler> TYPE = new Type<ViewChangedHandler>();
+
+		@Override
+		public final Type<ViewChangedHandler> getAssociatedType() {
+			return TYPE;
+		}
+
+		@Override
+		protected void dispatch(ViewChangedHandler handler) {
+			handler.onEvent(this);
+		}
+	}
 }
 
