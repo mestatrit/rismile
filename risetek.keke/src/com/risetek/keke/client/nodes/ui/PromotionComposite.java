@@ -1,4 +1,4 @@
-package com.risetek.keke.client.ui;
+package com.risetek.keke.client.nodes.ui;
 
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.DockPanel;
@@ -7,23 +7,21 @@ import com.google.gwt.user.client.ui.HasHorizontalAlignment;
 import com.google.gwt.user.client.ui.HasVerticalAlignment;
 import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Label;
-import com.google.gwt.user.client.ui.TextBox;
 import com.risetek.keke.client.PosEvents.PosEvent;
 import com.risetek.keke.client.context.UiKeke;
 import com.risetek.keke.client.nodes.Node;
 import com.risetek.keke.client.resources.IconManage;
 
-public class InputComposite extends Composite {
+public class PromotionComposite extends Composite {
 	
 	Label Type = new Label();
 	Label brief = new Label();
-	TextBox input =  new TextBox();
 	Image img = new Image();
 	DockPanel outPanel = new DockPanel();
-	Grid g = new Grid(3,1);
+	Grid g = new Grid(2,1);
 	public PosEvent event;
 
-	public InputComposite(Node node) {
+	public PromotionComposite(Node node) {
 		outPanel.setPixelSize(UiKeke.kekeWidth, UiKeke.kekeHeight);
 		Type.setText(node.Ticker);
 		brief.setText(node.Promotion);
@@ -37,7 +35,6 @@ public class InputComposite extends Composite {
 	    g.setCellSpacing(0);
 		g.setWidget(0, 0, Type);
 		g.setWidget(1, 0, brief);
-		g.setWidget(2, 0, input);
 		g.setSize("100%", "100%");
 		outPanel.add(g, DockPanel.EAST);
 		initWidget(outPanel);
