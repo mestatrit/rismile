@@ -5,7 +5,6 @@ import com.google.gwt.user.client.ui.Grid;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.risetek.keke.client.context.UiKeke;
 import com.risetek.keke.client.nodes.Node;
-import com.risetek.keke.client.ticker.TickerFactory;
 
 public class KekesComposite extends Composite implements UiKeke {
 

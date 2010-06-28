@@ -15,6 +15,15 @@ public class Presenter {
 	public void upDate(AWidget widget ) {
 		Node head = widget.NodesStack.pop();
 		widget.NodesStack.push(head);
+/*
+		Node p = head.children;
+		int index = 0;
+		Vector<Node> nodes = new Vector<Node>(); 
+		while( p != null ) {
+			nodes.add(p);
+			p = p.next;
+		}
+*/
 		view.renderKekes( head.children , widget.current);
 	}
 }
