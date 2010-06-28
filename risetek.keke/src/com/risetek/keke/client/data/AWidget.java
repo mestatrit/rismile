@@ -6,6 +6,7 @@ import java.util.Vector;
 import com.google.gwt.core.client.GWT;
 import com.risetek.keke.client.context.ClientEventBus;
 import com.risetek.keke.client.nodes.InputNode;
+import com.risetek.keke.client.nodes.LoginNode;
 import com.risetek.keke.client.nodes.NamedNode;
 import com.risetek.keke.client.nodes.Node;
 import com.risetek.keke.client.nodes.PasswordNode;
@@ -26,6 +27,8 @@ public abstract class AWidget {
 			node = new InputNode(nodeDesc[2], nodeDesc[3]);
 		else if( "Password".equals(nodeDesc[1]))
 			node = new PasswordNode(nodeDesc[2], nodeDesc[3]);
+		else if( "Login".equals(nodeDesc[1]))
+			node = new LoginNode(nodeDesc[2], nodeDesc[3]);
 		else
 			node = new PromotionNode(nodeDesc[2], nodeDesc[3]);
 		return node;
@@ -82,6 +85,9 @@ public abstract class AWidget {
 	}
 	
 	public void engage() {
+		// 如果当前节点任务没有完成，不能进步。
+		if( current.finished() != 0 )
+			return;
 		if( current.children != null ) {
 			NodesStack.push(current);
 			current.children.enter(this);

@@ -15,7 +15,7 @@ import com.risetek.keke.client.resources.IconManage;
 public class PromotionComposite extends Composite {
 	
 	Label Type = new Label();
-	Label brief = new Label();
+	public Label brief = new Label();
 	Image img = new Image();
 	DockPanel outPanel = new DockPanel();
 	Grid g = new Grid(2,1);

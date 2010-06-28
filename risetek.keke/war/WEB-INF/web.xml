@@ -17,6 +17,18 @@
     <url-pattern>/risetek_keke/greet</url-pattern>
   </servlet-mapping>
    -->
+
+  <servlet>
+    <servlet-name>loginServlet</servlet-name>
+    <servlet-class>com.risetek.keke.server.LoginServiceImpl</servlet-class>
+  </servlet>
+  
+  <servlet-mapping>
+    <servlet-name>loginServlet</servlet-name>
+    <url-pattern>/risetek_keke/login</url-pattern>
+  </servlet-mapping>
+
+
   <!-- Default page to serve -->
   <welcome-file-list>
     <welcome-file>Risetek_keke.html</welcome-file>

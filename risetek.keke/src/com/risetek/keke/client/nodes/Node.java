@@ -89,4 +89,9 @@ public abstract class Node implements INodeCallback {
 	public void press(int keyCode) {
 		
 	}
+	
+	public int finished() {
+		return 0;
+	}
+	
 }
