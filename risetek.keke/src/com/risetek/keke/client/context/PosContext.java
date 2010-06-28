@@ -52,6 +52,8 @@ public class PosContext {
     private PosEventStack eventstack;
     private boolean locked;
 	Node	kekeTree;
+	// 运行密钥。
+	String	Token = null;
 	public Stack<Node>	NodesStack = new Stack<Node>();
 	
 	public static void Log(String message) {
@@ -97,7 +99,6 @@ public class PosContext {
     	this.view = view;
         inputline = new StringBuffer();
         eventstack = new PosEventStack();
-       
 
         ClientEventBus.INSTANCE.addHandler(uphanlde, HIDUPEvent.TYPE);
         ClientEventBus.INSTANCE.addHandler(downhanlde, HIDDOWNEvent.TYPE);
@@ -108,10 +109,19 @@ public class PosContext {
         ClientEventBus.INSTANCE.addHandler(keyCodehandler, HIDNumberEvent.TYPE);
         
         presenter = new Presenter(view);
-        widget = LoginWidget.INSTANCE;
-        widget.Execute();
-        }
+        Executer();
+    }
 
+    void Executer() {
+    	boolean goon = true;
+    	while(goon) {
+	        if( Token == null ) {
+		        widget = LoginWidget.INSTANCE;
+		        widget.Execute();
+	        }
+    	}
+    }
+    
     private void updateView() {
         presenter.upDate(widget);
     }

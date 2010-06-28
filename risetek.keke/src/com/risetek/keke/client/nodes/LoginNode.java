@@ -10,8 +10,9 @@ import com.risetek.keke.client.nodes.ui.PromotionComposite;
 
 /*
  * 登录节点
+ * 这应该是一个虚节点，不接受用户的输入。
  */
-public class LoginNode extends Node {
+public class LoginNode extends VNode {
 
 	int state = -1;
 	
@@ -27,10 +28,18 @@ public class LoginNode extends Node {
 
 	public int leave(AWidget widget) {
 		// 取消链接
+		state = -1;
 		return 0;
 	}
 
-	public int enter(AWidget widget) {
+	/*
+	 * (non-Javadoc)
+	 * @see com.risetek.keke.client.nodes.Node#enter(com.risetek.keke.client.data.AWidget)
+	 * 虚拟节点，这个步骤是一个过程，不会停留。
+	 */
+	
+	public int enter(final AWidget widget) {
+		
 		super.enter(widget);
 		// 开始登录过程
 		// 1、发送登录信息，钩挂回调函数和超时定时器。
@@ -49,7 +58,9 @@ public class LoginNode extends Node {
 			@Override
 			public void onSuccess(String result) {
 				GWT.log("login sucessed!");
+				myComposite.brief.setText("登录成功："+result);
 				state = 0;
+				widget.engage();
 			}} );
 		return 0;
 	}
