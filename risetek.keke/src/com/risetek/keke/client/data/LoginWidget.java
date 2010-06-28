@@ -1,32 +1,23 @@
 package com.risetek.keke.client.data;
 
-import java.util.Stack;
-
-import com.risetek.keke.client.context.PosContext;
-import com.risetek.keke.client.nodes.NamedNode;
-import com.risetek.keke.client.nodes.Node;
 
 public class LoginWidget extends AWidget {
-	
+	String[][] a = {
+			{"4", "NamedNode", "Root ePay", ""},
+			{"1", "Promotion", "登录ePay", "p3"},
+			{"0", "Promotion", "送时间", "p4"},
+			{"0", "Promotion", "送生活", "p2"},
+			{"0", "Promotion", "送安全", "p5"},
+			{"1", "Username", "输入用户名称", "p2"},
+			{"1", "PasswordTicker", "输入登录密码", "p2"},
+			{"1", "LoginTicker", "登录ePay", ""},
+			{"0", "CreatorTicker", "链接网络", ""}
+	};
+
 	private LoginWidget() {
-		rootNode = new NamedNode("NamedNode", "Root ePay");
-
-		Node n = rootNode.addChildrenNode(new Node("PromotionTicker", "登录ePay", "p3"));
-		rootNode.addChildrenNode(new Node("PromotionTicker", "送时间", "p4"));
-		rootNode.addChildrenNode(new Node("PromotionTicker", "送生活", "p2"));
-		rootNode.addChildrenNode(new Node("PromotionTicker", "送安全", "p5"));
-
-		n = n.addChildrenNode(new Node("UsernameTicker", "输入用户名称"));
-		n = n.addChildrenNode(new Node("PasswordTicker", "输入登录密码"));
-		n = n.addChildrenNode(new Node("LoginTicker", "登录ePay"));
-		n.addChildrenNode(new Node("CreatorTicker", "链接网络"));
+		rootNode = loadNodes(a);
 	}
 	
 	public static LoginWidget INSTANCE = new LoginWidget();
 	
-	public void Execute() {
-		NodesStack = new Stack<Node>();
-		NodesStack.push(rootNode);
-		rootNode.enter(this);
-	}
 }
