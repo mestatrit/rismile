@@ -85,4 +85,8 @@ public abstract class Node implements INodeCallback {
 	public int leave(AWidget widget) {
 		return 0;
 	}
+	
+	public void press(int keyCode) {
+		
+	}
 }

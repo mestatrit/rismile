@@ -17,7 +17,8 @@ public class InputComposite extends Composite {
 	
 	Label Type = new Label();
 	Label brief = new Label();
-	TextBox input =  new TextBox();
+	public Label input = new Label();
+
 	Image img = new Image();
 	DockPanel outPanel = new DockPanel();
 	Grid g = new Grid(3,1);

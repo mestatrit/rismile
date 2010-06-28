@@ -8,6 +8,7 @@ import com.risetek.keke.client.context.ClientEventBus;
 import com.risetek.keke.client.nodes.InputNode;
 import com.risetek.keke.client.nodes.NamedNode;
 import com.risetek.keke.client.nodes.Node;
+import com.risetek.keke.client.nodes.PasswordNode;
 import com.risetek.keke.client.nodes.PromotionNode;
 
 public abstract class AWidget {
@@ -23,6 +24,8 @@ public abstract class AWidget {
 			node = new PromotionNode(nodeDesc[2], nodeDesc[3]);
 		else if( "Username".equals(nodeDesc[1]))
 			node = new InputNode(nodeDesc[2], nodeDesc[3]);
+		else if( "Password".equals(nodeDesc[1]))
+			node = new PasswordNode(nodeDesc[2], nodeDesc[3]);
 		else
 			node = new PromotionNode(nodeDesc[2], nodeDesc[3]);
 		return node;
@@ -114,6 +117,11 @@ public abstract class AWidget {
 			return 0;
 		}
 		return -1;
+	}
+	
+	public void press(int keyCode) {
+		if( current != null )
+			current.press(keyCode);
 	}
 	
 }

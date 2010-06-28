@@ -1,5 +1,6 @@
 package com.risetek.keke.client.context;
 
+import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.KeyCodes;
 import com.google.gwt.event.shared.EventHandler;
 import com.google.gwt.event.shared.GwtEvent;
@@ -20,22 +21,53 @@ public class ClientEventBus {
 			
 			if (event.getTypeInt() == Event.ONKEYUP )
 				return;
-			
-			switch(event.getNativeEvent().getKeyCode()) {
-			case KeyCodes.KEY_DOWN:
-				ClientEventBus.INSTANCE.fireEvent(new ClientEventBus.HIDDOWNEvent());
-				break;
-			case KeyCodes.KEY_UP:
-				ClientEventBus.INSTANCE.fireEvent(new ClientEventBus.HIDUPEvent());
-				break;
-			case KeyCodes.KEY_LEFT:
-				ClientEventBus.INSTANCE.fireEvent(new ClientEventBus.HIDLEFTEvent());
-				break;
-			case KeyCodes.KEY_RIGHT:
-				ClientEventBus.INSTANCE.fireEvent(new ClientEventBus.HIDRIGHTEvent());
-				break;
-			default:
-				break;
+
+			if (event.getTypeInt() == Event.ONKEYDOWN )
+			{
+				int keyCode = event.getNativeEvent().getKeyCode();
+				switch(keyCode) {
+				case KeyCodes.KEY_DOWN:
+					ClientEventBus.INSTANCE.fireEvent(new ClientEventBus.HIDDOWNEvent());
+					break;
+				case KeyCodes.KEY_UP:
+					ClientEventBus.INSTANCE.fireEvent(new ClientEventBus.HIDUPEvent());
+					break;
+				case KeyCodes.KEY_LEFT:
+					ClientEventBus.INSTANCE.fireEvent(new ClientEventBus.HIDLEFTEvent());
+					break;
+				case KeyCodes.KEY_RIGHT:
+					ClientEventBus.INSTANCE.fireEvent(new ClientEventBus.HIDRIGHTEvent());
+					break;
+				case 96:	// "0"
+				case 97:	// "1"
+				case 98:	// "2"
+				case 99:	// "3"
+				case 100:	// "4"
+				case 101:	// "5"
+				case 102:	// "6"
+				case 103:	// "7"
+				case 104:	// "8"
+				case 105:	// "9"
+					ClientEventBus.INSTANCE.fireEvent(new ClientEventBus.HIDNumberEvent(keyCode - 96));
+					break;
+
+				case 48:	// "0"
+				case 49:	// "1"
+				case 50:	// "2"
+				case 51:	// "3"
+				case 52:	// "4"
+				case 53:	// "5"
+				case 54:	// "6"
+				case 55:	// "7"
+				case 56:	// "8"
+				case 57:	// "9"
+					ClientEventBus.INSTANCE.fireEvent(new ClientEventBus.HIDNumberEvent(keyCode - 48));
+					break;
+					
+				default:
+					GWT.log("Press: " + keyCode);
+					break;
+				}
 			}
 		}
 	}
@@ -179,5 +211,36 @@ public class ClientEventBus {
 			handler.onEvent(this);
 		}
 	}
+	
+	
+	// 处理 数字输入 事件
+	public interface HIDNumberHandler extends EventHandler {
+		void onEvent(HIDNumberEvent event);
+	}
+	
+	public static class HIDNumberEvent extends GwtEvent<HIDNumberHandler> {
+		public static Type<HIDNumberHandler> TYPE = new Type<HIDNumberHandler>();
+
+		private int keyCode;
+		public HIDNumberEvent(int keyCode) {
+			this.keyCode = keyCode;
+		}
+		
+		public int getKeyCode() {
+			return keyCode;
+		}
+		
+		@Override
+		public final Type<HIDNumberHandler> getAssociatedType() {
+			return TYPE;
+		}
+
+		@Override
+		protected void dispatch(HIDNumberHandler handler) {
+			handler.onEvent(this);
+		}
+	}
+	
+	
 }
 

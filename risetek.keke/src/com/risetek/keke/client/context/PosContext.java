@@ -29,6 +29,8 @@ import com.risetek.keke.client.context.ClientEventBus.HIDDOWNEvent;
 import com.risetek.keke.client.context.ClientEventBus.HIDDOWNHandler;
 import com.risetek.keke.client.context.ClientEventBus.HIDLEFTEvent;
 import com.risetek.keke.client.context.ClientEventBus.HIDLEFTHandler;
+import com.risetek.keke.client.context.ClientEventBus.HIDNumberEvent;
+import com.risetek.keke.client.context.ClientEventBus.HIDNumberHandler;
 import com.risetek.keke.client.context.ClientEventBus.HIDRIGHTEvent;
 import com.risetek.keke.client.context.ClientEventBus.HIDRIGHTHandler;
 import com.risetek.keke.client.context.ClientEventBus.HIDUPEvent;
@@ -103,6 +105,7 @@ public class PosContext {
         ClientEventBus.INSTANCE.addHandler(righthandler, HIDRIGHTEvent.TYPE);
         ClientEventBus.INSTANCE.addHandler(cardhandler, HIDCARDEvent.TYPE);
         ClientEventBus.INSTANCE.addHandler(viewchangedhandler, ViewChangedEvent.TYPE);
+        ClientEventBus.INSTANCE.addHandler(keyCodehandler, HIDNumberEvent.TYPE);
         
         presenter = new Presenter(view);
         widget = LoginWidget.INSTANCE;
@@ -258,6 +261,15 @@ public class PosContext {
 	        updateView();
 		}
 	};
+
+	HIDNumberHandler keyCodehandler = new HIDNumberHandler() {
+
+		@Override
+		public void onEvent(HIDNumberEvent event) {
+	        widget.press(event.getKeyCode());
+		}
+	};
+
 }
 
 

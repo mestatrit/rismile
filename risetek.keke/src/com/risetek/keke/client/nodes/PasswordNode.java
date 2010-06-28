@@ -8,9 +8,10 @@ import com.risetek.keke.client.nodes.ui.InputComposite;
 /*
  * 命名节点，是大量重复使用的结构化节点组。
  */
-public class InputNode extends Node {
-	String input = "";
-	public InputNode(String promotion, String imgName) {
+public class PasswordNode extends Node {
+	String password = "";
+	String passshow = "";
+	public PasswordNode(String promotion, String imgName) {
 		super("Input", promotion, imgName);
 	}
 
@@ -25,16 +26,18 @@ public class InputNode extends Node {
 
 		StringBuffer sb = new StringBuffer();
 		char c = "0123456789".charAt(keyCode);
-		sb.append(input);
+		sb.append(password);
 		sb.append(c);
-		input = sb.toString();
-		myComposite.input.setText(input);
+		
+		passshow = passshow.concat("*");
+		myComposite.input.setText(passshow);
 	}
 
 	public int leave(AWidget widget) {
-		input = "";
+		password = "";
+		passshow = "";
 		InputComposite myComposite = (InputComposite)getComposite();
-		myComposite.input.setText(input);
+		myComposite.input.setText(passshow);
 		return 0;
 	}
 }

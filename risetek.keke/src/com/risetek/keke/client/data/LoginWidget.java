@@ -9,7 +9,7 @@ public class LoginWidget extends AWidget {
 			{"0", "Promotion", "送生活", "p2"},
 			{"0", "Promotion", "送安全", "p5"},
 			{"1", "Username", "输入用户名称", "p2"},
-			{"1", "PasswordTicker", "输入登录密码", "p2"},
+			{"1", "Password", "输入登录密码", "p2"},
 			{"1", "LoginTicker", "登录ePay", ""},
 			{"0", "CreatorTicker", "链接网络", ""}
 	};
