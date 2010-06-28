@@ -3,28 +3,23 @@ package com.risetek.keke.client.nodes;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.client.ui.Composite;
 import com.risetek.keke.client.data.AWidget;
-import com.risetek.keke.client.ticker.TickerFactory;
 
 /*
  * 这个结构用来表达一系列串联的节点。并能存储到数据库中。这是一种变异了的树形结构。
  */
 
-public class Node implements INodeCallback {
-//	Node parent;
+public abstract class Node implements INodeCallback {
+
 	public Node children;
 	public Node next;
 	public String Ticker;
 	public String Promotion;
 	public String imgName;
 
-	private Composite composite = null;
+	Composite composite = null;
 	
-	public Composite getComposite() {
-		if( composite == null )
-			composite = TickerFactory.Produce(this).comp;
-		return composite;
-	}
-	
+	public abstract Composite getComposite();
+
 	public Node(String ticker, String promotion) {
 		Ticker = ticker;
 		Promotion = promotion;
@@ -37,12 +32,6 @@ public class Node implements INodeCallback {
 		this.imgName = imgName;
 	}
 	
-	/*
-	 * 持久存储本节点
-	 */
-	public void save() {
-
-	}
 	/*
 	 * 链接一个节点到本节点的子孙
 	 */

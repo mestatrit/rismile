@@ -1,5 +1,7 @@
 package com.risetek.keke.client.nodes;
 
+import com.google.gwt.core.client.GWT;
+import com.google.gwt.user.client.ui.Composite;
 import com.risetek.keke.client.data.AWidget;
 
 
@@ -8,8 +10,10 @@ import com.risetek.keke.client.data.AWidget;
  */
 public class NamedNode extends Node {
 
-	public NamedNode(String ticker, String promotion) {
-		super(ticker, "NamedTicker");
+	String name;
+	public NamedNode(String name) {
+		super("Named", "NamedTicker");
+		this.name = name;
 	}
 
 	/*
@@ -23,6 +27,12 @@ public class NamedNode extends Node {
 		super.enter(widget);
 		children.enter(widget);
 		return 0;
+	}
+
+	@Override
+	public Composite getComposite() {
+		GWT.log("Fatal: Named Node do not have composite");
+		return null;
 	}
 	
 }
