@@ -1,8 +1,8 @@
 package com.risetek.keke.client.nodes;
 
 import com.google.gwt.user.client.ui.Composite;
-import com.risetek.keke.client.data.AWidget;
 import com.risetek.keke.client.nodes.ui.PromotionComposite;
+import com.risetek.keke.client.sticklet.ASticklet;
 
 public class ExitNode extends VNode {
 
@@ -17,7 +17,7 @@ public class ExitNode extends VNode {
 		return composite;
 	}
 
-	public int enter(AWidget widget) {
+	public int enter(ASticklet widget) {
 		super.enter(widget);
 		return NODE_EXIT;
 	}

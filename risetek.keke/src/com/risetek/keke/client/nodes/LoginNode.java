@@ -3,8 +3,8 @@ package com.risetek.keke.client.nodes;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Composite;
-import com.risetek.keke.client.data.AWidget;
 import com.risetek.keke.client.nodes.ui.PromotionComposite;
+import com.risetek.keke.client.sticklet.ASticklet;
 
 
 /*
@@ -25,7 +25,7 @@ public class LoginNode extends VNode {
 		return composite;
 	}
 
-	public int leave(AWidget widget) {
+	public int leave(ASticklet widget) {
 		// 取消链接
 		state = -1;
 		return 0;
@@ -52,7 +52,7 @@ public class LoginNode extends VNode {
 	 * 虚拟节点，这个步骤是一个过程，不会停留。
 	 */
 	
-	public int enter(final AWidget widget) {
+	public int enter(final ASticklet widget) {
 		
 		super.enter(widget);
 		// 开始登录过程
@@ -67,18 +67,18 @@ public class LoginNode extends VNode {
 			public void onFailure(Throwable caught) {
 				GWT.log("login failed");
 				addFailedNode();
-				widget.control(AWidget.WIDGET_ENGAGE);
+				widget.control(ASticklet.STICKLET_ENGAGE);
 			}
 
 			@Override
 			public void onSuccess(String result[][]) {
 				GWT.log("login sucessed!");
 				state = 0;
-				Node following = widget.loadNodes(result);
+				Node following = Node.loadNodes(result);
 				addSucessedNode(following);
 //				addSucessedNode(result[1][2]);
 				
-				widget.control(AWidget.WIDGET_ENGAGE);
+				widget.control(ASticklet.STICKLET_ENGAGE);
 			}} );
 		return 0;
 	}

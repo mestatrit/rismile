@@ -1,8 +1,8 @@
 package com.risetek.keke.client.nodes;
 
 import com.google.gwt.user.client.ui.Composite;
-import com.risetek.keke.client.data.AWidget;
 import com.risetek.keke.client.nodes.ui.InputComposite;
+import com.risetek.keke.client.sticklet.ASticklet;
 
 
 /*
@@ -31,14 +31,14 @@ public class InputNode extends Node {
 		myComposite.input.setText(input);
 	}
 
-	public int leave(AWidget widget) {
+	public int leave(ASticklet widget) {
 		input = "";
 		InputComposite myComposite = (InputComposite)getComposite();
 		myComposite.input.setText(input);
 		return 0;
 	}
 
-	public int action(AWidget widget) {
+	public int action(ASticklet widget) {
 		widget.ParamStack.push(input);
 		return 0;
 	}

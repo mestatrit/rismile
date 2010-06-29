@@ -1,7 +1,7 @@
 package com.risetek.keke.client.presenter;
 
-import com.risetek.keke.client.data.AWidget;
 import com.risetek.keke.client.nodes.Node;
+import com.risetek.keke.client.sticklet.ASticklet;
 import com.risetek.keke.client.ui.KekesComposite;
 
 public class Presenter {
@@ -12,7 +12,7 @@ public class Presenter {
 		this.view = view;
 	}
 
-	public void upDate(AWidget widget ) {
+	public void upDate(ASticklet widget ) {
 		Node head = widget.HistoryNodesStack.pop();
 		widget.HistoryNodesStack.push(head);
 /*
@@ -25,6 +25,6 @@ public class Presenter {
 		}
 */
 //		view.renderKekes( head.children , widget.current);
-		view.renderKekes( widget.getChildrenNode(head) , widget.current);
+		view.renderKekes( widget.getChildrenNode(head) , widget.getCurrentNode());
 	}
 }

@@ -31,12 +31,12 @@ import com.risetek.keke.client.context.ClientEventBus.HIDNumberEvent;
 import com.risetek.keke.client.context.ClientEventBus.HIDNumberHandler;
 import com.risetek.keke.client.context.ClientEventBus.ViewChangedEvent;
 import com.risetek.keke.client.context.ClientEventBus.ViewChangedHandler;
-import com.risetek.keke.client.data.AWidget;
-import com.risetek.keke.client.data.DemoWidget;
-import com.risetek.keke.client.data.LoginWidget;
 import com.risetek.keke.client.data.PosConfig;
 import com.risetek.keke.client.nodes.Node;
 import com.risetek.keke.client.presenter.Presenter;
+import com.risetek.keke.client.sticklet.ASticklet;
+import com.risetek.keke.client.sticklet.DemoSticklet;
+import com.risetek.keke.client.sticklet.LoginSticklet;
 import com.risetek.keke.client.ui.KekesComposite;
 
 
@@ -49,7 +49,7 @@ public class PosContext {
 	Node	kekeTree;
 	// 运行密钥。
 	String	Token = null;
-	public Stack<Node>	NodesStack = new Stack<Node>();
+	//public Stack<Node>	NodesStack = new Stack<Node>();
 	
 	public static void Log(String message) {
 		GWT.log(message);
@@ -89,9 +89,9 @@ public class PosContext {
      */
     KekesComposite view;
     Presenter	presenter;
-    public AWidget		widget;
+    public ASticklet		widget;
     
-    Stack<AWidget> executeWidget = new Stack<AWidget>();
+    Stack<ASticklet> executeWidget = new Stack<ASticklet>();
     
     public PosContext(KekesComposite view) {
     	this.view = view;
@@ -103,7 +103,7 @@ public class PosContext {
         ClientEventBus.INSTANCE.addHandler(controlCodehandler, HIDControlEvent.TYPE);
 
         presenter = new Presenter(view);
-        executeWidget.push(new DemoWidget());
+        executeWidget.push(new DemoSticklet());
 
         Executer();
     }
@@ -111,16 +111,11 @@ public class PosContext {
     void Executer() {
     	if( executeWidget.size() > 0 )
     	{
-    		if( Token == null ) {
-    			/*
-    			Node n = Node.namedNodesHash.get(LoginWidget.Label);
-    			if( n == null )
-        	        executeWidget.push(new Widget(n));
-    			else
-    			*/
-    				executeWidget.push(new LoginWidget());
-    		}
-	    	widget = executeWidget.pop();
+    		/*
+    		if( Token == null )
+   				executeWidget.push(new LoginSticklet());
+    		 */
+    		widget = executeWidget.pop();
 	        widget.Execute();
     	}
     	else
@@ -258,16 +253,16 @@ public class PosContext {
 			int controlKey = event.getControlCode();
 			switch( controlKey ) {
 			case ClientEventBus.CONTROL_KEY_DOWN:
-				widget.control(AWidget.WIDGET_DOWN);
+				widget.control(ASticklet.STICKLET_DOWN);
 				break;
 			case ClientEventBus.CONTROL_KEY_UP:
-				widget.control(AWidget.WIDGET_UP);
+				widget.control(ASticklet.STICKLET_UP);
 				break;
 			case ClientEventBus.CONTROL_KEY_LEFT:
-				widget.control(AWidget.WIDGET_ROLLBACK);
+				widget.control(ASticklet.STICKLET_ROLLBACK);
 				break;
 			case ClientEventBus.CONTROL_KEY_RIGHT:
-				if( widget.control(AWidget.WIDGET_ENGAGE) == AWidget.WIDGET_EXIT ) {
+				if( widget.control(ASticklet.STICKLET_ENGAGE) == ASticklet.STICKLET_EXIT ) {
 					// 上一个widget执行完毕。
 					Executer();
 				}
