@@ -5,6 +5,7 @@ import java.util.Vector;
 
 import com.google.gwt.core.client.GWT;
 import com.risetek.keke.client.context.ClientEventBus;
+import com.risetek.keke.client.nodes.ExitNode;
 import com.risetek.keke.client.nodes.InputNode;
 import com.risetek.keke.client.nodes.LoginNode;
 import com.risetek.keke.client.nodes.NamedNode;
@@ -17,9 +18,12 @@ public abstract class AWidget {
 	public static final int WIDGET_OK	= 0;
 	public static final int WIDGET_EXIT = -1;
 	
-	public Stack<Node>	NodesStack;
+	public Stack<Node>	HistoryNodesStack;
 	public Node current;
 	Node rootNode;
+
+	// 执行其间的运行参数堆栈。
+	public Stack<String> ParamStack;
 	
 	private Node createNode(String[] nodeDesc) {
 		Node node = null;
@@ -33,6 +37,8 @@ public abstract class AWidget {
 			node = new PasswordNode(nodeDesc[2], nodeDesc[3]);
 		else if( "Login".equals(nodeDesc[1]))
 			node = new LoginNode(nodeDesc[2], nodeDesc[3]);
+		else if( "Exit".equals(nodeDesc[1]))
+			node = new ExitNode();
 		else
 			node = new PromotionNode(nodeDesc[2], nodeDesc[3]);
 		return node;
@@ -47,7 +53,7 @@ public abstract class AWidget {
 		}
 	}
 	
-	Node loadNodes(String[][] datas) {
+	public Node loadNodes(String[][] datas) {
 		Vector<NodeDegree> s = new Vector<NodeDegree>();
 		NodeDegree dn = new NodeDegree(Integer.parseInt(datas[0][0]), createNode(datas[0]));
 		if( dn.degree <= 0 ) {
@@ -60,7 +66,7 @@ public abstract class AWidget {
 		int loop = 1;
 		while( loop < datas.length )
 		{
-			GWT.log("Load node: "+ datas[loop][1] +" " + datas[loop][2]);
+//			GWT.log("Load node: "+ datas[loop][1] +" " + datas[loop][2]);
 			dn = new NodeDegree(Integer.parseInt(datas[loop][0]), createNode(datas[loop]));
 			if( s.size() > 0  ) {
 				NodeDegree topdn = s.elementAt(0);
@@ -81,73 +87,18 @@ public abstract class AWidget {
 	}
 		
 	public void clearHistory() {
-		while( NodesStack.size() > 1 ) {
-			NodesStack.pop();
+		while( HistoryNodesStack.size() > 1 ) {
+			HistoryNodesStack.pop();
 		}
 	}
 	
 	public void Execute() {
-		NodesStack = new Stack<Node>();
-		NodesStack.push(rootNode);
+		ParamStack = new Stack<String>();
+		HistoryNodesStack = new Stack<Node>();
+		
+		HistoryNodesStack.push(rootNode);
 		rootNode.enter(this);
 		ClientEventBus.INSTANCE.fireEvent(new ClientEventBus.ViewChangedEvent());
-	}
-	
-	public int engage() {
-		// 如果当前节点任务没有完成，不能进步。
-		if( current.finished() == 0 )
-		{
-			if( current.children != null ) {
-				NodesStack.push(current);
-				// 我们这里决定widget的存在与否
-				int code = current.children.enter(this);
-				if( code == Node.NODE_EXIT )
-				{
-					exit();
-					return WIDGET_EXIT;
-				}
-				else
-					ClientEventBus.INSTANCE.fireEvent(new ClientEventBus.ViewChangedEvent());
-			}
-		}
-		return WIDGET_OK;
-	}
-	
-	public void rollback() {
-		if( NodesStack.size() > 1 ) {
-			Node n = NodesStack.pop();
-			if( n.rollbackable() )
-			{
-				n.enter(this);
-				ClientEventBus.INSTANCE.fireEvent(new ClientEventBus.ViewChangedEvent());
-			}
-			else
-				NodesStack.push(n);
-				
-		}
-	}
-	
-	public void move_down() {
-		if( current.next != null ) {
-			current.next.enter(this);
-			ClientEventBus.INSTANCE.fireEvent(new ClientEventBus.ViewChangedEvent());
-		}
-	}
-	public int move_up() {
-		if( NodesStack.size() > 0 ) {
-			Node p = NodesStack.pop();
-			NodesStack.push(p);
-			p = p.children;
-			if( p == current )
-				return -1;
-			while( p.next != current )
-				p = p.next;
-			
-			p.enter(this);
-			ClientEventBus.INSTANCE.fireEvent(new ClientEventBus.ViewChangedEvent());
-			return 0;
-		}
-		return -1;
 	}
 	
 	public void press(int keyCode) {
@@ -155,10 +106,106 @@ public abstract class AWidget {
 			current.press(keyCode);
 	}
 	
+	public final static int WIDGET_UP 		= 0;
+	public final static int WIDGET_DOWN 	= 1;
+	public final static int WIDGET_ROLLBACK = 2;
+	public final static int WIDGET_ENGAGE 	= 3;
+	public final static int WIDGET_LEAVE 	= 4;
+	
+	int control_mask = 0;
+	
+	public void control_mask(int controlCode) {
+		control_mask |= ( 1 << controlCode );
+	}
+
+	public void control_unmask(int controlCode) {
+		control_mask &= ~( 1 << controlCode );
+	}
+
+	public int control(int controlCode) {
+
+		// 判断本操作是否被屏蔽。
+		if( (control_mask & ( 1 << controlCode )) != 0 )
+			return WIDGET_OK;
+		
+		switch( controlCode )
+		{
+		case WIDGET_UP:
+			if( HistoryNodesStack.size() > 0 ) {
+				Node p = HistoryNodesStack.pop();
+				HistoryNodesStack.push(p);
+				p = getChildrenNode(p);
+				if( p == current )
+					break;
+				
+				while( p.next != current )
+					p = p.next;
+				
+				p.enter(this);
+				//ClientEventBus.INSTANCE.fireEvent(new ClientEventBus.ViewChangedEvent());
+			}
+			break;
+			
+		case WIDGET_DOWN:
+			if( current.next != null ) {
+				current.next.enter(this);
+				//ClientEventBus.INSTANCE.fireEvent(new ClientEventBus.ViewChangedEvent());
+			}
+			break;
+			
+		case WIDGET_ROLLBACK:
+			if( HistoryNodesStack.size() > 1 ) {
+				Node n = HistoryNodesStack.pop();
+				if( n.rollbackable() )
+				{
+					n.enter(this);
+					//ClientEventBus.INSTANCE.fireEvent(new ClientEventBus.ViewChangedEvent());
+				}
+				else
+					HistoryNodesStack.push(n);
+					
+			}
+			break;
+			
+		case WIDGET_ENGAGE:
+			/*
+			 * 从当前节点进入下一个节点的时候，执行该动作。
+			 */
+			
+			// 如果当前节点任务没有完成，不能进步。
+			if( current.finished() == 0 )
+			{
+				if( getChildrenNode(current) != null ) {
+					// 离开当前节点，进入下一个节点，这说明本步骤得到认可，需要获取该阶段的运行结果。
+					current.action(this);
+					// 记录运行的层次。
+					HistoryNodesStack.push(current);
+					// 我们这里决定widget的存在与否
+					int code = getChildrenNode(current).enter(this);
+					if( code == Node.NODE_EXIT )
+						return WIDGET_EXIT;
+					//else ClientEventBus.INSTANCE.fireEvent(new ClientEventBus.ViewChangedEvent());
+				}
+			}
+			break;
+			
+		case WIDGET_LEAVE:
+			break;
+			
+		default:
+			break;
+		}
+		return WIDGET_OK;
+	}
+	
+	Stack<Node> callerNodeStack = new Stack<Node>();
+	
 	/*
-	 * widget执行结束。
+	 * 我们或者得到节点的直接子孙。
+	 * 或者得到了CallerNode的直接子孙。
 	 */
-	public void exit() {
-		GWT.log("widget exit");
+	public Node getChildrenNode(Node p) {
+		Node n = p.getChildren();
+		return n;
 	}
 }

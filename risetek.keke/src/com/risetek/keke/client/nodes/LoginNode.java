@@ -32,15 +32,18 @@ public class LoginNode extends VNode {
 	}
 
 	public void addFailedNode() {
-		Node node = new PromotionNode("登录失败", "p2");
+		Node node = new PromotionNode("服务失败", "p2");
 		node = addChildrenNode(node);
 		node.addChildrenNode(new ExitNode());
 	}
 
-	public void addSucessedNode() {
-		Node node = new PromotionNode("登录成功", "p3");
+	public void addSucessedNode(Node result) {
+		/*
+		Node node = new PromotionNode("登录成功:"+result, "p3");
 		node = addChildrenNode(node);
 		node.addChildrenNode(new ExitNode());
+		*/
+		this.addChildrenNode(result);
 	}
 	
 	/*
@@ -54,23 +57,28 @@ public class LoginNode extends VNode {
 		super.enter(widget);
 		// 开始登录过程
 		// 1、发送登录信息，钩挂回调函数和超时定时器。
+		String password = widget.ParamStack.pop();
+		String username = widget.ParamStack.pop();
 		
 		ILoginServiceAsync loginService = GWT.create(ILoginService.class);
-		loginService.loginServer("username", "password", new AsyncCallback<String>(){
+		loginService.loginServer(username, password, new AsyncCallback<String[][]>(){
 
 			@Override
 			public void onFailure(Throwable caught) {
 				GWT.log("login failed");
 				addFailedNode();
-				widget.engage();
+				widget.control(AWidget.WIDGET_ENGAGE);
 			}
 
 			@Override
-			public void onSuccess(String result) {
+			public void onSuccess(String result[][]) {
 				GWT.log("login sucessed!");
 				state = 0;
-				addSucessedNode();
-				widget.engage();
+				Node following = widget.loadNodes(result);
+				addSucessedNode(following);
+//				addSucessedNode(result[1][2]);
+				
+				widget.control(AWidget.WIDGET_ENGAGE);
 			}} );
 		return 0;
 	}

@@ -28,6 +28,7 @@ public class PasswordNode extends Node {
 		char c = "0123456789".charAt(keyCode);
 		sb.append(password);
 		sb.append(c);
+		password = sb.toString();
 		
 		passshow = passshow.concat("*");
 		myComposite.input.setText(passshow);
@@ -40,4 +41,10 @@ public class PasswordNode extends Node {
 		myComposite.input.setText(passshow);
 		return 0;
 	}
+	
+	public int action(AWidget widget) {
+		widget.ParamStack.push(password);
+		return 0;
+	}
+	
 }

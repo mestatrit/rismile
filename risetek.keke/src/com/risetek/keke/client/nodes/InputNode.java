@@ -37,4 +37,9 @@ public class InputNode extends Node {
 		myComposite.input.setText(input);
 		return 0;
 	}
+
+	public int action(AWidget widget) {
+		widget.ParamStack.push(input);
+		return 0;
+	}
 }

@@ -1,24 +1,33 @@
 package com.risetek.keke.client.nodes;
 
-import com.google.gwt.core.client.GWT;
+import java.util.HashMap;
+
 import com.google.gwt.user.client.ui.Composite;
+import com.risetek.keke.client.context.ClientEventBus;
 import com.risetek.keke.client.data.AWidget;
 
 /*
  * 这个结构用来表达一系列串联的节点。并能存储到数据库中。这是一种变异了的树形结构。
  */
 
-public abstract class Node implements INodeCallback {
+public abstract class Node {
+	
+	public static final HashMap<String, Node> namedNodesHash = new HashMap<String, Node>(); 
+	
 	public final static int NODE_OK	= 0;
 	public final static int NODE_EXIT	= -1;
 	
-	public Node children;
+	private Node children;
 	public Node next;
 	public String Ticker;
 	public String Promotion;
 	public String imgName;
 
 	Composite composite = null;
+	
+	public Node getChildren() {
+		return children;
+	}
 	
 	public abstract Composite getComposite();
 
@@ -56,35 +65,22 @@ public abstract class Node implements INodeCallback {
 			next.addNextNode(node);
 	}
 
-	public void callback() {
-		if( this instanceof NamedNode) {
-			/*
-			 * 命名节点，不在这里扩展表达。
-			 * 这个命名节点应该注册到某个表中去，以便统一地作为独立的树完成表达。
-			 */
-			return;
-		}
-		GWT.log(this.toString());
-	}
-	/*
-	 * 遍历节点，只针对本节点的子孙遍历
-	 */
-	void travelNode(INodeCallback nodecallback) {
-		nodecallback.callback();
-		if( children != null )
-			children.travelNode(nodecallback);
-		if( next != null)
-			next.travelNode(nodecallback);
-	}
-
 	public int enter(AWidget widget) {
 		if( widget.current != null )
 			widget.current.leave(widget);
 		widget.current = this;
+		
+		if( getComposite() != null )
+			ClientEventBus.INSTANCE.fireEvent(new ClientEventBus.ViewChangedEvent());
 		return 0;
 	}
 	
 	public int leave(AWidget widget) {
+		return 0;
+	}
+	
+	// 我们离开这个节点进入下一步的时候，执行该动作。
+	public int action(AWidget widget) {
 		return 0;
 	}
 	

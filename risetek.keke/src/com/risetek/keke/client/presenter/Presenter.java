@@ -13,8 +13,8 @@ public class Presenter {
 	}
 
 	public void upDate(AWidget widget ) {
-		Node head = widget.NodesStack.pop();
-		widget.NodesStack.push(head);
+		Node head = widget.HistoryNodesStack.pop();
+		widget.HistoryNodesStack.push(head);
 /*
 		Node p = head.children;
 		int index = 0;
@@ -24,6 +24,7 @@ public class Presenter {
 			p = p.next;
 		}
 */
-		view.renderKekes( head.children , widget.current);
+//		view.renderKekes( head.children , widget.current);
+		view.renderKekes( widget.getChildrenNode(head) , widget.current);
 	}
 }

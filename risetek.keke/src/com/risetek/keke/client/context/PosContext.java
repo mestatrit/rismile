@@ -101,18 +101,25 @@ public class PosContext {
         ClientEventBus.INSTANCE.addHandler(viewchangedhandler, ViewChangedEvent.TYPE);
         ClientEventBus.INSTANCE.addHandler(keyCodehandler, HIDNumberEvent.TYPE);
         ClientEventBus.INSTANCE.addHandler(controlCodehandler, HIDControlEvent.TYPE);
-        
+
         presenter = new Presenter(view);
         executeWidget.push(new DemoWidget());
-        
+
         Executer();
     }
 
     void Executer() {
     	if( executeWidget.size() > 0 )
     	{
-    		if( Token == null )
-    	        executeWidget.push(new LoginWidget());
+    		if( Token == null ) {
+    			/*
+    			Node n = Node.namedNodesHash.get(LoginWidget.Label);
+    			if( n == null )
+        	        executeWidget.push(new Widget(n));
+    			else
+    			*/
+    				executeWidget.push(new LoginWidget());
+    		}
 	    	widget = executeWidget.pop();
 	        widget.Execute();
     	}
@@ -251,20 +258,21 @@ public class PosContext {
 			int controlKey = event.getControlCode();
 			switch( controlKey ) {
 			case ClientEventBus.CONTROL_KEY_DOWN:
-				widget.move_down();
+				widget.control(AWidget.WIDGET_DOWN);
 				break;
 			case ClientEventBus.CONTROL_KEY_UP:
-				widget.move_up();
+				widget.control(AWidget.WIDGET_UP);
 				break;
 			case ClientEventBus.CONTROL_KEY_LEFT:
-				widget.rollback();
+				widget.control(AWidget.WIDGET_ROLLBACK);
 				break;
 			case ClientEventBus.CONTROL_KEY_RIGHT:
-				if( widget.engage() == AWidget.WIDGET_EXIT ) {
+				if( widget.control(AWidget.WIDGET_ENGAGE) == AWidget.WIDGET_EXIT ) {
 					// 上一个widget执行完毕。
 					Executer();
 				}
 				break;
+				
 			default:
 				GWT.log("Control Code Overrun");
 				break;
