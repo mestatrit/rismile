@@ -9,7 +9,9 @@ import com.risetek.keke.client.data.AWidget;
  */
 
 public abstract class Node implements INodeCallback {
-
+	public final static int NODE_OK	= 0;
+	public final static int NODE_EXIT	= -1;
+	
 	public Node children;
 	public Node next;
 	public String Ticker;
@@ -93,5 +95,8 @@ public abstract class Node implements INodeCallback {
 	public int finished() {
 		return 0;
 	}
-	
+	// 是否能记录历史：
+	public boolean rollbackable() {
+		return true;
+	}
 }

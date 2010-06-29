@@ -12,7 +12,7 @@ public class NamedNode extends Node {
 
 	String name;
 	public NamedNode(String name) {
-		super("Named", "NamedTicker");
+		super("Named", "NamedNode");
 		this.name = name;
 	}
 

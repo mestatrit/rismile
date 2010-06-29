@@ -25,19 +25,14 @@ import com.google.gwt.core.client.GWT;
 import com.risetek.keke.client.PosEvents.PosEvent;
 import com.risetek.keke.client.context.ClientEventBus.HIDCARDEvent;
 import com.risetek.keke.client.context.ClientEventBus.HIDCARDHandler;
-import com.risetek.keke.client.context.ClientEventBus.HIDDOWNEvent;
-import com.risetek.keke.client.context.ClientEventBus.HIDDOWNHandler;
-import com.risetek.keke.client.context.ClientEventBus.HIDLEFTEvent;
-import com.risetek.keke.client.context.ClientEventBus.HIDLEFTHandler;
+import com.risetek.keke.client.context.ClientEventBus.HIDControlEvent;
+import com.risetek.keke.client.context.ClientEventBus.HIDControlHandler;
 import com.risetek.keke.client.context.ClientEventBus.HIDNumberEvent;
 import com.risetek.keke.client.context.ClientEventBus.HIDNumberHandler;
-import com.risetek.keke.client.context.ClientEventBus.HIDRIGHTEvent;
-import com.risetek.keke.client.context.ClientEventBus.HIDRIGHTHandler;
-import com.risetek.keke.client.context.ClientEventBus.HIDUPEvent;
-import com.risetek.keke.client.context.ClientEventBus.HIDUPHandler;
 import com.risetek.keke.client.context.ClientEventBus.ViewChangedEvent;
 import com.risetek.keke.client.context.ClientEventBus.ViewChangedHandler;
 import com.risetek.keke.client.data.AWidget;
+import com.risetek.keke.client.data.DemoWidget;
 import com.risetek.keke.client.data.LoginWidget;
 import com.risetek.keke.client.data.PosConfig;
 import com.risetek.keke.client.nodes.Node;
@@ -95,31 +90,34 @@ public class PosContext {
     KekesComposite view;
     Presenter	presenter;
     public AWidget		widget;
+    
+    Stack<AWidget> executeWidget = new Stack<AWidget>();
+    
     public PosContext(KekesComposite view) {
     	this.view = view;
         inputline = new StringBuffer();
         eventstack = new PosEventStack();
-
-        ClientEventBus.INSTANCE.addHandler(uphanlde, HIDUPEvent.TYPE);
-        ClientEventBus.INSTANCE.addHandler(downhanlde, HIDDOWNEvent.TYPE);
-        ClientEventBus.INSTANCE.addHandler(lefthandle, HIDLEFTEvent.TYPE);
-        ClientEventBus.INSTANCE.addHandler(righthandler, HIDRIGHTEvent.TYPE);
         ClientEventBus.INSTANCE.addHandler(cardhandler, HIDCARDEvent.TYPE);
         ClientEventBus.INSTANCE.addHandler(viewchangedhandler, ViewChangedEvent.TYPE);
         ClientEventBus.INSTANCE.addHandler(keyCodehandler, HIDNumberEvent.TYPE);
+        ClientEventBus.INSTANCE.addHandler(controlCodehandler, HIDControlEvent.TYPE);
         
         presenter = new Presenter(view);
+        executeWidget.push(new DemoWidget());
+        
         Executer();
     }
 
     void Executer() {
-    	boolean goon = true;
-    	while(goon) {
-	        if( Token == null ) {
-		        widget = LoginWidget.INSTANCE;
-		        widget.Execute();
-	        }
+    	if( executeWidget.size() > 0 )
+    	{
+    		if( Token == null )
+    	        executeWidget.push(new LoginWidget());
+	    	widget = executeWidget.pop();
+	        widget.Execute();
     	}
+    	else
+    		GWT.log("D3View GAMEOVER");
     }
     
     private void updateView() {
@@ -222,41 +220,7 @@ public class PosContext {
         inputline = null;
         eventstack = null;
     }
-    
-	HIDUPHandler uphanlde = new HIDUPHandler(){
-		@Override
-		public void onEvent(HIDUPEvent event) {
-			widget.move_up();
-		}
-	};
-	
-	
-	HIDDOWNHandler downhanlde = new HIDDOWNHandler(){
 
-		@Override
-		public void onEvent(HIDDOWNEvent event) {
-			widget.move_down();
-		}
-	};
-	
-	HIDLEFTHandler lefthandle = new HIDLEFTHandler() {
-
-		@Override
-		public void onEvent(HIDLEFTEvent event) {
-			widget.rollback();
-		}
-		
-	};
-	
-	HIDRIGHTHandler righthandler = new HIDRIGHTHandler() {
-
-		@Override
-		public void onEvent(HIDRIGHTEvent event) {
-			widget.engage();
-		}
-		
-	};
-	
 	HIDCARDHandler cardhandler = new HIDCARDHandler() {
 		@Override
 		public void onEvent(HIDCARDEvent event) {
@@ -280,6 +244,33 @@ public class PosContext {
 		}
 	};
 
+	HIDControlHandler controlCodehandler = new HIDControlHandler() {
+
+		@Override
+		public void onEvent(HIDControlEvent event) {
+			int controlKey = event.getControlCode();
+			switch( controlKey ) {
+			case ClientEventBus.CONTROL_KEY_DOWN:
+				widget.move_down();
+				break;
+			case ClientEventBus.CONTROL_KEY_UP:
+				widget.move_up();
+				break;
+			case ClientEventBus.CONTROL_KEY_LEFT:
+				widget.rollback();
+				break;
+			case ClientEventBus.CONTROL_KEY_RIGHT:
+				if( widget.engage() == AWidget.WIDGET_EXIT ) {
+					// 上一个widget执行完毕。
+					Executer();
+				}
+				break;
+			default:
+				GWT.log("Control Code Overrun");
+				break;
+			}
+		}
+	};
 }
 
 

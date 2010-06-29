@@ -13,6 +13,10 @@ import com.risetek.keke.client.nodes.PasswordNode;
 import com.risetek.keke.client.nodes.PromotionNode;
 
 public abstract class AWidget {
+	
+	public static final int WIDGET_OK	= 0;
+	public static final int WIDGET_EXIT = -1;
+	
 	public Stack<Node>	NodesStack;
 	public Node current;
 	Node rootNode;
@@ -76,6 +80,11 @@ public abstract class AWidget {
 		return top.node;
 	}
 		
+	public void clearHistory() {
+		while( NodesStack.size() > 1 ) {
+			NodesStack.pop();
+		}
+	}
 	
 	public void Execute() {
 		NodesStack = new Stack<Node>();
@@ -84,21 +93,37 @@ public abstract class AWidget {
 		ClientEventBus.INSTANCE.fireEvent(new ClientEventBus.ViewChangedEvent());
 	}
 	
-	public void engage() {
+	public int engage() {
 		// 如果当前节点任务没有完成，不能进步。
-		if( current.finished() != 0 )
-			return;
-		if( current.children != null ) {
-			NodesStack.push(current);
-			current.children.enter(this);
-			ClientEventBus.INSTANCE.fireEvent(new ClientEventBus.ViewChangedEvent());
+		if( current.finished() == 0 )
+		{
+			if( current.children != null ) {
+				NodesStack.push(current);
+				// 我们这里决定widget的存在与否
+				int code = current.children.enter(this);
+				if( code == Node.NODE_EXIT )
+				{
+					exit();
+					return WIDGET_EXIT;
+				}
+				else
+					ClientEventBus.INSTANCE.fireEvent(new ClientEventBus.ViewChangedEvent());
+			}
 		}
+		return WIDGET_OK;
 	}
 	
 	public void rollback() {
 		if( NodesStack.size() > 1 ) {
-			NodesStack.pop().enter(this);
-			ClientEventBus.INSTANCE.fireEvent(new ClientEventBus.ViewChangedEvent());
+			Node n = NodesStack.pop();
+			if( n.rollbackable() )
+			{
+				n.enter(this);
+				ClientEventBus.INSTANCE.fireEvent(new ClientEventBus.ViewChangedEvent());
+			}
+			else
+				NodesStack.push(n);
+				
 		}
 	}
 	
@@ -130,4 +155,10 @@ public abstract class AWidget {
 			current.press(keyCode);
 	}
 	
+	/*
+	 * widget执行结束。
+	 */
+	public void exit() {
+		GWT.log("widget exit");
+	}
 }

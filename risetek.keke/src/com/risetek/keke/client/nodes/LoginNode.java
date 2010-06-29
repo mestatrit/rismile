@@ -4,7 +4,6 @@ import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Composite;
 import com.risetek.keke.client.data.AWidget;
-import com.risetek.keke.client.nodes.ui.InputComposite;
 import com.risetek.keke.client.nodes.ui.PromotionComposite;
 
 
@@ -32,6 +31,18 @@ public class LoginNode extends VNode {
 		return 0;
 	}
 
+	public void addFailedNode() {
+		Node node = new PromotionNode("登录失败", "p2");
+		node = addChildrenNode(node);
+		node.addChildrenNode(new ExitNode());
+	}
+
+	public void addSucessedNode() {
+		Node node = new PromotionNode("登录成功", "p3");
+		node = addChildrenNode(node);
+		node.addChildrenNode(new ExitNode());
+	}
+	
 	/*
 	 * (non-Javadoc)
 	 * @see com.risetek.keke.client.nodes.Node#enter(com.risetek.keke.client.data.AWidget)
@@ -43,8 +54,6 @@ public class LoginNode extends VNode {
 		super.enter(widget);
 		// 开始登录过程
 		// 1、发送登录信息，钩挂回调函数和超时定时器。
-		final PromotionComposite myComposite = (PromotionComposite)getComposite();
-		myComposite.brief.setText("登录中...");
 		
 		ILoginServiceAsync loginService = GWT.create(ILoginService.class);
 		loginService.loginServer("username", "password", new AsyncCallback<String>(){
@@ -52,14 +61,15 @@ public class LoginNode extends VNode {
 			@Override
 			public void onFailure(Throwable caught) {
 				GWT.log("login failed");
-				myComposite.brief.setText("登录失败");
+				addFailedNode();
+				widget.engage();
 			}
 
 			@Override
 			public void onSuccess(String result) {
 				GWT.log("login sucessed!");
-				myComposite.brief.setText("登录成功："+result);
 				state = 0;
+				addSucessedNode();
 				widget.engage();
 			}} );
 		return 0;

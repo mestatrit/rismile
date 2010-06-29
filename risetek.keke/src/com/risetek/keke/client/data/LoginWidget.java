@@ -10,14 +10,11 @@ public class LoginWidget extends AWidget {
 			{"0", "Promotion", "送安全", "p5"},
 			{"1", "Username", "输入用户名称", "p2"},
 			{"1", "Password", "输入登录密码", "p2"},
-			{"1", "Login", "登录ePay", ""},
-			{"0", "CreatorTicker", "链接网络", ""}
+			{"0", "Login", "登录ePay", ""},
+//			{"0", "CreatorTicker", "链接网络", ""}
 	};
 
-	private LoginWidget() {
+	public LoginWidget() {
 		rootNode = loadNodes(a);
 	}
-	
-	public static LoginWidget INSTANCE = new LoginWidget();
-	
 }

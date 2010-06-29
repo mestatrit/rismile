@@ -27,16 +27,16 @@ public class ClientEventBus {
 				int keyCode = event.getNativeEvent().getKeyCode();
 				switch(keyCode) {
 				case KeyCodes.KEY_DOWN:
-					ClientEventBus.INSTANCE.fireEvent(new ClientEventBus.HIDDOWNEvent());
+					ClientEventBus.INSTANCE.fireEvent(new ClientEventBus.HIDControlEvent(CONTROL_KEY_DOWN));
 					break;
 				case KeyCodes.KEY_UP:
-					ClientEventBus.INSTANCE.fireEvent(new ClientEventBus.HIDUPEvent());
+					ClientEventBus.INSTANCE.fireEvent(new ClientEventBus.HIDControlEvent(CONTROL_KEY_UP));
 					break;
 				case KeyCodes.KEY_LEFT:
-					ClientEventBus.INSTANCE.fireEvent(new ClientEventBus.HIDLEFTEvent());
+					ClientEventBus.INSTANCE.fireEvent(new ClientEventBus.HIDControlEvent(CONTROL_KEY_LEFT));
 					break;
 				case KeyCodes.KEY_RIGHT:
-					ClientEventBus.INSTANCE.fireEvent(new ClientEventBus.HIDRIGHTEvent());
+					ClientEventBus.INSTANCE.fireEvent(new ClientEventBus.HIDControlEvent(CONTROL_KEY_RIGHT));
 					break;
 				case 96:	// "0"
 				case 97:	// "1"
@@ -87,82 +87,6 @@ public class ClientEventBus {
 	public final <H extends EventHandler> HandlerRegistration addHandler(
 			final H handler, GwtEvent.Type<H> type) {
 		return handleManager.addHandler(type, handler);
-	}
-	
-	// 处理 UP 事件
-	public interface HIDUPHandler extends EventHandler {
-		void onEvent(HIDUPEvent event);
-	}
-	
-	public static class HIDUPEvent extends GwtEvent<HIDUPHandler> {
-		public static Type<HIDUPHandler> TYPE = new Type<HIDUPHandler>();
-
-		@Override
-		public final Type<HIDUPHandler> getAssociatedType() {
-			return TYPE;
-		}
-
-		@Override
-		protected void dispatch(HIDUPHandler handler) {
-			handler.onEvent(this);
-		}
-	}
-	
-	// 处理  DOWN 事件
-	public interface HIDDOWNHandler extends EventHandler {
-		void onEvent(HIDDOWNEvent event);
-	}
-	
-	public static class HIDDOWNEvent extends GwtEvent<HIDDOWNHandler> {
-		public static Type<HIDDOWNHandler> TYPE = new Type<HIDDOWNHandler>();
-
-		@Override
-		public final Type<HIDDOWNHandler> getAssociatedType() {
-			return TYPE;
-		}
-
-		@Override
-		protected void dispatch(HIDDOWNHandler handler) {
-			handler.onEvent(this);
-		}
-	}
-
-	// 处理  LEFT 事件
-	public interface HIDLEFTHandler extends EventHandler {
-		void onEvent(HIDLEFTEvent event);
-	}
-	
-	public static class HIDLEFTEvent extends GwtEvent<HIDLEFTHandler> {
-		public static Type<HIDLEFTHandler> TYPE = new Type<HIDLEFTHandler>();
-
-		@Override
-		public final Type<HIDLEFTHandler> getAssociatedType() {
-			return TYPE;
-		}
-
-		@Override
-		protected void dispatch(HIDLEFTHandler handler) {
-			handler.onEvent(this);
-		}
-	}
-
-	// 处理  RIGHT 事件
-	public interface HIDRIGHTHandler extends EventHandler {
-		void onEvent(HIDRIGHTEvent event);
-	}
-	
-	public static class HIDRIGHTEvent extends GwtEvent<HIDRIGHTHandler> {
-		public static Type<HIDRIGHTHandler> TYPE = new Type<HIDRIGHTHandler>();
-
-		@Override
-		public final Type<HIDRIGHTHandler> getAssociatedType() {
-			return TYPE;
-		}
-
-		@Override
-		protected void dispatch(HIDRIGHTHandler handler) {
-			handler.onEvent(this);
-		}
 	}
 
 	// 处理  刷卡 事件
@@ -241,6 +165,39 @@ public class ClientEventBus {
 		}
 	}
 	
+	public static final int CONTROL_KEY_UP		= 0;
+	public static final int CONTROL_KEY_DOWN	= 1;
+	public static final int CONTROL_KEY_LEFT	= 2;
+	public static final int CONTROL_KEY_RIGHT	= 3;
+	
+	
+	// 处理 控制输入事件
+	public interface HIDControlHandler extends EventHandler {
+		void onEvent(HIDControlEvent event);
+	}
+	
+	public static class HIDControlEvent extends GwtEvent<HIDControlHandler> {
+		public static Type<HIDControlHandler> TYPE = new Type<HIDControlHandler>();
+
+		private int keyCode;
+		public HIDControlEvent(int keyCode) {
+			this.keyCode = keyCode;
+		}
+		
+		public int getControlCode() {
+			return keyCode;
+		}
+		
+		@Override
+		public final Type<HIDControlHandler> getAssociatedType() {
+			return TYPE;
+		}
+
+		@Override
+		protected void dispatch(HIDControlHandler handler) {
+			handler.onEvent(this);
+		}
+	}
 	
 }
 
