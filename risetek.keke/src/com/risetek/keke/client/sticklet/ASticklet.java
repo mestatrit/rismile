@@ -131,7 +131,8 @@ public abstract class ASticklet {
 			if( currentNode.finished() == 0 )
 			{
 				// 离开当前节点，进入下一个节点，这说明本步骤得到认可，需要获取该阶段的运行结果。
-				currentNode.action(this);
+				if( currentNode.action(this) == Node.NODE_EXIT )
+					return STICKLET_EXIT;
 
 				if( getChildrenNode(currentNode) != null ) {
 					// 记录运行的层次。
@@ -150,7 +151,9 @@ public abstract class ASticklet {
 						return callerSticklet.control(STICKLET_ENGAGE);
 					}
 					// 当前节点的children节点没有了，我们得查询
-					return STICKLET_EXIT;
+					// 还是直接返回？
+					// 还是根本不理睬？
+					// return STICKLET_EXIT;
 				}
 			}
 			break;

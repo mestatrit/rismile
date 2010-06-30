@@ -7,7 +7,7 @@ import com.risetek.keke.client.sticklet.ASticklet;
 public class ExitNode extends VNode {
 
 	public ExitNode() {
-		super("ExitNode", "");
+		super("ExitNode", "退出中...", "ExitIcon");
 	}
 
 	@Override
@@ -19,7 +19,10 @@ public class ExitNode extends VNode {
 
 	public int enter(ASticklet widget) {
 		super.enter(widget);
-		return NODE_EXIT;
+		return 0;
 	}
 	
+	public int action(ASticklet widget) {
+		return NODE_EXIT;
+	}
 }

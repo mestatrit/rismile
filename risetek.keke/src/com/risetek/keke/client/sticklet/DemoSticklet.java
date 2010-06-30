@@ -5,6 +5,6 @@ import com.risetek.keke.client.nodes.Node;
 public class DemoSticklet  extends ASticklet {
 
 	public DemoSticklet() {
-		rootNode = Node.loadNodes(LocalSticklets.b);
+		rootNode = Node.loadNodes(LocalSticklets.demoSticklet);
 	}
 }

@@ -26,7 +26,7 @@ public class LocalSticklets {
 	};
 	
 	public final static String RootLabel = "Root ePay"; 
-	public final static String[][] b = {
+	public final static String[][] demoSticklet = {
 			{"1", "NamedNode", RootLabel},
 			{"3", "SecurityCheck"},
 			{"0", "Promotion", "服务创造价值", "p4"},

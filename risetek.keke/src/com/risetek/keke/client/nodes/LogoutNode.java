@@ -11,6 +11,6 @@ public class LogoutNode extends PromotionNode {
 
 	public int action(ASticklet widget) {
 		PosContext.Token = null;
-		return 0;
+		return NODE_EXIT;
 	}
 }
