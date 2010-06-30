@@ -18,16 +18,17 @@ public abstract class ASticklet {
 	Node currentNode;
 	public Node rootNode;
 
-	public Node getCurrentNode() {
+	public ASticklet getActiveSticklet() {
 		if( calledSticklet != null )
-			return calledSticklet.getCurrentNode();
+			return calledSticklet.getActiveSticklet();
+		return this;
+	}
+	
+	public Node getCurrentNode() {
 		return currentNode;
 	}
 	
 	public void setCurrentNode(Node n) {
-		if( calledSticklet != null )
-			calledSticklet.setCurrentNode(n);
-		else
 			currentNode = n;
 	}
 	// 执行其间的运行参数堆栈。
@@ -73,9 +74,6 @@ public abstract class ASticklet {
 	}
 
 	public int control(int controlCode) {
-		if( calledSticklet != null )
-			return calledSticklet.control(controlCode);
-		
 		// 判断本操作是否被屏蔽。
 		if( (control_mask & ( 1 << controlCode )) != 0 )
 			return STICKLET_OK;
@@ -141,6 +139,10 @@ public abstract class ASticklet {
 				// 当前节点的children节点没有了，我们得查询其是否被调用CallerNode的sticklet环境。
 				else
 				{
+					if( callerSticklet != null ) {
+						callerSticklet.calledSticklet = null;
+						return callerSticklet.control(STICKLET_ENGAGE);
+					}
 					// 当前节点的children节点没有了，我们得查询
 					return STICKLET_EXIT;
 				}
@@ -161,9 +163,16 @@ public abstract class ASticklet {
 	 * 或者得到了CallerNode的直接子孙。
 	 */
 	public Node getChildrenNode(Node p) {
-		Node n = p.getChildren();
-		if( n == null && callerSticklet != null )
-			n = callerSticklet.getCurrentNode();
-		return n;
+		return p.getChildren();
 	}
+
+	/*
+	 * 调用执行。
+	 */
+	public void Call(ASticklet called) {
+		calledSticklet = called;
+		called.callerSticklet = this;
+		called.Execute();
+	}
+	
 }

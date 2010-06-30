@@ -89,7 +89,11 @@ public class PosContext {
      */
     KekesComposite view;
     Presenter	presenter;
-    public ASticklet		widget;
+    private ASticklet widget;
+    
+    ASticklet getSticklet() {
+    	return widget.getActiveSticklet();
+    }
     
     Stack<ASticklet> executeWidget = new Stack<ASticklet>();
     
@@ -123,7 +127,7 @@ public class PosContext {
     }
     
     private void updateView() {
-        presenter.upDate(widget);
+        presenter.upDate(getSticklet());
     }
     /**
      * Converts the input buffer to an int.
@@ -242,7 +246,7 @@ public class PosContext {
 
 		@Override
 		public void onEvent(HIDNumberEvent event) {
-	        widget.press(event.getKeyCode());
+			getSticklet().press(event.getKeyCode());
 		}
 	};
 
@@ -253,16 +257,17 @@ public class PosContext {
 			int controlKey = event.getControlCode();
 			switch( controlKey ) {
 			case ClientEventBus.CONTROL_KEY_DOWN:
-				widget.control(ASticklet.STICKLET_DOWN);
+				getSticklet().control(ASticklet.STICKLET_DOWN);
 				break;
 			case ClientEventBus.CONTROL_KEY_UP:
-				widget.control(ASticklet.STICKLET_UP);
+				getSticklet().control(ASticklet.STICKLET_UP);
 				break;
 			case ClientEventBus.CONTROL_KEY_LEFT:
-				widget.control(ASticklet.STICKLET_ROLLBACK);
+				getSticklet().control(ASticklet.STICKLET_ROLLBACK);
 				break;
 			case ClientEventBus.CONTROL_KEY_RIGHT:
-				if( widget.control(ASticklet.STICKLET_ENGAGE) == ASticklet.STICKLET_EXIT ) {
+				ASticklet sticklet = getSticklet(); 
+				if( sticklet.control(ASticklet.STICKLET_ENGAGE) == ASticklet.STICKLET_EXIT ) {
 					// 上一个widget执行完毕。
 					Executer();
 				}
