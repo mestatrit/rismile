@@ -174,6 +174,7 @@ public abstract class ASticklet {
 
 	/*
 	 * 调用执行。
+	 * 调用者的参数是不是也应该压入子sticklet中，以便执行？
 	 */
 	public void Call(ASticklet called) {
 		calledSticklet = called;

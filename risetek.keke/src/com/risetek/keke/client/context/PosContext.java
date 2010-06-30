@@ -42,8 +42,6 @@ public class PosContext {
     Stack<ASticklet> executeWidget = new Stack<ASticklet>();
     
     public PosContext(KekesComposite view) {
-//        inputline = new StringBuffer();
-//        eventstack = new PosEventStack();
         ClientEventBus.INSTANCE.addHandler(cardhandler, HIDCARDEvent.TYPE);
         ClientEventBus.INSTANCE.addHandler(viewchangedhandler, ViewChangedEvent.TYPE);
         ClientEventBus.INSTANCE.addHandler(keyCodehandler, HIDNumberEvent.TYPE);

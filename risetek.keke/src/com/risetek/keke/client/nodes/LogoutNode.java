@@ -6,7 +6,7 @@ import com.risetek.keke.client.sticklet.ASticklet;
 public class LogoutNode extends PromotionNode {
 
 	public LogoutNode() {
-		super("LogoutNode", "注销");
+		super("注销", "Logout");
 	}
 
 	public int action(ASticklet widget) {
