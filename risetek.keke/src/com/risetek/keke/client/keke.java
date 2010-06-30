@@ -7,7 +7,6 @@ import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Widget;
-import com.risetek.keke.client.PosEvents.PosEvent;
 import com.risetek.keke.client.context.UiKeke;
 import com.risetek.keke.client.resources.IconManage;
 
@@ -19,9 +18,7 @@ public class keke extends Composite {
 	@UiField SpanElement brief;
 	@UiField Image img;
 
-	public PosEvent event;
-	public keke(String title, String imgName, PosEvent event) {
-		this.event = event;
+	public keke(String title, String imgName) {
 		Widget w = uiBinder.createAndBindUi(this);
 		
 		img.setResource(IconManage.getIcon(imgName));

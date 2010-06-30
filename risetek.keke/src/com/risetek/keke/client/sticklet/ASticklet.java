@@ -10,20 +10,17 @@ public abstract class ASticklet {
 	public static final int STICKLET_OK	= 0;
 	public static final int STICKLET_EXIT = -1;
 	
+	/*
+	 * 节点移动路径记录表
+	 * 用来获取当前节点的上一级节点信息，并通过上级节点获取本级节点的首项节点信息。
+	 * 也用于rollback中。
+	 */
+	
 	public Stack<Node>	HistoryNodesStack = new Stack<Node>();
-	
-	public ASticklet	calledSticklet = null;
-	public ASticklet	callerSticklet = null;
-
+	/*
+	 * 标志当前活动中的节点。 
+	 */
 	Node currentNode;
-	public Node rootNode;
-
-	public ASticklet getActiveSticklet() {
-		if( calledSticklet != null )
-			return calledSticklet.getActiveSticklet();
-		return this;
-	}
-	
 	public Node getCurrentNode() {
 		return currentNode;
 	}
@@ -31,15 +28,28 @@ public abstract class ASticklet {
 	public void setCurrentNode(Node n) {
 			currentNode = n;
 	}
+	/*
+	 * 本Sticklet的入口节点。
+	 */
+	public Node rootNode;
+	
+	/*
+	 * 双链路，钩挂调用者和被调用者的层级关系。
+	 */
+	public ASticklet	calledSticklet = null;
+	public ASticklet	callerSticklet = null;
+
+	/*
+	 * 获取Sticklet调用层级关系中的当前活动目标。
+	 */
+	public ASticklet getActiveSticklet() {
+		if( calledSticklet != null )
+			return calledSticklet.getActiveSticklet();
+		return this;
+	}
+	
 	// 执行其间的运行参数堆栈。
 	public Stack<String> ParamStack = new Stack<String>();
-	
-		
-	public void clearHistory() {
-		while( HistoryNodesStack.size() > 1 ) {
-			HistoryNodesStack.pop();
-		}
-	}
 	
 	public void Execute() {
 		HistoryNodesStack.push(rootNode);
@@ -48,11 +58,6 @@ public abstract class ASticklet {
 	}
 	
 	public void press(int keyCode) {
-		if( calledSticklet != null ) {
-			calledSticklet.press(keyCode);
-			return;
-		}
-		
 		if( currentNode != null )
 			currentNode.press(keyCode);
 	}

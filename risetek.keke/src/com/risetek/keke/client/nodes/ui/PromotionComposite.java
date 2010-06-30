@@ -7,7 +7,6 @@ import com.google.gwt.user.client.ui.HasHorizontalAlignment;
 import com.google.gwt.user.client.ui.HasVerticalAlignment;
 import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Label;
-import com.risetek.keke.client.PosEvents.PosEvent;
 import com.risetek.keke.client.context.UiKeke;
 import com.risetek.keke.client.nodes.Node;
 import com.risetek.keke.client.resources.IconManage;
@@ -19,7 +18,6 @@ public class PromotionComposite extends Composite {
 	Image img = new Image();
 	DockPanel outPanel = new DockPanel();
 	Grid g = new Grid(2,1);
-	public PosEvent event;
 
 	public PromotionComposite(Node node) {
 		outPanel.setPixelSize(UiKeke.kekeWidth, UiKeke.kekeHeight);
