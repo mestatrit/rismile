@@ -130,9 +130,10 @@ public abstract class ASticklet {
 			// 如果当前节点任务没有完成，不能进步。
 			if( currentNode.finished() == 0 )
 			{
+				// 离开当前节点，进入下一个节点，这说明本步骤得到认可，需要获取该阶段的运行结果。
+				currentNode.action(this);
+
 				if( getChildrenNode(currentNode) != null ) {
-					// 离开当前节点，进入下一个节点，这说明本步骤得到认可，需要获取该阶段的运行结果。
-					currentNode.action(this);
 					// 记录运行的层次。
 					HistoryNodesStack.push(currentNode);
 					// 我们这里决定widget的存在与否

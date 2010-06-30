@@ -112,15 +112,19 @@ public abstract class Node {
 			node = new PasswordNode(nodeDesc[2], nodeDesc[3]);
 		else if( "Login".equals(nodeDesc[1]))
 			node = new LoginNode(nodeDesc[2], nodeDesc[3]);
+		else if( "Logout".equals(nodeDesc[1]))
+			node = new LogoutNode();
 		else if( "Exit".equals(nodeDesc[1]))
 			node = new ExitNode();
 		else if( "SecurityCheck".equals(nodeDesc[1]))
 			node = new SecurityCheckNode();
+		else if( "InjectToken".equals(nodeDesc[1]))
+			node = new InjectTokenNode(nodeDesc[2]);
 		else
 			node = new PromotionNode(nodeDesc[2], nodeDesc[3]);
 		return node;
 	}
-
+	
 	public static Node loadNodes(String[][] datas) {
 
 		class NodeDegree {

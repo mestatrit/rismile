@@ -1,6 +1,7 @@
 package com.risetek.keke.client.nodes;
 
 import com.google.gwt.core.client.GWT;
+import com.risetek.keke.client.context.PosContext;
 import com.risetek.keke.client.sticklet.ASticklet;
 import com.risetek.keke.client.sticklet.LoginSticklet;
 
@@ -16,7 +17,10 @@ public class SecurityCheckNode extends VNode {
 	 * 我们检查安全问题。如果没有登录，那么需要调用登录sticklet。
 	 */
 	boolean isSecurity() {
-		return false;
+		if( PosContext.Token == null )
+			return false;
+		else
+			return true;
 	}
 	
 	public int enter(ASticklet sticklet) {

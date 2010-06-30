@@ -31,7 +31,7 @@ public class LocalSticklets {
 			{"3", "SecurityCheck"},
 			{"0", "Promotion", "服务创造价值", "p4"},
 			{"0", "Promotion", "观念决定出路", "p2"},
-			{"0", "Promotion", "退出登录", "p5"},
+			{"0", "Logout", "退出登录", "p5"},
 	};
 	
 	

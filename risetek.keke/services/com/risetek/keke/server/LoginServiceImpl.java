@@ -9,6 +9,7 @@ public class LoginServiceImpl extends RemoteServiceServlet implements
 	private static final long serialVersionUID = 1212436686440421909L;
 	String[][] login_sucessed = {
 			{"1", "NamedNode", "Login Sucessed", ""},
+			{"1", "InjectToken", "Login Sucessed", ""},
 			{"0", "Promotion", "登录成功", "p4"},
 	};
 

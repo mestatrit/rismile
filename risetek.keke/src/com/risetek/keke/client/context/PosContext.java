@@ -20,7 +20,7 @@ import com.risetek.keke.client.ui.KekesComposite;
 public class PosContext {
 
 	// 运行密钥。
-	String	Token = null;
+	public static String Token = null;
 	
 	public static void Log(String message) {
 		GWT.log(message);
@@ -51,7 +51,6 @@ public class PosContext {
 
         presenter = new Presenter(view);
         executeWidget.push(new DemoSticklet());
-
         Executer();
     }
 
@@ -62,7 +61,11 @@ public class PosContext {
 	        runningSticklet.Execute();
     	}
     	else
+    	{
     		GWT.log("D3View GAMEOVER");
+            executeWidget.push(new DemoSticklet());
+            Executer();
+    	}
     }
     
     private void updateView() {
