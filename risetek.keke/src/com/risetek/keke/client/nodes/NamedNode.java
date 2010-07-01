@@ -15,7 +15,6 @@ public class NamedNode extends VNode {
 	public NamedNode(String name) {
 		super("Named", "");
 		GWT.log("Create named Node: "+name);
-		namedNodesHash.put(name, this);
 	}
 
 }

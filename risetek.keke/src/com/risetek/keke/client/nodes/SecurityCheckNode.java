@@ -3,7 +3,7 @@ package com.risetek.keke.client.nodes;
 import com.google.gwt.core.client.GWT;
 import com.risetek.keke.client.context.PosContext;
 import com.risetek.keke.client.sticklet.ASticklet;
-import com.risetek.keke.client.sticklet.LoginSticklet;
+import com.risetek.keke.client.sticklet.Sticklets;
 
 
 public class SecurityCheckNode extends VNode {
@@ -22,10 +22,9 @@ public class SecurityCheckNode extends VNode {
 		else
 			return true;
 	}
-	
+/*	
 	public int enter(ASticklet sticklet) {
-		GWT.log("SecurityCheckNode");
-		//Node n = Node.namedNodesHash.get(calledName);
+		GWT.log("Enter SecurityCheckNode");
 		// 陷入被调用环境中去。
 		if( isSecurity() ) {
 			// TODO: 需节点无法停留在当前节点，咋办呢？
@@ -33,14 +32,30 @@ public class SecurityCheckNode extends VNode {
 		}
 		else
 		{
-			ASticklet login = new LoginSticklet();
+			ASticklet login = Sticklets.loadSticklet("epay.local.login");
 			sticklet.Call(login);
 		}
 		return 0;
 	}
 	
 	// 我们离开这个节点进入下一步的时候，执行该动作。
-	public int action(ASticklet widget) {
+	public int action(ASticklet sticklet) {
+		return 0;
+	}
+*/
+	public int enter(ASticklet sticklet) {
+		GWT.log("Enter SecurityCheckNode");
+		super.enter(sticklet);
+		return 0;
+	}
+	
+	// 我们离开这个节点进入下一步的时候，执行该动作。
+	public int action(ASticklet sticklet) {
+		// 陷入被调用环境中去。
+		if( !isSecurity() ) {
+			ASticklet login = Sticklets.loadSticklet("epay.local.login");
+			sticklet.Call(login);
+		}
 		return 0;
 	}
 	

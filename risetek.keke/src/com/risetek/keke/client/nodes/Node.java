@@ -1,7 +1,6 @@
 package com.risetek.keke.client.nodes;
 
 import java.util.HashMap;
-import java.util.Vector;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.client.ui.Composite;
@@ -14,7 +13,7 @@ import com.risetek.keke.client.sticklet.ASticklet;
 
 public abstract class Node {
 	
-	public static final HashMap<String, Node> namedNodesHash = new HashMap<String, Node>(); 
+//	public static final HashMap<String, Node>  = new HashMap<String, Node>(); 
 	
 	public final static int NODE_OK	= 0;
 	public final static int NODE_EXIT	= -1;
@@ -99,74 +98,6 @@ public abstract class Node {
 	}
 	
 	
-	
-	private static Node createNode(String[] nodeDesc) {
-		Node node = null;
-		if( "NamedNode".equals(nodeDesc[1]))
-			node = new NamedNode(nodeDesc[2]);
-		else if ( "Promotion".equals(nodeDesc[1]))
-			node = new PromotionNode(nodeDesc[2], nodeDesc[3]);
-		else if( "Username".equals(nodeDesc[1]))
-			node = new InputNode(nodeDesc[2], nodeDesc[3]);
-		else if( "Password".equals(nodeDesc[1]))
-			node = new PasswordNode(nodeDesc[2], nodeDesc[3]);
-		else if( "Login".equals(nodeDesc[1]))
-			node = new LoginNode(nodeDesc[2], nodeDesc[3]);
-		else if( "Logout".equals(nodeDesc[1]))
-			node = new LogoutNode();
-		else if( "Exit".equals(nodeDesc[1]))
-			node = new ExitNode();
-		else if( "SecurityCheck".equals(nodeDesc[1]))
-			node = new SecurityCheckNode();
-		else if( "InjectToken".equals(nodeDesc[1]))
-			node = new InjectTokenNode(nodeDesc[2]);
-		else
-			node = new PromotionNode(nodeDesc[2], nodeDesc[3]);
-		return node;
-	}
-	
-	public static Node loadNodes(String[][] datas) {
 
-		class NodeDegree {
-			int degree;
-			Node node;
-			public NodeDegree(int degree, Node node) {
-				this.degree = degree;
-				this.node = node;
-			}
-		}
-		
-		Vector<NodeDegree> s = new Vector<NodeDegree>();
-		NodeDegree dn = new NodeDegree(Integer.parseInt(datas[0][0]), createNode(datas[0]));
-		if( dn.degree <= 0 ) {
-			GWT.log("root node degree error");
-			return null;
-		}
-		s.add(dn);
-		NodeDegree top = dn;
-		
-		int loop = 1;
-		while( loop < datas.length )
-		{
-//			GWT.log("Load node: "+ datas[loop][1] +" " + datas[loop][2]);
-			dn = new NodeDegree(Integer.parseInt(datas[loop][0]), createNode(datas[loop]));
-			if( s.size() > 0  ) {
-				NodeDegree topdn = s.elementAt(0);
-				topdn.node.addChildrenNode(dn.node);
-				topdn.degree--;
-				if( topdn.degree <= 0 )
-					s.remove(0);
-			}
-			else
-				GWT.log("load notes error.");
-			
-			if( dn.degree > 0 )
-				s.add(dn);
-			loop++;
-		}
-		
-		return top.node;
-	}
-	
 	
 }

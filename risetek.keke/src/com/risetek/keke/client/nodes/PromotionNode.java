@@ -1,7 +1,9 @@
 package com.risetek.keke.client.nodes;
 
+import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.client.ui.Composite;
 import com.risetek.keke.client.nodes.ui.PromotionComposite;
+import com.risetek.keke.client.sticklet.ASticklet;
 
 
 /*
@@ -13,6 +15,12 @@ public class PromotionNode extends Node {
 		super("Promotion", promotion, imgName);
 	}
 
+	// DEBUG only
+	public int enter(ASticklet sticklet) {
+		GWT.log("Enter: Promotion");
+		return super.enter(sticklet);
+	}	
+	
 	public Composite getComposite() {
 		if( composite == null )
 			composite = new PromotionComposite(this);

@@ -131,7 +131,8 @@ public abstract class ASticklet {
 			if( currentNode.finished() == 0 )
 			{
 				// 离开当前节点，进入下一个节点，这说明本步骤得到认可，需要获取该阶段的运行结果。
-				if( currentNode.action(this) == Node.NODE_EXIT )
+				int result = currentNode.action(this);
+				if( result == Node.NODE_EXIT )
 					return STICKLET_EXIT;
 
 				if( getChildrenNode(currentNode) != null ) {
@@ -146,6 +147,10 @@ public abstract class ASticklet {
 				// 当前节点的children节点没有了，我们得查询其是否被调用CallerNode的sticklet环境。
 				else
 				{
+					// 对于Caller来说，这个条件成立！
+					if( calledSticklet != null )
+						break;
+					
 					if( callerSticklet != null ) {
 						callerSticklet.calledSticklet = null;
 						return callerSticklet.control(STICKLET_ENGAGE);

@@ -5,6 +5,8 @@ import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Composite;
 import com.risetek.keke.client.nodes.ui.PromotionComposite;
 import com.risetek.keke.client.sticklet.ASticklet;
+import com.risetek.keke.client.sticklet.Sticklet;
+import com.risetek.keke.client.sticklet.Sticklets;
 
 
 /*
@@ -15,14 +17,8 @@ public class LoginNode extends VNode {
 
 	int state = -1;
 	
-	public LoginNode(String promotion, String imgName) {
-		super("Input", promotion, imgName);
-	}
-
-	public Composite getComposite() {
-		if( composite == null )
-			composite = new PromotionComposite(this);;
-		return composite;
+	public LoginNode(String promotion) {
+		super("Login", promotion);
 	}
 
 	public int leave(ASticklet widget) {
@@ -31,21 +27,6 @@ public class LoginNode extends VNode {
 		return 0;
 	}
 
-	public void addFailedNode() {
-		Node node = new PromotionNode("服务失败", "p2");
-		node = addChildrenNode(node);
-		node.addChildrenNode(new ExitNode());
-	}
-
-	public void addSucessedNode(Node result) {
-		/*
-		Node node = new PromotionNode("登录成功:"+result, "p3");
-		node = addChildrenNode(node);
-		node.addChildrenNode(new ExitNode());
-		*/
-		this.addChildrenNode(result);
-	}
-	
 	/*
 	 * (non-Javadoc)
 	 * @see com.risetek.keke.client.nodes.Node#enter(com.risetek.keke.client.data.AWidget)
@@ -53,8 +34,9 @@ public class LoginNode extends VNode {
 	 */
 	
 	public int enter(final ASticklet widget) {
-		
+		// 我们应该终止对rollback控制的响应。
 		super.enter(widget);
+
 		// 开始登录过程
 		// 1、发送登录信息，钩挂回调函数和超时定时器。
 		String password = widget.ParamStack.pop();
@@ -66,24 +48,30 @@ public class LoginNode extends VNode {
 			@Override
 			public void onFailure(Throwable caught) {
 				GWT.log("login failed");
-				addFailedNode();
-				widget.control(ASticklet.STICKLET_ENGAGE);
+				Sticklet s = Sticklets.loadSticklet("epay.local.services.failed");
+				widget.Call(s);
 			}
 
 			@Override
 			public void onSuccess(String result[][]) {
 				GWT.log("login sucessed!");
 				state = 0;
-				Node following = Node.loadNodes(result);
-				addSucessedNode(following);
-//				addSucessedNode(result[1][2]);
-				
-				widget.control(ASticklet.STICKLET_ENGAGE);
+				Sticklet s = Sticklets.loadSticklet(result);
+				widget.Call(s);
 			}} );
+
 		return 0;
 	}
 
 	public int finished() {
 		return state;
 	}
+	
+	public int action(final ASticklet widget) {
+		GWT.log("Login action");
+		return 0;
+	}
+	
+	
+	
 }
