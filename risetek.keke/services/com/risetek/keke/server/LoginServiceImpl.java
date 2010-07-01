@@ -10,7 +10,7 @@ public class LoginServiceImpl extends RemoteServiceServlet implements
 	String[][] login_sucessed = {
 			{"1", "NamedNode", "Login Sucessed", ""},
 			{"1", "InjectToken", "Login Sucessed", ""},
-			{"0", "Promotion", "登录成功", "p4"},
+			{"0", "Promotion", "ePay欢迎您", "p4"},
 	};
 
 	String[][] login_faild_invalid_username = {
@@ -18,7 +18,7 @@ public class LoginServiceImpl extends RemoteServiceServlet implements
 			{"2", "Promotion", "用户不存在", "p2"},
 			{"0", "Promotion", "重新登录", "p3"},
 			{"1", "Promotion", "取消登录", "p4"},
-			{"1", "Exit"},
+			{"0", "Exit"},
 	};
 	
 	String[][] login_faild_invalid_password = {
