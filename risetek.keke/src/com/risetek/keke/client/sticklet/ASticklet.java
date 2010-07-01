@@ -153,7 +153,9 @@ public abstract class ASticklet {
 				{
 					if( callerSticklet != null ) {
 						callerSticklet.calledSticklet = null;
-						return callerSticklet.control(STICKLET_ENGAGE);
+						int code = callerSticklet.control(STICKLET_ENGAGE);
+						ClientEventBus.INSTANCE.fireEvent(new ClientEventBus.ViewChangedEvent());
+						return code;
 					}
 					// 当前节点的children节点没有了，我们得查询
 					// 还是直接返回？
