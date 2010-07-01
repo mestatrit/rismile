@@ -30,7 +30,6 @@ public class Sticklets {
 			{ "0", "Exit", "Goodbye ePay", "p3" },
 			{ "0", "Caller", "epay.local.system.login", "p2" }, };
 
-/*	
 	private final static String[][] demo = {
 			{ "1", "NamedNode", "epay.local.demo" },
 			{ "3", "SecurityCheck" },
@@ -38,13 +37,6 @@ public class Sticklets {
 			{ "0", "Promotion", "观念决定出路", "p2" },
 			{ "1", "Logout", "退出登录", "p5" },
 			{ "0", "Caller", "epay.local.demo", "p5" }, };
-*/
-	private final static String[][] demo = {
-		{ "1", "NamedNode", "epay.local.demo" },
-		{ "3", "SecurityCheck" },
-		{ "0", "Promotion", "服务创造价值", "p4" },
-		{ "0", "Promotion", "观念决定出路", "p2" },
-		{ "0", "Logout", "退出登录", "p5" },};
 	
 	private final static String[][] gameover = {
 			{ "4", "NamedNode", "epay.local.gameover" },
@@ -95,17 +87,20 @@ public class Sticklets {
 	}
 
 	public static Sticklet loadSticklet(String name) {
-		Sticklet i = INSTANCE.stickletInstances.get(name);
+		Sticklet i;
+		/*
+		i = INSTANCE.stickletInstances.get(name);
 		if (i != null)
 			return i;
-
+		*/
+		
 		String[][] src = INSTANCE.stickletSources.get(name);
 		if (src == null) {
 			src = INSTANCE.stickletSources.get("epay.local.system.nosrc");
 			return new Sticklet(loadNodes(src));
 		}
 		i = new Sticklet(loadNodes(src));
-		INSTANCE.stickletInstances.put(name, i);
+		//INSTANCE.stickletInstances.put(name, i);
 		return i;
 	}
 

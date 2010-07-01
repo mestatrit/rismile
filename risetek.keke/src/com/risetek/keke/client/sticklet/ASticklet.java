@@ -6,6 +6,10 @@ import com.risetek.keke.client.context.ClientEventBus;
 import com.risetek.keke.client.nodes.Node;
 
 public abstract class ASticklet {
+	String aStickletName = null;
+	public ASticklet(String name) {
+		aStickletName = name;
+	}
 	
 	public static final int STICKLET_OK	= 0;
 	public static final int STICKLET_EXIT = -1;
@@ -54,7 +58,7 @@ public abstract class ASticklet {
 	public void Execute() {
 		HistoryNodesStack.push(rootNode);
 		rootNode.enter(this);
-		ClientEventBus.INSTANCE.fireEvent(new ClientEventBus.ViewChangedEvent());
+		//ClientEventBus.INSTANCE.fireEvent(new ClientEventBus.ViewChangedEvent());
 	}
 	
 	public void press(int keyCode) {
@@ -147,10 +151,6 @@ public abstract class ASticklet {
 				// 当前节点的children节点没有了，我们得查询其是否被调用CallerNode的sticklet环境。
 				else
 				{
-					// 对于Caller来说，这个条件成立！
-					if( calledSticklet != null )
-						break;
-					
 					if( callerSticklet != null ) {
 						callerSticklet.calledSticklet = null;
 						return callerSticklet.control(STICKLET_ENGAGE);

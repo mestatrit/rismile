@@ -13,7 +13,7 @@ import com.google.gwt.core.client.GWT;
 public class NamedNode extends VNode {
 
 	public NamedNode(String name) {
-		super("Named", "");
+		super("Named", name);
 		GWT.log("Create named Node: "+name);
 	}
 

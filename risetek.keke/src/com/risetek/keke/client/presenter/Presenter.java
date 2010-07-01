@@ -12,9 +12,9 @@ public class Presenter {
 		this.view = view;
 	}
 
-	public void upDate(ASticklet widget ) {
-		Node head = widget.HistoryNodesStack.pop();
-		widget.HistoryNodesStack.push(head);
+	public void upDate(ASticklet sticklet ) {
+		Node head = sticklet.HistoryNodesStack.pop();
+		sticklet.HistoryNodesStack.push(head);
 /*
 		Node p = head.children;
 		int index = 0;
@@ -25,6 +25,6 @@ public class Presenter {
 		}
 */
 //		view.renderKekes( head.children , widget.current);
-		view.renderKekes( widget.getChildrenNode(head) , widget.getCurrentNode());
+		view.renderKekes( sticklet.getChildrenNode(head) , sticklet.getCurrentNode());
 	}
 }

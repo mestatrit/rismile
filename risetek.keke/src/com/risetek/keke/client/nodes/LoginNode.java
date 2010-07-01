@@ -13,7 +13,7 @@ import com.risetek.keke.client.sticklet.Sticklets;
  * 登录节点
  * 这应该是一个虚节点，不接受用户的输入。
  */
-public class LoginNode extends VNode {
+public class LoginNode extends Node {
 
 	int state = -1;
 	
@@ -37,6 +37,8 @@ public class LoginNode extends VNode {
 		// 我们应该终止对rollback控制的响应。
 		super.enter(widget);
 
+		if( state == -1 ) {
+		
 		// 开始登录过程
 		// 1、发送登录信息，钩挂回调函数和超时定时器。
 		String password = widget.ParamStack.pop();
@@ -59,7 +61,9 @@ public class LoginNode extends VNode {
 				Sticklet s = Sticklets.loadSticklet(result);
 				widget.Call(s);
 			}} );
-
+		}
+		else
+			widget.control(ASticklet.STICKLET_ENGAGE);
 		return 0;
 	}
 
@@ -71,7 +75,12 @@ public class LoginNode extends VNode {
 		GWT.log("Login action");
 		return 0;
 	}
-	
-	
+
+	@Override
+	public Composite getComposite() {
+		if( composite == null )
+			composite = new PromotionComposite(this);
+		return composite;
+	}
 	
 }
