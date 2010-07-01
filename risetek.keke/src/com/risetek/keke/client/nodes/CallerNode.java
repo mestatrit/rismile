@@ -13,7 +13,7 @@ public class CallerNode extends Node {
 	String calledSticklet = null;
 	
 	public CallerNode(String calledSticklet) {
-		super("Caller", "系统调用");
+		super("Caller", "系统调用:"+calledSticklet);
 		this.calledSticklet = calledSticklet;
 	}
 	
