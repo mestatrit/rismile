@@ -13,9 +13,8 @@ import com.risetek.keke.client.context.ClientEventBus.ViewChangedEvent;
 import com.risetek.keke.client.context.ClientEventBus.ViewChangedHandler;
 import com.risetek.keke.client.presenter.Presenter;
 import com.risetek.keke.client.sticklet.ASticklet;
-import com.risetek.keke.client.sticklet.DemoSticklet;
+import com.risetek.keke.client.sticklet.Sticklets;
 import com.risetek.keke.client.ui.KekesComposite;
-
 
 public class PosContext {
 
@@ -38,7 +37,7 @@ public class PosContext {
     ASticklet getSticklet() {
     	return runningSticklet.getActiveSticklet();
     }
-    
+
     Stack<ASticklet> executeWidget = new Stack<ASticklet>();
     
     public PosContext(KekesComposite view) {
@@ -48,7 +47,7 @@ public class PosContext {
         ClientEventBus.INSTANCE.addHandler(controlCodehandler, HIDControlEvent.TYPE);
 
         presenter = new Presenter(view);
-        executeWidget.push(new DemoSticklet());
+        executeWidget.push(Sticklets.loadSticklet("epay.local.demo"));
         Executer();
     }
 
@@ -61,7 +60,7 @@ public class PosContext {
     	else
     	{
     		GWT.log("D3View GAMEOVER");
-            executeWidget.push(new DemoSticklet());
+            executeWidget.push(Sticklets.loadSticklet("epay.local.gameover"));
             Executer();
     	}
     }
@@ -82,8 +81,7 @@ public class PosContext {
 		public void onEvent(HIDCARDEvent event) {
 		}
 	};
-	
-	
+
 	ViewChangedHandler viewchangedhandler = new ViewChangedHandler() {
 
 		@Override
