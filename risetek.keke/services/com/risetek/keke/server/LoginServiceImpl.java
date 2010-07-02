@@ -10,20 +10,20 @@ public class LoginServiceImpl extends RemoteServiceServlet implements
 	String[][] login_sucessed = {
 			{"1", "NamedNode", "Login Sucessed", ""},
 			{"1", "InjectToken", "Login Sucessed", ""},
-			{"0", "Promotion", "ePay欢迎您", "p4"},
+			{"0", "Promotion", "ePay欢迎您", "20090218213217243"},
 	};
 
 	String[][] login_faild_invalid_username = {
 			{"1", "NamedNode", "Login Failed invalid username", ""},
-			{"2", "Promotion", "用户不存在", "p2"},
-			{"0", "Promotion", "重新登录", "p3"},
-			{"1", "Promotion", "取消登录", "p4"},
+			{"2", "Promotion", "用户不存在", "20090218213215625"},
+			{"0", "Promotion", "重新登录", "20090218213218178"},
+			{"1", "Promotion", "取消登录", "20090218213227180"},
 			{"0", "Exit"},
 	};
 	
 	String[][] login_faild_invalid_password = {
 			{"1", "NamedNode", "Login Failed invalid password", ""},
-			{"0", "Promotion", "口令错误", "p3"},
+			{"0", "Promotion", "口令错误", "Error"},
 	};
 	
 	@Override
