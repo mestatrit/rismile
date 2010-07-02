@@ -22,11 +22,16 @@ public abstract class VNode extends Node {
 	 * 作为一个虚节点，我们跳过这一步，进入下一步。
 	 */
 
-	public int enter(ASticklet widget) {
-		super.enter(widget);
+	public int enter(ASticklet sticklet) {
+		super.enter(sticklet);
 		//作为一个虚节点，我们跳过这一步，进入下一步。
-		widget.control(ASticklet.STICKLET_ENGAGE);
-		return 0;
+		return sticklet.control(ASticklet.STICKLET_ENGAGE);
+	}
+	
+	public int rollback(ASticklet sticklet) {
+		super.rollback(sticklet);
+		//作为一个虚节点，我们不能停留在这个节点，必须再进步。
+		return sticklet.control(ASticklet.STICKLET_ENGAGE);
 	}
 	
 	// 我们假定虚拟节点还是有绘制能力，这也许能过渡一下。

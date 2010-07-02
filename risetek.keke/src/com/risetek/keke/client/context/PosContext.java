@@ -20,6 +20,9 @@ import com.risetek.keke.client.ui.KekesComposite;
 
 public class PosContext {
 
+	// TODO: 
+	// 我们应该用 key value pair 来维系系统级别的信息。
+	
 	// 运行密钥。
 	public static String Token = null;
 	
@@ -32,6 +35,12 @@ public class PosContext {
 		String name = node.getClass().getName();
 		name = name.substring(30);
 		D3View.logger.logger.addItem("->"+name+ " "+node.Promotion);
+	}
+
+	public static void LogRollback(Node node) {
+		String name = node.getClass().getName();
+		name = name.substring(30);
+		D3View.logger.logger.addItem("<-- "+name+ " "+node.Promotion);
 	}
 	
 	public static void LogAction(Node node) {

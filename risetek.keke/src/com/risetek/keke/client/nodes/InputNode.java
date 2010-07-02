@@ -1,7 +1,6 @@
 package com.risetek.keke.client.nodes;
 
 import com.google.gwt.user.client.ui.Composite;
-import com.risetek.keke.client.context.PosContext;
 import com.risetek.keke.client.nodes.ui.InputComposite;
 import com.risetek.keke.client.sticklet.ASticklet;
 
@@ -43,9 +42,16 @@ public class InputNode extends Node {
 		return 0;
 	}
 
-	public int action(ASticklet widget) {
-		PosContext.LogAction(this);
-		widget.ParamStack.push(input);
-		return 0;
+	public int action(ASticklet sticklet) {
+		// 压入输入数据。
+		sticklet.ParamStack.push(input);
+		return super.action(sticklet);
 	}
+	
+	public int rollback(ASticklet sticklet) {
+		// 取消原来那个输入数据。
+		sticklet.ParamStack.pop();
+		return super.rollback(sticklet);
+	}
+	
 }

@@ -11,10 +11,8 @@ public class InjectTokenNode extends VNode {
 	}
 
 	public int enter(ASticklet widget) {
-		PosContext.LogEnter(this);
 		PosContext.Token = token;
-		super.enter(widget);
-		return 0;
+		return super.enter(widget);
 	}
 
 }

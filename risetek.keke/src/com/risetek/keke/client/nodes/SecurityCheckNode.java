@@ -21,41 +21,19 @@ public class SecurityCheckNode extends VNode {
 		else
 			return true;
 	}
-/*	
+
 	public int enter(ASticklet sticklet) {
-		GWT.log("Enter SecurityCheckNode");
-		// 陷入被调用环境中去。
-		if( isSecurity() ) {
-			// TODO: 需节点无法停留在当前节点，咋办呢？
-			super.enter(sticklet);
-		}
-		else
-		{
-			ASticklet login = Sticklets.loadSticklet("epay.local.login");
-			sticklet.Call(login);
-		}
-		return 0;
-	}
-	
-	// 我们离开这个节点进入下一步的时候，执行该动作。
-	public int action(ASticklet sticklet) {
-		return 0;
-	}
-*/
-	public int enter(ASticklet sticklet) {
-		super.enter(sticklet);
-		return 0;
-	}
-	
-	// 我们离开这个节点进入下一步的时候，执行该动作。
-	public int action(ASticklet sticklet) {
 		// 陷入被调用环境中去。
 		if( !isSecurity() ) {
 			ASticklet login = Sticklets.loadSticklet("epay.local.login");
-			sticklet.Call(login);
+			return sticklet.Call(login);
 		}
-		super.action(sticklet);
-		return 0;
+		return super.enter(sticklet);
+	}
+	
+	// 我们离开这个节点进入下一步的时候，执行该动作。
+	public int action(ASticklet sticklet) {
+		return super.action(sticklet);
 	}
 	
 }

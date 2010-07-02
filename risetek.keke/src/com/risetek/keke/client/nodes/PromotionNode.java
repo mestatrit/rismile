@@ -1,7 +1,6 @@
 package com.risetek.keke.client.nodes;
 
 import com.google.gwt.user.client.ui.Composite;
-import com.risetek.keke.client.context.PosContext;
 import com.risetek.keke.client.nodes.ui.PromotionComposite;
 import com.risetek.keke.client.sticklet.ASticklet;
 
@@ -19,6 +18,11 @@ public class PromotionNode extends Node {
 	public int enter(ASticklet sticklet) {
 		return super.enter(sticklet);
 	}	
+	
+	// 我们离开这个节点进入下一步的时候，执行该动作。
+	public int action(ASticklet widget) {
+		return super.action(widget);
+	}
 	
 	public Composite getComposite() {
 		if( composite == null )

@@ -42,10 +42,16 @@ public class PasswordNode extends Node {
 		return 0;
 	}
 	
-	public int action(ASticklet widget) {
-		widget.ParamStack.push(password);
-		super.action(widget);
-		return 0;
+	public int action(ASticklet sticklet) {
+		// 压入密码数据。
+		sticklet.ParamStack.push(password);
+		return super.action(sticklet);
+	}
+	
+	public int rollback(ASticklet sticklet) {
+		// 取消原来那个密码数据。
+		sticklet.ParamStack.pop();
+		return super.rollback(sticklet);
 	}
 	
 }

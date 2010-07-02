@@ -65,13 +65,15 @@ public abstract class Node {
 	public int enter(ASticklet sticklet) {
 		PosContext.LogEnter(this);
 		
-		if( sticklet.getCurrentNode() != null )
-			sticklet.getCurrentNode().leave(sticklet);
+		Node last = sticklet.getCurrentNode();
+		if( last != null ){
+			last.leave(sticklet);
+		}
 		sticklet.setCurrentNode(this);
 		
 		if( getComposite() != null )
 			ClientEventBus.INSTANCE.fireEvent(new ClientEventBus.ViewChangedEvent());
-		return 0;
+		return NODE_STAY;
 	}
 	
 	public int leave(ASticklet widget) {
@@ -88,15 +90,23 @@ public abstract class Node {
 		
 	}
 	
-	public int finished() {
-		return 0;
-	}
 	// 是否能记录历史：
 	public boolean rollbackable() {
 		return true;
 	}
 	
-	
+	public int rollback(ASticklet sticklet) {
+		PosContext.LogRollback(this);
+		Node last = sticklet.getCurrentNode();
+		if( last != null ){
+			last.leave(sticklet);
+		}
+		sticklet.setCurrentNode(this);
+		
+		if( getComposite() != null )
+			ClientEventBus.INSTANCE.fireEvent(new ClientEventBus.ViewChangedEvent());
+		return NODE_STAY;
+	}
 
 	
 }

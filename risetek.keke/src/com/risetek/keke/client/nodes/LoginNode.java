@@ -34,38 +34,40 @@ public class LoginNode extends Node {
 	 * 虚拟节点，这个步骤是一个过程，不会停留。
 	 */
 	
-	public int enter(final ASticklet widget) {
-		PosContext.LogEnter(this);
+	public int enter(final ASticklet sticklet) {
 		// 我们应该终止对rollback控制的响应。
-		super.enter(widget);
-
+		sticklet.control_mask_key();
 		if( state == -1 ) {
+			super.enter(sticklet);
 		
-		// 开始登录过程
-		// 1、发送登录信息，钩挂回调函数和超时定时器。
-		String password = widget.ParamStack.pop();
-		String username = widget.ParamStack.pop();
+			// 开始登录过程
+			// 1、发送登录信息，钩挂回调函数和超时定时器。
+			String password = sticklet.ParamStack.pop();
+			String username = sticklet.ParamStack.pop();
 		
-		ILoginServiceAsync loginService = GWT.create(ILoginService.class);
-		loginService.loginServer(username, password, new AsyncCallback<String[][]>(){
+			ILoginServiceAsync loginService = GWT.create(ILoginService.class);
 
-			@Override
-			public void onFailure(Throwable caught) {
-				PosContext.Log("login failed");
-				Sticklet s = Sticklets.loadSticklet("epay.local.services.failed");
-				widget.Call(s);
+			loginService.loginServer(username, password, new AsyncCallback<String[][]>(){
+
+				@Override
+				public void onFailure(Throwable caught) {
+					sticklet.control_unmask_key();
+					PosContext.Log("login failed");
+					Sticklet s = Sticklets.loadSticklet("epay.local.services.failed");
+					sticklet.Call(s);
+				}
+	
+				@Override
+				public void onSuccess(String result[][]) {
+					sticklet.control_unmask_key();
+					PosContext.Log("login sucessed!");
+					state = 0;
+					Sticklet s = Sticklets.loadSticklet(result);
+					sticklet.Call(s);
+				}} );
 			}
-
-			@Override
-			public void onSuccess(String result[][]) {
-				PosContext.Log("login sucessed!");
-				state = 0;
-				Sticklet s = Sticklets.loadSticklet(result);
-				widget.Call(s);
-			}} );
-		}
-		else
-			widget.control(ASticklet.STICKLET_ENGAGE);
+			else
+				sticklet.control(ASticklet.STICKLET_ENGAGE);
 		return 0;
 	}
 
@@ -74,8 +76,7 @@ public class LoginNode extends Node {
 	}
 	
 	public int action(final ASticklet widget) {
-		PosContext.LogAction(this);
-		return 0;
+		return super.action(widget);
 	}
 
 	@Override
