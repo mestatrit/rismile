@@ -71,10 +71,6 @@ public class LoginNode extends Node {
 		return 0;
 	}
 
-	public int finished() {
-		return state;
-	}
-	
 	public int action(final ASticklet widget) {
 		return super.action(widget);
 	}
