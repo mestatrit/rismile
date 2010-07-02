@@ -90,11 +90,6 @@ public abstract class Node {
 		
 	}
 	
-	// 是否能记录历史：
-	public boolean rollbackable() {
-		return true;
-	}
-	
 	public int rollback(ASticklet sticklet) {
 		PosContext.LogRollback(this);
 		Node last = sticklet.getCurrentNode();
