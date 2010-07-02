@@ -23,9 +23,9 @@ public class Sticklets {
 
 	final static String[][] login = {
 			{ "5", "NamedNode", "epay.local.login" },
-			{ "1", "Promotion", "登录ePay", "p3" },
-			{ "0", "Promotion", "送时间", "p4" },
-			{ "0", "Promotion", "送生活", "p2" },
+			{ "1", "Promotion", "登录ePay", "20090218213158800" },
+			{ "0", "Promotion", "送时间", "20090218213158872" },
+			{ "0", "Promotion", "送生活", "20090218213158904" },
 			{ "0", "Promotion", "送安全", "p5" },
 			{ "0", "Exit", "Goodbye ePay", "p3" },
 			{ "0", "Caller", "epay.local.system.login", "p2" }, };
@@ -33,9 +33,9 @@ public class Sticklets {
 	private final static String[][] demo = {
 			{ "1", "NamedNode", "epay.local.demo" },
 			{ "3", "SecurityCheck" },
-			{ "0", "Promotion", "服务创造价值", "p4" },
-			{ "0", "Promotion", "观念决定出路", "p2" },
-			{ "1", "Logout", "退出登录", "p5" },
+			{ "0", "Promotion", "服务创造价值", "20090218213158120" },
+			{ "0", "Promotion", "观念决定出路", "20090218213158200" },
+			{ "1", "Logout", "退出登录", "20090218213158214" },
 			{ "0", "Caller", "epay.local.demo", "p5" }, };
 	
 	private final static String[][] gameover = {
