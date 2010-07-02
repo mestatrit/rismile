@@ -11,6 +11,7 @@ public class D3View {
 	interface localUiBinder extends UiBinder<Widget, D3View> {}
 	private static localUiBinder uiBinder = GWT.create(localUiBinder.class);
 	public @UiField KekesComposite kekeComposite;
+	public static @UiField LoggerComposite logger;
 
 	public D3View() {
 		Window.enableScrolling(false);

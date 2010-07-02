@@ -1,6 +1,5 @@
 package com.risetek.keke.client.context;
 
-import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.KeyCodes;
 import com.google.gwt.event.shared.EventHandler;
 import com.google.gwt.event.shared.GwtEvent;
@@ -65,9 +64,10 @@ public class ClientEventBus {
 					break;
 					
 				case 18:	// "ALT"
+				case 144:	// "Num Lock"
 					break;
 				default:
-					GWT.log("Press: " + keyCode);
+					PosContext.Log("Press: " + keyCode);
 					break;
 				}
 			}

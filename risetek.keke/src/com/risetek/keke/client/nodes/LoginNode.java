@@ -3,6 +3,7 @@ package com.risetek.keke.client.nodes;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Composite;
+import com.risetek.keke.client.context.PosContext;
 import com.risetek.keke.client.nodes.ui.PromotionComposite;
 import com.risetek.keke.client.sticklet.ASticklet;
 import com.risetek.keke.client.sticklet.Sticklet;
@@ -49,14 +50,14 @@ public class LoginNode extends Node {
 
 			@Override
 			public void onFailure(Throwable caught) {
-				GWT.log("login failed");
+				PosContext.Log("login failed");
 				Sticklet s = Sticklets.loadSticklet("epay.local.services.failed");
 				widget.Call(s);
 			}
 
 			@Override
 			public void onSuccess(String result[][]) {
-				GWT.log("login sucessed!");
+				PosContext.Log("login sucessed!");
 				state = 0;
 				Sticklet s = Sticklets.loadSticklet(result);
 				widget.Call(s);
@@ -72,7 +73,7 @@ public class LoginNode extends Node {
 	}
 	
 	public int action(final ASticklet widget) {
-		GWT.log("Login action");
+		PosContext.Log("Login action");
 		return 0;
 	}
 

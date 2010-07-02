@@ -1,6 +1,6 @@
 package com.risetek.keke.client.nodes;
 
-import com.google.gwt.core.client.GWT;
+import com.risetek.keke.client.context.PosContext;
 
 
 /*
@@ -14,7 +14,7 @@ public class NamedNode extends VNode {
 
 	public NamedNode(String name) {
 		super("Named", name);
-		GWT.log("Create named Node: "+name);
+		PosContext.Log("Create named Node: "+name);
 	}
 
 }

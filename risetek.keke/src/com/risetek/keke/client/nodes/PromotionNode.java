@@ -1,7 +1,7 @@
 package com.risetek.keke.client.nodes;
 
-import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.client.ui.Composite;
+import com.risetek.keke.client.context.PosContext;
 import com.risetek.keke.client.nodes.ui.PromotionComposite;
 import com.risetek.keke.client.sticklet.ASticklet;
 
@@ -17,7 +17,7 @@ public class PromotionNode extends Node {
 
 	// DEBUG only
 	public int enter(ASticklet sticklet) {
-		GWT.log("Enter: Promotion");
+		PosContext.Log("Enter: Promotion");
 		return super.enter(sticklet);
 	}	
 	

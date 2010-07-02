@@ -1,6 +1,5 @@
 package com.risetek.keke.client.nodes;
 
-import com.google.gwt.core.client.GWT;
 import com.risetek.keke.client.context.PosContext;
 import com.risetek.keke.client.sticklet.ASticklet;
 import com.risetek.keke.client.sticklet.Sticklets;
@@ -44,7 +43,7 @@ public class SecurityCheckNode extends VNode {
 	}
 */
 	public int enter(ASticklet sticklet) {
-		GWT.log("Enter SecurityCheckNode");
+		PosContext.Log("Enter SecurityCheckNode");
 		super.enter(sticklet);
 		return 0;
 	}

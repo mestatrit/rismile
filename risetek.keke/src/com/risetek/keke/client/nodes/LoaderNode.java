@@ -1,7 +1,7 @@
 package com.risetek.keke.client.nodes;
 
-import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.client.ui.Composite;
+import com.risetek.keke.client.context.PosContext;
 import com.risetek.keke.client.sticklet.ASticklet;
 
 public class LoaderNode extends VNode {
@@ -15,7 +15,7 @@ public class LoaderNode extends VNode {
 
 	@Override
 	public Composite getComposite() {
-		GWT.log("Fatal: Named Node do not have composite");
+		PosContext.Log("Fatal: Named Node do not have composite");
 		return null;
 	}
 

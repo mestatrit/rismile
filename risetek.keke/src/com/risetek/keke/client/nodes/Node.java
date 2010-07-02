@@ -1,8 +1,5 @@
 package com.risetek.keke.client.nodes;
 
-import java.util.HashMap;
-
-import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.client.ui.Composite;
 import com.risetek.keke.client.context.ClientEventBus;
 import com.risetek.keke.client.sticklet.ASticklet;

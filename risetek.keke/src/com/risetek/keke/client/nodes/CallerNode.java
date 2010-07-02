@@ -1,6 +1,5 @@
 package com.risetek.keke.client.nodes;
 
-import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.client.ui.Composite;
 import com.risetek.keke.client.context.PosContext;
 import com.risetek.keke.client.nodes.ui.PromotionComposite;
@@ -18,12 +17,12 @@ public class CallerNode extends Node {
 	}
 	
 	public int enter(ASticklet sticklet) {
-		GWT.log("CallerNode");
+		PosContext.Log("CallerNode");
 		if( sticklet.calledSticklet == null )
 		{
 			super.enter(sticklet);
 			// 陷入被调用环境中去。
-			GWT.log("Call: "+calledSticklet);
+			PosContext.Log("Call: "+calledSticklet);
 			ASticklet called = Sticklets.loadSticklet(calledSticklet);
 			sticklet.Call(called);
 		}

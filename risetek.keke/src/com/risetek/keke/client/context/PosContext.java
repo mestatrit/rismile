@@ -14,6 +14,7 @@ import com.risetek.keke.client.context.ClientEventBus.ViewChangedHandler;
 import com.risetek.keke.client.presenter.Presenter;
 import com.risetek.keke.client.sticklet.ASticklet;
 import com.risetek.keke.client.sticklet.Sticklets;
+import com.risetek.keke.client.ui.D3View;
 import com.risetek.keke.client.ui.KekesComposite;
 
 public class PosContext {
@@ -23,6 +24,7 @@ public class PosContext {
 	
 	public static void Log(String message) {
 		GWT.log(message);
+		D3View.logger.logger.addItem(message);
 	}
 
     /*
@@ -59,7 +61,7 @@ public class PosContext {
     	}
     	else
     	{
-    		GWT.log("D3View GAMEOVER");
+    		PosContext.Log("D3View GAMEOVER");
             executeWidget.push(Sticklets.loadSticklet("epay.local.gameover"));
             Executer();
     	}
@@ -122,7 +124,7 @@ public class PosContext {
 				break;
 				
 			default:
-				GWT.log("Control Code Overrun");
+				PosContext.Log("Control Code Overrun");
 				break;
 			}
 		}

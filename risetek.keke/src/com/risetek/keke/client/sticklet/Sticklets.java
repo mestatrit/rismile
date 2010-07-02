@@ -3,7 +3,7 @@ package com.risetek.keke.client.sticklet;
 import java.util.HashMap;
 import java.util.Vector;
 
-import com.google.gwt.core.client.GWT;
+import com.risetek.keke.client.context.PosContext;
 import com.risetek.keke.client.nodes.CallerNode;
 import com.risetek.keke.client.nodes.ExitNode;
 import com.risetek.keke.client.nodes.InjectTokenNode;
@@ -157,7 +157,7 @@ public class Sticklets {
 				createNode(datas[0]));
 		if (dn.degree <= 0) {
 			// 命名节点的度必须大于 0 。
-			GWT.log("root node degree error");
+			PosContext.Log("root node degree error");
 			return null;
 		}
 		fifoStack.add(dn);
@@ -174,7 +174,7 @@ public class Sticklets {
 				if (topdn.degree <= 0)
 					fifoStack.remove(0);
 			} else
-				GWT.log("load notes error.");
+				PosContext.Log("load notes error.");
 
 			if (dn.degree > 0)
 				fifoStack.add(dn);
@@ -183,7 +183,7 @@ public class Sticklets {
 
 		// 检查Sticklet是否规范
 		if (fifoStack.size() > 0)
-			GWT.log("Sticklet: " + datas[0][2] + " error!");
+			PosContext.Log("Sticklet: " + datas[0][2] + " error!");
 
 		return top.node;
 	}
