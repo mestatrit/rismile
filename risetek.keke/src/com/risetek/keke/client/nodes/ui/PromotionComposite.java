@@ -7,16 +7,12 @@ import com.risetek.keke.client.nodes.Node;
 
 public class PromotionComposite extends StickComposite {
 	
-	Label Type = new Label();
-	public Label brief = new Label();
 	DockPanel tipsPanel = new DockPanel();
-	
 	
 	public PromotionComposite(Node node) {
 		super(node);
-		
-		Type.setText(node.Ticker);
-		brief.setText(node.Promotion);
+		Label Type = new Label(node.Ticker);
+		Label brief = new Label(node.Promotion);
 
 		tipsPanel.setSize("100%", "100%");
 		tipsPanel.add(Type, DockPanel.NORTH);
