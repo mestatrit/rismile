@@ -51,7 +51,6 @@ public class ControlPanel extends Composite {
 	    up.addClickHandler(new ClickHandler(){
 			@Override
 			public void onClick(ClickEvent event) {
-//				ClientEventBus.INSTANCE.fireEvent(new ClientEventBus.HIDUPEvent());
 				ClientEventBus.INSTANCE.fireEvent(new ClientEventBus.HIDControlEvent(ClientEventBus.CONTROL_KEY_UP));
 			}
 	    });
@@ -59,7 +58,6 @@ public class ControlPanel extends Composite {
 	    down.addClickHandler(new ClickHandler(){
 			@Override
 			public void onClick(ClickEvent event) {
-//				ClientEventBus.INSTANCE.fireEvent(new ClientEventBus.HIDDOWNEvent());
 				ClientEventBus.INSTANCE.fireEvent(new ClientEventBus.HIDControlEvent(ClientEventBus.CONTROL_KEY_DOWN));
 			}
 	    });
@@ -67,7 +65,6 @@ public class ControlPanel extends Composite {
 	    left.addClickHandler(new ClickHandler(){
 			@Override
 			public void onClick(ClickEvent event) {
-//				ClientEventBus.INSTANCE.fireEvent(new ClientEventBus.HIDLEFTEvent());
 				ClientEventBus.INSTANCE.fireEvent(new ClientEventBus.HIDControlEvent(ClientEventBus.CONTROL_KEY_LEFT));
 			}
 	    });
@@ -75,7 +72,6 @@ public class ControlPanel extends Composite {
 	    right.addClickHandler(new ClickHandler(){
 			@Override
 			public void onClick(ClickEvent event) {
-//				ClientEventBus.INSTANCE.fireEvent(new ClientEventBus.HIDRIGHTEvent());
 				ClientEventBus.INSTANCE.fireEvent(new ClientEventBus.HIDControlEvent(ClientEventBus.CONTROL_KEY_RIGHT));
 			}
 	    });

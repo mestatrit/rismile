@@ -1,4 +1,4 @@
-package com.risetek.keke.client.context;
+package com.risetek.keke.client.ui;
 
 public interface UiKeke {
 	public static int maxKeke		= 5;
