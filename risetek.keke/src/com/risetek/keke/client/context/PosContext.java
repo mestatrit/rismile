@@ -142,8 +142,9 @@ public class PosContext {
 				break;
 			case ClientEventBus.CONTROL_KEY_RIGHT:
 				ASticklet sticklet = getSticklet(); 
-				if( sticklet.control(ASticklet.STICKLET_ENGAGE) == ASticklet.STICKLET_EXIT ) {
-					// 上一个widget执行完毕。
+				if( sticklet.control(ASticklet.STICKLET_ENGAGE) == Node.NODE_EXIT ) {
+					// 上一个sticklet执行完毕。
+					PosContext.Log("Run out of sticklet:"+sticklet.aStickletName);
 					Executer();
 				}
 				break;

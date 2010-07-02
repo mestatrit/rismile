@@ -7,13 +7,10 @@ import com.risetek.keke.client.context.PosContext;
 import com.risetek.keke.client.nodes.Node;
 
 public abstract class ASticklet {
-	String aStickletName = null;
+	public String aStickletName = null;
 	public ASticklet(String name) {
 		aStickletName = name;
 	}
-	
-	public static final int STICKLET_OK	= 0;
-	public static final int STICKLET_EXIT = -1;
 	
 	/*
 	 * 节点移动路径记录表
@@ -99,7 +96,7 @@ public abstract class ASticklet {
 	public int control(int controlCode) {
 		// 判断本操作是否被屏蔽。
 		if( (control_mask & ( 1 << controlCode )) != 0 )
-			return STICKLET_OK;
+			return Node.NODE_OK;
 		
 		switch( controlCode )
 		{
@@ -155,8 +152,6 @@ public abstract class ASticklet {
 						return STICKLET_EXIT;
 				}
 				*/
-				if( code == Node.NODE_EXIT )
-					return STICKLET_EXIT;
 				return code;
 			}
 			// 当前节点的children节点没有了，我们得查询其是否被调用CallerNode的sticklet环境。
@@ -175,7 +170,7 @@ public abstract class ASticklet {
 		default:
 			break;
 		}
-		return STICKLET_OK;
+		return Node.NODE_OK;
 	}
 	
 	/*
