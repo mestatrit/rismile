@@ -9,7 +9,7 @@ public class LoaderNode extends VNode {
 	String loadWidgetName;
 	
 	public LoaderNode(String newWidget) {
-		super("LoaderNode", "");
+		super("装载");
 		loadWidgetName = newWidget;
 	}
 
@@ -27,6 +27,8 @@ public class LoaderNode extends VNode {
 	 * 
 	 */
 	public int enter(ASticklet widget) {
+		PosContext.LogEnter(this);
+		
 		super.enter(widget);
 		
 		return 0;

@@ -1,6 +1,7 @@
 package com.risetek.keke.client.nodes;
 
 import com.google.gwt.user.client.ui.Composite;
+import com.risetek.keke.client.context.PosContext;
 import com.risetek.keke.client.nodes.ui.InputComposite;
 import com.risetek.keke.client.sticklet.ASticklet;
 
@@ -11,7 +12,7 @@ import com.risetek.keke.client.sticklet.ASticklet;
 public class InputNode extends Node {
 	String input = "";
 	public InputNode(String promotion, String imgName) {
-		super("Input", promotion, imgName);
+		super(promotion, imgName);
 	}
 
 	public Composite getComposite() {
@@ -19,7 +20,11 @@ public class InputNode extends Node {
 			composite = new InputComposite(this);;
 		return composite;
 	}
-
+	
+	public int enter(ASticklet sticklet) {
+		return super.enter(sticklet);
+	}
+	
 	public void press(int keyCode) {
 		InputComposite myComposite = (InputComposite)getComposite();
 
@@ -39,6 +44,7 @@ public class InputNode extends Node {
 	}
 
 	public int action(ASticklet widget) {
+		PosContext.LogAction(this);
 		widget.ParamStack.push(input);
 		return 0;
 	}

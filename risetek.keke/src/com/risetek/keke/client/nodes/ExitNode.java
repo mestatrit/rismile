@@ -1,13 +1,14 @@
 package com.risetek.keke.client.nodes;
 
 import com.google.gwt.user.client.ui.Composite;
+import com.risetek.keke.client.context.PosContext;
 import com.risetek.keke.client.nodes.ui.PromotionComposite;
 import com.risetek.keke.client.sticklet.ASticklet;
 
 public class ExitNode extends Node {
 
 	public ExitNode() {
-		super("ExitNode", "退出程序", "20090218213218568");
+		super("退出程序", "20090218213218568");
 	}
 
 	@Override
@@ -23,6 +24,7 @@ public class ExitNode extends Node {
 	}
 	
 	public int action(ASticklet widget) {
+		PosContext.LogAction(this);
 		return NODE_EXIT;
 	}
 }

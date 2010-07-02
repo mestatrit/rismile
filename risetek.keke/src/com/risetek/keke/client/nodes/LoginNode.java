@@ -19,7 +19,7 @@ public class LoginNode extends Node {
 	int state = -1;
 	
 	public LoginNode(String promotion) {
-		super("Login", promotion, "Login");
+		super(promotion, "Login");
 	}
 
 	public int leave(ASticklet widget) {
@@ -35,6 +35,7 @@ public class LoginNode extends Node {
 	 */
 	
 	public int enter(final ASticklet widget) {
+		PosContext.LogEnter(this);
 		// 我们应该终止对rollback控制的响应。
 		super.enter(widget);
 
@@ -73,7 +74,7 @@ public class LoginNode extends Node {
 	}
 	
 	public int action(final ASticklet widget) {
-		PosContext.Log("Login action");
+		PosContext.LogAction(this);
 		return 0;
 	}
 

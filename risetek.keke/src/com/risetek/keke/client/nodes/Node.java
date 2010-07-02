@@ -2,6 +2,7 @@ package com.risetek.keke.client.nodes;
 
 import com.google.gwt.user.client.ui.Composite;
 import com.risetek.keke.client.context.ClientEventBus;
+import com.risetek.keke.client.context.PosContext;
 import com.risetek.keke.client.sticklet.ASticklet;
 
 /*
@@ -10,7 +11,9 @@ import com.risetek.keke.client.sticklet.ASticklet;
 
 public abstract class Node {
 	
-	public final static int NODE_OK	= 0;
+	public final static int NODE_OK		= 0;
+	public final static int NODE_STAY	= 1;
+	public final static int NODE_CANCEL	= 2;
 	public final static int NODE_EXIT	= -1;
 	
 	private Node children;
@@ -27,14 +30,12 @@ public abstract class Node {
 	
 	public abstract Composite getComposite();
 
-	public Node(String ticker, String promotion) {
-		Ticker = ticker;
-		Promotion = promotion;
-		imgName = "p2";
+	public Node(String promotion) {
+		this(promotion,"20090218213218568");
 	}
 
-	public Node(String ticker, String promotion, String imgName) {
-		Ticker = ticker;
+	public Node(String promotion, String imgName) {
+		Ticker = getClass().getName().substring(30);
 		Promotion = promotion;
 		this.imgName = imgName;
 	}
@@ -62,6 +63,8 @@ public abstract class Node {
 	}
 
 	public int enter(ASticklet sticklet) {
+		PosContext.LogEnter(this);
+		
 		if( sticklet.getCurrentNode() != null )
 			sticklet.getCurrentNode().leave(sticklet);
 		sticklet.setCurrentNode(this);
@@ -77,6 +80,7 @@ public abstract class Node {
 	
 	// 我们离开这个节点进入下一步的时候，执行该动作。
 	public int action(ASticklet widget) {
+		PosContext.LogAction(this);
 		return 0;
 	}
 	

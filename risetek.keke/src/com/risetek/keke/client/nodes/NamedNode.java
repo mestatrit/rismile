@@ -13,7 +13,7 @@ import com.risetek.keke.client.context.PosContext;
 public class NamedNode extends VNode {
 
 	public NamedNode(String name) {
-		super("Named", name);
+		super(name);
 		PosContext.Log("Create named Node: "+name);
 	}
 

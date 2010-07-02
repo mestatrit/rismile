@@ -11,6 +11,13 @@ public class LogoutNode extends PromotionNode {
 
 	public int action(ASticklet widget) {
 		PosContext.Token = null;
+		super.action(widget);
 		return 0;
 	}
+
+	// DEBUG only
+	public int enter(ASticklet sticklet) {
+		return super.enter(sticklet);
+	}	
+
 }

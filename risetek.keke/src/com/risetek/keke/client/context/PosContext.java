@@ -11,6 +11,7 @@ import com.risetek.keke.client.context.ClientEventBus.HIDNumberEvent;
 import com.risetek.keke.client.context.ClientEventBus.HIDNumberHandler;
 import com.risetek.keke.client.context.ClientEventBus.ViewChangedEvent;
 import com.risetek.keke.client.context.ClientEventBus.ViewChangedHandler;
+import com.risetek.keke.client.nodes.Node;
 import com.risetek.keke.client.presenter.Presenter;
 import com.risetek.keke.client.sticklet.ASticklet;
 import com.risetek.keke.client.sticklet.Sticklets;
@@ -27,6 +28,21 @@ public class PosContext {
 		D3View.logger.logger.addItem(message);
 	}
 
+	public static void LogEnter(Node node) {
+		String name = node.getClass().getName();
+		name = name.substring(30);
+		D3View.logger.logger.addItem("->"+name+ " "+node.Promotion);
+	}
+	
+	public static void LogAction(Node node) {
+		/*
+		String name = node.getClass().getName();
+		name = name.substring(30);
+		D3View.logger.logger.addItem("  "+name+ " action");
+		*/
+		D3View.logger.logger.addItem( "["+node.Promotion + "] action");
+	}
+	
     /*
      * 表现层
      */

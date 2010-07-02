@@ -12,9 +12,6 @@ public class LoggerComposite extends Composite {
 		d.setHeight("100%");
 		logger.setWidth("100%");
 		logger.setHeight("320px");
-		logger.addItem("Line one");
-		logger.addItem("Line tow");
-		logger.addItem("Line three");
 		logger.setVisibleItemCount(20);
 		logger.setEnabled(false);
 		d.add(logger);

@@ -8,7 +8,7 @@ import com.risetek.keke.client.sticklet.Sticklets;
 public class SecurityCheckNode extends VNode {
 
 	public SecurityCheckNode() {
-		super("SecurityCheck", "");
+		super("安全检测");
 	}
 	/*
 	 * (non-Javadoc)
@@ -43,7 +43,6 @@ public class SecurityCheckNode extends VNode {
 	}
 */
 	public int enter(ASticklet sticklet) {
-		PosContext.Log("Enter SecurityCheckNode");
 		super.enter(sticklet);
 		return 0;
 	}
@@ -55,6 +54,7 @@ public class SecurityCheckNode extends VNode {
 			ASticklet login = Sticklets.loadSticklet("epay.local.login");
 			sticklet.Call(login);
 		}
+		super.action(sticklet);
 		return 0;
 	}
 	

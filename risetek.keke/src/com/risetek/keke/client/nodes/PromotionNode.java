@@ -12,12 +12,11 @@ import com.risetek.keke.client.sticklet.ASticklet;
 public class PromotionNode extends Node {
 
 	public PromotionNode(String promotion, String imgName) {
-		super("Promotion", promotion, imgName);
+		super(promotion, imgName);
 	}
 
 	// DEBUG only
 	public int enter(ASticklet sticklet) {
-		PosContext.Log("Enter: Promotion");
 		return super.enter(sticklet);
 	}	
 	

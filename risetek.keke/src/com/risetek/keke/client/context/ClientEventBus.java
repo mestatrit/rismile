@@ -67,7 +67,7 @@ public class ClientEventBus {
 				case 144:	// "Num Lock"
 					break;
 				default:
-					PosContext.Log("Press: " + keyCode);
+					// PosContext.Log("Press: " + keyCode);
 					break;
 				}
 			}

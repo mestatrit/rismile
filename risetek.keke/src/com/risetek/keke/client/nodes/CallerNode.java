@@ -12,12 +12,11 @@ public class CallerNode extends Node {
 	String calledSticklet = null;
 	
 	public CallerNode(String calledSticklet) {
-		super("Caller", "系统调用:"+calledSticklet);
+		super("调用["+calledSticklet+"]","20090218213222605");
 		this.calledSticklet = calledSticklet;
 	}
 	
 	public int enter(ASticklet sticklet) {
-		PosContext.Log("CallerNode");
 		if( sticklet.calledSticklet == null )
 		{
 			super.enter(sticklet);
@@ -25,14 +24,18 @@ public class CallerNode extends Node {
 			PosContext.Log("Call: "+calledSticklet);
 			ASticklet called = Sticklets.loadSticklet(calledSticklet);
 			sticklet.Call(called);
+			return 0;
 		}
 		else
-			sticklet.control(ASticklet.STICKLET_ENGAGE);
-		return 0;
+		{
+			PosContext.LogEnter(this);
+			return sticklet.control(ASticklet.STICKLET_ENGAGE);
+		}
 	}
 	
 	// 我们离开这个节点进入下一步的时候，执行该动作。
 	public int action(ASticklet sticklet) {
+		PosContext.LogAction(this);
 		return 0;
 	}
 
