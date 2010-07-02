@@ -12,7 +12,7 @@ public class PasswordNode extends Node {
 	String password = "";
 	String passshow = "";
 	public PasswordNode(String promotion, String imgName) {
-		super("Input", promotion, imgName);
+		super("Input", promotion, "Password");
 	}
 
 	public Composite getComposite() {

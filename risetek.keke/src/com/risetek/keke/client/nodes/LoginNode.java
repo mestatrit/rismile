@@ -18,7 +18,7 @@ public class LoginNode extends Node {
 	int state = -1;
 	
 	public LoginNode(String promotion) {
-		super("Login", promotion);
+		super("Login", promotion, "Login");
 	}
 
 	public int leave(ASticklet widget) {

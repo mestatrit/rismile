@@ -43,4 +43,10 @@ public class CallerNode extends Node {
 			composite = new PromotionComposite(this);
 		return composite;
 	}
+	
+	// Caller不能回滚。
+	public boolean rollbackable() {
+		return false;
+	}
+	
 }

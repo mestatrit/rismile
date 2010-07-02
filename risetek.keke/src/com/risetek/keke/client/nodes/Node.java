@@ -13,8 +13,6 @@ import com.risetek.keke.client.sticklet.ASticklet;
 
 public abstract class Node {
 	
-//	public static final HashMap<String, Node>  = new HashMap<String, Node>(); 
-	
 	public final static int NODE_OK	= 0;
 	public final static int NODE_EXIT	= -1;
 	

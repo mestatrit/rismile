@@ -4,10 +4,10 @@ import com.google.gwt.user.client.ui.Composite;
 import com.risetek.keke.client.nodes.ui.PromotionComposite;
 import com.risetek.keke.client.sticklet.ASticklet;
 
-public class ExitNode extends VNode {
+public class ExitNode extends Node {
 
 	public ExitNode() {
-		super("ExitNode", "退出中...", "ExitIcon");
+		super("ExitNode", "退出程序", "20090218213218568");
 	}
 
 	@Override

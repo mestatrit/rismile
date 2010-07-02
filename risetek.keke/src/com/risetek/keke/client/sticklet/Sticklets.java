@@ -26,45 +26,45 @@ public class Sticklets {
 			{ "1", "Promotion", "登录ePay", "20090218213158800" },
 			{ "0", "Promotion", "送时间", "20090218213158872" },
 			{ "0", "Promotion", "送生活", "20090218213158904" },
-			{ "0", "Promotion", "送安全", "p5" },
-			{ "0", "Exit", "Goodbye ePay", "p3" },
-			{ "0", "Caller", "epay.local.system.login", "p2" }, };
+			{ "0", "Promotion", "送安全", "20090218213158120" },
+			{ "0", "Exit", "Goodbye ePay", "20090218213218568" },
+			{ "0", "Caller", "epay.local.system.login", "20090218213211612" }, };
 
 	private final static String[][] demo = {
 			{ "1", "NamedNode", "epay.local.demo" },
 			{ "3", "SecurityCheck" },
-			{ "0", "Promotion", "服务创造价值", "20090218213158120" },
-			{ "0", "Promotion", "观念决定出路", "20090218213158200" },
-			{ "1", "Logout", "退出登录", "20090218213158214" },
-			{ "0", "Caller", "epay.local.demo", "p5" }, };
+			{ "0", "Promotion", "服务创造价值", "20090218213211718" },
+			{ "0", "Promotion", "观念决定出路", "20090218213212220" },
+			{ "1", "Logout", "退出登录", "20090218213212783" },
+			{ "0", "Caller", "epay.local.demo", "20090218213213314" }, };
 	
 	private final static String[][] gameover = {
 			{ "4", "NamedNode", "epay.local.gameover" },
-			{ "0", "Promotion", "Game is Over", "p4" },
-			{ "0", "Promotion", "D3View", "p4" },
-			{ "0", "Promotion", "连接世界", "p2" },
-			{ "0", "Exit", "Goodbye ePay", "p3" }, };
+			{ "0", "Promotion", "Game is Over", "20090218213214862" },
+			{ "0", "Promotion", "D3View", "20090218213215625" },
+			{ "0", "Promotion", "连接世界", "20090218213215859" },
+			{ "0", "Exit", "Goodbye ePay", "20090218213216656" }, };
 
 	private final static String[][] services_failed = {
 			{ "1", "NamedNode", "epay.local.services.failed" },
-			{ "1", "Promotion", "远端服务失败", "p2" },
-			{ "0", "Exit", "byebye..", "p4" }, };
+			{ "1", "Promotion", "远端服务失败", "20090218213217243" },
+			{ "0", "Exit", "byebye..", "20090218213218178" }, };
 
 	private final static String[][] invalid_src = {
 			{ "1", "NamedNode", "epay.local.system.nosrc" },
-			{ "1", "Promotion", "未找到相应Stcklet", "p2" },
-			{ "0", "Exit", "byebye..", "p4" }, };
+			{ "1", "Promotion", "未找到相应Stcklet", "20090218213218568" },
+			{ "0", "Exit", "byebye..", "20090218213219389" }, };
 
 	private final static String[][] runtime_error = {
 			{ "1", "NamedNode", "epay.local.system.runtime_error" },
-			{ "1", "Promotion", "Runtimg Error", "p2" },
-			{ "0", "Exit", "byebye..", "p4" }, };
+			{ "1", "Promotion", "Runtimg Error", "20090218213219741" },
+			{ "0", "Exit", "byebye..", "20090218213222605" }, };
 
 	final static String[][] syslogin = {
 			{ "1", "NamedNode", "epay.local.system.login" },
-			{ "1", "Username", "输入用户名称", "p2" },
-			{ "1", "Password", "输入登录密码", "p2" },
-			{ "0", "Login", "登录ePay", "" }, };
+			{ "1", "Username", "输入用户名称", "20090218213222671" },
+			{ "1", "Password", "输入登录密码", "20090218213227180" },
+			{ "0", "Login", "登录ePay", "20090218213227509" }, };
 
 	/*
 	 * 注册名称与源。

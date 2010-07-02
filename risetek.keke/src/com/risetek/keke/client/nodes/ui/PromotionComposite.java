@@ -2,7 +2,6 @@ package com.risetek.keke.client.nodes.ui;
 
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.DockPanel;
-import com.google.gwt.user.client.ui.Grid;
 import com.google.gwt.user.client.ui.HasHorizontalAlignment;
 import com.google.gwt.user.client.ui.HasVerticalAlignment;
 import com.google.gwt.user.client.ui.Image;
@@ -17,24 +16,24 @@ public class PromotionComposite extends Composite {
 	public Label brief = new Label();
 	Image img = new Image();
 	DockPanel outPanel = new DockPanel();
-	Grid g = new Grid(2,1);
-
+	DockPanel tipsPanel = new DockPanel();
+	
+	
 	public PromotionComposite(Node node) {
 		outPanel.setPixelSize(UiKeke.kekeWidth, UiKeke.kekeHeight);
 		Type.setText(node.Ticker);
 		brief.setText(node.Promotion);
 		img.setResource(IconManage.getIcon(node.imgName));
 		outPanel.add(img, DockPanel.WEST);
-		outPanel.setCellHeight(img, "90%");
-		outPanel.setCellWidth(img, "20%");
+
+		outPanel.setCellWidth(img, "80px");
 		outPanel.setCellHorizontalAlignment(img, HasHorizontalAlignment.ALIGN_CENTER);
 		outPanel.setCellVerticalAlignment(img, HasVerticalAlignment.ALIGN_MIDDLE);
-	    g.setCellPadding(0);
-	    g.setCellSpacing(0);
-		g.setWidget(0, 0, Type);
-		g.setWidget(1, 0, brief);
-		g.setSize("100%", "100%");
-		outPanel.add(g, DockPanel.EAST);
+
+		tipsPanel.setSize("100%", "100%");
+		tipsPanel.add(Type, DockPanel.NORTH);
+		tipsPanel.add(brief, DockPanel.CENTER);
+		outPanel.add(tipsPanel, DockPanel.EAST);
 		initWidget(outPanel);
 		setStyleName("KekeComposite");
 	}
