@@ -10,7 +10,8 @@ public class KekesComposite extends Composite implements UiKeke {
 	private Grid keke = new Grid(maxKeke,1);
 	public KekesComposite() {
 		initWidget(keke);
-		setPixelSize(kekeWidth, maxKeke*kekeHeight);
+		this.setWidth("100%");
+		setHeight(maxKeke*kekeHeight+"px");
 	    keke.setCellPadding(0);
 	    keke.setCellSpacing(0);
 	    this.setStyleName("KekesComposite");
@@ -20,7 +21,8 @@ public class KekesComposite extends Composite implements UiKeke {
 		for( int spacekeke = 0; spacekeke < maxKeke; spacekeke++ )
 		{
 			HTMLPanel p = new HTMLPanel("");
-			p.setPixelSize(kekeWidth, kekeHeight);
+			p.setWidth("100%");
+			p.setHeight(kekeHeight+"px");
 			keke.setWidget(spacekeke, 0, p);
 		}
 	}

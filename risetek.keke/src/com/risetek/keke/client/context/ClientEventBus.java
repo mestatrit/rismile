@@ -64,6 +64,8 @@ public class ClientEventBus {
 					ClientEventBus.INSTANCE.fireEvent(new ClientEventBus.HIDNumberEvent(keyCode - 48));
 					break;
 					
+				case 18:	// "ALT"
+					break;
 				default:
 					GWT.log("Press: " + keyCode);
 					break;

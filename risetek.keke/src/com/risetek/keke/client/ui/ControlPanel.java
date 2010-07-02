@@ -6,6 +6,7 @@ import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.DockLayoutPanel;
+import com.google.gwt.user.client.ui.DockPanel;
 import com.google.gwt.user.client.ui.Grid;
 import com.google.gwt.user.client.ui.HTML;
 import com.risetek.keke.client.context.ClientEventBus;
@@ -14,7 +15,8 @@ import com.risetek.keke.client.context.ClientEventBus;
  */
 public class ControlPanel extends Composite {
 	
-	DockLayoutPanel dock = new DockLayoutPanel(Unit.EM);
+//	DockLayoutPanel dock = new DockLayoutPanel(Unit.PX);
+	DockPanel dock = new DockPanel();
 	Grid dirButton = new Grid(3,3);
 	
 	Button up = new Button("上");
@@ -28,13 +30,14 @@ public class ControlPanel extends Composite {
 	{
 		initWidget(dock);
 		setStyleName("HID");
-
-		dock.setWidth("300px");
-		dock.setHeight("400px");
+		dock.setSize("100%", "100%");
+//		dock.setWidth("200px");
+//		dock.setHeight("300px");
 		
 //		dock.addNorth(card, 3);
-		dock.addNorth(new HTML("控制台"), 4);
-		dock.addNorth(card, 4);
+		dock.add(new HTML("控制台"), DockPanel.NORTH);
+//		dock.addNorth(card, 60);
+		
 		dirButton.setWidget(0, 1, up);
 		dirButton.setWidget(1, 0, left);
 		dirButton.setWidget(1, 2, right);
@@ -76,6 +79,7 @@ public class ControlPanel extends Composite {
 			}
 	    });
 		
-		dock.add(dirButton);
+//		dock.add(dirButton);
+		dock.add(dirButton, DockPanel.SOUTH);
 	}
 }

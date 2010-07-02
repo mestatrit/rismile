@@ -14,7 +14,8 @@ public class StickComposite extends Composite {
 	Image img = new Image();
 
 	public StickComposite(Node node) {
-		outPanel.setPixelSize(UiKeke.kekeWidth, UiKeke.kekeHeight);
+		outPanel.setWidth("100%");
+		outPanel.setHeight(UiKeke.kekeHeight+"px");
 		
 		// ICON 的处理。 
 		img.setResource(IconManage.getIcon(node.imgName));

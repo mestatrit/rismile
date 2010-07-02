@@ -44,14 +44,14 @@ h1 {
 	border-width: 0px;
 }
 
-.machine {
+.risefront .machine {
 	background: #2a8ebf;
 	text-align: center;
 	cellspacing: 0px;
 	cellpading: 0px;
 }
 
-.machine td {
+.risefront .machine td {
 	border: solid white;
 	border-width: 1px;
 }
@@ -79,17 +79,17 @@ h1 {
 	background: yellow;
 }
 
-.HID .gwt-Button {
+.risefront .HID .gwt-Button {
 	width: 6em;
 }
 
 
-.KekesComposite td {
+.risefront .KekesComposite td {
 	border: solid yellow;
 	border-width: 0px;
 }
 
-.KekesComposite .KekeComposite td {
+.risefront .KekesComposite .KekeComposite td {
 	border: solid white;
 	border-width: 0px;
 	padding-top: 0px;
