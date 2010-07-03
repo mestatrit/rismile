@@ -23,20 +23,18 @@ public class CallerNode extends Node {
 			// 陷入被调用环境中去。
 			PosContext.Log("Call: "+calledSticklet);
 			ASticklet called = Sticklets.loadSticklet(calledSticklet);
-			sticklet.Call(called);
-			return 0;
+			return sticklet.Call(called);
 		}
 		else
 		{
-			PosContext.LogEnter(this);
+			PosContext.Log("Caller engage.");
 			return sticklet.control(ASticklet.STICKLET_ENGAGE);
 		}
 	}
 	
 	// 我们离开这个节点进入下一步的时候，执行该动作。
 	public int action(ASticklet sticklet) {
-		PosContext.LogAction(this);
-		return 0;
+		return super.action(sticklet);
 	}
 
 	@Override
@@ -44,11 +42,6 @@ public class CallerNode extends Node {
 		if( composite == null )
 			composite = new PromotionComposite(this);
 		return composite;
-	}
-	
-	// Caller不能回滚。
-	public boolean rollbackable() {
-		return false;
 	}
 	
 }

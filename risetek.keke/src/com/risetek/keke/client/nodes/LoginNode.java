@@ -33,7 +33,6 @@ public class LoginNode extends Node {
 	 * @see com.risetek.keke.client.nodes.Node#enter(com.risetek.keke.client.data.AWidget)
 	 * 虚拟节点，这个步骤是一个过程，不会停留。
 	 */
-	
 	public int enter(final ASticklet sticklet) {
 		// 我们应该终止对rollback控制的响应。
 		sticklet.control_mask_key();
@@ -45,9 +44,16 @@ public class LoginNode extends Node {
 			String password = sticklet.ParamStack.pop();
 			String username = sticklet.ParamStack.pop();
 		
-			ILoginServiceAsync loginService = GWT.create(ILoginService.class);
+			// 压回数据，当重复本过程的时候，需要这些参数。
+			sticklet.ParamStack.push(username);
+			sticklet.ParamStack.push(password);
 
-			loginService.loginServer(username, password, new AsyncCallback<String[][]>(){
+			String param ="<?xml version=\"1.0\" encoding=\"GB2312\"?><RemoteService name=\"Login\">" 
+				+ "<username>" + username + "</username>" + "<password>" + password +"</password>"
+				+ "</RemoteService>";
+			
+			IRemoteServiceAsync loginService = GWT.create(IRemoteService.class);
+			loginService.remoteService(param, new AsyncCallback<String[][]>(){
 
 				@Override
 				public void onFailure(Throwable caught) {

@@ -170,7 +170,7 @@ public abstract class ASticklet {
 		default:
 			break;
 		}
-		return Node.NODE_OK;
+		return Node.NODE_CANCEL;
 	}
 	
 	/*
