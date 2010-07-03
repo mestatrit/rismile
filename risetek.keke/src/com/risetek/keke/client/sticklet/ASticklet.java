@@ -153,16 +153,14 @@ public abstract class ASticklet {
 			// 当前节点的children节点没有了，我们得查询其是否被调用CallerNode的sticklet环境。
 			else
 			{
+				int code;
+				Node older = currentNode;
+				code = older.action(this);
+				if( code == Node.NODE_EXIT ) {
+					return Node.NODE_EXIT;
+				}
 				if( callerSticklet != null ) {
 					callerSticklet.calledSticklet = null;
-					int code;
-					Node older = currentNode;
-					code = older.action(this);
-					if( code == Node.NODE_EXIT ) {
-						return Node.NODE_EXIT;
-					}
-					
-					//code = callerSticklet.control(STICKLET_ENGAGE);
 
 					ClientEventBus.INSTANCE.fireEvent(new ClientEventBus.HIDControlEvent(ClientEventBus.CONTROL_SYSTEM_ENGAGE));
 
