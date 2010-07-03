@@ -1,7 +1,5 @@
 package com.risetek.keke.server.process;
 
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 
 import com.google.gwt.core.client.GWT;
@@ -10,8 +8,10 @@ public class Login {
 	
 	final static String[][] login_sucessed = {
 			{"1", "NamedNode", "Login Sucessed", ""},
-			{"1", "InjectToken", "Login Sucessed", ""},
+			{"3", "InjectToken", "Login Sucessed", ""},
 			{"0", "Promotion", "ePay欢迎您", "20090218213217243"},
+			{"0", "Promotion", "Risetek为您服务", "20090218213218178"},
+			{"0", "Promotion", "NetFront先锋", "20090218213215625"},
 	};
 
 	final static String[][] login_faild_invalid_username = {

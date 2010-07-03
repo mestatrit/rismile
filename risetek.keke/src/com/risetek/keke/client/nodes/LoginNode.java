@@ -3,7 +3,6 @@ package com.risetek.keke.client.nodes;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Composite;
-import com.risetek.keke.client.context.PosContext;
 import com.risetek.keke.client.nodes.ui.PromotionComposite;
 import com.risetek.keke.client.sticklet.ASticklet;
 import com.risetek.keke.client.sticklet.Sticklet;
@@ -16,16 +15,12 @@ import com.risetek.keke.client.sticklet.Sticklets;
  */
 public class LoginNode extends Node {
 
-	int state = -1;
-	
 	public LoginNode(String promotion) {
 		super(promotion, "Login");
 	}
 
 	public int leave(ASticklet widget) {
-		// 取消链接
-		state = -1;
-		return 0;
+		return super.leave(widget);
 	}
 
 	/*
@@ -36,49 +31,44 @@ public class LoginNode extends Node {
 	public int enter(final ASticklet sticklet) {
 		// 我们应该终止对rollback控制的响应。
 		sticklet.control_mask_key();
-		if( state == -1 ) {
-			super.enter(sticklet);
 		
-			// 开始登录过程
-			// 1、发送登录信息，钩挂回调函数和超时定时器。
-			String password = sticklet.ParamStack.pop();
-			String username = sticklet.ParamStack.pop();
-		
-			// 压回数据，当重复本过程的时候，需要这些参数。
-			sticklet.ParamStack.push(username);
-			sticklet.ParamStack.push(password);
-
-			String param ="<?xml version=\"1.0\" encoding=\"GB2312\"?><RemoteService name=\"Login\">" 
-				+ "<username>" + username + "</username>" + "<password>" + password +"</password>"
-				+ "</RemoteService>";
-			
-			IRemoteServiceAsync loginService = GWT.create(IRemoteService.class);
-			loginService.remoteService(param, new AsyncCallback<String[][]>(){
-
-				@Override
-				public void onFailure(Throwable caught) {
-					sticklet.control_unmask_key();
-					PosContext.Log("login failed");
-					Sticklet s = Sticklets.loadSticklet("epay.local.services.failed");
-					sticklet.Call(s);
-				}
+		// 开始登录过程
+		// 1、发送登录信息，钩挂回调函数和超时定时器。
+		String password = sticklet.ParamStack.pop();
+		String username = sticklet.ParamStack.pop();
 	
-				@Override
-				public void onSuccess(String result[][]) {
-					sticklet.control_unmask_key();
-					PosContext.Log("login sucessed!");
-					state = 0;
-					Sticklet s = Sticklets.loadSticklet(result);
-					sticklet.Call(s);
-				}} );
+		// 压回数据，当重复本过程的时候，需要这些参数。
+		sticklet.ParamStack.push(username);
+		sticklet.ParamStack.push(password);
+
+		String param ="<?xml version=\"1.0\" encoding=\"GB2312\"?><RemoteService name=\"Login\">" 
+			+ "<username>" + username + "</username>" + "<password>" + password +"</password>"
+			+ "</RemoteService>";
+		
+		IRemoteServiceAsync loginService = GWT.create(IRemoteService.class);
+		loginService.remoteService(param, new AsyncCallback<String[][]>(){
+
+			@Override
+			public void onFailure(Throwable caught) {
+				sticklet.control_unmask_key();
+				Sticklet s = Sticklets.loadSticklet("epay.local.services.failed");
+				sticklet.Call(s);
 			}
-			else
-				sticklet.control(ASticklet.STICKLET_ENGAGE);
-		return 0;
+
+			@Override
+			public void onSuccess(String result[][]) {
+				sticklet.control_unmask_key();
+				Sticklet s = Sticklets.loadSticklet(result);
+				sticklet.Call(s);
+			}} );		
+		
+		
+		return super.enter(sticklet);
 	}
 
-	public int action(final ASticklet widget) {
-		return super.action(widget);
+	public int action(final ASticklet sticklet) {
+
+		return super.action(sticklet);
 	}
 
 	@Override

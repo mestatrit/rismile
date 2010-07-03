@@ -17,19 +17,18 @@ public class CallerNode extends Node {
 	}
 	
 	public int enter(ASticklet sticklet) {
-		if( sticklet.calledSticklet == null )
-		{
-			super.enter(sticklet);
-			// 陷入被调用环境中去。
-			PosContext.Log("Call: "+calledSticklet);
-			ASticklet called = Sticklets.loadSticklet(calledSticklet);
-			return sticklet.Call(called);
+		if( sticklet.calledSticklet != null ) {
+			PosContext.Log("Fatal: calledSticklet is not null");
+			return Node.NODE_CANCEL;
 		}
-		else
-		{
-			PosContext.Log("Caller engage.");
-			return sticklet.control(ASticklet.STICKLET_ENGAGE);
-		}
+			
+		int state = super.enter(sticklet);
+		// 陷入被调用环境中去。
+		PosContext.Log("Call: "+calledSticklet);
+		ASticklet called = Sticklets.loadSticklet(calledSticklet);
+		if( sticklet.Call(called) != NODE_STAY )
+			PosContext.Log("Fatal: Called sticklet can't stay.");
+		return state;
 	}
 	
 	// 我们离开这个节点进入下一步的时候，执行该动作。
@@ -37,6 +36,10 @@ public class CallerNode extends Node {
 		return super.action(sticklet);
 	}
 
+	public int rollback(ASticklet sticklet) {
+		return super.rollback(sticklet);
+	}
+	
 	@Override
 	public Composite getComposite() {
 		if( composite == null )

@@ -1,7 +1,6 @@
 package com.risetek.keke.client.nodes;
 
 import com.google.gwt.user.client.ui.Composite;
-import com.risetek.keke.client.context.PosContext;
 import com.risetek.keke.client.nodes.ui.PromotionComposite;
 import com.risetek.keke.client.sticklet.ASticklet;
 
@@ -19,12 +18,11 @@ public class ExitNode extends Node {
 	}
 
 	public int enter(ASticklet widget) {
-		super.enter(widget);
-		return 0;
+		return super.enter(widget);
 	}
 	
 	public int action(ASticklet widget) {
-		PosContext.LogAction(this);
+		super.action(widget);
 		return NODE_EXIT;
 	}
 }

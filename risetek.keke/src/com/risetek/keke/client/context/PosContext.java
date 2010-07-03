@@ -138,14 +138,23 @@ public class PosContext {
 				getSticklet().control(ASticklet.STICKLET_UP);
 				break;
 			case ClientEventBus.CONTROL_KEY_LEFT:
+			case ClientEventBus.CONTROL_SYSTEM_ROLLBACK:
 				getSticklet().control(ASticklet.STICKLET_ROLLBACK);
 				break;
 			case ClientEventBus.CONTROL_KEY_RIGHT:
-				ASticklet sticklet = getSticklet(); 
-				if( sticklet.control(ASticklet.STICKLET_ENGAGE) == Node.NODE_EXIT ) {
+			case ClientEventBus.CONTROL_SYSTEM_ENGAGE:
+				ASticklet sticklet = getSticklet();
+				int state = sticklet.control(ASticklet.STICKLET_ENGAGE);
+				if( state == Node.NODE_EXIT ) {
 					// 上一个sticklet执行完毕。
 					PosContext.Log("Run out of sticklet:"+sticklet.aStickletName);
+					// TODO: 这里应该退出程序。
 					Executer();
+				}
+				else if( state == Node.NODE_CANCEL) {
+					PosContext.Log("engage canceled.");
+					ClientEventBus.INSTANCE.fireEvent(new ClientEventBus.HIDControlEvent(ClientEventBus.CONTROL_SYSTEM_ROLLBACK));
+
 				}
 				break;
 				

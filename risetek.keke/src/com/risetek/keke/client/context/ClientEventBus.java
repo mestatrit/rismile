@@ -167,10 +167,12 @@ public class ClientEventBus {
 		}
 	}
 	
-	public static final int CONTROL_KEY_UP		= 0;
-	public static final int CONTROL_KEY_DOWN	= 1;
-	public static final int CONTROL_KEY_LEFT	= 2;
-	public static final int CONTROL_KEY_RIGHT	= 3;
+	public static final int CONTROL_KEY_UP			= 0;
+	public static final int CONTROL_KEY_DOWN		= 1;
+	public static final int CONTROL_KEY_LEFT		= 2;
+	public static final int CONTROL_KEY_RIGHT		= 3;
+	public static final int CONTROL_SYSTEM_ENGAGE	= 4;
+	public static final int CONTROL_SYSTEM_ROLLBACK	= 5;
 	
 	
 	// 处理 控制输入事件

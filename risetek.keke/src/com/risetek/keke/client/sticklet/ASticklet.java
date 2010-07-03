@@ -139,19 +139,15 @@ public abstract class ASticklet {
 			if( getChildrenNode(currentNode) != null ) {
 				// 记录运行的层次。
 				HistoryNodesStack.push(currentNode);
+				int code;
 				// 我们这里决定widget的存在与否
 				Node older = currentNode;
-				older.action(this);
-				int code = getChildrenNode(currentNode).enter(this);
-				/*
-				if( code == Node.NODE_STAY ) {
-					// 下一个节点能够停留。
-					// 离开当前节点，进入下一个节点，这说明本步骤得到认可，需要获取该阶段的运行结果。
-					int result = older.action(this);
-					if( result == Node.NODE_EXIT )
-						return STICKLET_EXIT;
+				code = older.action(this);
+				if( code == Node.NODE_EXIT ) {
+					return Node.NODE_EXIT;
 				}
-				*/
+
+				code = getChildrenNode(currentNode).enter(this);
 				return code;
 			}
 			// 当前节点的children节点没有了，我们得查询其是否被调用CallerNode的sticklet环境。
@@ -159,7 +155,17 @@ public abstract class ASticklet {
 			{
 				if( callerSticklet != null ) {
 					callerSticklet.calledSticklet = null;
-					int code = callerSticklet.control(STICKLET_ENGAGE);
+					int code;
+					Node older = currentNode;
+					code = older.action(this);
+					if( code == Node.NODE_EXIT ) {
+						return Node.NODE_EXIT;
+					}
+					
+					//code = callerSticklet.control(STICKLET_ENGAGE);
+
+					ClientEventBus.INSTANCE.fireEvent(new ClientEventBus.HIDControlEvent(ClientEventBus.CONTROL_SYSTEM_ENGAGE));
+
 					ClientEventBus.INSTANCE.fireEvent(new ClientEventBus.ViewChangedEvent());
 					return code;
 				}

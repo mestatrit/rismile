@@ -5,9 +5,9 @@ import com.risetek.keke.client.sticklet.ASticklet;
 
 public class InjectTokenNode extends VNode {
 	private String token;
-	public InjectTokenNode(String Token) {
-		super(Token);
-		token = Token;
+	public InjectTokenNode(String name, String value) {
+		super(value);
+		token = value;
 	}
 
 	public int enter(ASticklet widget) {

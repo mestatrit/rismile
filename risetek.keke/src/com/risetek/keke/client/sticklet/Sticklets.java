@@ -30,14 +30,23 @@ public class Sticklets {
 			{ "0", "Exit", "Goodbye ePay", "20090218213218568" },
 			{ "0", "Caller", "epay.local.system.login", "20090218213211612" }, };
 
-	private final static String[][] demo = {
-			{ "1", "NamedNode", "epay.local.demo" },
+	private final static String[][] epay = {
+			{ "1", "NamedNode", "epay.local.epay" },
 			{ "3", "SecurityCheck" },
 			{ "0", "Promotion", "服务创造价值", "20090218213211718" },
 			{ "0", "Promotion", "观念决定出路", "20090218213212220" },
 			{ "1", "Logout", "退出登录", "20090218213212783" },
 			{ "0", "Caller", "epay.local.demo", "20090218213213314" }, };
-	
+
+	private final static String[][] demo = {
+			{ "5", "NamedNode", "epay.local.demo" },
+			{ "1", "Promotion", "我的 ePay", "20090218213217243" },
+			{ "0", "Promotion", "新服务消息", "20090218213219741" },
+			{ "0", "Promotion", "秒杀商品", "20090218213212220" },
+			{ "0", "Promotion", "400-000-001 服务电话", "20090218213211718" },
+			{ "0", "Exit", "退出程序", "20090218213212783" },
+			{ "0", "Caller", "epay.local.epay", "20090218213213314" },
+	 		};
 	private final static String[][] gameover = {
 			{ "4", "NamedNode", "epay.local.gameover" },
 			{ "0", "Promotion", "Game is Over", "20090218213214862" },
@@ -81,6 +90,7 @@ public class Sticklets {
 		// lazy 调用。
 		registeStick(login);
 		registeStick(demo);
+		registeStick(epay);
 		registeStick(gameover);
 		registeStick(services_failed);
 		registeStick(syslogin);
@@ -131,7 +141,7 @@ public class Sticklets {
 		else if ("Caller".equals(nodeDesc[1]))
 			node = new CallerNode(nodeDesc[2]);
 		else if ("InjectToken".equals(nodeDesc[1]))
-			node = new InjectTokenNode(nodeDesc[2]);
+			node = new InjectTokenNode("name",nodeDesc[2]);
 		else
 			node = new PromotionNode(nodeDesc[2], nodeDesc[3]);
 		return node;
