@@ -1,6 +1,10 @@
 package com.risetek.keke.client.nodes;
 
+import com.google.gwt.user.client.ui.Composite;
+import com.risetek.keke.client.context.ClientEventBus;
 import com.risetek.keke.client.context.PosContext;
+import com.risetek.keke.client.nodes.ui.PromotionComposite;
+import com.risetek.keke.client.sticklet.ASticklet;
 
 
 /*
@@ -15,6 +19,22 @@ public class NamedNode extends VNode {
 	public NamedNode(String name) {
 		super(name);
 		PosContext.Log("Create named Node: "+name);
+	}
+
+	@Override
+	public Composite getComposite() {
+		return null;
+	}
+
+	public int failed(ASticklet sticklet) {
+		super.failed(sticklet);
+		if( sticklet.callerSticklet != null ) {
+			sticklet.callerSticklet.calledSticklet.Clean();
+			sticklet.callerSticklet.calledSticklet = null;
+			ClientEventBus.INSTANCE.fireEvent(new ClientEventBus.HIDControlEvent(ClientEventBus.CONTROL_SYSTEM_ENGAGE_BY_CANCEL));
+			ClientEventBus.INSTANCE.fireEvent(new ClientEventBus.ViewChangedEvent());
+		}
+		return NODE_STAY;
 	}
 
 }

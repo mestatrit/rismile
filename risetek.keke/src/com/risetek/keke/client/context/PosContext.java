@@ -42,6 +42,13 @@ public class PosContext {
 		name = name.substring(30);
 		D3View.logger.logger.addItem("<-- "+name+ " "+node.Promotion);
 	}
+
+	public static void LogFaild(Node node) {
+		String name = node.getClass().getName();
+		name = name.substring(30);
+		D3View.logger.logger.addItem("["+name+ "] failed "+node.Promotion);
+	}
+	
 	
 	public static void LogAction(Node node) {
 		/*
@@ -143,8 +150,12 @@ public class PosContext {
 				break;
 			case ClientEventBus.CONTROL_KEY_RIGHT:
 			case ClientEventBus.CONTROL_SYSTEM_ENGAGE:
+			case ClientEventBus.CONTROL_SYSTEM_ENGAGE_BY_CANCEL:
+				int controlCode = ASticklet.STICKLET_ENGAGE;
+				if( controlKey == ClientEventBus.CONTROL_SYSTEM_ENGAGE_BY_CANCEL )
+					controlCode = ASticklet.STICKLET_ENGAGE_BY_CANCEL;
 				ASticklet sticklet = getSticklet();
-				int state = sticklet.control(ASticklet.STICKLET_ENGAGE);
+				int state = sticklet.control(controlCode);
 				if( state == Node.NODE_EXIT ) {
 					// 上一个sticklet执行完毕。
 					PosContext.Log("Run out of sticklet:"+sticklet.aStickletName);
@@ -153,11 +164,10 @@ public class PosContext {
 				}
 				else if( state == Node.NODE_CANCEL) {
 					PosContext.Log("engage canceled.");
-					ClientEventBus.INSTANCE.fireEvent(new ClientEventBus.HIDControlEvent(ClientEventBus.CONTROL_SYSTEM_ROLLBACK));
+					ClientEventBus.INSTANCE.fireEvent(new ClientEventBus.HIDControlEvent(ClientEventBus.CONTROL_SYSTEM_ENGAGE_BY_CANCEL));
 
 				}
 				break;
-				
 			default:
 				PosContext.Log("Control Code Overrun");
 				break;

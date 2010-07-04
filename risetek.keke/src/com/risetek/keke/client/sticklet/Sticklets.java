@@ -5,6 +5,7 @@ import java.util.Vector;
 
 import com.risetek.keke.client.context.PosContext;
 import com.risetek.keke.client.nodes.CallerNode;
+import com.risetek.keke.client.nodes.CancelNode;
 import com.risetek.keke.client.nodes.ExitNode;
 import com.risetek.keke.client.nodes.InjectTokenNode;
 import com.risetek.keke.client.nodes.InputNode;
@@ -22,12 +23,9 @@ public class Sticklets {
 	HashMap<String, Sticklet> stickletInstances = new HashMap<String, Sticklet>();
 
 	final static String[][] login = {
-			{ "5", "NamedNode", "epay.local.login" },
+			{ "2", "NamedNode", "epay.local.login" },
 			{ "1", "Promotion", "登录ePay", "20090218213158800" },
-			{ "0", "Promotion", "送时间", "20090218213158872" },
-			{ "0", "Promotion", "送生活", "20090218213158904" },
-			{ "0", "Promotion", "送安全", "20090218213158120" },
-			{ "0", "Exit", "Goodbye ePay", "20090218213218568" },
+			{ "0", "Cancel", "取消登录", "20090218213158872" },
 			{ "0", "Caller", "epay.local.system.login", "20090218213211612" }, };
 
 	private final static String[][] epay = {
@@ -42,7 +40,7 @@ public class Sticklets {
 			{ "5", "NamedNode", "epay.local.demo" },
 			{ "1", "Promotion", "我的 ePay", "20090218213217243" },
 			{ "0", "Promotion", "新服务消息", "20090218213219741" },
-			{ "0", "Promotion", "秒杀商品", "20090218213212220" },
+			{ "0", "Promotion", "我要帮助", "20090218213212220" },
 			{ "0", "Promotion", "400-000-001 服务电话", "20090218213211718" },
 			{ "0", "Exit", "退出程序", "20090218213212783" },
 			{ "0", "Caller", "epay.local.epay", "20090218213213314" },
@@ -126,6 +124,8 @@ public class Sticklets {
 			node = new NamedNode(nodeDesc[2]);
 		else if ("Promotion".equals(nodeDesc[1]))
 			node = new PromotionNode(nodeDesc[2], nodeDesc[3]);
+		else if ("Cancel".equals(nodeDesc[1]))
+			node = new CancelNode(nodeDesc[2], nodeDesc[3]);
 		else if ("Username".equals(nodeDesc[1]))
 			node = new InputNode(nodeDesc[2], nodeDesc[3]);
 		else if ("Password".equals(nodeDesc[1]))

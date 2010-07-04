@@ -103,5 +103,7 @@ public abstract class Node {
 		return NODE_STAY;
 	}
 
-	
+	public int failed(ASticklet sticklet) {
+		return NODE_STAY;
+	}
 }

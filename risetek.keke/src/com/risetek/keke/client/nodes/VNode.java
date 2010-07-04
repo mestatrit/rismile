@@ -26,7 +26,8 @@ public abstract class VNode extends Node {
 	
 	public int rollback(ASticklet sticklet) {
 		int state = super.rollback(sticklet);
-		//作为一个虚节点，我们不能停留在这个节点，必须再进步。
+		//作为一个虚节点，我们不能停留在这个节点，必须再rollback。
+//		ClientEventBus.INSTANCE.fireEvent(new ClientEventBus.HIDControlEvent(ClientEventBus.CONTROL_SYSTEM_ROLLBACK));
 		ClientEventBus.INSTANCE.fireEvent(new ClientEventBus.HIDControlEvent(ClientEventBus.CONTROL_SYSTEM_ENGAGE));
 		return state;
 	}
@@ -34,8 +35,11 @@ public abstract class VNode extends Node {
 	// 我们假定虚拟节点还是有绘制能力，这也许能过渡一下。
 	@Override
 	public Composite getComposite() {
+		/*
 		if( composite == null )
 			composite = new PromotionComposite(this);
 		return composite;
+		*/
+		return null;
 	}
 }

@@ -15,16 +15,6 @@ public class Presenter {
 	public void upDate(ASticklet sticklet ) {
 		Node head = sticklet.HistoryNodesStack.pop();
 		sticklet.HistoryNodesStack.push(head);
-/*
-		Node p = head.children;
-		int index = 0;
-		Vector<Node> nodes = new Vector<Node>(); 
-		while( p != null ) {
-			nodes.add(p);
-			p = p.next;
-		}
-*/
-//		view.renderKekes( head.children , widget.current);
 		view.renderKekes( sticklet.getChildrenNode(head) , sticklet.getCurrentNode());
 	}
 }

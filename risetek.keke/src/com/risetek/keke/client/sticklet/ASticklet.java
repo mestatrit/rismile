@@ -54,7 +54,7 @@ public abstract class ASticklet {
 	public Stack<String> ParamStack = new Stack<String>();
 	
 	public int Execute() {
-		HistoryNodesStack.push(rootNode);
+		//HistoryNodesStack.push(rootNode);
 		return rootNode.enter(this);
 	}
 	
@@ -63,10 +63,11 @@ public abstract class ASticklet {
 			currentNode.press(keyCode);
 	}
 	
-	public final static int STICKLET_UP 		= 0;
-	public final static int STICKLET_DOWN 		= 1;
-	public final static int STICKLET_ROLLBACK 	= 2;
-	public final static int STICKLET_ENGAGE 	= 3;
+	public final static int STICKLET_UP 				= 0;
+	public final static int STICKLET_DOWN 				= 1;
+	public final static int STICKLET_ROLLBACK 			= 2;
+	public final static int STICKLET_ENGAGE 			= 3;
+	public final static int STICKLET_ENGAGE_BY_CANCEL 	= 4;
 	
 	int control_mask = 0;
 	
@@ -136,45 +137,59 @@ public abstract class ASticklet {
 			/*
 			 * 从当前节点进入下一个节点的时候，执行该动作。
 			 */
-			if( getChildrenNode(currentNode) != null ) {
-				// 记录运行的层次。
-				HistoryNodesStack.push(currentNode);
-				int code;
-				// 我们这里决定widget的存在与否
-				Node older = currentNode;
-				code = older.action(this);
-				if( code == Node.NODE_EXIT ) {
-					return Node.NODE_EXIT;
-				}
-
-				code = getChildrenNode(currentNode).enter(this);
+			// 记录运行的层次。
+			HistoryNodesStack.push(currentNode);
+			int code;
+			// 我们这里决定widget的存在与否
+			code = currentNode.action(this);
+			if( code == Node.NODE_EXIT ) {
 				return code;
 			}
-			// 当前节点的children节点没有了，我们得查询其是否被调用CallerNode的sticklet环境。
-			else
-			{
-				int code;
-				Node older = currentNode;
-				code = older.action(this);
-				if( code == Node.NODE_EXIT ) {
-					return Node.NODE_EXIT;
-				}
-				if( callerSticklet != null ) {
-					callerSticklet.calledSticklet = null;
 
-					ClientEventBus.INSTANCE.fireEvent(new ClientEventBus.HIDControlEvent(ClientEventBus.CONTROL_SYSTEM_ENGAGE));
+			if( code == Node.NODE_CANCEL) {
+				// 这表明本sticklet没有成功执行。
+				if( callerSticklet != null ) {
+					callerSticklet.calledSticklet.Clean();
+					callerSticklet.calledSticklet = null;
 
 					ClientEventBus.INSTANCE.fireEvent(new ClientEventBus.ViewChangedEvent());
 					return code;
 				}
+				return code;
+			}
+			
+			if( code == Node.NODE_OK)
+			{
+				if( getChildrenNode(currentNode) != null ) {
+	
+					code = getChildrenNode(currentNode).enter(this);
+					return code;
+				}
+				// 当前节点的children节点没有了，我们得查询其是否被调用CallerNode的sticklet环境。
+				else
+				{
+					if( callerSticklet != null ) {
+						callerSticklet.calledSticklet.Clean();
+						callerSticklet.calledSticklet = null;
+	
+						ClientEventBus.INSTANCE.fireEvent(new ClientEventBus.HIDControlEvent(ClientEventBus.CONTROL_SYSTEM_ENGAGE));
+	
+						ClientEventBus.INSTANCE.fireEvent(new ClientEventBus.ViewChangedEvent());
+						return code;
+					}
+				}
 			}
 			PosContext.Log("Fatal: engage failed");
+			HistoryNodesStack.pop();
 			break;
-			
+		case STICKLET_ENGAGE_BY_CANCEL:
+			PosContext.LogFaild(currentNode);
+			return currentNode.failed(this);
+			//break;
 		default:
 			break;
 		}
-		return Node.NODE_CANCEL;
+		return Node.NODE_OK;
 	}
 	
 	/*
@@ -195,4 +210,8 @@ public abstract class ASticklet {
 		return called.Execute();
 	}
 	
+	public int Clean() {
+		PosContext.Log(aStickletName+" Clean up");
+		return 0;
+	}
 }

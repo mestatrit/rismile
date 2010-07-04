@@ -1,6 +1,7 @@
 package com.risetek.keke.client.nodes;
 
 import com.google.gwt.user.client.ui.Composite;
+import com.risetek.keke.client.context.ClientEventBus;
 import com.risetek.keke.client.context.PosContext;
 import com.risetek.keke.client.nodes.ui.PromotionComposite;
 import com.risetek.keke.client.sticklet.ASticklet;
@@ -47,4 +48,8 @@ public class CallerNode extends Node {
 		return composite;
 	}
 	
+	public int failed(ASticklet sticklet) {
+		Node n = sticklet.HistoryNodesStack.pop();
+		return n.rollback(sticklet);
+	}
 }
