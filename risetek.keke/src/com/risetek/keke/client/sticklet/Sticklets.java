@@ -46,11 +46,8 @@ public class Sticklets {
 			{ "0", "Caller", "epay.local.epay", "20090218213213314" },
 	 		};
 	private final static String[][] gameover = {
-			{ "4", "NamedNode", "epay.local.gameover" },
-			{ "0", "Promotion", "Game is Over", "20090218213214862" },
-			{ "0", "Promotion", "D3View", "20090218213215625" },
-			{ "0", "Promotion", "连接世界", "20090218213215859" },
-			{ "0", "Exit", "Goodbye ePay", "20090218213216656" }, };
+			{ "1", "NamedNode", "epay.local.gameover" },
+			{ "0", "Cancel", "Game Over F5 to reLoad", "20090218213214862" }, };
 
 	private final static String[][] services_failed = {
 			{ "1", "NamedNode", "epay.local.services.failed" },
