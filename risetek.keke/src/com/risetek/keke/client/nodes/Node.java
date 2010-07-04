@@ -83,7 +83,7 @@ public abstract class Node {
 	// 我们离开这个节点进入下一步的时候，执行该动作。
 	public int action(ASticklet widget) {
 		PosContext.LogAction(this);
-		return 0;
+		return NODE_OK;
 	}
 	
 	public void press(int keyCode) {

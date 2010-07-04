@@ -1,5 +1,6 @@
 package com.risetek.keke.client.nodes;
 
+import com.risetek.keke.client.context.ClientEventBus;
 import com.risetek.keke.client.context.PosContext;
 import com.risetek.keke.client.sticklet.ASticklet;
 import com.risetek.keke.client.sticklet.Sticklets;
@@ -23,17 +24,22 @@ public class SecurityCheckNode extends VNode {
 	}
 
 	public int enter(ASticklet sticklet) {
-		// 陷入被调用环境中去。
-		if( !isSecurity() ) {
-			ASticklet login = Sticklets.loadSticklet("epay.local.login");
-			return sticklet.Call(login);
-		}
 		return super.enter(sticklet);
 	}
 	
 	// 我们离开这个节点进入下一步的时候，执行该动作。
 	public int action(ASticklet sticklet) {
+		// 陷入被调用环境中去。
+		if( !isSecurity() ) {
+			ASticklet login = Sticklets.loadSticklet("epay.local.login");
+			sticklet.Call(login);
+			return NODE_STAY;
+		}
 		return super.action(sticklet);
 	}
 	
+	public int failed(ASticklet sticklet) {
+		Node n = sticklet.HistoryNodesStack.pop();
+		return n.failed(sticklet);
+	}
 }

@@ -54,7 +54,6 @@ public abstract class ASticklet {
 	public Stack<String> ParamStack = new Stack<String>();
 	
 	public int Execute() {
-		//HistoryNodesStack.push(rootNode);
 		return rootNode.enter(this);
 	}
 	
