@@ -98,3 +98,26 @@ h1 {
 	padding-right: 0px;
 }
 
+.risefront .KekesComposite .KekeComposite tr.edge {
+	height: 3px;
+}
+
+
+.risefront .KekesComposite .KekeComposite td.topleft {
+/*	background: crimson; */
+	width: 3px;
+}
+
+.risefront .KekesComposite .KekeComposite td.topright {
+	width: 3px;
+}
+
+
+.risefront .KekesComposite .KekeComposite td.midleft {
+	width: 3px;
+}
+
+.risefront .KekesComposite .KekeComposite td.bottomleft {
+	width: 3px;
+}
+
