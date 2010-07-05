@@ -22,7 +22,7 @@ public class KekesComposite extends Composite implements UiKeke {
 		{
 			HTMLPanel p = new HTMLPanel("");
 			p.setWidth("100%");
-			p.setHeight(kekeHeight+"px");
+			p.setHeight((kekeHeight+6)+"px");
 			keke.setWidget(spacekeke, 0, p);
 		}
 	}

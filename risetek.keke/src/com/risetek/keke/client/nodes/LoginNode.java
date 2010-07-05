@@ -1,8 +1,10 @@
 package com.risetek.keke.client.nodes;
 
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.http.client.RequestBuilder;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Composite;
+import com.risetek.keke.client.context.ClientEventBus;
 import com.risetek.keke.client.nodes.ui.PromotionComposite;
 import com.risetek.keke.client.sticklet.ASticklet;
 import com.risetek.keke.client.sticklet.Sticklet;
@@ -14,6 +16,10 @@ import com.risetek.keke.client.sticklet.Sticklets;
  * 这应该是一个虚节点，不接受用户的输入。
  */
 public class LoginNode extends Node {
+	
+	private static RequestBuilder rqBuilder;
+	
+	
 
 	public LoginNode(String promotion) {
 		super(promotion, "Login");
@@ -78,4 +84,14 @@ public class LoginNode extends Node {
 		return composite;
 	}
 	
+	public int failed(ASticklet sticklet) {
+		super.failed(sticklet);
+		if( sticklet.callerSticklet != null ) {
+			sticklet.callerSticklet.calledSticklet.Clean();
+			sticklet.callerSticklet.calledSticklet = null;
+			ClientEventBus.INSTANCE.fireEvent(new ClientEventBus.HIDControlEvent(ClientEventBus.CONTROL_SYSTEM_ENGAGE_BY_CANCEL));
+			ClientEventBus.INSTANCE.fireEvent(new ClientEventBus.ViewChangedEvent());
+		}
+		return NODE_STAY;
+	}
 }

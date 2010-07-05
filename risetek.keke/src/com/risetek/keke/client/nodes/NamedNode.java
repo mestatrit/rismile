@@ -3,12 +3,13 @@ package com.risetek.keke.client.nodes;
 import com.google.gwt.user.client.ui.Composite;
 import com.risetek.keke.client.context.ClientEventBus;
 import com.risetek.keke.client.context.PosContext;
-import com.risetek.keke.client.nodes.ui.PromotionComposite;
 import com.risetek.keke.client.sticklet.ASticklet;
 
 
 /*
  * 命名节点，是大量重复使用的结构化节点组。
+ * 这个节点的特殊性在于其总是位于第一的位置。是标志一个sticklet的节点。
+ * 
  */
 
 // TODO:

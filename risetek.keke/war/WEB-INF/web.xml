@@ -16,6 +16,18 @@
     <url-pattern>/risetek_keke/ePayRemoteService</url-pattern>
   </servlet-mapping>
 
+
+  <servlet>
+    <servlet-name>ePayRemoteServlet</servlet-name>
+    <servlet-class>com.risetek.keke.server.RemoteServletImpl</servlet-class>
+  </servlet>
+  
+  <servlet-mapping>
+    <servlet-name>ePayRemoteServlet</servlet-name>
+    <url-pattern>/risetek_keke/epay/login</url-pattern>
+  </servlet-mapping>
+
+
   <servlet>
     <servlet-name>loginServlet</servlet-name>
     <servlet-class>com.risetek.keke.server.LoginServiceImpl</servlet-class>

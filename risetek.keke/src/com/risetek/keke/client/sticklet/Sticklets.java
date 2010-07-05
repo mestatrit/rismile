@@ -15,6 +15,7 @@ import com.risetek.keke.client.nodes.NamedNode;
 import com.risetek.keke.client.nodes.Node;
 import com.risetek.keke.client.nodes.PasswordNode;
 import com.risetek.keke.client.nodes.PromotionNode;
+import com.risetek.keke.client.nodes.RemoteRequestNode;
 import com.risetek.keke.client.nodes.SecurityCheckNode;
 
 public class Sticklets {
@@ -51,8 +52,7 @@ public class Sticklets {
 
 	private final static String[][] services_failed = {
 			{ "1", "NamedNode", "epay.local.services.failed" },
-			{ "1", "Promotion", "远端服务失败", "20090218213217243" },
-			{ "0", "Exit", "byebye..", "20090218213218178" }, };
+			{ "0", "Cancel", "远端服务失败", "20090218213217243" },};
 
 	private final static String[][] invalid_src = {
 			{ "1", "NamedNode", "epay.local.system.nosrc" },
@@ -63,13 +63,19 @@ public class Sticklets {
 			{ "1", "NamedNode", "epay.local.system.runtime_error" },
 			{ "1", "Promotion", "Runtimg Error", "20090218213219741" },
 			{ "0", "Exit", "byebye..", "20090218213222605" }, };
-
+/*
 	final static String[][] syslogin = {
 			{ "1", "NamedNode", "epay.local.system.login" },
-			{ "1", "Username", "输入用户名称", "20090218213222671" },
+			{ "1", "Input", "输入用户名称", "20090218213222671" },
 			{ "1", "Password", "输入登录密码", "20090218213227180" },
 			{ "0", "Login", "登录ePay", "20090218213227509" }, };
-
+*/
+	final static String[][] syslogin = {
+		{ "1", "NamedNode", "epay.local.system.login" },
+		{ "1", "Input", "输入用户名称", "20090218213222671" },
+		{ "1", "Password", "输入登录密码", "20090218213227180" },
+		{ "0", "RemoteRequest", "登录ePay", "20090218213227509" }, };
+	
 	/*
 	 * 注册名称与源。
 	 */
@@ -123,12 +129,14 @@ public class Sticklets {
 			node = new PromotionNode(nodeDesc[2], nodeDesc[3]);
 		else if ("Cancel".equals(nodeDesc[1]))
 			node = new CancelNode(nodeDesc[2], nodeDesc[3]);
-		else if ("Username".equals(nodeDesc[1]))
+		else if ("Input".equals(nodeDesc[1]))
 			node = new InputNode(nodeDesc[2], nodeDesc[3]);
 		else if ("Password".equals(nodeDesc[1]))
 			node = new PasswordNode(nodeDesc[2], nodeDesc[3]);
 		else if ("Login".equals(nodeDesc[1]))
 			node = new LoginNode(nodeDesc[2]);
+		else if ("RemoteRequest".equals(nodeDesc[1]))
+			node = new RemoteRequestNode(nodeDesc[2]);
 		else if ("Logout".equals(nodeDesc[1]))
 			node = new LogoutNode();
 		else if ("Exit".equals(nodeDesc[1]))

@@ -2,7 +2,6 @@ package com.risetek.keke.client.nodes;
 
 import com.google.gwt.user.client.ui.Composite;
 import com.risetek.keke.client.context.ClientEventBus;
-import com.risetek.keke.client.nodes.ui.PromotionComposite;
 import com.risetek.keke.client.sticklet.ASticklet;
 
 public abstract class VNode extends Node {
@@ -27,8 +26,8 @@ public abstract class VNode extends Node {
 	public int rollback(ASticklet sticklet) {
 		int state = super.rollback(sticklet);
 		//作为一个虚节点，我们不能停留在这个节点，必须再rollback。
-//		ClientEventBus.INSTANCE.fireEvent(new ClientEventBus.HIDControlEvent(ClientEventBus.CONTROL_SYSTEM_ROLLBACK));
-		ClientEventBus.INSTANCE.fireEvent(new ClientEventBus.HIDControlEvent(ClientEventBus.CONTROL_SYSTEM_ENGAGE));
+		ClientEventBus.INSTANCE.fireEvent(new ClientEventBus.HIDControlEvent(ClientEventBus.CONTROL_SYSTEM_ROLLBACK));
+//		ClientEventBus.INSTANCE.fireEvent(new ClientEventBus.HIDControlEvent(ClientEventBus.CONTROL_SYSTEM_ENGAGE));
 		return state;
 	}
 	

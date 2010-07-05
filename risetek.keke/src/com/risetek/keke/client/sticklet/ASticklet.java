@@ -129,7 +129,16 @@ public abstract class ASticklet {
 				return n.rollback(this);
 			}
 			else
-				PosContext.Log("Fatal: broken rollback history stack");
+			{
+				// 这表明这是第一个节点，一定是NamedNode ?
+				if( callerSticklet != null ) {
+					callerSticklet.calledSticklet.Clean();
+					callerSticklet.calledSticklet = null;
+					ClientEventBus.INSTANCE.fireEvent(new ClientEventBus.HIDControlEvent(ClientEventBus.CONTROL_SYSTEM_ROLLBACK));
+				}
+				else
+					ClientEventBus.INSTANCE.fireEvent(new ClientEventBus.HIDControlEvent(ClientEventBus.CONTROL_SYSTEM_ENGAGE));
+			}
 			break;
 			
 		case STICKLET_ENGAGE:
