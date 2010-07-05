@@ -3,6 +3,8 @@ package com.risetek.keke.client.context;
 import java.util.Stack;
 
 import com.google.gwt.core.client.GWT;
+import com.risetek.keke.client.context.ClientEventBus.CallerEvent;
+import com.risetek.keke.client.context.ClientEventBus.CallerHandler;
 import com.risetek.keke.client.context.ClientEventBus.HIDCARDEvent;
 import com.risetek.keke.client.context.ClientEventBus.HIDCARDHandler;
 import com.risetek.keke.client.context.ClientEventBus.HIDControlEvent;
@@ -79,6 +81,7 @@ public class PosContext {
         ClientEventBus.INSTANCE.addHandler(viewchangedhandler, ViewChangedEvent.TYPE);
         ClientEventBus.INSTANCE.addHandler(keyCodehandler, HIDNumberEvent.TYPE);
         ClientEventBus.INSTANCE.addHandler(controlCodehandler, HIDControlEvent.TYPE);
+        ClientEventBus.INSTANCE.addHandler(callerhandler, CallerEvent.TYPE);
 
         presenter = new Presenter(view);
         executeWidget.push(Sticklets.loadSticklet("epay.local.demo"));
@@ -132,6 +135,15 @@ public class PosContext {
 		}
 	};
 
+	CallerHandler callerhandler = new CallerHandler() {
+
+		@Override
+		public void onEvent(CallerEvent event) {
+			getSticklet().Call(event.getSticklet());
+		}
+	};
+	
+	
 	HIDControlHandler controlCodehandler = new HIDControlHandler() {
 
 		@Override

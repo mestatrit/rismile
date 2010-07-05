@@ -5,6 +5,7 @@ import com.google.gwt.http.client.RequestException;
 import com.google.gwt.user.client.ui.Composite;
 import com.risetek.keke.client.context.PosContext;
 import com.risetek.keke.client.context.RemoteResponse;
+import com.risetek.keke.client.nodes.ui.PromotionComposite;
 import com.risetek.keke.client.sticklet.ASticklet;
 
 /*
@@ -43,9 +44,15 @@ public class RemoteRequestNode extends Node {
 		
 	}	
 	
-	@Override
 	public Composite getComposite() {
-		return null;
+		if( composite == null )
+			composite = new PromotionComposite(this);
+		return composite;
+	}
+	
+	public int failed(ASticklet sticklet) {
+		Node n = sticklet.HistoryNodesStack.pop();
+		return n.rollback(sticklet);
 	}
 	
 }

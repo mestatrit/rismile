@@ -30,10 +30,10 @@ public class RemoteServletImpl extends HttpServlet {
 		PrintWriter out;
 		try {
 			out = resp.getWriter();
-			out.println("<?xml version=\"1.0\" encoding=\"utf-8\"?>"
-					+ "<stick type='NamedNode' d='1'>missing Service method<PARAM></PARAM></stick>"
-					+ "<stick type='Promotion' d='0'>没有该远程方法<PARAM img='Error'></PARAM></stick>"
-					);
+			out.println("<?xml version=\"1.0\" encoding=\"utf-8\"?><ePay>"
+					+ "<stick type='NamedNode' d='1' p=\"missing Service method\"><PARAM>No</PARAM><p>e</p></stick>"
+					+ "<stick type='Promotion' d='0' p=\"没有该远程方法\"><img>Error</img><title>abc</title></stick>"
+					+ "</ePay>");
 			out.flush();
 		} catch (IOException e) {
 			e.printStackTrace();
