@@ -13,7 +13,7 @@
   
   <servlet-mapping>
     <servlet-name>ePayRemoteServlet</servlet-name>
-    <url-pattern>/risetek_keke/epay/login</url-pattern>
+    <url-pattern>/risetek_keke/remotecall</url-pattern>
   </servlet-mapping>
 
   <!-- Default page to serve -->

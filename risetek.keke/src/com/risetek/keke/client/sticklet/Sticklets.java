@@ -15,10 +15,12 @@ import com.risetek.keke.client.nodes.InjectTokenNode;
 import com.risetek.keke.client.nodes.InputNode;
 import com.risetek.keke.client.nodes.LogoutNode;
 import com.risetek.keke.client.nodes.NamedNode;
+import com.risetek.keke.client.nodes.ParamStick;
 import com.risetek.keke.client.nodes.PasswordNode;
 import com.risetek.keke.client.nodes.PromotionNode;
 import com.risetek.keke.client.nodes.RemoteRequestNode;
 import com.risetek.keke.client.nodes.SecurityCheckNode;
+import com.risetek.keke.client.nodes.StayStick;
 import com.risetek.keke.client.nodes.Stick;
 
 public class Sticklets {
@@ -35,23 +37,25 @@ public class Sticklets {
 	private final static String[][] epay = {
 			{ "1", "NamedNode", "epay.local.epay" },
 			{ "3", "SecurityCheck" },
-			{ "0", "Promotion", "服务创造价值", "20090218213211718" },
-			{ "0", "Promotion", "观念决定出路", "20090218213212220" },
+			{ "0", "Stay", "服务创造价值", "20090218213211718" },
+			{ "0", "Stay", "观念决定出路", "20090218213212220" },
 			{ "1", "Logout", "退出登录", "20090218213212783" },
 			{ "0", "Caller", "epay.local.demo", "20090218213213314" }, };
 
 	private final static String[][] demo = {
 			{ "5", "NamedNode", "epay.local.demo" },
 			{ "1", "Promotion", "我的 ePay", "20090218213217243" },
-			{ "0", "Promotion", "新服务消息", "20090218213219741" },
+			{ "1", "Promotion", "新服务消息", "20090218213219741" },
 			{ "0", "Promotion", "我要帮助", "20090218213212220" },
 			{ "0", "Promotion", "400-000-001 服务电话", "20090218213211718" },
 			{ "0", "Exit", "退出程序", "20090218213212783" },
 			{ "0", "Caller", "epay.local.epay", "20090218213213314" },
+			{ "1", "Param", "epay/news", "20090218213214862" },
+			{ "0", "RemoteRequest", "获取新信息中...", "20090218213227509" },
 	 		};
 	private final static String[][] gameover = {
 			{ "1", "NamedNode", "epay.local.gameover" },
-			{ "0", "Cancel", "Game Over F5 to reLoad", "20090218213214862" }, };
+			{ "0", "Cancel", "Game Over 按F5重新运行", "20090218213214862" }, };
 
 	private final static String[][] services_failed = {
 			{ "1", "NamedNode", "epay.local.services.failed" },
@@ -66,18 +70,13 @@ public class Sticklets {
 			{ "1", "NamedNode", "epay.local.system.runtime_error" },
 			{ "1", "Promotion", "Runtimg Error", "20090218213219741" },
 			{ "0", "Exit", "byebye..", "20090218213222605" }, };
-/*
+
 	final static String[][] syslogin = {
 			{ "1", "NamedNode", "epay.local.system.login" },
 			{ "1", "Input", "输入用户名称", "20090218213222671" },
 			{ "1", "Password", "输入登录密码", "20090218213227180" },
-			{ "0", "Login", "登录ePay", "20090218213227509" }, };
-*/
-	final static String[][] syslogin = {
-		{ "1", "NamedNode", "epay.local.system.login" },
-		{ "1", "Input", "输入用户名称", "20090218213222671" },
-		{ "1", "Password", "输入登录密码", "20090218213227180" },
-		{ "0", "RemoteRequest", "登录ePay中...", "20090218213227509" }, };
+			{ "1", "Param", "epay/login", "20090218213214862" },
+			{ "0", "RemoteRequest", "登录ePay中...", "20090218213227509" }, };
 	
 	/*
 	 * 注册名称与源。
@@ -130,6 +129,8 @@ public class Sticklets {
 			node = new NamedNode(nodeDesc[2]);
 		else if ("Promotion".equals(nodeDesc[1]))
 			node = new PromotionNode(nodeDesc[2], nodeDesc[3]);
+		else if ("Stay".equals(nodeDesc[1]))
+			node = new StayStick(nodeDesc[2], nodeDesc[3]);
 		else if ("Cancel".equals(nodeDesc[1]))
 			node = new CancelNode(nodeDesc[2], nodeDesc[3]);
 		else if ("Input".equals(nodeDesc[1]))
@@ -138,6 +139,8 @@ public class Sticklets {
 			node = new PasswordNode(nodeDesc[2], nodeDesc[3]);
 		else if ("RemoteRequest".equals(nodeDesc[1]))
 			node = new RemoteRequestNode(nodeDesc[2]);
+		else if ("Param".equals(nodeDesc[1]))
+			node = new ParamStick(nodeDesc[2]);
 		else if ("Logout".equals(nodeDesc[1]))
 			node = new LogoutNode();
 		else if ("Exit".equals(nodeDesc[1]))
@@ -207,20 +210,11 @@ public class Sticklets {
 	public static String stickletToXML(String[][] sticklet) {
 		String xml = "<?xml version=\"1.0\" encoding=\"utf-8\"?><ePay>";
 		for( int loop=0; loop < sticklet.length; loop++ ) {
-			String stick = "<stick type=\"";
-			stick = stick.concat(sticklet[loop][1]);
-			stick = stick.concat("\" d=\"");
-			stick = stick.concat(sticklet[loop][0]);
-			stick = stick.concat("\" p=\"");
-			stick = stick.concat(sticklet[loop][2]);
-			stick = stick.concat("\">");
-
-			stick = stick.concat("<img>");
-			stick = stick.concat(sticklet[loop][3]);
-			stick = stick.concat("</img>");
-		
+			String stick = "<stick t=\"".concat(sticklet[loop][1]);
+			stick = stick.concat("\" d=\"").concat(sticklet[loop][0]);
+			stick = stick.concat("\" p=\"").concat(sticklet[loop][2]).concat("\">");
+			stick = stick.concat("<img>").concat(sticklet[loop][3]).concat("</img>");
 			stick = stick.concat("</stick>");
-			
 			xml = xml.concat(stick);
 		}
 		
@@ -245,7 +239,7 @@ public class Sticklets {
 			String[] nodes = new String[4];
 			Node node = list.item(loop);
 			nodes[0] = getStickAttribute(node,"d");
-			nodes[1] = getStickAttribute(node,"type");
+			nodes[1] = getStickAttribute(node,"t");
 			nodes[2] = getStickAttribute(node,"p");
 			nodes[3] = node.getChildNodes().toString();
 			sticklet.add(nodes);

@@ -16,24 +16,23 @@ import org.w3c.dom.NodeList;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 
+import com.risetek.keke.client.sticklet.Sticklets;
 import com.risetek.keke.server.process.Login;
 
 public class RemoteServletImpl extends HttpServlet {
 
 	private static final long serialVersionUID = 5310351748984867707L;
-/*
+
 	private static final String[][] remoteService_missing = {
 			{ "1", "NamedNode", "missing Service method", "" },
 			{ "0", "Promotion", "没有该远程方法", "Error" }, };
-*/
+
 	void process(HttpServletResponse resp) {
 		PrintWriter out;
 		try {
 			out = resp.getWriter();
-			out.println("<?xml version=\"1.0\" encoding=\"utf-8\"?><ePay>"
-					+ "<stick type='NamedNode' d='1' p=\"missing Service method\"><PARAM>No</PARAM><p>e</p></stick>"
-					+ "<stick type='Promotion' d='0' p=\"没有该远程方法\"><img>Error</img><title>abc</title></stick>"
-					+ "</ePay>");
+			String xml = Sticklets.stickletToXML(remoteService_missing);
+			out.println(xml);
 			out.flush();
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -59,7 +58,7 @@ public class RemoteServletImpl extends HttpServlet {
 				if (name != null) {
 					String value = name.getTextContent();
 					if (value != null) {
-						if ("Login".equals(value)) {
+						if ("epay/login".equals(value)) {
 							Login.process(resp);
 							return;
 						}

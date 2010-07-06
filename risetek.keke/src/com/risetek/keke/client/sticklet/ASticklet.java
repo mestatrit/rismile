@@ -187,9 +187,20 @@ public abstract class ASticklet {
 						ClientEventBus.INSTANCE.fireEvent(new ClientEventBus.ViewChangedEvent());
 						return code;
 					}
+					else
+					{
+						PosContext.Log("Tail stick.");
+						// TODO: 临时性的解决办法，回到本sticklet的头。
+						Stick s = HistoryNodesStack.elementAt(0);
+						HistoryNodesStack.clear();
+
+						HistoryNodesStack.push(s);
+						s.enter(this);
+						
+					}
 				}
 			}
-			PosContext.Log("Fatal: engage failed");
+			PosContext.Log("Fatal: "+ currentNode.Promotion + " engage failed by "+ code);
 			HistoryNodesStack.pop();
 			break;
 		case STICKLET_ENGAGE_BY_CANCEL:

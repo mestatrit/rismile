@@ -1,5 +1,6 @@
 package com.risetek.keke.client.nodes;
 
+import com.risetek.keke.client.context.ClientEventBus;
 import com.risetek.keke.client.context.PosContext;
 import com.risetek.keke.client.sticklet.ASticklet;
 import com.risetek.keke.client.sticklet.Sticklets;
@@ -31,7 +32,7 @@ public class SecurityCheckNode extends VStick {
 		// 陷入被调用环境中去。
 		if( !isSecurity() ) {
 			ASticklet login = Sticklets.loadSticklet("epay.local.login");
-			sticklet.Call(login);
+			ClientEventBus.INSTANCE.fireEvent(new ClientEventBus.CallerEvent(login));
 			return NODE_STAY;
 		}
 		return super.action(sticklet);
