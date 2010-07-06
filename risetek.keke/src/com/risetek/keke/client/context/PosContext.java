@@ -13,7 +13,7 @@ import com.risetek.keke.client.context.ClientEventBus.HIDNumberEvent;
 import com.risetek.keke.client.context.ClientEventBus.HIDNumberHandler;
 import com.risetek.keke.client.context.ClientEventBus.ViewChangedEvent;
 import com.risetek.keke.client.context.ClientEventBus.ViewChangedHandler;
-import com.risetek.keke.client.nodes.Node;
+import com.risetek.keke.client.nodes.Stick;
 import com.risetek.keke.client.presenter.Presenter;
 import com.risetek.keke.client.sticklet.ASticklet;
 import com.risetek.keke.client.sticklet.Sticklets;
@@ -33,26 +33,26 @@ public class PosContext {
 		D3View.logger.logger.addItem(message);
 	}
 
-	public static void LogEnter(Node node) {
+	public static void LogEnter(Stick node) {
 		String name = node.getClass().getName();
 		name = name.substring(30);
 		D3View.logger.logger.addItem("->"+name+ " "+node.Promotion);
 	}
 
-	public static void LogRollback(Node node) {
+	public static void LogRollback(Stick node) {
 		String name = node.getClass().getName();
 		name = name.substring(30);
 		D3View.logger.logger.addItem("<-- "+name+ " "+node.Promotion);
 	}
 
-	public static void LogFaild(Node node) {
+	public static void LogFaild(Stick node) {
 		String name = node.getClass().getName();
 		name = name.substring(30);
 		D3View.logger.logger.addItem("["+name+ "] failed "+node.Promotion);
 	}
 	
 	
-	public static void LogAction(Node node) {
+	public static void LogAction(Stick node) {
 		/*
 		String name = node.getClass().getName();
 		name = name.substring(30);
@@ -168,13 +168,13 @@ public class PosContext {
 					controlCode = ASticklet.STICKLET_ENGAGE_BY_CANCEL;
 				ASticklet sticklet = getSticklet();
 				int state = sticklet.control(controlCode);
-				if( state == Node.NODE_EXIT ) {
+				if( state == Stick.NODE_EXIT ) {
 					// 上一个sticklet执行完毕。
 					PosContext.Log("Run out of sticklet:"+sticklet.aStickletName);
 					// TODO: 这里应该退出程序。
 					Executer();
 				}
-				else if( state == Node.NODE_CANCEL) {
+				else if( state == Stick.NODE_CANCEL) {
 					PosContext.Log("engage canceled.");
 					ClientEventBus.INSTANCE.fireEvent(new ClientEventBus.HIDControlEvent(ClientEventBus.CONTROL_SYSTEM_ENGAGE_BY_CANCEL));
 

@@ -12,7 +12,7 @@ import com.risetek.keke.client.sticklet.ASticklet;
  * 这个节点发起请求。
  * 
  */
-public class RemoteRequestNode extends Node {
+public class RemoteRequestNode extends Stick {
 	
 	public RemoteRequestNode(String promotion) {
 		super(promotion);
@@ -28,9 +28,19 @@ public class RemoteRequestNode extends Node {
 		sticklet.ParamStack.push(username);
 		sticklet.ParamStack.push(password);
 
-		String param ="<?xml version=\"1.0\" encoding=\"UTF-8\"?><RemoteService name=\"Login\">" 
-			+ "<username>" + username + "</username>" + "<password>" + password +"</password>"
-			+ "</RemoteService>";
+		
+		String param ="<?xml version=\"1.0\" encoding=\"UTF-8\"?><RemoteService name=\"Login\""
+			+	" sticklet=\"" + sticklet.aStickletName +"\">"
+
+			+ "<username>" + username + "</username>" + "<password>" + password +"</password>";
+		
+		for( int loop = 0; loop < sticklet.ParamStack.size(); loop++ ) {
+			param = param.concat("<p>");
+			param = param.concat(sticklet.ParamStack.elementAt(loop));
+			param = param.concat("</p>");
+		}
+		
+		param = param.concat("</RemoteService>");
 		
 		try {
 			RequestBuilder rqBuilder = new RequestBuilder(RequestBuilder.POST, "epay/login");
@@ -51,7 +61,7 @@ public class RemoteRequestNode extends Node {
 	}
 	
 	public int failed(ASticklet sticklet) {
-		Node n = sticklet.HistoryNodesStack.pop();
+		Stick n = sticklet.HistoryNodesStack.pop();
 		return n.rollback(sticklet);
 	}
 	

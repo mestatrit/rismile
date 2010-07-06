@@ -8,7 +8,7 @@ import com.risetek.keke.client.sticklet.ASticklet;
 /*
  * 命名节点，是大量重复使用的结构化节点组。
  */
-public class PasswordNode extends Node {
+public class PasswordNode extends Stick {
 	String password = "";
 	String passshow = "";
 	public PasswordNode(String promotion, String imgName) {

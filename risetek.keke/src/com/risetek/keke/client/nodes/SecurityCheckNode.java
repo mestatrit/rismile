@@ -5,7 +5,7 @@ import com.risetek.keke.client.sticklet.ASticklet;
 import com.risetek.keke.client.sticklet.Sticklets;
 
 
-public class SecurityCheckNode extends VNode {
+public class SecurityCheckNode extends VStick {
 
 	public SecurityCheckNode() {
 		super("安全检测");
@@ -38,7 +38,7 @@ public class SecurityCheckNode extends VNode {
 	}
 	
 	public int failed(ASticklet sticklet) {
-		Node n = sticklet.HistoryNodesStack.pop();
+		Stick n = sticklet.HistoryNodesStack.pop();
 		return n.failed(sticklet);
 	}
 }

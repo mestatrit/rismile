@@ -3,20 +3,23 @@ package com.risetek.keke.client.sticklet;
 import java.util.HashMap;
 import java.util.Vector;
 
+import com.google.gwt.xml.client.Document;
+import com.google.gwt.xml.client.Node;
+import com.google.gwt.xml.client.NodeList;
+import com.google.gwt.xml.client.XMLParser;
 import com.risetek.keke.client.context.PosContext;
 import com.risetek.keke.client.nodes.CallerNode;
 import com.risetek.keke.client.nodes.CancelNode;
 import com.risetek.keke.client.nodes.ExitNode;
 import com.risetek.keke.client.nodes.InjectTokenNode;
 import com.risetek.keke.client.nodes.InputNode;
-import com.risetek.keke.client.nodes.LoginNode;
 import com.risetek.keke.client.nodes.LogoutNode;
 import com.risetek.keke.client.nodes.NamedNode;
-import com.risetek.keke.client.nodes.Node;
 import com.risetek.keke.client.nodes.PasswordNode;
 import com.risetek.keke.client.nodes.PromotionNode;
 import com.risetek.keke.client.nodes.RemoteRequestNode;
 import com.risetek.keke.client.nodes.SecurityCheckNode;
+import com.risetek.keke.client.nodes.Stick;
 
 public class Sticklets {
 
@@ -74,7 +77,7 @@ public class Sticklets {
 		{ "1", "NamedNode", "epay.local.system.login" },
 		{ "1", "Input", "输入用户名称", "20090218213222671" },
 		{ "1", "Password", "输入登录密码", "20090218213227180" },
-		{ "0", "RemoteRequest", "登录ePay", "20090218213227509" }, };
+		{ "0", "RemoteRequest", "登录ePay中...", "20090218213227509" }, };
 	
 	/*
 	 * 注册名称与源。
@@ -121,8 +124,8 @@ public class Sticklets {
 
 	public static Sticklets INSTANCE = new Sticklets();
 
-	private static Node createNode(String[] nodeDesc) {
-		Node node = null;
+	private static Stick createNode(String[] nodeDesc) {
+		Stick node = null;
 		if ("NamedNode".equals(nodeDesc[1]))
 			node = new NamedNode(nodeDesc[2]);
 		else if ("Promotion".equals(nodeDesc[1]))
@@ -133,8 +136,6 @@ public class Sticklets {
 			node = new InputNode(nodeDesc[2], nodeDesc[3]);
 		else if ("Password".equals(nodeDesc[1]))
 			node = new PasswordNode(nodeDesc[2], nodeDesc[3]);
-		else if ("Login".equals(nodeDesc[1]))
-			node = new LoginNode(nodeDesc[2]);
 		else if ("RemoteRequest".equals(nodeDesc[1]))
 			node = new RemoteRequestNode(nodeDesc[2]);
 		else if ("Logout".equals(nodeDesc[1]))
@@ -152,15 +153,15 @@ public class Sticklets {
 		return node;
 	}
 
-	public static Node loadNodes(String[][] datas) {
+	public static Stick loadNodes(String[][] datas) {
 
 		// 该函数中应该实现对 src 的基本检查，如果错误，应该抛出 ePay Runtime Error.
 
 		class NodeDegree {
 			int degree;
-			Node node;
+			Stick node;
 
-			public NodeDegree(int degree, Node node) {
+			public NodeDegree(int degree, Stick node) {
 				this.degree = degree;
 				this.node = node;
 			}
@@ -203,4 +204,62 @@ public class Sticklets {
 		return top.node;
 	}
 
+	public static String stickletToXML(String[][] sticklet) {
+		String xml = "<?xml version=\"1.0\" encoding=\"utf-8\"?><ePay>";
+		for( int loop=0; loop < sticklet.length; loop++ ) {
+			String stick = "<stick type=\"";
+			stick = stick.concat(sticklet[loop][1]);
+			stick = stick.concat("\" d=\"");
+			stick = stick.concat(sticklet[loop][0]);
+			stick = stick.concat("\" p=\"");
+			stick = stick.concat(sticklet[loop][2]);
+			stick = stick.concat("\">");
+
+			stick = stick.concat("<img>");
+			stick = stick.concat(sticklet[loop][3]);
+			stick = stick.concat("</img>");
+		
+			stick = stick.concat("</stick>");
+			
+			xml = xml.concat(stick);
+		}
+		
+		xml = xml.concat("</ePay>");
+		return xml;
+	}
+	
+	
+	private static String getStickAttribute(Node node, String attribute) {
+		Node n = node.getAttributes().getNamedItem(attribute);
+		if( n != null )
+			return n.getNodeValue();
+		return null;
+	}
+	
+	public static String[][] xmlToSticklet(String xml) {
+		Vector<String[]> sticklet = new Vector<String[]>();
+		Document doc = XMLParser.parse(xml);
+		NodeList list = doc.getElementsByTagName("stick");
+		
+		for(int loop=0; loop < list.getLength(); loop++) {
+			String[] nodes = new String[4];
+			Node node = list.item(loop);
+			nodes[0] = getStickAttribute(node,"d");
+			nodes[1] = getStickAttribute(node,"type");
+			nodes[2] = getStickAttribute(node,"p");
+			nodes[3] = node.getChildNodes().toString();
+			sticklet.add(nodes);
+		}
+		
+		String[][] a = new String[sticklet.size()][4];
+		
+		for( int loop = 0; loop < sticklet.size(); loop++) {
+			String[] t = sticklet.elementAt(loop);
+			a[loop][0] = t[0];
+			a[loop][1] = t[1];
+			a[loop][2] = t[2];
+			a[loop][3] = t[3];
+		}
+		return a;
+	}
 }

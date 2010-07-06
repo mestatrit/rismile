@@ -78,9 +78,12 @@ public class IconManage {
 	}
 	
 	public static ImageResource getIcon(String name) {
+		// TODO: FIXME: 这是临时措施。
+		name = name.replace("<img>", "");
+		name = name.replace("</img>", "");
 		ImageResource i = INSANCE.v.get(name);
 		if( i == null )
-			i = INSANCE.v.get("20090218213158904");
+			i = INSANCE.v.get("20090218213212783");
 		return i;
 	}
 

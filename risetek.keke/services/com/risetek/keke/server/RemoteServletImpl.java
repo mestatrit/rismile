@@ -16,7 +16,7 @@ import org.w3c.dom.NodeList;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 
-import com.risetek.keke.server.process.PLogin;
+import com.risetek.keke.server.process.Login;
 
 public class RemoteServletImpl extends HttpServlet {
 
@@ -60,7 +60,7 @@ public class RemoteServletImpl extends HttpServlet {
 					String value = name.getTextContent();
 					if (value != null) {
 						if ("Login".equals(value)) {
-							PLogin.process(resp);
+							Login.process(resp);
 							return;
 						}
 					}

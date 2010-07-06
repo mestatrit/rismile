@@ -2,7 +2,7 @@ package com.risetek.keke.client.nodes.ui;
 
 import com.google.gwt.user.client.ui.DockPanel;
 import com.google.gwt.user.client.ui.Label;
-import com.risetek.keke.client.nodes.Node;
+import com.risetek.keke.client.nodes.Stick;
 
 public class InputComposite extends StickComposite {
 	
@@ -10,7 +10,7 @@ public class InputComposite extends StickComposite {
 	public Label input = new Label();
 	
 
-	public InputComposite(Node node) {
+	public InputComposite(Stick node) {
 		super(node);
 		
 		Label Type = new Label(node.Ticker);

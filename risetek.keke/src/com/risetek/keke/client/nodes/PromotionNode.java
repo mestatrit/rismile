@@ -8,7 +8,7 @@ import com.risetek.keke.client.sticklet.ASticklet;
 /*
  * 命名节点，是大量重复使用的结构化节点组。
  */
-public class PromotionNode extends Node {
+public class PromotionNode extends Stick {
 
 	public PromotionNode(String promotion, String imgName) {
 		super(promotion, imgName);

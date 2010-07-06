@@ -7,7 +7,7 @@ import com.risetek.keke.client.sticklet.ASticklet;
 import com.risetek.keke.client.sticklet.Sticklets;
 
 
-public class CallerNode extends Node {
+public class CallerNode extends Stick {
 
 	String calledSticklet = null;
 	
@@ -19,7 +19,7 @@ public class CallerNode extends Node {
 	public int enter(ASticklet sticklet) {
 		if( sticklet.calledSticklet != null ) {
 			PosContext.Log("Fatal: calledSticklet is not null");
-			return Node.NODE_CANCEL;
+			return Stick.NODE_CANCEL;
 		}
 			
 		int state = super.enter(sticklet);
@@ -48,7 +48,7 @@ public class CallerNode extends Node {
 	}
 	
 	public int failed(ASticklet sticklet) {
-		Node n = sticklet.HistoryNodesStack.pop();
+		Stick n = sticklet.HistoryNodesStack.pop();
 		return n.rollback(sticklet);
 	}
 }

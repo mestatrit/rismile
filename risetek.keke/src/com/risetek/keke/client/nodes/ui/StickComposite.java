@@ -6,7 +6,7 @@ import com.google.gwt.user.client.ui.Grid;
 import com.google.gwt.user.client.ui.HasHorizontalAlignment;
 import com.google.gwt.user.client.ui.HasVerticalAlignment;
 import com.google.gwt.user.client.ui.Image;
-import com.risetek.keke.client.nodes.Node;
+import com.risetek.keke.client.nodes.Stick;
 import com.risetek.keke.client.resources.IconManage;
 import com.risetek.keke.client.ui.UiKeke;
 
@@ -17,7 +17,7 @@ public class StickComposite extends Composite {
 	DockPanel outPanel = new DockPanel();
 	Image img = new Image();
 
-	public StickComposite(Node node) {
+	public StickComposite(Stick node) {
 		//outgrid.addStyleName("sticklet");
 		
 		outgrid.getRowFormatter().addStyleName(0, "edge");

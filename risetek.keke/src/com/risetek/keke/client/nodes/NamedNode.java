@@ -15,7 +15,7 @@ import com.risetek.keke.client.sticklet.ASticklet;
 // TODO:
 // 命名节点应该注册到一个Hash表中，以备被按名调用。
 
-public class NamedNode extends VNode {
+public class NamedNode extends VStick {
 
 	public NamedNode(String name) {
 		super(name);

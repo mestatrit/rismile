@@ -3,7 +3,7 @@ package com.risetek.keke.client.ui;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.Grid;
 import com.google.gwt.user.client.ui.HTMLPanel;
-import com.risetek.keke.client.nodes.Node;
+import com.risetek.keke.client.nodes.Stick;
 
 public class KekesComposite extends Composite implements UiKeke {
 
@@ -27,12 +27,12 @@ public class KekesComposite extends Composite implements UiKeke {
 		}
 	}
 	
-	public void renderKekes(Node head, Node current)
+	public void renderKekes(Stick head, Stick current)
 	{
 		clearStickers();
 		int numberOfNodes = 0;
 		int numberToCurrentNodes = 0;
-		Node p = head;
+		Stick p = head;
 		while( p != null ) {
 			numberOfNodes++;
 			p = p.next;
@@ -44,7 +44,7 @@ public class KekesComposite extends Composite implements UiKeke {
 			p = p.next;
 		}
 		
-		Node firstRender = null;
+		Stick firstRender = null;
 		while( numberToCurrentNodes-- > 0) {
 			firstRender = firstRender == null ? head : firstRender.next;
 		}

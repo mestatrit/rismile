@@ -9,32 +9,32 @@ import com.risetek.keke.client.sticklet.ASticklet;
  * 这个结构用来表达一系列串联的节点。并能存储到数据库中。这是一种变异了的树形结构。
  */
 
-public abstract class Node {
+public abstract class Stick {
 	
 	public final static int NODE_OK		= 0;
 	public final static int NODE_STAY	= 1;
 	public final static int NODE_CANCEL	= 2;
 	public final static int NODE_EXIT	= -1;
 	
-	private Node children;
-	public Node next;
+	private Stick children;
+	public Stick next;
 	public String Ticker;
 	public String Promotion;
 	public String imgName;
 
 	Composite composite = null;
 	
-	public Node getChildren() {
+	public Stick getChildren() {
 		return children;
 	}
 	
 	public abstract Composite getComposite();
 
-	public Node(String promotion) {
+	public Stick(String promotion) {
 		this(promotion,"20090218213218568");
 	}
 
-	public Node(String promotion, String imgName) {
+	public Stick(String promotion, String imgName) {
 		Ticker = getClass().getName().substring(30);
 		Promotion = promotion;
 		this.imgName = imgName;
@@ -43,7 +43,7 @@ public abstract class Node {
 	/*
 	 * 链接一个节点到本节点的子孙
 	 */
-	public Node addChildrenNode(Node node) {
+	public Stick addChildrenNode(Stick node) {
 		if( children == null )
 			children = node;
 		else
@@ -55,7 +55,7 @@ public abstract class Node {
 	 * 链接一个弟兄到本节点
 	 */
 	
-	private void addNextNode(Node node) {
+	private void addNextNode(Stick node) {
 		if( next == null )
 			next = node;
 		else
@@ -65,7 +65,7 @@ public abstract class Node {
 	public int enter(ASticklet sticklet) {
 		PosContext.LogEnter(this);
 		
-		Node last = sticklet.getCurrentNode();
+		Stick last = sticklet.getCurrentNode();
 		if( last != null ){
 			last.leave(sticklet);
 		}
@@ -92,7 +92,7 @@ public abstract class Node {
 	
 	public int rollback(ASticklet sticklet) {
 		PosContext.LogRollback(this);
-		Node last = sticklet.getCurrentNode();
+		Stick last = sticklet.getCurrentNode();
 		if( last != null ){
 			last.leave(sticklet);
 		}

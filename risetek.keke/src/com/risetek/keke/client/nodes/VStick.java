@@ -4,9 +4,9 @@ import com.google.gwt.user.client.ui.Composite;
 import com.risetek.keke.client.context.ClientEventBus;
 import com.risetek.keke.client.sticklet.ASticklet;
 
-public abstract class VNode extends Node {
+public abstract class VStick extends Stick {
 
-	public VNode(String promotion) {
+	public VStick(String promotion) {
 		super(promotion);
 	}
 

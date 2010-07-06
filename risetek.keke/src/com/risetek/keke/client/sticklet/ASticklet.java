@@ -1,10 +1,11 @@
 package com.risetek.keke.client.sticklet;
 
+import java.util.HashMap;
 import java.util.Stack;
 
 import com.risetek.keke.client.context.ClientEventBus;
 import com.risetek.keke.client.context.PosContext;
-import com.risetek.keke.client.nodes.Node;
+import com.risetek.keke.client.nodes.Stick;
 
 public abstract class ASticklet {
 	public String aStickletName = null;
@@ -18,22 +19,22 @@ public abstract class ASticklet {
 	 * 也用于rollback中。
 	 */
 	
-	public Stack<Node>	HistoryNodesStack = new Stack<Node>();
+	public Stack<Stick>	HistoryNodesStack = new Stack<Stick>();
 	/*
 	 * 标志当前活动中的节点。 
 	 */
-	Node currentNode;
-	public Node getCurrentNode() {
+	Stick currentNode;
+	public Stick getCurrentNode() {
 		return currentNode;
 	}
 	
-	public void setCurrentNode(Node n) {
+	public void setCurrentNode(Stick n) {
 			currentNode = n;
 	}
 	/*
 	 * 本Sticklet的入口节点。
 	 */
-	public Node rootNode;
+	public Stick rootNode;
 	
 	/*
 	 * 双链路，钩挂调用者和被调用者的层级关系。
@@ -52,6 +53,7 @@ public abstract class ASticklet {
 	
 	// 执行其间的运行参数堆栈。
 	public Stack<String> ParamStack = new Stack<String>();
+	public HashMap<String, String> KVPair = new HashMap<String, String>();
 	
 	public int Execute() {
 		return rootNode.enter(this);
@@ -96,13 +98,13 @@ public abstract class ASticklet {
 	public int control(int controlCode) {
 		// 判断本操作是否被屏蔽。
 		if( (control_mask & ( 1 << controlCode )) != 0 )
-			return Node.NODE_OK;
+			return Stick.NODE_OK;
 		
 		switch( controlCode )
 		{
 		case STICKLET_UP:
 			if( HistoryNodesStack.size() > 0 ) {
-				Node p = HistoryNodesStack.pop();
+				Stick p = HistoryNodesStack.pop();
 				HistoryNodesStack.push(p);
 				p = getChildrenNode(p);
 				if( p == currentNode )
@@ -125,7 +127,7 @@ public abstract class ASticklet {
 			
 		case STICKLET_ROLLBACK:
 			if( HistoryNodesStack.size() > 0 ) {
-				Node n = HistoryNodesStack.pop();
+				Stick n = HistoryNodesStack.pop();
 				return n.rollback(this);
 			}
 			else
@@ -150,11 +152,11 @@ public abstract class ASticklet {
 			int code;
 			// 我们这里决定widget的存在与否
 			code = currentNode.action(this);
-			if( code == Node.NODE_EXIT ) {
+			if( code == Stick.NODE_EXIT ) {
 				return code;
 			}
 
-			if( code == Node.NODE_CANCEL) {
+			if( code == Stick.NODE_CANCEL) {
 				// 这表明本sticklet没有成功执行。
 				if( callerSticklet != null ) {
 					callerSticklet.calledSticklet.Clean();
@@ -166,7 +168,7 @@ public abstract class ASticklet {
 				return code;
 			}
 			
-			if( code == Node.NODE_OK)
+			if( code == Stick.NODE_OK)
 			{
 				if( getChildrenNode(currentNode) != null ) {
 	
@@ -197,14 +199,14 @@ public abstract class ASticklet {
 		default:
 			break;
 		}
-		return Node.NODE_OK;
+		return Stick.NODE_OK;
 	}
 	
 	/*
 	 * 我们或者得到节点的直接子孙。
 	 * 或者得到了CallerNode的直接子孙。
 	 */
-	public Node getChildrenNode(Node p) {
+	public Stick getChildrenNode(Stick p) {
 		return p.getChildren();
 	}
 

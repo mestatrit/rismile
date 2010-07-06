@@ -4,7 +4,7 @@ import com.google.gwt.user.client.ui.Composite;
 import com.risetek.keke.client.nodes.ui.PromotionComposite;
 import com.risetek.keke.client.sticklet.ASticklet;
 
-public class ExitNode extends Node {
+public class ExitNode extends Stick {
 
 	public ExitNode() {
 		super("退出程序", "20090218213218568");

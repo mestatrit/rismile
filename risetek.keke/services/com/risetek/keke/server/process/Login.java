@@ -1,8 +1,14 @@
 package com.risetek.keke.server.process;
 
+import java.io.IOException;
+import java.io.PrintWriter;
+
+import javax.servlet.http.HttpServletResponse;
+
 import org.w3c.dom.Node;
 
 import com.google.gwt.core.client.GWT;
+import com.risetek.keke.client.sticklet.Sticklets;
 
 public class Login {
 	
@@ -28,19 +34,21 @@ public class Login {
 	};
 	
 	
-	public static String[][] process(Node node) {
-		GWT.log("Node text:"+node.getTextContent());
-		/*
-		Node u = method.getAttributes().getNamedItem("username");
-		//Node u = doc.getElementsByTagName("username").item(0);
-		if( u == null || u.getNodeValue() == null )
-			return login_faild_invalid_username;
-		
-//		u = doc.getElementsByTagName("password").item(0);
-		u = method.getAttributes().getNamedItem("password");
-		if( u == null || u.getNodeValue() == null )
-			return login_faild_invalid_password;
-		*/
-		return login_sucessed;
+	public static void process(HttpServletResponse resp) {
+		PrintWriter out;
+		try {
+			out = resp.getWriter();
+			String xml = Sticklets.stickletToXML(login_sucessed);
+			out.println(xml);
+			/*
+			out.println("<?xml version=\"1.0\" encoding=\"utf-8\"?><ePay>"
+					+ "<stick type='NamedNode' d='1' p=\"missing Service method\"><PARAM>No</PARAM><p>e</p></stick>"
+					+ "<stick type='Cancel' d='0' p=\"没有该远程方法\"><img>Error</img><title>abc</title></stick>"
+					+ "</ePay>");
+			*/
+			out.flush();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 }
