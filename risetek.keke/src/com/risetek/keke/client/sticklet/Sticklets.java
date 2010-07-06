@@ -11,8 +11,8 @@ import com.risetek.keke.client.context.PosContext;
 import com.risetek.keke.client.nodes.CallerNode;
 import com.risetek.keke.client.nodes.CancelNode;
 import com.risetek.keke.client.nodes.ExitNode;
-import com.risetek.keke.client.nodes.InjectTokenNode;
 import com.risetek.keke.client.nodes.InputNode;
+import com.risetek.keke.client.nodes.KVPairStick;
 import com.risetek.keke.client.nodes.LogoutNode;
 import com.risetek.keke.client.nodes.NamedNode;
 import com.risetek.keke.client.nodes.ParamStick;
@@ -40,18 +40,21 @@ public class Sticklets {
 			{ "0", "Stay", "服务创造价值", "20090218213211718" },
 			{ "0", "Stay", "观念决定出路", "20090218213212220" },
 			{ "1", "Logout", "退出登录", "20090218213212783" },
+			// TODO: 系统调用则意味着历史记录的存在，这里应该启动一个新的sticklet来运行。
 			{ "0", "Caller", "epay.local.demo", "20090218213213314" }, };
 
 	private final static String[][] demo = {
 			{ "5", "NamedNode", "epay.local.demo" },
 			{ "1", "Promotion", "我的 ePay", "20090218213217243" },
 			{ "1", "Promotion", "新服务消息", "20090218213219741" },
-			{ "0", "Promotion", "我要帮助", "20090218213212220" },
-			{ "0", "Promotion", "400-000-001 服务电话", "20090218213211718" },
+			{ "1", "Promotion", "我要帮助", "20090218213212220" },
+			{ "0", "Stay", "400-000-001 服务电话", "20090218213211718" },
 			{ "0", "Exit", "退出程序", "20090218213212783" },
 			{ "0", "Caller", "epay.local.epay", "20090218213213314" },
 			{ "1", "Param", "epay/news", "20090218213214862" },
+			{ "1", "Param", "epay/help", "20090218213214862" },
 			{ "0", "RemoteRequest", "获取新信息中...", "20090218213227509" },
+			{ "0", "RemoteRequest", "获取帮助信息...", "20090218213227509" },
 	 		};
 	private final static String[][] gameover = {
 			{ "1", "NamedNode", "epay.local.gameover" },
@@ -149,8 +152,8 @@ public class Sticklets {
 			node = new SecurityCheckNode();
 		else if ("Caller".equals(nodeDesc[1]))
 			node = new CallerNode(nodeDesc[2]);
-		else if ("InjectToken".equals(nodeDesc[1]))
-			node = new InjectTokenNode("name",nodeDesc[2]);
+		else if ("KVPair".equals(nodeDesc[1]))
+			node = new KVPairStick();
 		else
 			node = new PromotionNode(nodeDesc[2], nodeDesc[3]);
 		return node;

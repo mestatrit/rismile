@@ -2,6 +2,7 @@ package com.risetek.keke.server;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -17,6 +18,7 @@ import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 
 import com.risetek.keke.client.sticklet.Sticklets;
+import com.risetek.keke.server.process.Help;
 import com.risetek.keke.server.process.Login;
 import com.risetek.keke.server.process.News;
 
@@ -61,14 +63,17 @@ public class RemoteServletImpl extends HttpServlet {
 					if (value != null) {
 						if ("epay/login".equals(value)) {
 							Login.process(resp);
-							return;
 						}
 						else if ("epay/news".equals(value)) {
 							News.process(resp);
-							return;
 						}
-						
+						else if ("epay/help".equals(value)) {
+							Help.process(resp);
+						}
+						return;
 					}
+					else
+						process(resp);
 				}
 			}
 		} catch (ParserConfigurationException e) {
@@ -78,6 +83,5 @@ public class RemoteServletImpl extends HttpServlet {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		process(resp);
 	}
 }

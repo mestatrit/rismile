@@ -5,21 +5,19 @@ import java.io.PrintWriter;
 
 import javax.servlet.http.HttpServletResponse;
 
-import org.w3c.dom.Node;
-
-import com.google.gwt.core.client.GWT;
 import com.risetek.keke.client.sticklet.Sticklets;
 
 public class Login {
-	
-	final static String[][] login_sucessed = {
-			{"1", "NamedNode", "Login Sucessed", ""},
-			{"3", "InjectToken", "Login Sucessed", ""},
-			{"0", "Promotion", "ePay欢迎您", "20090218213217243"},
-			{"0", "Promotion", "Risetek为您服务", "20090218213218178"},
-			{"0", "Promotion", "NetFront先锋", "20090218213215625"},
-	};
 
+	final static String[][] login_sucessed = {
+			{ "1", "NamedNode", "Login Sucessed", "" },
+			{ "1", "Param", "", "" },
+			{ "1", "Param", "", "" },
+			{ "3", "KVPair", "", "" },
+			{ "0", "Promotion", "ePay欢迎您", "20090218213217243" },
+			{ "0", "Promotion", "Risetek为您服务", "20090218213218178" },
+			{ "0", "Promotion", "NetFront先锋", "20090218213215625" }, };
+	
 	final static String[][] login_faild_invalid_username = {
 			{"1", "NamedNode", "Login Failed invalid username", ""},
 			{"2", "Promotion", "用户不存在", "20090218213215625"},
@@ -38,14 +36,10 @@ public class Login {
 		PrintWriter out;
 		try {
 			out = resp.getWriter();
+			login_sucessed[1][2] = "token";
+			login_sucessed[2][2] = "12345678";
 			String xml = Sticklets.stickletToXML(login_sucessed);
 			out.println(xml);
-			/*
-			out.println("<?xml version=\"1.0\" encoding=\"utf-8\"?><ePay>"
-					+ "<stick type='NamedNode' d='1' p=\"missing Service method\"><PARAM>No</PARAM><p>e</p></stick>"
-					+ "<stick type='Cancel' d='0' p=\"没有该远程方法\"><img>Error</img><title>abc</title></stick>"
-					+ "</ePay>");
-			*/
 			out.flush();
 		} catch (IOException e) {
 			e.printStackTrace();

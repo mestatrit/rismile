@@ -7,6 +7,11 @@ import com.google.gwt.resources.client.ClientBundle;
 import com.google.gwt.resources.client.ImageResource;
 
 public class IconManage {
+	public static String getDefault() {
+		return "20090218213212783";
+	}
+	
+	
 	public interface Images extends ClientBundle  {
 		
 		@Source("20090218213158120.png")		ImageResource  I20090218213158120();
@@ -72,9 +77,6 @@ public class IconManage {
 		v.put("Login", imgSrc.I20090218213158800());
 		v.put("Password", imgSrc.I20090218213218178());
 		v.put("Error", imgSrc.I20090218213212220());
-
-		
-		
 	}
 	
 	public static ImageResource getIcon(String name) {

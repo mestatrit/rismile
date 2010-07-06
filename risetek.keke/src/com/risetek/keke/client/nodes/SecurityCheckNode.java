@@ -17,7 +17,8 @@ public class SecurityCheckNode extends VStick {
 	 * 我们检查安全问题。如果没有登录，那么需要调用登录sticklet。
 	 */
 	boolean isSecurity() {
-		if( PosContext.Token == null )
+//		if( PosContext.Token == null )
+		if( PosContext.system.get("token") == null )
 			return false;
 		else
 			return true;

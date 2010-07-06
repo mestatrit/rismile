@@ -2,8 +2,9 @@ package com.risetek.keke.client.nodes;
 
 import com.google.gwt.user.client.ui.Composite;
 import com.risetek.keke.client.context.ClientEventBus;
-import com.risetek.keke.client.context.PosContext;
+import com.risetek.keke.client.resources.IconManage;
 import com.risetek.keke.client.sticklet.ASticklet;
+import com.risetek.keke.client.ui.D3View;
 
 /*
  * 这个结构用来表达一系列串联的节点。并能存储到数据库中。这是一种变异了的树形结构。
@@ -31,7 +32,7 @@ public abstract class Stick {
 	public abstract Composite getComposite();
 
 	public Stick(String promotion) {
-		this(promotion,"20090218213218568");
+		this(promotion, IconManage.getDefault());
 	}
 
 	public Stick(String promotion, String imgName) {
@@ -55,15 +56,15 @@ public abstract class Stick {
 	 * 链接一个弟兄到本节点
 	 */
 	
-	private void addNextNode(Stick node) {
+	private void addNextNode(Stick sticklet) {
 		if( next == null )
-			next = node;
+			next = sticklet;
 		else
-			next.addNextNode(node);
+			next.addNextNode(sticklet);
 	}
 
 	public int enter(ASticklet sticklet) {
-		PosContext.LogEnter(this);
+		LogEnter();
 		
 		Stick last = sticklet.getCurrentNode();
 		if( last != null ){
@@ -76,13 +77,13 @@ public abstract class Stick {
 		return NODE_STAY;
 	}
 	
-	public int leave(ASticklet widget) {
+	public int leave(ASticklet sticklet) {
 		return 0;
 	}
 	
 	// 我们离开这个节点进入下一步的时候，执行该动作。
-	public int action(ASticklet widget) {
-		PosContext.LogAction(this);
+	public int action(ASticklet sticklet) {
+		LogAction();
 		return NODE_OK;
 	}
 	
@@ -91,7 +92,7 @@ public abstract class Stick {
 	}
 	
 	public int rollback(ASticklet sticklet) {
-		PosContext.LogRollback(this);
+		LogRollback();
 		Stick last = sticklet.getCurrentNode();
 		if( last != null ){
 			last.leave(sticklet);
@@ -104,6 +105,39 @@ public abstract class Stick {
 	}
 
 	public int failed(ASticklet sticklet) {
+		LogFaild();
 		return NODE_STAY;
 	}
+	
+	
+	// 调试用。
+	public void LogEnter() {
+		String name = getClass().getName();
+		name = name.substring(30);
+		D3View.logger.logger.addItem("->"+name+ " "+ Promotion);
+	}
+
+	public void LogRollback() {
+		String name = getClass().getName();
+		name = name.substring(30);
+		D3View.logger.logger.addItem("<-- "+name+ " "+ Promotion);
+	}
+
+	public void LogFaild() {
+		String name = getClass().getName();
+		name = name.substring(30);
+		D3View.logger.logger.addItem("["+name+ "] failed "+ Promotion);
+	}
+
+
+	public void LogAction() {
+		/*
+		String name = node.getClass().getName();
+		name = name.substring(30);
+		D3View.logger.logger.addItem("  "+name+ " action");
+		*/
+		D3View.logger.logger.addItem( "["+ Promotion + "] action");
+	}
+	
+	
 }
