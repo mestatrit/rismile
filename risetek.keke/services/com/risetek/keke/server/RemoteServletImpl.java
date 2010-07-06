@@ -18,6 +18,7 @@ import org.xml.sax.SAXException;
 
 import com.risetek.keke.client.sticklet.Sticklets;
 import com.risetek.keke.server.process.Login;
+import com.risetek.keke.server.process.News;
 
 public class RemoteServletImpl extends HttpServlet {
 
@@ -62,6 +63,11 @@ public class RemoteServletImpl extends HttpServlet {
 							Login.process(resp);
 							return;
 						}
+						else if ("epay/news".equals(value)) {
+							News.process(resp);
+							return;
+						}
+						
 					}
 				}
 			}
