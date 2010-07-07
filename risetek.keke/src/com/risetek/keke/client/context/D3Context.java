@@ -14,7 +14,6 @@ import com.risetek.keke.client.context.ClientEventBus.HIDNumberEvent;
 import com.risetek.keke.client.context.ClientEventBus.HIDNumberHandler;
 import com.risetek.keke.client.context.ClientEventBus.ViewChangedEvent;
 import com.risetek.keke.client.context.ClientEventBus.ViewChangedHandler;
-import com.risetek.keke.client.nodes.Stick;
 import com.risetek.keke.client.presenter.Presenter;
 import com.risetek.keke.client.sticklet.Sticklet;
 import com.risetek.keke.client.sticklet.Sticklets;
@@ -25,6 +24,10 @@ public class D3Context {
 
 	// 我们用 key value pair 来维系系统级别的信息。
 	public static HashMap<String, String> system = new HashMap<String, String>();
+
+	public final Stack<Sticklet> callerSticklets = new Stack<Sticklet>();
+	
+	
 	private final Stack<Sticklet> executeWidget = new Stack<Sticklet>();
 	 // 表现层
 	final private Presenter presenter;
@@ -40,7 +43,7 @@ public class D3Context {
 	private Sticklet runningSticklet;
 
 	public Sticklet getSticklet() {
-		return runningSticklet.getActiveSticklet();
+		return callerSticklets.peek();
 	}
 
 
@@ -52,19 +55,15 @@ public class D3Context {
 		ClientEventBus.INSTANCE.addHandler(callerhandler, CallerEvent.TYPE);
 
 		presenter = new Presenter(view);
-		executeWidget.push(Sticklets.loadSticklet("epay.local.demo"));
-		Executer();
+		Sticklet let = Sticklets.loadSticklet("epay.local.demo");
+		ClientEventBus.INSTANCE.fireEvent(new ClientEventBus.CallerEvent(let));
 	}
 
-	void Executer() {
-		if (executeWidget.size() > 0) {
-			runningSticklet = executeWidget.pop();
-			runningSticklet.Execute(this);
-		} else {
-			D3Context.Log("D3View GAMEOVER");
-			executeWidget.push(Sticklets.loadSticklet("epay.local.gameover"));
-			Executer();
-		}
+	void system_exit() {
+		D3Context.Log("D3View GAMEOVER");
+		callerSticklets.clear();
+		Sticklet let = Sticklets.loadSticklet("epay.local.gameover");
+		ClientEventBus.INSTANCE.fireEvent(new ClientEventBus.CallerEvent(let));
 	}
 
 	private void updateView() {
@@ -95,179 +94,20 @@ public class D3Context {
 		}
 	};
 
-	D3Context getMe() {
-		return this;
+	public void Caller(Sticklet sticklet) {
+		callerSticklets.push(sticklet);
+		sticklet.rootNode.enter(this);
 	}
 	
 	CallerHandler callerhandler = new CallerHandler() {
 
 		@Override
 		public void onEvent(CallerEvent event) {
-			Sticklet sticklet = getSticklet();
-			sticklet.Call(event.getSticklet(), getMe());
+			Sticklet sticklet = event.getSticklet();
+			callerSticklets.push(sticklet);
+			sticklet.rootNode.enter(D3Context.this);
 		}
 	};
 
-
-	HIDControlHandler controlCodehandler = new HIDControlHandler() {
-
-		@Override
-		public void onEvent(HIDControlEvent event) {
-			Sticklet sticklet = getSticklet();
-			Stick current = sticklet.getCurrentNode();
-			int controlKey = event.getControlCode();
-			switch (controlKey) {
-
-			// --------------------- 键盘向下 -------------------------
-			case ClientEventBus.CONTROL_KEY_DOWN:
-				if (current.next != null) {
-					current.next.enter(getMe());
-				}
-				break;
-
-			// --------------------- 键盘向上 -------------------------
-			case ClientEventBus.CONTROL_KEY_UP:
-				if (sticklet.HistoryNodesStack.size() > 0) {
-					Stick p = sticklet.HistoryNodesStack.pop();
-					sticklet.HistoryNodesStack.push(p);
-					p = sticklet.getChildrenNode(p);
-					if (p == current)
-						break;
-
-					while (p.next != current)
-						p = p.next;
-
-					p.enter(getMe());
-				} else
-					D3Context.Log("Fatal: broken move up history stack");
-				break;
-
-			// --------------------- 键盘向左，或者系统发送回溯消息 -------------------------
-			case ClientEventBus.CONTROL_KEY_LEFT:
-			case ClientEventBus.CONTROL_SYSTEM_ROLLBACK:
-				if (sticklet.HistoryNodesStack.size() > 0) {
-					
-					Stick n = sticklet.HistoryNodesStack.pop();
-					// TODO: FIXME: 在logout后，还能回溯？
-					if( n.rollback(getMe()) == Stick.NODE_CANCEL ) {
-//						sticklet.HistoryNodesStack.push(n);
-//						sticklet.HistoryNodesStack.push(current);
-					}
-				} else {
-					// 这表明这是第一个节点，一定是NamedNode ?
-					if (sticklet.callerSticklet != null) {
-						sticklet.callerSticklet.calledSticklet.Clean();
-						sticklet.callerSticklet.calledSticklet = null;
-						ClientEventBus.INSTANCE.fireEvent(
-								new ClientEventBus.HIDControlEvent(ClientEventBus.CONTROL_SYSTEM_ROLLBACK));
-					} else
-						ClientEventBus.INSTANCE.fireEvent(
-								new ClientEventBus.HIDControlEvent(ClientEventBus.CONTROL_SYSTEM_ENGAGE));
-				}
-				break;
-			// --------------------- 系统发送取消消息 -------------------------
-			case ClientEventBus.CONTROL_SYSTEM_ENGAGE_BY_CANCEL: {
-				// 这个消息目前只在 NamedNode中发出，在NamedNode中，首先处理了当前运行的sticklet的撤销工作。
-				D3Context.Log("Cancel sticklet:" + sticklet.aStickletName);
-				int state = current.failed(getMe());
-				if (state == Stick.NODE_EXIT) {
-					// 上一个sticklet执行完毕。
-					// PosContext.Log("Run out of sticklet:"+sticklet.aStickletName);
-					// TODO: 这里应该退出程序。
-					Executer();
-				} else if (state == Stick.NODE_CANCEL) {
-					D3Context.Log("engage canceled.");
-					ClientEventBus.INSTANCE.fireEvent(
-							new ClientEventBus.HIDControlEvent(ClientEventBus.CONTROL_SYSTEM_ENGAGE_BY_CANCEL));
-				}
-				break;
-			}
-			case ClientEventBus.CONTROL_KEY_RIGHT:
-			case ClientEventBus.CONTROL_SYSTEM_ENGAGE:
-				int state = engagecontrol();
-				if (state == Stick.NODE_EXIT) {
-					// 上一个sticklet执行完毕。
-					// PosContext.Log("Run out of sticklet:"+sticklet.aStickletName);
-					// TODO: 这里应该退出程序。
-					Executer();
-				} else if (state == Stick.NODE_CANCEL) {
-					D3Context.Log("engage canceled.");
-					ClientEventBus.INSTANCE.fireEvent(
-							new ClientEventBus.HIDControlEvent(ClientEventBus.CONTROL_SYSTEM_ENGAGE_BY_CANCEL));
-				}
-				break;
-			default:
-				D3Context.Log("Control Code Overrun");
-				break;
-			}
-		}
-	};
-
-	public int engagecontrol() {
-		Sticklet sticklet = getSticklet();
-		Stick current = sticklet.getCurrentNode();
-		
-		/*
-		 * 从当前节点进入下一个节点的时候，执行该动作。
-		 */
-		// 记录运行的层次。
-		sticklet.HistoryNodesStack.push(current);
-		int code;
-		// 我们这里决定widget的存在与否
-		code = current.action(getMe());
-		if (code == Stick.NODE_EXIT) {
-			return code;
-		}
-
-		if (code == Stick.NODE_CANCEL) {
-			// 这表明本sticklet没有成功执行。
-			if (sticklet.callerSticklet != null) {
-				sticklet.callerSticklet.calledSticklet.Clean();
-				sticklet.callerSticklet.calledSticklet = null;
-
-				ClientEventBus.INSTANCE.fireEvent(
-						new ClientEventBus.ViewChangedEvent());
-				return code;
-			}
-			return code;
-		}
-
-		if (code == Stick.NODE_OK) {
-			if (sticklet.getChildrenNode(current) != null) {
-
-				code = sticklet.getChildrenNode(current)
-						.enter(getMe());
-				return code;
-			}
-			// 当前节点的children节点没有了，我们得查询其是否被调用CallerNode的sticklet环境。
-			else {
-				if (sticklet.callerSticklet != null) {
-					sticklet.callerSticklet.calledSticklet.Clean();
-					sticklet.callerSticklet.calledSticklet = null;
-
-					ClientEventBus.INSTANCE.fireEvent(
-							new ClientEventBus.HIDControlEvent(ClientEventBus.CONTROL_SYSTEM_ENGAGE));
-
-					ClientEventBus.INSTANCE.fireEvent(
-							new ClientEventBus.ViewChangedEvent());
-					return code;
-				} else {
-					D3Context.Log("Tail stick.");
-					// TODO: 临时性的解决办法，回到本sticklet的头。
-					Stick s = sticklet.HistoryNodesStack.elementAt(0);
-					sticklet.HistoryNodesStack.clear();
-
-					sticklet.HistoryNodesStack.push(s);
-					s.enter(getMe());
-
-				}
-			}
-		}
-		D3Context.Log("Fatal: " + current.Promotion
-				+ " engage failed by " + code);
-		sticklet.HistoryNodesStack.pop();
-
-		return Stick.NODE_OK;
-	}
-
+	HIDControlHandler controlCodehandler = new D3ControlHandler(this);
 }

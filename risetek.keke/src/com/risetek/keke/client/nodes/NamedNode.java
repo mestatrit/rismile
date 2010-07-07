@@ -31,11 +31,13 @@ public class NamedNode extends VStick {
 	public int failed(D3Context context) {
 		super.failed(context);
 		Sticklet sticklet = context.getSticklet();
-		if( sticklet.callerSticklet != null ) {
-			sticklet.callerSticklet.calledSticklet.Clean();
-			sticklet.callerSticklet.calledSticklet = null;
-			ClientEventBus.INSTANCE.fireEvent(new ClientEventBus.HIDControlEvent(ClientEventBus.CONTROL_SYSTEM_ENGAGE_BY_CANCEL));
-			ClientEventBus.INSTANCE.fireEvent(new ClientEventBus.ViewChangedEvent());
+		if( context.callerSticklets.size() > 1 ) {
+			sticklet.Clean();
+			context.callerSticklets.pop();
+			ClientEventBus.INSTANCE.fireEvent(
+					new ClientEventBus.HIDControlEvent(ClientEventBus.CONTROL_SYSTEM_ENGAGE_BY_CANCEL));
+			ClientEventBus.INSTANCE.fireEvent(
+					new ClientEventBus.ViewChangedEvent());
 		}
 		return NODE_STAY;
 	}

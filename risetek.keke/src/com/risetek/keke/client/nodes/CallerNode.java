@@ -1,6 +1,7 @@
 package com.risetek.keke.client.nodes;
 
 import com.google.gwt.user.client.ui.Composite;
+import com.risetek.keke.client.context.ClientEventBus;
 import com.risetek.keke.client.context.D3Context;
 import com.risetek.keke.client.nodes.ui.PromotionComposite;
 import com.risetek.keke.client.sticklet.Sticklet;
@@ -9,27 +10,20 @@ import com.risetek.keke.client.sticklet.Sticklets;
 
 public class CallerNode extends Stick {
 
-	String calledSticklet = null;
+	String called = null;
 	
-	public CallerNode(String calledSticklet) {
-		super("调用["+calledSticklet+"]","20090218213222605");
-		this.calledSticklet = calledSticklet;
+	public CallerNode(String called) {
+		super("调用["+called+"]","20090218213222605");
+		this.called = called;
 	}
 	
 	@Override
 	public int enter(D3Context context) {
-		Sticklet sticklet = context.getSticklet();
-		if( sticklet.calledSticklet != null ) {
-			D3Context.Log("Fatal: calledSticklet is not null");
-			return Stick.NODE_CANCEL;
-		}
-			
 		int state = super.enter(context);
 		// 陷入被调用环境中去。
-		D3Context.Log("Call: "+calledSticklet);
-		Sticklet called = Sticklets.loadSticklet(calledSticklet);
-		if( sticklet.Call(called, context) != NODE_STAY )
-			D3Context.Log("Fatal: Called sticklet can't stay.");
+		D3Context.Log("Call: "+called);
+		Sticklet sticklet = Sticklets.loadSticklet(called);
+		ClientEventBus.INSTANCE.fireEvent(new ClientEventBus.CallerEvent(sticklet));
 		return state;
 	}
 	

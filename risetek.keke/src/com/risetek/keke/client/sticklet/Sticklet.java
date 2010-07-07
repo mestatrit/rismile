@@ -34,22 +34,7 @@ public class Sticklet {
 	/*
 	 * 本Sticklet的入口节点。
 	 */
-	private Stick rootNode;
-	
-	/*
-	 * 双链路，钩挂调用者和被调用者的层级关系。
-	 */
-	public Sticklet	calledSticklet = null;
-	public Sticklet	callerSticklet = null;
-
-	/*
-	 * 获取Sticklet调用层级关系中的当前活动目标。
-	 */
-	public Sticklet getActiveSticklet() {
-		if( calledSticklet != null )
-			return calledSticklet.getActiveSticklet();
-		return this;
-	}
+	public Stick rootNode;
 	
 	// 执行其间的运行参数堆栈。
 	public Stack<String> ParamStack = new Stack<String>();
@@ -66,16 +51,6 @@ public class Sticklet {
 		return p.getChildren();
 	}
 
-	/*
-	 * 调用执行。
-	 * 调用者的参数是不是也应该压入子sticklet中，以便执行？
-	 */
-	public int Call(Sticklet called, D3Context context) {
-		calledSticklet = called;
-		called.callerSticklet = this;
-		return called.Execute(context);
-	}
-	
 	public int Clean() {
 		D3Context.Log(aStickletName+" Clean up");
 		return 0;
