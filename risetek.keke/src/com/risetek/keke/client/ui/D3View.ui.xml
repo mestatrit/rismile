@@ -12,7 +12,7 @@
 					<TABLE align="center" width="700px" border="1">
 						<TR>
 							<TD width="100%">
-								<g:HTMLPanel ui:field="skins" styleName="machine">
+								<g:HTMLPanel ui:field="skins" styleName="d3view">
 									<TABLE width="100%">
 										<TR>
 											<TD>Risetek</TD>

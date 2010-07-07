@@ -20,9 +20,6 @@ public class StickComposite extends Composite {
 	public StickComposite(Stick node) {
 		//outgrid.addStyleName("sticklet");
 		
-		outgrid.getRowFormatter().addStyleName(0, "edge");
-		outgrid.getRowFormatter().addStyleName(2, "edge");
-		
 		outgrid.getCellFormatter().addStyleName(0,0,"topleft");
 		outgrid.getCellFormatter().addStyleName(0,1,"topmiddler");
 		outgrid.getCellFormatter().addStyleName(0,2,"topright");
@@ -38,7 +35,6 @@ public class StickComposite extends Composite {
 		outgrid.setCellPadding(0);
 		outgrid.setCellSpacing(0);
 		outgrid.setWidth("100%");
-		//outgrid.setHeight(UiKeke.kekeHeight+"px");
 
 		outgrid.setHTML(0, 0, "");
 		outgrid.setHTML(0, 1, "");
@@ -53,6 +49,7 @@ public class StickComposite extends Composite {
 		outPanel.setHeight(UiKeke.kekeHeight+"px");
 		
 		// ICON 的处理。 
+
 		img.setResource(IconManage.getIcon(node.imgName));
 		outPanel.add(img, DockPanel.WEST);
 		outPanel.setCellWidth(img, "80px");

@@ -1,82 +1,30 @@
-/** Add css rules here for your application. */
-
-/** Example rules used by the template application (remove for your app) */
-h1 {
-  font-size: 2em;
-  font-weight: bold;
-  color: #777777;
-  margin: 40px 0px 70px;
-  text-align: center;
-}
-
-.sendButton {
-  display: block;
-  font-size: 16pt;
-}
-
-/** Most GWT widgets already have a style name defined */
-.gwt-DialogBox {
-  width: 400px;
-}
-
-.dialogVPanel {
-  margin: 5px;
-}
-
-.serverResponseLabelError {
-  color: red;
-}
-
-/** Set ids using widget.getElement().setId("idOfElement") */
-#closeButton {
-  margin: 15px 6px 6px;
-}
 
 .risefront {
-	background: #aa8ebf;
+	background: #cacedf;
 	text-align: center;
 	cellspacing: 0px;
 	cellpading: 0px;
+}
+
+.risefront .table {
+	border: solid white;
+	border-width: 0px;
+	border-spacing: 0px 0px;
 }
 
 .risefront td {
 	border: solid white;
 	border-width: 0px;
+	border-spacing: 0px 0px;
 }
 
-.risefront .machine {
-	background: #2a8ebf;
-	text-align: center;
-	cellspacing: 0px;
-	cellpading: 0px;
+.risefront .d3view {
+	background: #6a8ebf;
 }
 
-.risefront .machine td {
+.risefront .d3view td {
 	border: solid white;
 	border-width: 1px;
-}
-
-.keke-table {
-	border: 1px solid #999;
-	border-collapse: collapse;
-	text-align: center;
-	cellspacing: 0px;
-	cellpading: 0px;
-}
-
-.keke-table td {
-	width: 32em;
-	height: 6em;
-	border: solid #999;
-	border-width: 0px;
-	padding-top: 0px;
-	padding-left: 0px;
-	padding-bottom: 0px;
-	padding-right: 0px;
-}
-
-.hilight {
-	background: yellow;
 }
 
 .risefront .HID .gwt-Button {
@@ -84,12 +32,16 @@ h1 {
 }
 
 
-.risefront .KekesComposite td {
+.risefront .d3view .KekesComposite td {
 	border: solid yellow;
 	border-width: 0px;
 }
 
-.risefront .KekesComposite .KekeComposite td {
+.risefront .d3view .KekesComposite .hilight {
+	background: #9abeff;
+}
+
+.risefront .d3view .KekesComposite .KekeComposite td {
 	border: solid white;
 	border-width: 0px;
 	padding-top: 0px;
@@ -98,26 +50,60 @@ h1 {
 	padding-right: 0px;
 }
 
-.risefront .KekesComposite .KekeComposite tr.edge {
+.risefront .d3view .KekesComposite .KekeComposite td.topleft {
+	background: #9abedf;
+	width: 3px;
 	height: 3px;
+	border-width: 0px;
+}
+
+.risefront .d3view .KekesComposite .KekeComposite td.topmiddler {
+	background: #9abedf;
+	height: 3px;
+	border-width: 0px;
+}
+
+.risefront .d3view .KekesComposite .KekeComposite td.topright {
+	background: #9abedf;
+	width: 3px;
+	height: 3px;
+	border-width: 0px;
 }
 
 
-.risefront .KekesComposite .KekeComposite td.topleft {
-/*	background: crimson; */
+.risefront .d3view .KekesComposite .KekeComposite td.midleft {
+	background: #9abedf;
 	width: 3px;
+	border-width: 0px;
 }
 
-.risefront .KekesComposite .KekeComposite td.topright {
+.risefront .d3view .KekesComposite .KekeComposite td.midmiddler {
+}
+
+.risefront .d3view .KekesComposite .KekeComposite td.midright {
+	background: #9abedf;
 	width: 3px;
+	border-width: 0px;
 }
 
 
-.risefront .KekesComposite .KekeComposite td.midleft {
+.risefront .d3view .KekesComposite .KekeComposite td.bottomleft {
+	background: #9abedf;
 	width: 3px;
+	height: 3px;
+	border-width: 0px;
 }
 
-.risefront .KekesComposite .KekeComposite td.bottomleft {
+.risefront .d3view .KekesComposite .KekeComposite td.bottommiddler {
+	background: #9abedf;
+	height: 3px;
+	border-width: 0px;
+}
+
+.risefront .d3view .KekesComposite .KekeComposite td.bottomright {
+	background: #9abedf;
 	width: 3px;
+	height: 3px;
+	border-width: 0px;
 }
 

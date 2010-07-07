@@ -96,6 +96,7 @@ public class IconManage {
 		ImageResource i = INSTANCE.v.get(name);
 		if( i == null )
 			i = INSTANCE.v.get("20090218213212783");
+
 		return i;
 	}
 
