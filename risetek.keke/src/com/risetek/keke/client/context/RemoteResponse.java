@@ -13,7 +13,7 @@ public class RemoteResponse implements RequestCallback {
 	public void onError(Request request, Throwable exception) {
 		D3Context.Log("Remote request:" + "error.");
 		Sticklet s = Sticklets.loadSticklet("epay.local.services.failed");
-		ClientEventBus.INSTANCE.fireEvent(new ClientEventBus.CallerEvent(s));
+		D3Context.CallSticklet(s);
 	}
 
 	@Override
@@ -21,7 +21,7 @@ public class RemoteResponse implements RequestCallback {
 		D3Context.Log("Remote: "+response.getText());
 		String[][] a = Util.xmlToSticklet(response.getText());
 		Sticklet s = Sticklets.loadSticklet(a);
-		ClientEventBus.INSTANCE.fireEvent(new ClientEventBus.CallerEvent(s));
+		D3Context.CallSticklet(s);
 	}
 
 }

@@ -52,28 +52,28 @@ public class ControlPanel extends Composite {
 	    up.addClickHandler(new ClickHandler(){
 			@Override
 			public void onClick(ClickEvent event) {
-				ClientEventBus.INSTANCE.fireEvent(new ClientEventBus.HIDControlEvent(ClientEventBus.CONTROL_KEY_UP));
+				ClientEventBus.fireControlKey(ClientEventBus.CONTROL_KEY_UP);
 			}
 	    });
 		
 	    down.addClickHandler(new ClickHandler(){
 			@Override
 			public void onClick(ClickEvent event) {
-				ClientEventBus.INSTANCE.fireEvent(new ClientEventBus.HIDControlEvent(ClientEventBus.CONTROL_KEY_DOWN));
+				ClientEventBus.fireControlKey(ClientEventBus.CONTROL_KEY_DOWN);
 			}
 	    });
 		
 	    left.addClickHandler(new ClickHandler(){
 			@Override
 			public void onClick(ClickEvent event) {
-				ClientEventBus.INSTANCE.fireEvent(new ClientEventBus.HIDControlEvent(ClientEventBus.CONTROL_KEY_LEFT));
+				ClientEventBus.fireControlKey(ClientEventBus.CONTROL_KEY_LEFT);
 			}
 	    });
 		
 	    right.addClickHandler(new ClickHandler(){
 			@Override
 			public void onClick(ClickEvent event) {
-				ClientEventBus.INSTANCE.fireEvent(new ClientEventBus.HIDControlEvent(ClientEventBus.CONTROL_KEY_RIGHT));
+				ClientEventBus.fireControlKey(ClientEventBus.CONTROL_KEY_RIGHT);
 			}
 	    });
 		

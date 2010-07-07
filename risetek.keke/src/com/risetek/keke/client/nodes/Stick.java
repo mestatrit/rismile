@@ -44,6 +44,7 @@ public abstract class Stick {
 	
 
 	public int enter(D3Context context) {
+		
 		LogEnter();
 		
 		Sticklet sticklet = context.getSticklet(); 
@@ -52,10 +53,14 @@ public abstract class Stick {
 			last.leave(context);
 		}
 		sticklet.setCurrentNode(this);
-		
+
+		ViewChanged();
+		return NODE_STAY;
+	}
+	
+	public void ViewChanged() {
 		if( getComposite() != null )
 			ClientEventBus.INSTANCE.fireEvent(new ClientEventBus.ViewChangedEvent());
-		return NODE_STAY;
 	}
 	
 	public int leave(D3Context context) {
@@ -80,9 +85,7 @@ public abstract class Stick {
 			last.leave(context);
 		}
 		sticklet.setCurrentNode(this);
-		
-		if( getComposite() != null )
-			ClientEventBus.INSTANCE.fireEvent(new ClientEventBus.ViewChangedEvent());
+		ViewChanged();
 		return NODE_STAY;
 	}
 

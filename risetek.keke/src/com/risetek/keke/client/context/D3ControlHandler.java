@@ -57,12 +57,10 @@ public class D3ControlHandler implements ClientEventBus.HIDControlHandler{
 				if( context.callerSticklets.size() > 1 ) {
 					sticklet.Clean();
 					context.callerSticklets.pop();
-					ClientEventBus.INSTANCE.fireEvent(
-							new ClientEventBus.HIDControlEvent(ClientEventBus.CONTROL_SYSTEM_ROLLBACK));
+					ClientEventBus.fireControlKey(ClientEventBus.CONTROL_SYSTEM_ROLLBACK);
 				}
-					else
-					ClientEventBus.INSTANCE.fireEvent(
-							new ClientEventBus.HIDControlEvent(ClientEventBus.CONTROL_SYSTEM_ENGAGE));
+				else
+					ClientEventBus.fireControlKey(ClientEventBus.CONTROL_SYSTEM_ENGAGE);
 			}
 			break;
 		// --------------------- 系统发送取消消息 -------------------------
@@ -77,8 +75,7 @@ public class D3ControlHandler implements ClientEventBus.HIDControlHandler{
 				context.system_exit();
 			} else if (state == Stick.NODE_CANCEL) {
 				D3Context.Log("engage canceled.");
-				ClientEventBus.INSTANCE.fireEvent(
-						new ClientEventBus.HIDControlEvent(ClientEventBus.CONTROL_SYSTEM_ENGAGE_BY_CANCEL));
+				ClientEventBus.fireControlKey(ClientEventBus.CONTROL_SYSTEM_ENGAGE_BY_CANCEL);
 			}
 			break;
 		}
@@ -92,8 +89,7 @@ public class D3ControlHandler implements ClientEventBus.HIDControlHandler{
 				context.system_exit();
 			} else if (state == Stick.NODE_CANCEL) {
 				D3Context.Log("engage canceled.");
-				ClientEventBus.INSTANCE.fireEvent(
-						new ClientEventBus.HIDControlEvent(ClientEventBus.CONTROL_SYSTEM_ENGAGE_BY_CANCEL));
+				ClientEventBus.fireControlKey(ClientEventBus.CONTROL_SYSTEM_ENGAGE_BY_CANCEL);
 			}
 			break;
 		default:
@@ -125,8 +121,7 @@ public class D3ControlHandler implements ClientEventBus.HIDControlHandler{
 			if( context.callerSticklets.size() > 1 ) {
 				sticklet.Clean();
 				context.callerSticklets.pop();
-				ClientEventBus.INSTANCE.fireEvent(
-						new ClientEventBus.ViewChangedEvent());
+				current.ViewChanged();
 			}
 			return code;
 		}
@@ -143,11 +138,8 @@ public class D3ControlHandler implements ClientEventBus.HIDControlHandler{
 				if( context.callerSticklets.size() > 1 ) {
 					sticklet.Clean();
 					context.callerSticklets.pop();
-					ClientEventBus.INSTANCE.fireEvent(
-							new ClientEventBus.HIDControlEvent(ClientEventBus.CONTROL_SYSTEM_ENGAGE));
-
-					ClientEventBus.INSTANCE.fireEvent(
-							new ClientEventBus.ViewChangedEvent());
+					ClientEventBus.fireControlKey(ClientEventBus.CONTROL_SYSTEM_ENGAGE);
+					current.ViewChanged();
 					return code;
 				} else {
 					D3Context.Log("Tail stick.");

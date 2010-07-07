@@ -34,10 +34,8 @@ public class NamedNode extends VStick {
 		if( context.callerSticklets.size() > 1 ) {
 			sticklet.Clean();
 			context.callerSticklets.pop();
-			ClientEventBus.INSTANCE.fireEvent(
-					new ClientEventBus.HIDControlEvent(ClientEventBus.CONTROL_SYSTEM_ENGAGE_BY_CANCEL));
-			ClientEventBus.INSTANCE.fireEvent(
-					new ClientEventBus.ViewChangedEvent());
+			ClientEventBus.fireControlKey(ClientEventBus.CONTROL_SYSTEM_ENGAGE_BY_CANCEL);
+			ViewChanged();
 		}
 		return NODE_STAY;
 	}

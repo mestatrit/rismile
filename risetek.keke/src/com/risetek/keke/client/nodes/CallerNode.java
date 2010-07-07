@@ -1,7 +1,6 @@
 package com.risetek.keke.client.nodes;
 
 import com.google.gwt.user.client.ui.Composite;
-import com.risetek.keke.client.context.ClientEventBus;
 import com.risetek.keke.client.context.D3Context;
 import com.risetek.keke.client.nodes.ui.PromotionComposite;
 import com.risetek.keke.client.sticklet.Sticklet;
@@ -23,7 +22,7 @@ public class CallerNode extends Stick {
 		// 陷入被调用环境中去。
 		D3Context.Log("Call: "+called);
 		Sticklet sticklet = Sticklets.loadSticklet(called);
-		ClientEventBus.INSTANCE.fireEvent(new ClientEventBus.CallerEvent(sticklet));
+		D3Context.CallSticklet(sticklet);
 		return state;
 	}
 	

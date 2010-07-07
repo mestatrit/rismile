@@ -24,48 +24,50 @@ public class D3Context {
 
 	// 我们用 key value pair 来维系系统级别的信息。
 	public static HashMap<String, String> system = new HashMap<String, String>();
-
 	public final Stack<Sticklet> callerSticklets = new Stack<Sticklet>();
-	
-	
-	private final Stack<Sticklet> executeWidget = new Stack<Sticklet>();
 	 // 表现层
 	final private Presenter presenter;
-
-	public static void Log(String message) {
-		GWT.log(message);
-		D3View.logger.logger.addItem(message);
-	}
-
-	/*
-	 * 运行的Sticklet
-	 */
-	private Sticklet runningSticklet;
-
+	
 	public Sticklet getSticklet() {
 		return callerSticklets.peek();
 	}
 
+	public static void addListener(D3Context context) {
+		ClientEventBus.INSTANCE.addHandler(context.cardhandler, HIDCARDEvent.TYPE);
+		ClientEventBus.INSTANCE.addHandler(context.viewchangedhandler,ViewChangedEvent.TYPE);
+		ClientEventBus.INSTANCE.addHandler(context.keyCodehandler, HIDNumberEvent.TYPE);
+		ClientEventBus.INSTANCE.addHandler(context.controlCodehandler,HIDControlEvent.TYPE);
+		ClientEventBus.INSTANCE.addHandler(context.callerhandler, CallerEvent.TYPE);
+	}
 
+	public static void removeListener(D3Context context) {
+		ClientEventBus.INSTANCE.removeHandler(context.cardhandler, HIDCARDEvent.TYPE);
+		ClientEventBus.INSTANCE.removeHandler(context.viewchangedhandler,ViewChangedEvent.TYPE);
+		ClientEventBus.INSTANCE.removeHandler(context.keyCodehandler, HIDNumberEvent.TYPE);
+		ClientEventBus.INSTANCE.removeHandler(context.controlCodehandler,HIDControlEvent.TYPE);
+		ClientEventBus.INSTANCE.removeHandler(context.callerhandler, CallerEvent.TYPE);
+	}
+	
+	
 	public D3Context(KekesComposite view) {
-		ClientEventBus.INSTANCE.addHandler(cardhandler, HIDCARDEvent.TYPE);
-		ClientEventBus.INSTANCE.addHandler(viewchangedhandler,ViewChangedEvent.TYPE);
-		ClientEventBus.INSTANCE.addHandler(keyCodehandler, HIDNumberEvent.TYPE);
-		ClientEventBus.INSTANCE.addHandler(controlCodehandler,HIDControlEvent.TYPE);
-		ClientEventBus.INSTANCE.addHandler(callerhandler, CallerEvent.TYPE);
 
 		presenter = new Presenter(view);
 		Sticklet let = Sticklets.loadSticklet("epay.local.demo");
-		ClientEventBus.INSTANCE.fireEvent(new ClientEventBus.CallerEvent(let));
+		addListener(this);
+		CallSticklet(let);
 	}
 
 	void system_exit() {
 		D3Context.Log("D3View GAMEOVER");
 		callerSticklets.clear();
 		Sticklet let = Sticklets.loadSticklet("epay.local.gameover");
-		ClientEventBus.INSTANCE.fireEvent(new ClientEventBus.CallerEvent(let));
+		CallSticklet(let);
 	}
 
+	public static void CallSticklet(Sticklet sticklet) {
+		ClientEventBus.INSTANCE.fireEvent(new ClientEventBus.CallerEvent(sticklet));
+	}
+	
 	private void updateView() {
 		presenter.upDate(this);
 	}
@@ -110,4 +112,9 @@ public class D3Context {
 	};
 
 	HIDControlHandler controlCodehandler = new D3ControlHandler(this);
+
+	public static void Log(String message) {
+		GWT.log(message);
+		D3View.logger.logger.addItem(message);
+	}
 }

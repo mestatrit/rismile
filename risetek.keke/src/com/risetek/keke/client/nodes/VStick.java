@@ -20,7 +20,7 @@ public abstract class VStick extends Stick {
 	public int enter(D3Context context) {
 		int state = super.enter(context);
 		//作为一个虚节点，我们跳过这一步，进入下一步。
-		ClientEventBus.INSTANCE.fireEvent(new ClientEventBus.HIDControlEvent(ClientEventBus.CONTROL_SYSTEM_ENGAGE));
+		ClientEventBus.fireControlKey(ClientEventBus.CONTROL_SYSTEM_ENGAGE);
 		return state;
 	}
 	
@@ -28,7 +28,7 @@ public abstract class VStick extends Stick {
 	public int rollback(D3Context context) {
 		int state = super.rollback(context);
 		//作为一个虚节点，我们不能停留在这个节点，必须再rollback。
-		ClientEventBus.INSTANCE.fireEvent(new ClientEventBus.HIDControlEvent(ClientEventBus.CONTROL_SYSTEM_ROLLBACK));
+		ClientEventBus.fireControlKey(ClientEventBus.CONTROL_SYSTEM_ROLLBACK);
 //		ClientEventBus.INSTANCE.fireEvent(new ClientEventBus.HIDControlEvent(ClientEventBus.CONTROL_SYSTEM_ENGAGE));
 		return state;
 	}

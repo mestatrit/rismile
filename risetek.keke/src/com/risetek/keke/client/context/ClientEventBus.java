@@ -12,6 +12,11 @@ import com.risetek.keke.client.sticklet.Sticklet;
 
 public class ClientEventBus {
 
+	public static void fireControlKey(int keyCode) {
+		ClientEventBus.INSTANCE.fireEvent(new ClientEventBus.HIDControlEvent(keyCode));
+	}
+	
+	
 	public static ClientEventBus INSTANCE = new ClientEventBus();
 	
 	private class kekeNativePreviewHandler implements NativePreviewHandler {
@@ -27,16 +32,16 @@ public class ClientEventBus {
 				int keyCode = event.getNativeEvent().getKeyCode();
 				switch(keyCode) {
 				case KeyCodes.KEY_DOWN:
-					ClientEventBus.INSTANCE.fireEvent(new ClientEventBus.HIDControlEvent(CONTROL_KEY_DOWN));
+					fireControlKey(CONTROL_KEY_DOWN);
 					break;
 				case KeyCodes.KEY_UP:
-					ClientEventBus.INSTANCE.fireEvent(new ClientEventBus.HIDControlEvent(CONTROL_KEY_UP));
+					fireControlKey(CONTROL_KEY_UP);
 					break;
 				case KeyCodes.KEY_LEFT:
-					ClientEventBus.INSTANCE.fireEvent(new ClientEventBus.HIDControlEvent(CONTROL_KEY_LEFT));
+					fireControlKey(CONTROL_KEY_LEFT);
 					break;
 				case KeyCodes.KEY_RIGHT:
-					ClientEventBus.INSTANCE.fireEvent(new ClientEventBus.HIDControlEvent(CONTROL_KEY_RIGHT));
+					fireControlKey(CONTROL_KEY_RIGHT);
 					break;
 				case 96:	// "0"
 				case 97:	// "1"
@@ -92,6 +97,11 @@ public class ClientEventBus {
 		return handleManager.addHandler(type, handler);
 	}
 
+	public final <H extends EventHandler> void removeHandler(
+			final H handler, GwtEvent.Type<H> type) {
+		handleManager.removeHandler(type, handler);
+	}
+	
 	// 处理  刷卡 事件
 	public interface HIDCARDHandler extends EventHandler {
 		void onEvent(HIDCARDEvent event);

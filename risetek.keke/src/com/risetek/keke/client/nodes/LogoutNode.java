@@ -18,7 +18,7 @@ public class LogoutNode extends PromotionNode {
 	@Override
 	public int rollback(D3Context context) {
 		super.rollback(context);
-		ClientEventBus.INSTANCE.fireEvent(new ClientEventBus.HIDControlEvent(ClientEventBus.CONTROL_SYSTEM_ROLLBACK));
+		ClientEventBus.fireControlKey(ClientEventBus.CONTROL_SYSTEM_ROLLBACK);
 		return NODE_CANCEL;
 	}
 }
