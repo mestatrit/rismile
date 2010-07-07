@@ -51,15 +51,15 @@ public class KekesComposite extends Composite implements UiKeke {
 
 		// 显示活动前的Nodes
 		int index = 0;
-		while( firstRender != null ) {
+		while( firstRender != null && index < hiKeke) {
 			keke.setWidget(index++, 0, firstRender.getComposite());
 			firstRender = firstRender.next;
 		}
 		// 绘制当前有效的Node
-		keke.setWidget(1, 0, current.getComposite());
-		keke.getRowFormatter().setStyleName(1, "hilight");
+		keke.setWidget(hiKeke, 0, current.getComposite());
+		keke.getRowFormatter().setStyleName(hiKeke, "hilight");
 		
-		index = 2;
+		index = hiKeke+1;
 		p = current.next;
 		while( ( p != null ) && ( index < maxKeke ) ) {
 			keke.setWidget(index, 0, p.getComposite());
