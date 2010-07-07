@@ -21,6 +21,7 @@ import com.risetek.keke.client.sticklet.Sticklets;
 import com.risetek.keke.server.process.Help;
 import com.risetek.keke.server.process.Login;
 import com.risetek.keke.server.process.News;
+import com.risetek.keke.server.process.PeopleRSS;
 
 public class RemoteServletImpl extends HttpServlet {
 
@@ -66,6 +67,9 @@ public class RemoteServletImpl extends HttpServlet {
 						}
 						else if ("epay/news".equals(value)) {
 							News.process(resp);
+						}
+						else if ("epay/people".equals(value)) {
+							PeopleRSS.process(resp);
 						}
 						else if ("epay/help".equals(value)) {
 							Help.process(resp);

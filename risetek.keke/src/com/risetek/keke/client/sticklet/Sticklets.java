@@ -44,16 +44,19 @@ public class Sticklets {
 			{ "0", "Caller", "epay.local.demo", "20090218213213314" }, };
 
 	private final static String[][] demo = {
-			{ "5", "NamedNode", "epay.local.demo" },
+			{ "6", "NamedNode", "epay.local.demo" },
 			{ "1", "Promotion", "我的 ePay", "20090218213217243" },
 			{ "1", "Promotion", "新服务消息", "20090218213219741" },
+			{ "1", "Promotion", "人民网消息", "20090218213219741" },
 			{ "1", "Promotion", "我要帮助", "20090218213212220" },
 			{ "0", "Stay", "400-000-001 服务电话", "20090218213211718" },
 			{ "0", "Exit", "退出程序", "20090218213212783" },
 			{ "0", "Caller", "epay.local.epay", "20090218213213314" },
 			{ "1", "Param", "epay/news", "20090218213214862" },
+			{ "1", "Param", "epay/people", "20090218213214862" },
 			{ "1", "Param", "epay/help", "20090218213214862" },
 			{ "0", "RemoteRequest", "获取新信息中...", "20090218213227509" },
+			{ "0", "RemoteRequest", "获取新闻中...", "20090218213227509" },
 			{ "0", "RemoteRequest", "获取帮助信息...", "20090218213227509" },
 	 		};
 	private final static String[][] gameover = {
@@ -216,7 +219,8 @@ public class Sticklets {
 			String stick = "<stick t=\"".concat(sticklet[loop][1]);
 			stick = stick.concat("\" d=\"").concat(sticklet[loop][0]);
 			stick = stick.concat("\" p=\"").concat(sticklet[loop][2]).concat("\">");
-			stick = stick.concat("<img>").concat(sticklet[loop][3]).concat("</img>");
+			if( sticklet[loop][3] != null )
+				stick = stick.concat("<img>").concat(sticklet[loop][3]).concat("</img>");
 			stick = stick.concat("</stick>");
 			xml = xml.concat(stick);
 		}

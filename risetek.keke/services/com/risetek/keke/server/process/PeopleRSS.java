@@ -19,15 +19,8 @@ import org.xml.sax.SAXException;
 
 import com.risetek.keke.client.sticklet.Sticklets;
 
-public class News {
+public class PeopleRSS {
 
-	final static String[][] news = {
-			{ "3", "NamedNode", "epay.remote.news", "" },
-			{ "0", "Stay", "ePay欢迎您", "20090218213217243" },
-			{ "0", "Stay", "Risetek为您服务", "20090218213218178" },
-			{ "0", "Stay", "NetFront先锋", "20090218213215625" }, };
-
-	// http://www.google.com/reader/atom/feed/http://www.cnbeta.com/commentrss.php?n=10
 	private static String getRSS(String address) {
 
 		try {
@@ -38,10 +31,9 @@ public class News {
 			DocumentBuilder docBuilder = docBuilderFactory.newDocumentBuilder();
 
 			InputSource is = new InputSource();
-			is.setEncoding("gbk");
 			is.setByteStream(reader);
 			Document doc = docBuilder.parse(is);
-//			NodeList nodelist = doc.getElementsByTagName("entry");
+
 			NodeList nodelist = doc.getElementsByTagName("item");
 			int length = nodelist.getLength();
 			if (length > 5)
@@ -50,17 +42,17 @@ public class News {
 			String[][] sticklet = new String[length + 1][4];
 			sticklet[0][0] = length + "";
 			sticklet[0][1] = "NamedNode";
-			sticklet[0][2] = "epay.remote.news";
+			sticklet[0][2] = "epay.remote.peopleRSS";
 			sticklet[0][3] = "";
 
 			for (int loop = 0; loop < length; loop++) {
 				Node nn = nodelist.item(loop);
 				NodeList m = nn.getChildNodes();
-				String title = m.item(1).getFirstChild().getNodeValue();
+				String title = m.item(2).getNextSibling().getFirstChild().getNodeValue();
 				sticklet[loop + 1][0] = "0";
 				sticklet[loop + 1][1] = "Stay";
 				sticklet[loop + 1][2] = title;
-				sticklet[loop + 1][3] = "";	//"20090218213218178";
+				sticklet[loop + 1][3] = "";
 			}
 
 			reader.close();
@@ -82,9 +74,7 @@ public class News {
 		PrintWriter out;
 		try {
 			out = resp.getWriter();
-//			String xml = getRSS("http://googling.wang:ilovekerongbaby@www.google.com/reader/atom/feed/http://www.cnbeta.com/commentrss.php?n=10");
-			String xml = getRSS("http://www.cnbeta.com/commentrss.php");
-			//Sticklets.stickletToXML(news);
+			String xml = getRSS("http://www.people.com.cn/rss/politics.xml");
 			out.println(xml);
 			out.flush();
 		} catch (IOException e) {

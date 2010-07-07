@@ -1,6 +1,7 @@
 package com.risetek.keke.client.resources;
 
 import java.util.HashMap;
+import java.util.Random;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.resources.client.ClientBundle;
@@ -79,16 +80,25 @@ public class IconManage {
 		v.put("Error", imgSrc.I20090218213212220());
 	}
 	
+	static Random looker = new Random();
+	
 	public static ImageResource getIcon(String name) {
+		if( "<img/>".equals(name)) {
+			// 返回随机图标？
+			int size = INSTANCE.v.size();
+			size = looker.nextInt(size);
+			ImageResource i = (ImageResource) INSTANCE.v.values().toArray()[size];
+			return i;
+		}
 		// TODO: FIXME: 这是临时措施。
 		name = name.replace("<img>", "");
 		name = name.replace("</img>", "");
-		ImageResource i = INSANCE.v.get(name);
+		ImageResource i = INSTANCE.v.get(name);
 		if( i == null )
-			i = INSANCE.v.get("20090218213212783");
+			i = INSTANCE.v.get("20090218213212783");
 		return i;
 	}
 
 	
-	static IconManage INSANCE = new IconManage();
+	static IconManage INSTANCE = new IconManage();
 }
