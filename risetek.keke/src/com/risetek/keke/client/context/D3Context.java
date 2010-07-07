@@ -16,15 +16,18 @@ import com.risetek.keke.client.context.ClientEventBus.ViewChangedEvent;
 import com.risetek.keke.client.context.ClientEventBus.ViewChangedHandler;
 import com.risetek.keke.client.nodes.Stick;
 import com.risetek.keke.client.presenter.Presenter;
-import com.risetek.keke.client.sticklet.ASticklet;
+import com.risetek.keke.client.sticklet.Sticklet;
 import com.risetek.keke.client.sticklet.Sticklets;
 import com.risetek.keke.client.ui.D3View;
 import com.risetek.keke.client.ui.KekesComposite;
 
-public class PosContext {
+public class D3Context {
 
 	// 我们用 key value pair 来维系系统级别的信息。
 	public static HashMap<String, String> system = new HashMap<String, String>();
+	private final Stack<Sticklet> executeWidget = new Stack<Sticklet>();
+	 // 表现层
+	final private Presenter presenter;
 
 	public static void Log(String message) {
 		GWT.log(message);
@@ -32,21 +35,16 @@ public class PosContext {
 	}
 
 	/*
-	 * 表现层
-	 */
-	final private Presenter presenter;
-	/*
 	 * 运行的Sticklet
 	 */
-	private ASticklet runningSticklet;
+	private Sticklet runningSticklet;
 
-	public ASticklet getSticklet() {
+	public Sticklet getSticklet() {
 		return runningSticklet.getActiveSticklet();
 	}
 
-	Stack<ASticklet> executeWidget = new Stack<ASticklet>();
 
-	public PosContext(KekesComposite view) {
+	public D3Context(KekesComposite view) {
 		ClientEventBus.INSTANCE.addHandler(cardhandler, HIDCARDEvent.TYPE);
 		ClientEventBus.INSTANCE.addHandler(viewchangedhandler,ViewChangedEvent.TYPE);
 		ClientEventBus.INSTANCE.addHandler(keyCodehandler, HIDNumberEvent.TYPE);
@@ -61,9 +59,9 @@ public class PosContext {
 	void Executer() {
 		if (executeWidget.size() > 0) {
 			runningSticklet = executeWidget.pop();
-			runningSticklet.Execute();
+			runningSticklet.Execute(this);
 		} else {
-			PosContext.Log("D3View GAMEOVER");
+			D3Context.Log("D3View GAMEOVER");
 			executeWidget.push(Sticklets.loadSticklet("epay.local.gameover"));
 			Executer();
 		}
@@ -91,18 +89,22 @@ public class PosContext {
 
 		@Override
 		public void onEvent(HIDNumberEvent event) {
-			ASticklet sticklet = getSticklet();
+			Sticklet sticklet = getSticklet();
 			int code = event.getKeyCode();
 			sticklet.getCurrentNode().press(code);
 		}
 	};
 
+	D3Context getMe() {
+		return this;
+	}
+	
 	CallerHandler callerhandler = new CallerHandler() {
 
 		@Override
 		public void onEvent(CallerEvent event) {
-			ASticklet sticklet = getSticklet();
-			sticklet.Call(event.getSticklet());
+			Sticklet sticklet = getSticklet();
+			sticklet.Call(event.getSticklet(), getMe());
 		}
 	};
 
@@ -111,7 +113,7 @@ public class PosContext {
 
 		@Override
 		public void onEvent(HIDControlEvent event) {
-			ASticklet sticklet = getSticklet();
+			Sticklet sticklet = getSticklet();
 			Stick current = sticklet.getCurrentNode();
 			int controlKey = event.getControlCode();
 			switch (controlKey) {
@@ -119,7 +121,7 @@ public class PosContext {
 			// --------------------- 键盘向下 -------------------------
 			case ClientEventBus.CONTROL_KEY_DOWN:
 				if (current.next != null) {
-					current.next.enter(sticklet);
+					current.next.enter(getMe());
 				}
 				break;
 
@@ -135,9 +137,9 @@ public class PosContext {
 					while (p.next != current)
 						p = p.next;
 
-					p.enter(sticklet);
+					p.enter(getMe());
 				} else
-					PosContext.Log("Fatal: broken move up history stack");
+					D3Context.Log("Fatal: broken move up history stack");
 				break;
 
 			// --------------------- 键盘向左，或者系统发送回溯消息 -------------------------
@@ -147,7 +149,7 @@ public class PosContext {
 					
 					Stick n = sticklet.HistoryNodesStack.pop();
 					// TODO: FIXME: 在logout后，还能回溯？
-					if( n.rollback(sticklet) == Stick.NODE_CANCEL ) {
+					if( n.rollback(getMe()) == Stick.NODE_CANCEL ) {
 //						sticklet.HistoryNodesStack.push(n);
 //						sticklet.HistoryNodesStack.push(current);
 					}
@@ -166,15 +168,15 @@ public class PosContext {
 			// --------------------- 系统发送取消消息 -------------------------
 			case ClientEventBus.CONTROL_SYSTEM_ENGAGE_BY_CANCEL: {
 				// 这个消息目前只在 NamedNode中发出，在NamedNode中，首先处理了当前运行的sticklet的撤销工作。
-				PosContext.Log("Cancel sticklet:" + sticklet.aStickletName);
-				int state = current.failed(sticklet);
+				D3Context.Log("Cancel sticklet:" + sticklet.aStickletName);
+				int state = current.failed(getMe());
 				if (state == Stick.NODE_EXIT) {
 					// 上一个sticklet执行完毕。
 					// PosContext.Log("Run out of sticklet:"+sticklet.aStickletName);
 					// TODO: 这里应该退出程序。
 					Executer();
 				} else if (state == Stick.NODE_CANCEL) {
-					PosContext.Log("engage canceled.");
+					D3Context.Log("engage canceled.");
 					ClientEventBus.INSTANCE.fireEvent(
 							new ClientEventBus.HIDControlEvent(ClientEventBus.CONTROL_SYSTEM_ENGAGE_BY_CANCEL));
 				}
@@ -189,20 +191,20 @@ public class PosContext {
 					// TODO: 这里应该退出程序。
 					Executer();
 				} else if (state == Stick.NODE_CANCEL) {
-					PosContext.Log("engage canceled.");
+					D3Context.Log("engage canceled.");
 					ClientEventBus.INSTANCE.fireEvent(
 							new ClientEventBus.HIDControlEvent(ClientEventBus.CONTROL_SYSTEM_ENGAGE_BY_CANCEL));
 				}
 				break;
 			default:
-				PosContext.Log("Control Code Overrun");
+				D3Context.Log("Control Code Overrun");
 				break;
 			}
 		}
 	};
 
 	public int engagecontrol() {
-		ASticklet sticklet = getSticklet();
+		Sticklet sticklet = getSticklet();
 		Stick current = sticklet.getCurrentNode();
 		
 		/*
@@ -212,7 +214,7 @@ public class PosContext {
 		sticklet.HistoryNodesStack.push(current);
 		int code;
 		// 我们这里决定widget的存在与否
-		code = current.action(sticklet);
+		code = current.action(getMe());
 		if (code == Stick.NODE_EXIT) {
 			return code;
 		}
@@ -234,7 +236,7 @@ public class PosContext {
 			if (sticklet.getChildrenNode(current) != null) {
 
 				code = sticklet.getChildrenNode(current)
-						.enter(sticklet);
+						.enter(getMe());
 				return code;
 			}
 			// 当前节点的children节点没有了，我们得查询其是否被调用CallerNode的sticklet环境。
@@ -250,18 +252,18 @@ public class PosContext {
 							new ClientEventBus.ViewChangedEvent());
 					return code;
 				} else {
-					PosContext.Log("Tail stick.");
+					D3Context.Log("Tail stick.");
 					// TODO: 临时性的解决办法，回到本sticklet的头。
 					Stick s = sticklet.HistoryNodesStack.elementAt(0);
 					sticklet.HistoryNodesStack.clear();
 
 					sticklet.HistoryNodesStack.push(s);
-					s.enter(sticklet);
+					s.enter(getMe());
 
 				}
 			}
 		}
-		PosContext.Log("Fatal: " + current.Promotion
+		D3Context.Log("Fatal: " + current.Promotion
 				+ " engage failed by " + code);
 		sticklet.HistoryNodesStack.pop();
 

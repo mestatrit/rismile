@@ -2,8 +2,9 @@ package com.risetek.keke.client.nodes;
 
 import com.google.gwt.user.client.ui.Composite;
 import com.risetek.keke.client.context.ClientEventBus;
+import com.risetek.keke.client.context.D3Context;
 import com.risetek.keke.client.resources.IconManage;
-import com.risetek.keke.client.sticklet.ASticklet;
+import com.risetek.keke.client.sticklet.Sticklet;
 import com.risetek.keke.client.ui.D3View;
 
 /*
@@ -41,6 +42,56 @@ public abstract class Stick {
 		this.imgName = imgName;
 	}
 	
+
+	public int enter(D3Context context) {
+		LogEnter();
+		
+		Sticklet sticklet = context.getSticklet(); 
+		Stick last = sticklet.getCurrentNode();
+		if( last != null ){
+			last.leave(context);
+		}
+		sticklet.setCurrentNode(this);
+		
+		if( getComposite() != null )
+			ClientEventBus.INSTANCE.fireEvent(new ClientEventBus.ViewChangedEvent());
+		return NODE_STAY;
+	}
+	
+	public int leave(D3Context context) {
+		return 0;
+	}
+	
+	// 我们离开这个节点进入下一步的时候，执行该动作。
+	public int action(D3Context context) {
+		LogAction();
+		return NODE_OK;
+	}
+	
+	public void press(int keyCode) {
+		
+	}
+	
+	public int rollback(D3Context context) {
+		LogRollback();
+		Sticklet sticklet = context.getSticklet();
+		Stick last = sticklet.getCurrentNode();
+		if( last != null ){
+			last.leave(context);
+		}
+		sticklet.setCurrentNode(this);
+		
+		if( getComposite() != null )
+			ClientEventBus.INSTANCE.fireEvent(new ClientEventBus.ViewChangedEvent());
+		return NODE_STAY;
+	}
+
+	public int failed(D3Context context) {
+		LogFaild();
+		return NODE_STAY;
+	}	
+	
+	
 	/*
 	 * 链接一个节点到本节点的子孙
 	 */
@@ -62,53 +113,6 @@ public abstract class Stick {
 		else
 			next.addNextNode(sticklet);
 	}
-
-	public int enter(ASticklet sticklet) {
-		LogEnter();
-		
-		Stick last = sticklet.getCurrentNode();
-		if( last != null ){
-			last.leave(sticklet);
-		}
-		sticklet.setCurrentNode(this);
-		
-		if( getComposite() != null )
-			ClientEventBus.INSTANCE.fireEvent(new ClientEventBus.ViewChangedEvent());
-		return NODE_STAY;
-	}
-	
-	public int leave(ASticklet sticklet) {
-		return 0;
-	}
-	
-	// 我们离开这个节点进入下一步的时候，执行该动作。
-	public int action(ASticklet sticklet) {
-		LogAction();
-		return NODE_OK;
-	}
-	
-	public void press(int keyCode) {
-		
-	}
-	
-	public int rollback(ASticklet sticklet) {
-		LogRollback();
-		Stick last = sticklet.getCurrentNode();
-		if( last != null ){
-			last.leave(sticklet);
-		}
-		sticklet.setCurrentNode(this);
-		
-		if( getComposite() != null )
-			ClientEventBus.INSTANCE.fireEvent(new ClientEventBus.ViewChangedEvent());
-		return NODE_STAY;
-	}
-
-	public int failed(ASticklet sticklet) {
-		LogFaild();
-		return NODE_STAY;
-	}
-	
 	
 	// 调试用。
 	public void LogEnter() {

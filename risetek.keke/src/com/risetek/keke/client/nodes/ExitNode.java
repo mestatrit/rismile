@@ -1,8 +1,8 @@
 package com.risetek.keke.client.nodes;
 
 import com.google.gwt.user.client.ui.Composite;
+import com.risetek.keke.client.context.D3Context;
 import com.risetek.keke.client.nodes.ui.PromotionComposite;
-import com.risetek.keke.client.sticklet.ASticklet;
 
 public class ExitNode extends Stick {
 
@@ -17,12 +17,14 @@ public class ExitNode extends Stick {
 		return composite;
 	}
 
-	public int enter(ASticklet widget) {
-		return super.enter(widget);
+	@Override
+	public int enter(D3Context context) {
+		return super.enter(context);
 	}
 	
-	public int action(ASticklet widget) {
-		super.action(widget);
+	@Override
+	public int action(D3Context context) {
+		super.action(context);
 		return NODE_EXIT;
 	}
 }

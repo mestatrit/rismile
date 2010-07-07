@@ -3,11 +3,7 @@ package com.risetek.keke.client.sticklet;
 import java.util.HashMap;
 import java.util.Vector;
 
-import com.google.gwt.xml.client.Document;
-import com.google.gwt.xml.client.Node;
-import com.google.gwt.xml.client.NodeList;
-import com.google.gwt.xml.client.XMLParser;
-import com.risetek.keke.client.context.PosContext;
+import com.risetek.keke.client.context.D3Context;
 import com.risetek.keke.client.nodes.CallerNode;
 import com.risetek.keke.client.nodes.CancelNode;
 import com.risetek.keke.client.nodes.ExitNode;
@@ -25,8 +21,8 @@ import com.risetek.keke.client.nodes.Stick;
 
 public class Sticklets {
 
-	HashMap<String, String[][]> stickletSources = new HashMap<String, String[][]>();
-	HashMap<String, Sticklet> stickletInstances = new HashMap<String, Sticklet>();
+	private final HashMap<String, String[][]> stickletSources = new HashMap<String, String[][]>();
+	// HashMap<String, Sticklet> stickletInstances = new HashMap<String, Sticklet>();
 
 	final static String[][] login = {
 			{ "2", "NamedNode", "epay.local.login" },
@@ -92,7 +88,10 @@ public class Sticklets {
 	 * 注册名称与源。
 	 */
 	private void registeStick(String[][] src) {
-		stickletSources.put(src[0][2], src);
+		if( stickletSources.put(src[0][2], src) != null ) {
+			D3Context.Log("Warning: 重复的 sticklet ");
+			D3Context.Log(" ->" + src[0][2]);
+		}
 	}
 
 	private Sticklets() {
@@ -186,7 +185,7 @@ public class Sticklets {
 				createNode(datas[0]));
 		if (dn.degree <= 0) {
 			// 命名节点的度必须大于 0 。
-			PosContext.Log("root node degree error");
+			D3Context.Log("root node degree error");
 			return null;
 		}
 		fifoStack.add(dn);
@@ -203,7 +202,7 @@ public class Sticklets {
 				if (topdn.degree <= 0)
 					fifoStack.remove(0);
 			} else
-				PosContext.Log("load notes error.");
+				D3Context.Log("load notes error.");
 
 			if (dn.degree > 0)
 				fifoStack.add(dn);
@@ -212,59 +211,9 @@ public class Sticklets {
 
 		// 检查Sticklet是否规范
 		if (fifoStack.size() > 0)
-			PosContext.Log("Sticklet: " + datas[0][2] + " error!");
+			D3Context.Log("Sticklet: " + datas[0][2] + " error!");
 
 		return top.node;
 	}
 
-	public static String stickletToXML(String[][] sticklet) {
-		String xml = "<?xml version=\"1.0\" encoding=\"utf-8\"?><ePay>";
-		for( int loop=0; loop < sticklet.length; loop++ ) {
-			String stick = "<stick t=\"".concat(sticklet[loop][1]);
-			stick = stick.concat("\" d=\"").concat(sticklet[loop][0]);
-			stick = stick.concat("\" p=\"").concat(sticklet[loop][2]).concat("\">");
-			if( sticklet[loop][3] != null )
-				stick = stick.concat("<img>").concat(sticklet[loop][3]).concat("</img>");
-			stick = stick.concat("</stick>");
-			xml = xml.concat(stick);
-		}
-		
-		xml = xml.concat("</ePay>");
-		return xml;
-	}
-	
-	
-	private static String getStickAttribute(Node node, String attribute) {
-		Node n = node.getAttributes().getNamedItem(attribute);
-		if( n != null )
-			return n.getNodeValue();
-		return null;
-	}
-	
-	public static String[][] xmlToSticklet(String xml) {
-		Vector<String[]> sticklet = new Vector<String[]>();
-		Document doc = XMLParser.parse(xml);
-		NodeList list = doc.getElementsByTagName("stick");
-		
-		for(int loop=0; loop < list.getLength(); loop++) {
-			String[] nodes = new String[4];
-			Node node = list.item(loop);
-			nodes[0] = getStickAttribute(node,"d");
-			nodes[1] = getStickAttribute(node,"t");
-			nodes[2] = getStickAttribute(node,"p");
-			nodes[3] = node.getChildNodes().toString();
-			sticklet.add(nodes);
-		}
-		
-		String[][] a = new String[sticklet.size()][4];
-		
-		for( int loop = 0; loop < sticklet.size(); loop++) {
-			String[] t = sticklet.elementAt(loop);
-			a[loop][0] = t[0];
-			a[loop][1] = t[1];
-			a[loop][2] = t[2];
-			a[loop][3] = t[3];
-		}
-		return a;
-	}
 }

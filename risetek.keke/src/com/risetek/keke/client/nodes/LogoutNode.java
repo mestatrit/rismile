@@ -1,8 +1,7 @@
 package com.risetek.keke.client.nodes;
 
 import com.risetek.keke.client.context.ClientEventBus;
-import com.risetek.keke.client.context.PosContext;
-import com.risetek.keke.client.sticklet.ASticklet;
+import com.risetek.keke.client.context.D3Context;
 
 public class LogoutNode extends PromotionNode {
 
@@ -10,18 +9,15 @@ public class LogoutNode extends PromotionNode {
 		super("注销", "Logout");
 	}
 
-	public int action(ASticklet widget) {
-		PosContext.system.remove("token");
-		return super.action(widget);
+	@Override
+	public int action(D3Context context) {
+		D3Context.system.remove("token");
+		return super.action(context);
 	}
 
-	// DEBUG only
-	public int enter(ASticklet sticklet) {
-		return super.enter(sticklet);
-	}	
-
-	public int rollback(ASticklet sticklet) {
-		super.rollback(sticklet);
+	@Override
+	public int rollback(D3Context context) {
+		super.rollback(context);
 		ClientEventBus.INSTANCE.fireEvent(new ClientEventBus.HIDControlEvent(ClientEventBus.CONTROL_SYSTEM_ROLLBACK));
 		return NODE_CANCEL;
 	}

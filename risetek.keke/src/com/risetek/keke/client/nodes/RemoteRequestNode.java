@@ -3,10 +3,10 @@ package com.risetek.keke.client.nodes;
 import com.google.gwt.http.client.RequestBuilder;
 import com.google.gwt.http.client.RequestException;
 import com.google.gwt.user.client.ui.Composite;
-import com.risetek.keke.client.context.PosContext;
+import com.risetek.keke.client.context.D3Context;
 import com.risetek.keke.client.context.RemoteResponse;
 import com.risetek.keke.client.nodes.ui.PromotionComposite;
-import com.risetek.keke.client.sticklet.ASticklet;
+import com.risetek.keke.client.sticklet.Sticklet;
 
 /*
  * 这个节点发起请求。
@@ -18,9 +18,11 @@ public class RemoteRequestNode extends Stick {
 		super(promotion);
 	}
 
-	public int enter(ASticklet sticklet) {
+	@Override
+	public int enter(D3Context context) {
 		// 开始登录过程
 		// 1、发送登录信息，钩挂回调函数和超时定时器。
+		Sticklet sticklet = context.getSticklet();
 		String method = sticklet.ParamStack.pop();
 		sticklet.ParamStack.push(method);
 
@@ -39,23 +41,26 @@ public class RemoteRequestNode extends Stick {
 			RequestBuilder rqBuilder = new RequestBuilder(RequestBuilder.POST, "remotecall");
 			rqBuilder.sendRequest(param, new RemoteResponse());
 		} catch (RequestException e) {
-			PosContext.Log("Request failed.");
+			D3Context.Log("Request failed.");
 			e.printStackTrace();
 		}
 		
-		return super.enter(sticklet);
+		return super.enter(context);
 		
 	}	
 	
+	@Override
 	public Composite getComposite() {
 		if( composite == null )
 			composite = new PromotionComposite(this);
 		return composite;
 	}
 	
-	public int failed(ASticklet sticklet) {
+	@Override
+	public int failed(D3Context context) {
+		Sticklet sticklet = context.getSticklet();
 		Stick n = sticklet.HistoryNodesStack.pop();
-		return n.rollback(sticklet);
+		return n.rollback(context);
 	}
 	
 }

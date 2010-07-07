@@ -1,6 +1,7 @@
 package com.risetek.keke.client.nodes;
 
-import com.risetek.keke.client.sticklet.ASticklet;
+import com.risetek.keke.client.context.D3Context;
+import com.risetek.keke.client.sticklet.Sticklet;
 
 public class ParamStick extends VStick {
 	
@@ -10,19 +11,19 @@ public class ParamStick extends VStick {
 		this.param = param;
 	}
 
-	public int enter(ASticklet sticklet) {
-		return super.enter(sticklet);
-	}
-
-	public int action(ASticklet sticklet) {
+	@Override
+	public int action(D3Context context) {
+		Sticklet sticklet = context.getSticklet();
 		// 压入数据。
 		sticklet.ParamStack.push(param);
-		return super.action(sticklet);
+		return super.action(context);
 	}
 	
-	public int rollback(ASticklet sticklet) {
+	@Override
+	public int rollback(D3Context context) {
 		// 取消原来那个输入数据。
+		Sticklet sticklet = context.getSticklet();
 		sticklet.ParamStack.pop();
-		return super.rollback(sticklet);
+		return super.rollback(context);
 	}
 }

@@ -5,7 +5,7 @@ import java.io.PrintWriter;
 
 import javax.servlet.http.HttpServletResponse;
 
-import com.risetek.keke.client.sticklet.Sticklets;
+import com.risetek.keke.client.sticklet.Util;
 
 public class Login {
 
@@ -38,7 +38,7 @@ public class Login {
 			out = resp.getWriter();
 			login_sucessed[1][2] = "token";
 			login_sucessed[2][2] = "12345678";
-			String xml = Sticklets.stickletToXML(login_sucessed);
+			String xml = Util.stickletToXML(login_sucessed);
 			out.println(xml);
 			out.flush();
 		} catch (IOException e) {

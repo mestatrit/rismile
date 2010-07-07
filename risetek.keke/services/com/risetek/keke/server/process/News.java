@@ -17,7 +17,7 @@ import org.w3c.dom.NodeList;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 
-import com.risetek.keke.client.sticklet.Sticklets;
+import com.risetek.keke.client.sticklet.Util;
 
 public class News {
 
@@ -58,7 +58,7 @@ public class News {
 			}
 
 			reader.close();
-			String xml = Sticklets.stickletToXML(sticklet);
+			String xml = Util.stickletToXML(sticklet);
 			return xml;
 		} catch (ParserConfigurationException e) {
 			e.printStackTrace();

@@ -1,7 +1,7 @@
 package com.risetek.keke.client.nodes;
 
-import com.risetek.keke.client.context.PosContext;
-import com.risetek.keke.client.sticklet.ASticklet;
+import com.risetek.keke.client.context.D3Context;
+import com.risetek.keke.client.sticklet.Sticklet;
 
 public class KVPairStick extends VStick {
 
@@ -9,26 +9,26 @@ public class KVPairStick extends VStick {
 		super("键值设定");
 	}
 
-	public int enter(ASticklet widget) {
-		return super.enter(widget);
-	}
-
-	public int rollback(ASticklet sticklet) {
+	@Override
+	public int rollback(D3Context context) {
+		Sticklet sticklet = context.getSticklet();
 		String value = sticklet.ParamStack.pop();
 		String key = sticklet.ParamStack.pop();
 		sticklet.ParamStack.push(key);
 		sticklet.ParamStack.push(value);
-		PosContext.system.remove(key);
-		return super.rollback(sticklet);
+		D3Context.system.remove(key);
+		return super.rollback(context);
 	}
 
-	public int action(ASticklet sticklet) {
+	@Override
+	public int action(D3Context context) {
+		Sticklet sticklet = context.getSticklet();
 		// 最接近的参数区是键值对。
 		String value = sticklet.ParamStack.pop();
 		String key = sticklet.ParamStack.pop();
 		sticklet.ParamStack.push(key);
 		sticklet.ParamStack.push(value);
-		PosContext.system.put(key,value);
-		return super.action(sticklet);
+		D3Context.system.put(key,value);
+		return super.action(context);
 	}
 }

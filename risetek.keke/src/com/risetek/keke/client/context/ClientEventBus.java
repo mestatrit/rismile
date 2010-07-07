@@ -8,7 +8,7 @@ import com.google.gwt.event.shared.HandlerRegistration;
 import com.google.gwt.user.client.Event;
 import com.google.gwt.user.client.Event.NativePreviewEvent;
 import com.google.gwt.user.client.Event.NativePreviewHandler;
-import com.risetek.keke.client.sticklet.ASticklet;
+import com.risetek.keke.client.sticklet.Sticklet;
 
 public class ClientEventBus {
 
@@ -213,12 +213,12 @@ public class ClientEventBus {
 	public static class CallerEvent extends GwtEvent<CallerHandler> {
 		public static Type<CallerHandler> TYPE = new Type<CallerHandler>();
 
-		private ASticklet sticklet;
-		public CallerEvent(ASticklet sticklet) {
+		private Sticklet sticklet;
+		public CallerEvent(Sticklet sticklet) {
 			this.sticklet = sticklet;
 		}
 		
-		public ASticklet getSticklet() {
+		public Sticklet getSticklet() {
 			return sticklet;
 		}
 		

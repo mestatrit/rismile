@@ -1,8 +1,8 @@
 package com.risetek.keke.client.presenter;
 
-import com.risetek.keke.client.context.PosContext;
+import com.risetek.keke.client.context.D3Context;
 import com.risetek.keke.client.nodes.Stick;
-import com.risetek.keke.client.sticklet.ASticklet;
+import com.risetek.keke.client.sticklet.Sticklet;
 import com.risetek.keke.client.ui.KekesComposite;
 
 public class Presenter {
@@ -11,8 +11,8 @@ public class Presenter {
 		this.view = view;
 	}
 
-	public void upDate(PosContext context ) {
-		ASticklet sticklet = context.getSticklet();
+	public void upDate(D3Context context ) {
+		Sticklet sticklet = context.getSticklet();
 		Stick head = sticklet.HistoryNodesStack.peek();
 		view.renderKekes( sticklet.getChildrenNode(head) , sticklet.getCurrentNode());
 	}

@@ -1,8 +1,9 @@
 package com.risetek.keke.client.nodes;
 
 import com.google.gwt.user.client.ui.Composite;
+import com.risetek.keke.client.context.D3Context;
 import com.risetek.keke.client.nodes.ui.InputComposite;
-import com.risetek.keke.client.sticklet.ASticklet;
+import com.risetek.keke.client.sticklet.Sticklet;
 
 
 /*
@@ -20,10 +21,12 @@ public class InputNode extends Stick {
 		return composite;
 	}
 	
-	public int enter(ASticklet sticklet) {
-		return super.enter(sticklet);
+	@Override
+	public int enter(D3Context context) {
+		return super.enter(context);
 	}
 	
+	@Override
 	public void press(int keyCode) {
 		InputComposite myComposite = (InputComposite)getComposite();
 
@@ -35,23 +38,28 @@ public class InputNode extends Stick {
 		myComposite.input.setText(input);
 	}
 
-	public int leave(ASticklet widget) {
+	@Override
+	public int leave(D3Context context) {
 		input = "";
 		InputComposite myComposite = (InputComposite)getComposite();
 		myComposite.input.setText(input);
 		return 0;
 	}
 
-	public int action(ASticklet sticklet) {
+	@Override
+	public int action(D3Context context) {
 		// 压入输入数据。
+		Sticklet sticklet = context.getSticklet();
 		sticklet.ParamStack.push(input);
-		return super.action(sticklet);
+		return super.action(context);
 	}
 	
-	public int rollback(ASticklet sticklet) {
+	@Override
+	public int rollback(D3Context context) {
 		// 取消原来那个输入数据。
+		Sticklet sticklet = context.getSticklet();
 		sticklet.ParamStack.pop();
-		return super.rollback(sticklet);
+		return super.rollback(context);
 	}
 	
 }

@@ -2,8 +2,8 @@ package com.risetek.keke.client.nodes;
 
 import com.google.gwt.user.client.ui.Composite;
 import com.risetek.keke.client.context.ClientEventBus;
-import com.risetek.keke.client.context.PosContext;
-import com.risetek.keke.client.sticklet.ASticklet;
+import com.risetek.keke.client.context.D3Context;
+import com.risetek.keke.client.sticklet.Sticklet;
 
 
 /*
@@ -19,7 +19,7 @@ public class NamedNode extends VStick {
 
 	public NamedNode(String name) {
 		super(name);
-		PosContext.Log("Create named Node: "+name);
+		D3Context.Log("Create named Node: "+name);
 	}
 
 	@Override
@@ -27,8 +27,10 @@ public class NamedNode extends VStick {
 		return null;
 	}
 
-	public int failed(ASticklet sticklet) {
-		super.failed(sticklet);
+	@Override
+	public int failed(D3Context context) {
+		super.failed(context);
+		Sticklet sticklet = context.getSticklet();
 		if( sticklet.callerSticklet != null ) {
 			sticklet.callerSticklet.calledSticklet.Clean();
 			sticklet.callerSticklet.calledSticklet = null;

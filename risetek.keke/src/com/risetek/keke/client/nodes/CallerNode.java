@@ -1,9 +1,9 @@
 package com.risetek.keke.client.nodes;
 
 import com.google.gwt.user.client.ui.Composite;
-import com.risetek.keke.client.context.PosContext;
+import com.risetek.keke.client.context.D3Context;
 import com.risetek.keke.client.nodes.ui.PromotionComposite;
-import com.risetek.keke.client.sticklet.ASticklet;
+import com.risetek.keke.client.sticklet.Sticklet;
 import com.risetek.keke.client.sticklet.Sticklets;
 
 
@@ -16,28 +16,32 @@ public class CallerNode extends Stick {
 		this.calledSticklet = calledSticklet;
 	}
 	
-	public int enter(ASticklet sticklet) {
+	@Override
+	public int enter(D3Context context) {
+		Sticklet sticklet = context.getSticklet();
 		if( sticklet.calledSticklet != null ) {
-			PosContext.Log("Fatal: calledSticklet is not null");
+			D3Context.Log("Fatal: calledSticklet is not null");
 			return Stick.NODE_CANCEL;
 		}
 			
-		int state = super.enter(sticklet);
+		int state = super.enter(context);
 		// 陷入被调用环境中去。
-		PosContext.Log("Call: "+calledSticklet);
-		ASticklet called = Sticklets.loadSticklet(calledSticklet);
-		if( sticklet.Call(called) != NODE_STAY )
-			PosContext.Log("Fatal: Called sticklet can't stay.");
+		D3Context.Log("Call: "+calledSticklet);
+		Sticklet called = Sticklets.loadSticklet(calledSticklet);
+		if( sticklet.Call(called, context) != NODE_STAY )
+			D3Context.Log("Fatal: Called sticklet can't stay.");
 		return state;
 	}
 	
 	// 我们离开这个节点进入下一步的时候，执行该动作。
-	public int action(ASticklet sticklet) {
-		return super.action(sticklet);
+	@Override
+	public int action(D3Context context) {
+		return super.action(context);
 	}
 
-	public int rollback(ASticklet sticklet) {
-		return super.rollback(sticklet);
+	@Override
+	public int rollback(D3Context context) {
+		return super.rollback(context);
 	}
 	
 	@Override
@@ -47,8 +51,10 @@ public class CallerNode extends Stick {
 		return composite;
 	}
 	
-	public int failed(ASticklet sticklet) {
+	@Override
+	public int failed(D3Context context) {
+		Sticklet sticklet = context.getSticklet();
 		Stick n = sticklet.HistoryNodesStack.pop();
-		return n.rollback(sticklet);
+		return n.rollback(context);
 	}
 }

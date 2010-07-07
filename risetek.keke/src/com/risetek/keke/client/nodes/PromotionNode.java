@@ -1,8 +1,8 @@
 package com.risetek.keke.client.nodes;
 
 import com.google.gwt.user.client.ui.Composite;
+import com.risetek.keke.client.context.D3Context;
 import com.risetek.keke.client.nodes.ui.PromotionComposite;
-import com.risetek.keke.client.sticklet.ASticklet;
 
 
 /*
@@ -14,16 +14,13 @@ public class PromotionNode extends Stick {
 		super(promotion, imgName);
 	}
 
-	// DEBUG only
-	public int enter(ASticklet sticklet) {
-		return super.enter(sticklet);
-	}	
-	
 	// 我们离开这个节点进入下一步的时候，执行该动作。
-	public int action(ASticklet widget) {
-		return super.action(widget);
+	@Override
+	public int action(D3Context context) {
+		return super.action(context);
 	}
 	
+	@Override
 	public Composite getComposite() {
 		if( composite == null )
 			composite = new PromotionComposite(this);

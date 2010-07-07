@@ -2,7 +2,7 @@ package com.risetek.keke.client.nodes;
 
 import com.google.gwt.user.client.ui.Composite;
 import com.risetek.keke.client.context.ClientEventBus;
-import com.risetek.keke.client.sticklet.ASticklet;
+import com.risetek.keke.client.context.D3Context;
 
 public abstract class VStick extends Stick {
 
@@ -16,15 +16,17 @@ public abstract class VStick extends Stick {
 	 * 作为一个虚节点，我们跳过这一步，进入下一步。
 	 */
 
-	public int enter(ASticklet sticklet) {
-		int state = super.enter(sticklet);
+	@Override
+	public int enter(D3Context context) {
+		int state = super.enter(context);
 		//作为一个虚节点，我们跳过这一步，进入下一步。
 		ClientEventBus.INSTANCE.fireEvent(new ClientEventBus.HIDControlEvent(ClientEventBus.CONTROL_SYSTEM_ENGAGE));
 		return state;
 	}
 	
-	public int rollback(ASticklet sticklet) {
-		int state = super.rollback(sticklet);
+	@Override
+	public int rollback(D3Context context) {
+		int state = super.rollback(context);
 		//作为一个虚节点，我们不能停留在这个节点，必须再rollback。
 		ClientEventBus.INSTANCE.fireEvent(new ClientEventBus.HIDControlEvent(ClientEventBus.CONTROL_SYSTEM_ROLLBACK));
 //		ClientEventBus.INSTANCE.fireEvent(new ClientEventBus.HIDControlEvent(ClientEventBus.CONTROL_SYSTEM_ENGAGE));

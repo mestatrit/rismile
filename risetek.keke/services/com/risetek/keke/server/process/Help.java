@@ -5,7 +5,7 @@ import java.io.PrintWriter;
 
 import javax.servlet.http.HttpServletResponse;
 
-import com.risetek.keke.client.sticklet.Sticklets;
+import com.risetek.keke.client.sticklet.Util;
 
 public class Help {
 
@@ -19,7 +19,7 @@ public class Help {
 		PrintWriter out;
 		try {
 			out = resp.getWriter();
-			String xml = Sticklets.stickletToXML(news);
+			String xml = Util.stickletToXML(news);
 			out.println(xml);
 			out.flush();
 		} catch (IOException e) {
