@@ -18,11 +18,6 @@ public class ExitNode extends Stick {
 	}
 
 	@Override
-	public int enter(D3Context context) {
-		return super.enter(context);
-	}
-	
-	@Override
 	public int action(D3Context context) {
 		super.action(context);
 		return NODE_EXIT;
