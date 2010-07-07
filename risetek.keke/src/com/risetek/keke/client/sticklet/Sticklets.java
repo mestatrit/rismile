@@ -33,19 +33,20 @@ public class Sticklets {
 	private final static String[][] epay = {
 			{ "1", "NamedNode", "epay.local.epay" },
 			{ "3", "SecurityCheck" },
-			{ "0", "Stay", "服务创造价值", "20090218213211718" },
+			{ "0", "Promotion", "服务创造价值", "20090218213211718" },
 			{ "0", "Stay", "观念决定出路", "20090218213212220" },
 			{ "1", "Logout", "退出登录", "20090218213212783" },
 			// TODO: 系统调用则意味着历史记录的存在，这里应该启动一个新的sticklet来运行。
 			{ "0", "Caller", "epay.local.demo", "20090218213213314" }, };
 
 	private final static String[][] demo = {
-			{ "6", "NamedNode", "epay.local.demo" },
+			{ "7", "NamedNode", "epay.local.demo" },
 			{ "1", "Promotion", "我的 ePay", "20090218213217243" },
 			{ "1", "Promotion", "新服务消息", "20090218213219741" },
 			{ "1", "Promotion", "人民网消息", "20090218213219741" },
 			{ "1", "Promotion", "我要帮助", "20090218213212220" },
 			{ "0", "Stay", "400-000-001 服务电话", "20090218213211718" },
+			{ "0", "Promotion", "测试点：没有子节点的执行会越界", "20090218213211718" },
 			{ "0", "Exit", "退出程序", "20090218213212783" },
 			{ "0", "Caller", "epay.local.epay", "20090218213213314" },
 			{ "1", "Param", "epay/news", "20090218213214862" },
