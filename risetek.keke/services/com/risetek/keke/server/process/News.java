@@ -21,12 +21,6 @@ import com.risetek.keke.client.sticklet.Sticklets;
 
 public class News {
 
-	final static String[][] news = {
-			{ "3", "NamedNode", "epay.remote.news", "" },
-			{ "0", "Stay", "ePay欢迎您", "20090218213217243" },
-			{ "0", "Stay", "Risetek为您服务", "20090218213218178" },
-			{ "0", "Stay", "NetFront先锋", "20090218213215625" }, };
-
 	// http://www.google.com/reader/atom/feed/http://www.cnbeta.com/commentrss.php?n=10
 	private static String getRSS(String address) {
 

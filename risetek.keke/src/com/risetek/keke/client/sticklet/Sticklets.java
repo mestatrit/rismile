@@ -55,9 +55,13 @@ public class Sticklets {
 			{ "1", "Param", "epay/news", "20090218213214862" },
 			{ "1", "Param", "epay/people", "20090218213214862" },
 			{ "1", "Param", "epay/help", "20090218213214862" },
-			{ "0", "RemoteRequest", "获取新信息中...", "20090218213227509" },
-			{ "0", "RemoteRequest", "获取新闻中...", "20090218213227509" },
+			{ "1", "Promotion", "消息动态来源cnbeta", "" },
+			{ "1", "Promotion", "新闻动态来源人民网", "" },
 			{ "0", "RemoteRequest", "获取帮助信息...", "20090218213227509" },
+			{ "1", "Promotion", "消息由后台动态提取", "" },
+			{ "1", "Promotion", "新闻由后台动态提取", "" },
+			{ "0", "RemoteRequest", "获取新信息中...", "" },
+			{ "0", "RemoteRequest", "获取新闻中...", "20090218213227509" },
 	 		};
 	private final static String[][] gameover = {
 			{ "1", "NamedNode", "epay.local.gameover" },
