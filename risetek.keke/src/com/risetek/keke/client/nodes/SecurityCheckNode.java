@@ -17,7 +17,6 @@ public class SecurityCheckNode extends VStick {
 	 * 我们检查安全问题。如果没有登录，那么需要调用登录sticklet。
 	 */
 	boolean isSecurity() {
-//		if( PosContext.Token == null )
 		if( D3Context.system.get("token") == null )
 			return false;
 		else
@@ -27,7 +26,6 @@ public class SecurityCheckNode extends VStick {
 	// 我们离开这个节点进入下一步的时候，执行该动作。
 	@Override
 	public int action(D3Context context) {
-		Sticklet sticklet = context.getSticklet();
 		// 陷入被调用环境中去。
 		if( !isSecurity() ) {
 			Sticklet login = Sticklets.loadSticklet("epay.local.login");
