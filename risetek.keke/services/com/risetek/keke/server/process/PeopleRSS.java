@@ -5,6 +5,7 @@ import java.io.InputStream;
 import java.io.PrintWriter;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.Vector;
 
 import javax.servlet.http.HttpServletResponse;
 import javax.xml.parsers.DocumentBuilder;
@@ -70,7 +71,7 @@ public class PeopleRSS {
 		return null;
 	}
 
-	public static void process(HttpServletResponse resp) {
+	public static void process(HttpServletResponse resp, Vector<String> params) {
 		PrintWriter out;
 		try {
 			out = resp.getWriter();

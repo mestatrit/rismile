@@ -2,6 +2,7 @@ package com.risetek.keke.server.process;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.Vector;
 
 import javax.servlet.http.HttpServletResponse;
 
@@ -15,7 +16,7 @@ public class Help {
 			{ "0", "Stay", "怎么操作", "20090218213218178" },
 			{ "0", "Stay", "该问谁？", "20090218213215625" }, };
 
-	public static void process(HttpServletResponse resp) {
+	public static void process(HttpServletResponse resp, Vector<String> params) {
 		PrintWriter out;
 		try {
 			out = resp.getWriter();

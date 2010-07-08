@@ -14,7 +14,9 @@ public class Util {
 		for( int loop=0; loop < sticklet.length; loop++ ) {
 			String stick = "<stick t=\"".concat(sticklet[loop][1]);
 			stick = stick.concat("\" d=\"").concat(sticklet[loop][0]);
-			stick = stick.concat("\" p=\"").concat(sticklet[loop][2]).concat("\">");
+			stick = stick.concat("\" p=\"");
+			String promotion = sticklet[loop][2] == null ? "" : sticklet[loop][2];
+			stick = stick.concat(promotion).concat("\">");
 			if( sticklet[loop][3] != null )
 				stick = stick.concat("<img>").concat(sticklet[loop][3]).concat("</img>");
 			stick = stick.concat("</stick>");

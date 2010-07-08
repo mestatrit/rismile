@@ -1,5 +1,6 @@
 package com.risetek.keke.client.nodes;
 
+import com.google.gwt.core.client.GWT;
 import com.google.gwt.http.client.RequestBuilder;
 import com.google.gwt.http.client.RequestException;
 import com.google.gwt.user.client.ui.Composite;
@@ -23,9 +24,7 @@ public class RemoteRequestNode extends Stick {
 		// 开始登录过程
 		// 1、发送登录信息，钩挂回调函数和超时定时器。
 		Sticklet sticklet = context.getSticklet();
-		String method = sticklet.ParamStack.pop();
-		sticklet.ParamStack.push(method);
-
+		String method = sticklet.ParamStack.peek();
 		
 		String param ="<?xml version=\"1.0\" encoding=\"UTF-8\"?><RemoteService name=\""+method+"\""
 			+	" sticklet=\"" + sticklet.aStickletName +"\">";
@@ -39,6 +38,7 @@ public class RemoteRequestNode extends Stick {
 		
 		try {
 			RequestBuilder rqBuilder = new RequestBuilder(RequestBuilder.POST, "remotecall");
+			GWT.log("Send Request:"+param);
 			rqBuilder.sendRequest(param, new RemoteResponse());
 		} catch (RequestException e) {
 			D3Context.Log("Request failed.");

@@ -22,7 +22,7 @@ import com.risetek.keke.client.nodes.Stick;
 public class Sticklets {
 
 	private final HashMap<String, String[][]> stickletSources = new HashMap<String, String[][]>();
-	// HashMap<String, Sticklet> stickletInstances = new HashMap<String, Sticklet>();
+	HashMap<String, Sticklet> stickletInstances = new HashMap<String, Sticklet>();
 
 	final static String[][] login = {
 			{ "2", "NamedNode", "epay.local.login" },
@@ -111,19 +111,23 @@ public class Sticklets {
 
 	public static Sticklet loadSticklet(String name) {
 		Sticklet i;
-		/*
+
 		i = INSTANCE.stickletInstances.get(name);
-		if (i != null)
+		if (i != null) {
+			// 我们不能直接给出i, 因为存在运行数据，要给出一个新的Sticklet上下文环境。
+			D3Context.Log("cached sticklet:"+name);
+			i = new Sticklet(i.rootNode);
 			return i;
-		*/
+		}
 		
 		String[][] src = INSTANCE.stickletSources.get(name);
 		if (src == null) {
+			D3Context.Log("不存在的Sticklet:"+name);
 			src = INSTANCE.stickletSources.get("epay.local.system.nosrc");
 			return new Sticklet(loadNodes(src));
 		}
 		i = new Sticklet(loadNodes(src));
-		//INSTANCE.stickletInstances.put(name, i);
+		INSTANCE.stickletInstances.put(name, i);
 		return i;
 	}
 
