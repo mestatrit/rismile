@@ -32,7 +32,7 @@ public class ControlPanel extends Composite {
 		outPanel.setWidth("100%");
 		outPanel.setHeight("100%");
 		outPanel.setWidget(0, 0, new HTML("控制台"));
-		dirButton.setBorderWidth(1);
+		dirButton.setBorderWidth(0);
 		dirButton.setWidget(0, 1, up);
 		dirButton.setWidget(1, 0, left);
 		dirButton.setWidget(1, 2, right);

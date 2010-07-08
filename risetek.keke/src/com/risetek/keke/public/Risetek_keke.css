@@ -18,13 +18,17 @@
 	border-spacing: 0px 0px;
 }
 
+.risefront .workview {
+	background: #dadeef;
+}
+
 .risefront .d3view {
 	background: #6a8ebf;
 }
 
 .risefront .d3view td {
 	border: solid white;
-	border-width: 1px;
+	border-width: 0px;
 }
 
 .risefront .HID .gwt-Button {
@@ -38,7 +42,7 @@
 }
 
 .risefront .d3view .KekesComposite {
-	background: #7a9ecf;
+	background: #9a9e2f;
 }
 
 .risefront .d3view .KekesComposite .hilight {
