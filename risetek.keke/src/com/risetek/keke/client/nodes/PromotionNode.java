@@ -1,7 +1,6 @@
 package com.risetek.keke.client.nodes;
 
 import com.google.gwt.user.client.ui.Composite;
-import com.risetek.keke.client.context.D3Context;
 import com.risetek.keke.client.nodes.ui.PromotionComposite;
 
 
@@ -14,12 +13,6 @@ public class PromotionNode extends Stick {
 		super(promotion, imgName);
 	}
 
-	// 我们离开这个节点进入下一步的时候，执行该动作。
-	@Override
-	public int action(D3Context context) {
-		return super.action(context);
-	}
-	
 	@Override
 	public Composite getComposite() {
 		if( composite == null )

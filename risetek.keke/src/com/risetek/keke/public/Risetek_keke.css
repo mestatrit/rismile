@@ -49,6 +49,11 @@
 	background: #9abeff;
 }
 
+.risefront .caller {
+/*	background: yellow;	*/
+}
+
+
 .risefront .d3view .KekesComposite .stick td {
 	border: solid white;
 	border-width: 0px;
