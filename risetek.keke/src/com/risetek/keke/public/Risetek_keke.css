@@ -37,11 +37,15 @@
 	border-width: 0px;
 }
 
+.risefront .d3view .KekesComposite {
+	background: #7a9ecf;
+}
+
 .risefront .d3view .KekesComposite .hilight {
 	background: #9abeff;
 }
 
-.risefront .d3view .KekesComposite .KekeComposite td {
+.risefront .d3view .KekesComposite .stick td {
 	border: solid white;
 	border-width: 0px;
 	padding-top: 0px;
@@ -50,20 +54,20 @@
 	padding-right: 0px;
 }
 
-.risefront .d3view .KekesComposite .KekeComposite td.topleft {
+.risefront .d3view .KekesComposite .stick td.topleft {
 	background: #9abedf;
 	width: 3px;
 	height: 3px;
 	border-width: 0px;
 }
 
-.risefront .d3view .KekesComposite .KekeComposite td.topmiddler {
+.risefront .d3view .KekesComposite .stick td.topmiddler {
 	background: #9abedf;
 	height: 3px;
 	border-width: 0px;
 }
 
-.risefront .d3view .KekesComposite .KekeComposite td.topright {
+.risefront .d3view .KekesComposite .stick td.topright {
 	background: #9abedf;
 	width: 3px;
 	height: 3px;
@@ -71,36 +75,36 @@
 }
 
 
-.risefront .d3view .KekesComposite .KekeComposite td.midleft {
+.risefront .d3view .KekesComposite .stick td.midleft {
 	background: #9abedf;
 	width: 3px;
 	border-width: 0px;
 }
 
-.risefront .d3view .KekesComposite .KekeComposite td.midmiddler {
+.risefront .d3view .KekesComposite .stick td.midmiddler {
 }
 
-.risefront .d3view .KekesComposite .KekeComposite td.midright {
+.risefront .d3view .KekesComposite .stick td.midright {
 	background: #9abedf;
 	width: 3px;
 	border-width: 0px;
 }
 
 
-.risefront .d3view .KekesComposite .KekeComposite td.bottomleft {
+.risefront .d3view .KekesComposite .stick td.bottomleft {
 	background: #9abedf;
 	width: 3px;
 	height: 3px;
 	border-width: 0px;
 }
 
-.risefront .d3view .KekesComposite .KekeComposite td.bottommiddler {
+.risefront .d3view .KekesComposite .stick td.bottommiddler {
 	background: #9abedf;
 	height: 3px;
 	border-width: 0px;
 }
 
-.risefront .d3view .KekesComposite .KekeComposite td.bottomright {
+.risefront .d3view .KekesComposite .stick td.bottomright {
 	background: #9abedf;
 	width: 3px;
 	height: 3px;

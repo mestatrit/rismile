@@ -13,8 +13,8 @@ import com.risetek.keke.client.context.ClientEventBus;
  */
 public class ControlPanel extends Composite {
 	
-//	DockLayoutPanel dock = new DockLayoutPanel(Unit.PX);
-	DockPanel dock = new DockPanel();
+	
+	Grid outPanel = new Grid(2,1);
 	Grid dirButton = new Grid(3,3);
 	
 	Button up = new Button("上");
@@ -26,16 +26,13 @@ public class ControlPanel extends Composite {
 
 	public ControlPanel()
 	{
-		initWidget(dock);
+		initWidget(outPanel);
 		setStyleName("HID");
-		dock.setSize("100%", "100%");
-//		dock.setWidth("200px");
-//		dock.setHeight("300px");
-		
-//		dock.addNorth(card, 3);
-		dock.add(new HTML("控制台"), DockPanel.NORTH);
-//		dock.addNorth(card, 60);
-		
+		outPanel.setBorderWidth(1);
+		outPanel.setWidth("100%");
+		outPanel.setHeight("100%");
+		outPanel.setWidget(0, 0, new HTML("控制台"));
+		dirButton.setBorderWidth(1);
 		dirButton.setWidget(0, 1, up);
 		dirButton.setWidget(1, 0, left);
 		dirButton.setWidget(1, 2, right);
@@ -76,8 +73,6 @@ public class ControlPanel extends Composite {
 				ClientEventBus.fireControlKey(ClientEventBus.CONTROL_KEY_RIGHT);
 			}
 	    });
-		
-//		dock.add(dirButton);
-		dock.add(dirButton, DockPanel.SOUTH);
+		outPanel.setWidget(1, 0, dirButton);
 	}
 }

@@ -18,7 +18,6 @@ public class StickComposite extends Composite {
 	Image img = new Image();
 
 	public StickComposite(Stick node) {
-		//outgrid.addStyleName("sticklet");
 		
 		outgrid.getCellFormatter().addStyleName(0,0,"topleft");
 		outgrid.getCellFormatter().addStyleName(0,1,"topmiddler");
@@ -56,8 +55,7 @@ public class StickComposite extends Composite {
 		outPanel.setCellHorizontalAlignment(img, HasHorizontalAlignment.ALIGN_CENTER);
 		outPanel.setCellVerticalAlignment(img, HasVerticalAlignment.ALIGN_MIDDLE);
 
-		//initWidget(outPanel);
 		initWidget(outgrid);
-		setStyleName("KekeComposite");
+		setStyleName("stick");
 	}
 }

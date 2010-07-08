@@ -10,11 +10,12 @@ public class KekesComposite extends Composite implements UiKeke {
 	private Grid keke = new Grid(maxKeke,1);
 	public KekesComposite() {
 		initWidget(keke);
-		this.setWidth("100%");
+		setWidth("100%");
 		setHeight(maxKeke*kekeHeight+"px");
 	    keke.setCellPadding(0);
 	    keke.setCellSpacing(0);
-	    this.setStyleName("KekesComposite");
+		keke.setBorderWidth(0);
+	    setStyleName("KekesComposite");
 	}
 
 	private void clearStickers() {
