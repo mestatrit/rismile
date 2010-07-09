@@ -3,7 +3,6 @@ package com.risetek.keke.server.process;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Stack;
-import java.util.Vector;
 
 import javax.servlet.http.HttpServletResponse;
 
@@ -30,7 +29,7 @@ public class Login {
 	*/
 	final static String[][] login_faild_invalid_username = {
 		{"1", "NamedNode", "Login Failed invalid username", ""},
-		{"0", "Cancel", "用户不存在", "20090218213215625"},
+		{"0", "Promotion", "用户不存在", "20090218213215625"},
 	};
 
 	final static String[][] login_faild_invalid_password = {
@@ -55,7 +54,7 @@ public class Login {
 				else {
 					login_sucessed[1][2] = "token";
 					login_sucessed[2][2] = "12345678";
-					login_sucessed[4][1] = "ePay欢迎："+guess_username;
+					login_sucessed[4][2] = "ePay欢迎："+guess_username;
 					xml = Util.stickletToXML(login_sucessed);
 				}
 				
