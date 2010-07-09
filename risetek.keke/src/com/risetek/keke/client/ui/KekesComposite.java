@@ -110,7 +110,7 @@ public class KekesComposite extends Composite implements UiKeke {
 			// 关闭键盘消息？
 			if( slide == null )
 				slide = new SlideAnimation(keke, (oldPoint+delta));
-
+			slide.cancel();
 			slide.setDelta(delta);
 			slide.run(400);
 		}
