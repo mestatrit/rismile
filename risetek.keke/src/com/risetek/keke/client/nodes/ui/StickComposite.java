@@ -3,11 +3,9 @@ package com.risetek.keke.client.nodes.ui;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.DockPanel;
 import com.google.gwt.user.client.ui.Grid;
-import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.HasHorizontalAlignment;
 import com.google.gwt.user.client.ui.HasVerticalAlignment;
 import com.google.gwt.user.client.ui.Image;
-import com.google.gwt.user.client.ui.Widget;
 import com.risetek.keke.client.nodes.Stick;
 import com.risetek.keke.client.resources.IconManage;
 import com.risetek.keke.client.ui.UiKeke;
@@ -66,9 +64,8 @@ public class StickComposite extends Composite {
 		outPanel.setHeight("100%");
 
 		// ICON 的处理。
-		Image img;
 		if (node != null) {
-			img = new Image();
+			Image img = new Image();
 			img.setResource(IconManage.getIcon(node.imgName));
 			outPanel.add(img, DockPanel.WEST);
 			outPanel.setCellWidth(img, "70px");
