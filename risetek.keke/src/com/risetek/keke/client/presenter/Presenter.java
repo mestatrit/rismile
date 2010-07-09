@@ -10,6 +10,9 @@ public class Presenter {
 	// TODO: 我们也许会连续收到多个更新消息，如果能够过滤这些过程，也许能提高显示速度。
 	// 实际上，只有事件处理完成，没有新的事件缓冲存在的时候，才需要实际去更新界面。
 	
+	// 通过判断传入的头部是不是发生了变化来确定是不是更新显示数据的办法，避免了事件多次
+	// 发送而造成的担忧。
+	
 	private KekesComposite view;
 	public Presenter(KekesComposite view) {
 		this.view = view;

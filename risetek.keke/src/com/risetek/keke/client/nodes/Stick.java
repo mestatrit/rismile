@@ -118,22 +118,25 @@ public abstract class Stick {
 	}
 	
 	// 调试用。
-	public void LogEnter() {
+	public String getClassName() {
 		String name = getClass().getName();
 		name = name.substring(30);
+		return name;
+	}
+
+	public void LogEnter() {
+		String name = getClassName();
 		D3View.logger.logger.addItem("->"+name+ " "+ Promotion);
 	}
 
 	public void LogRollback() {
-		String name = getClass().getName();
-		name = name.substring(30);
+		String name = getClassName();
 		D3View.logger.logger.addItem("<-- "+name+ " "+ Promotion);
 	}
 
 	public void LogFaild() {
-		String name = getClass().getName();
-		name = name.substring(30);
-		D3View.logger.logger.addItem("["+name+ "] failed "+ Promotion);
+		String name = getClassName();
+		D3View.logger.logger.addItem("! "+name+ " " + Promotion);
 	}
 
 
@@ -143,7 +146,7 @@ public abstract class Stick {
 		name = name.substring(30);
 		D3View.logger.logger.addItem("  "+name+ " action");
 		*/
-		D3View.logger.logger.addItem( "["+ Promotion + "] action");
+		D3View.logger.logger.addItem( "@ "+ Promotion);
 	}
 	
 	

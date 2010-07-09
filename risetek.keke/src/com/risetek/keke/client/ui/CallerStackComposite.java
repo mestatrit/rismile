@@ -13,7 +13,8 @@ public class CallerStackComposite extends Composite {
 	public void ShowStack(Stack<Sticklet> caller) {
 		logger.clear();
 		for(int loop = 0; loop < caller.size(); loop++) {
-			logger.addItem(caller.elementAt(loop).aStickletName);
+			logger.addItem(caller.elementAt(loop).aStickletName+"["+caller.elementAt(loop).getCurrentNode().getClassName()
+					+":"+caller.elementAt(loop).getCurrentNode().Promotion+"]");
 		}
 	}
 	public CallerStackComposite() {
@@ -22,7 +23,7 @@ public class CallerStackComposite extends Composite {
 		logger.setWidth("100%");
 		logger.setHeight("100%");
 		outPanel.add(logger, DockPanel.NORTH);
-		logger.setVisibleItemCount(10);
+		logger.setVisibleItemCount(20);
 		logger.setEnabled(false);
 		initWidget(outPanel);
 	}
