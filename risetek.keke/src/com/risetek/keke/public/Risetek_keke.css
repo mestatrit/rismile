@@ -31,6 +31,12 @@
 	border-width: 0px;
 }
 
+
+.risefront .table {
+	text-align: center;
+	align: center;
+}
+
 .risefront .HID .gwt-Button {
 	width: 6em;
 }

@@ -13,7 +13,7 @@ public class LoggerComposite extends Composite {
 		logger.setWidth("100%");
 		logger.setHeight("100%");
 		// 这个值会影响界面，主要是布局比例。
-		logger.setVisibleItemCount(40);
+		logger.setVisibleItemCount(2);
 		logger.setEnabled(false);
 		outPanel.add(logger);
 		initWidget(outPanel);

@@ -42,7 +42,7 @@ public class PeopleRSS {
 
 			String[][] sticklet = new String[length + 1][4];
 			sticklet[0][0] = length + "";
-			sticklet[0][1] = "NamedNode";
+			sticklet[0][1] = "Named";
 			sticklet[0][2] = "epay.remote.peopleRSS";
 			sticklet[0][3] = "";
 

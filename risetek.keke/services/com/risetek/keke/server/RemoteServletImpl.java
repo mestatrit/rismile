@@ -30,7 +30,7 @@ public class RemoteServletImpl extends HttpServlet {
 	private static final long serialVersionUID = 5310351748984867707L;
 
 	private static final String[][] remoteService_missing = {
-			{ "1", "NamedNode", "missing Service method", "" },
+			{ "1", "Named", "missing Service method", "" },
 			{ "0", "Cancel", "没有该远程方法", "Error" }, };
 
 	void process(HttpServletResponse resp, Vector<String> params) {

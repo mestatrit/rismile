@@ -22,7 +22,7 @@ public class HistoryStackComposite extends Composite {
 		logger.setWidth("100%");
 		logger.setHeight("100%");
 		outPanel.add(logger);
-		logger.setVisibleItemCount(20);
+		logger.setVisibleItemCount(2);
 		logger.setEnabled(false);
 		initWidget(outPanel);
 	}

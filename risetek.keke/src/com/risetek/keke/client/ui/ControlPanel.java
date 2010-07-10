@@ -6,14 +6,15 @@ import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.Grid;
 import com.google.gwt.user.client.ui.HTML;
+import com.google.gwt.user.client.ui.HasHorizontalAlignment;
+import com.google.gwt.user.client.ui.VerticalPanel;
 import com.risetek.keke.client.context.ClientEventBus;
 /*
  * 一个用于人机界面的输入控制组件。
  */
 public class ControlPanel extends Composite {
+	private final VerticalPanel outPanel = new VerticalPanel();
 	
-	
-	Grid outPanel = new Grid(2,1);
 	Grid dirButton = new Grid(3,3);
 	
 	Button up = new Button("上");
@@ -25,13 +26,16 @@ public class ControlPanel extends Composite {
 
 	public ControlPanel()
 	{
+		outPanel.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_CENTER);
 		initWidget(outPanel);
 		setStyleName("HID");
 		outPanel.setBorderWidth(1);
 		outPanel.setWidth("100%");
 		outPanel.setHeight("100%");
-		outPanel.setWidget(0, 0, new HTML("控制台"));
+		outPanel.add(new HTML("控制台"));
+		
 		dirButton.setBorderWidth(0);
+		//dirButton.setSize("100%", "100%");
 		dirButton.setWidget(0, 1, up);
 		dirButton.setWidget(1, 0, left);
 		dirButton.setWidget(1, 2, right);
@@ -72,6 +76,6 @@ public class ControlPanel extends Composite {
 				ClientEventBus.fireControlKey(ClientEventBus.CONTROL_KEY_RIGHT);
 			}
 	    });
-		outPanel.setWidget(1, 0, dirButton);
+		outPanel.add(dirButton);
 	}
 }

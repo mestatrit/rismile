@@ -25,13 +25,13 @@ public class Sticklets {
 	HashMap<String, Sticklet> stickletInstances = new HashMap<String, Sticklet>();
 
 	final static String[][] login = {
-			{ "2", "NamedNode", "epay.local.login" },
+			{ "2", "Named", "epay.local.login" },
 			{ "1", "Promotion", "登录ePay", "20090218213158800" },
 			{ "0", "Cancel", "取消登录", "20090218213158872" },
 			{ "0", "Caller", "epay.local.system.login", "20090218213211612" }, };
 
 	private final static String[][] epay = {
-			{ "1", "NamedNode", "epay.local.epay" },
+			{ "1", "Named", "epay.local.epay" },
 			{ "3", "SecurityCheck" },
 			{ "0", "Promotion", "服务创造价值", "20090218213211718" },
 			{ "0", "Stay", "观念决定出路", "20090218213212220" },
@@ -40,7 +40,7 @@ public class Sticklets {
 			{ "0", "Caller", "epay.local.demo", "20090218213213314" }, };
 
 	private final static String[][] demo = {
-			{ "7", "NamedNode", "epay.local.demo" },
+			{ "7", "Named", "epay.local.demo" },
 			{ "1", "Promotion", "我的 ePay", "20090218213217243" },
 			{ "1", "Promotion", "新服务消息", "20090218213219741" },
 			{ "1", "Promotion", "人民网消息", "20090218213219741" },
@@ -61,25 +61,25 @@ public class Sticklets {
 			{ "0", "RemoteRequest", "获取新闻中...", "20090218213227509" },
 	 		};
 	private final static String[][] gameover = {
-			{ "1", "NamedNode", "epay.local.gameover" },
+			{ "1", "Named", "epay.local.gameover" },
 			{ "0", "Cancel", "Game Over 按F5重新运行", "20090218213214862" }, };
 
 	private final static String[][] services_failed = {
-			{ "1", "NamedNode", "epay.local.services.failed" },
+			{ "1", "Named", "epay.local.services.failed" },
 			{ "0", "Cancel", "远端服务失败", "20090218213217243" },};
 
 	private final static String[][] invalid_src = {
-			{ "1", "NamedNode", "epay.local.system.nosrc" },
+			{ "1", "Named", "epay.local.system.nosrc" },
 			{ "1", "Promotion", "未找到相应Stcklet", "20090218213218568" },
 			{ "0", "Exit", "byebye..", "20090218213219389" }, };
 
 	private final static String[][] runtime_error = {
-			{ "1", "NamedNode", "epay.local.system.runtime_error" },
+			{ "1", "Named", "epay.local.system.runtime_error" },
 			{ "1", "Promotion", "Runtimg Error", "20090218213219741" },
 			{ "0", "Exit", "byebye..", "20090218213222605" }, };
 
 	final static String[][] syslogin = {
-			{ "1", "NamedNode", "epay.local.system.login" },
+			{ "1", "Named", "epay.local.system.login" },
 			{ "1", "Input", "输入用户名称", "20090218213222671" },
 			{ "1", "Password", "输入登录密码", "20090218213227180" },
 			{ "1", "Param", "epay/login", "20090218213214862" },
@@ -139,7 +139,7 @@ public class Sticklets {
 
 	private static Stick createNode(String[] nodeDesc) {
 		Stick node = null;
-		if ("NamedNode".equals(nodeDesc[1]))
+		if ("Named".equals(nodeDesc[1]))
 			node = new NamedNode(nodeDesc[2]);
 		else if ("Promotion".equals(nodeDesc[1]))
 			node = new PromotionNode(nodeDesc[2], nodeDesc[3]);
