@@ -12,7 +12,7 @@ import com.risetek.keke.client.sticklet.Sticklet;
 public class PasswordNode extends Stick {
 	String password = "";
 	String passshow = "";
-	public PasswordNode(String promotion, String imgName) {
+	public PasswordNode(String promotion) {
 		super(promotion, "Password");
 	}
 

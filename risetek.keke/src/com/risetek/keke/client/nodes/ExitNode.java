@@ -7,7 +7,7 @@ import com.risetek.keke.client.nodes.ui.PromotionComposite;
 public class ExitNode extends Stick {
 
 	public ExitNode() {
-		super("退出程序", "20090218213218568");
+		super("退出程序", "Exit");
 	}
 
 	@Override

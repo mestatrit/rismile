@@ -19,7 +19,8 @@ public abstract class VStick extends Stick {
 	@Override
 	public int enter(D3Context context) {
 		int state = super.enter(context);
-		//作为一个虚节点，我们跳过这一步，进入下一步。
+		// 作为一个虚节点，我们跳过这一步，进入下一步。
+		// 这个进步会促使action动作。
 		ClientEventBus.fireControlKey(ClientEventBus.CONTROL_SYSTEM_ENGAGE);
 		return state;
 	}

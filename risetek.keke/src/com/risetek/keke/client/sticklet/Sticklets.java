@@ -146,11 +146,11 @@ public class Sticklets {
 		else if ("Stay".equals(nodeDesc[1]))
 			node = new StayStick(nodeDesc[2], nodeDesc[3]);
 		else if ("Cancel".equals(nodeDesc[1]))
-			node = new CancelNode(nodeDesc[2], nodeDesc[3]);
+			node = new CancelNode(nodeDesc[2]);
 		else if ("Input".equals(nodeDesc[1]))
 			node = new InputNode(nodeDesc[2], nodeDesc[3]);
 		else if ("Password".equals(nodeDesc[1]))
-			node = new PasswordNode(nodeDesc[2], nodeDesc[3]);
+			node = new PasswordNode(nodeDesc[2]);
 		else if ("RemoteRequest".equals(nodeDesc[1]))
 			node = new RemoteRequestNode(nodeDesc[2]);
 		else if ("Param".equals(nodeDesc[1]))

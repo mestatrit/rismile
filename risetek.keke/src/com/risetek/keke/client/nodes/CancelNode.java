@@ -4,8 +4,8 @@ import com.risetek.keke.client.context.D3Context;
 
 public class CancelNode extends PromotionNode {
 
-	public CancelNode(String promotion, String imgName) {
-		super(promotion, imgName);
+	public CancelNode(String promotion) {
+		super(promotion, "Cancel");
 	}
 
 	// 我们离开这个节点进入下一步的时候，执行该动作。

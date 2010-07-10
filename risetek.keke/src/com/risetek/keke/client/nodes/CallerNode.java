@@ -9,10 +9,10 @@ import com.risetek.keke.client.sticklet.Sticklets;
 
 public class CallerNode extends Stick {
 
-	String called = null;
+	private final String called;
 	
 	public CallerNode(String called) {
-		super("调用["+called+"]","20090218213222605");
+		super("调用["+called+"]","Caller");
 		this.called = called;
 	}
 	
