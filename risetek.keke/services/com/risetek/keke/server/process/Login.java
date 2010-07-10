@@ -29,12 +29,12 @@ public class Login {
 	*/
 	final static String[][] login_faild_invalid_username = {
 		{"1", "NamedNode", "Login Failed invalid username", ""},
-		{"0", "Promotion", "用户不存在", "20090218213215625"},
+		{"0", "Cancel", "用户不存在", "20090218213215625"},
 	};
 
 	final static String[][] login_faild_invalid_password = {
 			{"1", "NamedNode", "Login Failed invalid password", ""},
-			{"0", "Promotion", "口令错误", "Error"},
+			{"0", "Cancel", "口令错误", "Error"},
 	};
 	
 	
