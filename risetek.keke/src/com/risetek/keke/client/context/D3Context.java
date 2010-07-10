@@ -69,6 +69,8 @@ public class D3Context {
 	}
 	
 	private void updateView() {
+		D3View.caller.ShowStack(callerSticklets);
+		D3View.history.ShowHistoryStack(getSticklet().HistoryNodesStack);
 		presenter.upDate(this);
 	}
 
@@ -96,11 +98,6 @@ public class D3Context {
 		}
 	};
 
-	public void Caller(Sticklet sticklet) {
-		callerSticklets.push(sticklet);
-		sticklet.rootNode.enter(this);
-	}
-	
 	CallerHandler callerhandler = new CallerHandler() {
 
 		@Override

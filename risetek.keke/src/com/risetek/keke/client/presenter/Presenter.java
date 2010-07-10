@@ -3,7 +3,6 @@ package com.risetek.keke.client.presenter;
 import com.risetek.keke.client.context.D3Context;
 import com.risetek.keke.client.nodes.Stick;
 import com.risetek.keke.client.sticklet.Sticklet;
-import com.risetek.keke.client.ui.D3View;
 import com.risetek.keke.client.ui.KekesComposite;
 
 public class Presenter {
@@ -19,8 +18,6 @@ public class Presenter {
 	}
 
 	public void upDate(D3Context context ) {
-		D3View.caller.ShowStack(context.callerSticklets);
-		D3View.history.ShowHistoryStack(context.getSticklet().HistoryNodesStack);
 		Sticklet sticklet = context.getSticklet();
 		Stick head = sticklet.HistoryNodesStack.peek();
 		view.renderKekes( sticklet.getChildrenNode(head) , sticklet.getCurrentNode());
