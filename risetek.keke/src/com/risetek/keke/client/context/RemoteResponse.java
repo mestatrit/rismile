@@ -20,6 +20,8 @@ public class RemoteResponse implements RequestCallback {
 	public void onResponseReceived(Request request, Response response) {
 		D3Context.Log("Remote: "+response.getText());
 		String[][] a = Util.xmlToSticklet(response.getText());
+		// TODO: 我们应该想办法把Sticklets或者其原文作为参数传递到RemoteRequest的下一个Stick上去。
+		// 这有利于分解RemoteRequest的enter和action两个步骤，实现规范性。
 		Sticklet s = Sticklets.loadSticklet(a);
 		D3Context.CallSticklet(s);
 	}
