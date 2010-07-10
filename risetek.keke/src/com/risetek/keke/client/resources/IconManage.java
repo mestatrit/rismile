@@ -78,6 +78,9 @@ public class IconManage {
 		v.put("Login", imgSrc.I20090218213158800());
 		v.put("Password", imgSrc.I20090218213218178());
 		v.put("Error", imgSrc.I20090218213212220());
+		v.put("Caller", imgSrc.I20090218213222605());
+		v.put("Cancel", imgSrc.I20090218213215859());
+		v.put("Exit", imgSrc.I20090218213218568());
 	}
 	
 	static Random looker = new Random();
