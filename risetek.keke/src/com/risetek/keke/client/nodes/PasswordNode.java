@@ -61,4 +61,8 @@ public class PasswordNode extends Stick {
 		return super.rollback(context);
 	}
 	
+	@Override
+	public int hasKeyPad() {
+		return 1;
+	}
 }

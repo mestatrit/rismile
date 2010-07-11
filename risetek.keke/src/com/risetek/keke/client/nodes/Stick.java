@@ -26,6 +26,10 @@ public abstract class Stick {
 
 	Composite composite = null;
 	
+	public int hasKeyPad() {
+		return 0;
+	}
+	
 	public Stick getChildren() {
 		return children;
 	}

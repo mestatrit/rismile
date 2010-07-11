@@ -13,6 +13,7 @@ public class Presenter {
 	// 发送而造成的担忧。
 	
 	private KekesComposite view;
+	
 	public Presenter(KekesComposite view) {
 		this.view = view;
 	}

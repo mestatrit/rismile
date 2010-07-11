@@ -10,39 +10,43 @@ import com.risetek.keke.client.nodes.ui.StickComposite;
 
 public class KekesComposite extends Composite implements UiKeke {
 
-	private Grid keke = null;
-
+	private KeyInputComposite keyPad;
+	
 	// 我们试图用这个作为背景。
-	private final Grid hikeke = new Grid(maxKeke, 1);
-	private AbsolutePanel background = new AbsolutePanel();
+	private final AbsolutePanel background = new ePayBackground();
 
-	public KekesComposite() {
+	class ePayBackground extends AbsolutePanel {
+		// 我们可以在这个背景上做广告？
+		public ePayBackground() {
+			// 绘制背景
+			Grid hikeke = new Grid(maxKeke, 1);
+			hikeke.setWidth("100%");
+			hikeke.setHeight("100%");
+			hikeke.setCellPadding(0);
+			hikeke.setCellSpacing(0);
+			hikeke.setBorderWidth(0);
+			for (int spacekeke = 0; spacekeke < maxKeke; spacekeke++) {
+				hikeke.setWidget(spacekeke, 0, new StickComposite(null, false));
+			}
+			hikeke.getRowFormatter().setStyleName(hiKeke, "hilight");
 
-		// 绘制背景
-		hikeke.setWidth("100%");
-		hikeke.setHeight(maxKeke * kekeHeight + "px");
-		hikeke.setCellPadding(0);
-		hikeke.setCellSpacing(0);
-		hikeke.setBorderWidth(0);
-		for (int spacekeke = 0; spacekeke < maxKeke; spacekeke++) {
-			StickComposite empty = new StickComposite(null, false);
-			hikeke.setWidget(spacekeke, 0, empty);
+			add(hikeke);
+			setWidth("100%");
+			setHeight(maxKeke * kekeHeight + "px");
+			DOM.setStyleAttribute(getElement(), "overflow", "hidden");
+			getElement().getStyle().setZIndex(UiKeke.background_INDEX);
+			setStyleName("KekesComposite");
 		}
-		hikeke.getRowFormatter().setStyleName(hiKeke, "hilight");
-
+	}
+	
+	public KekesComposite() {
+		keyPad = new KeyInputComposite(background);
 		initWidget(background);
-		background.setWidth("100%");
-		background.setHeight(maxKeke * kekeHeight + "px");
-		DOM.setStyleAttribute(background.getElement(), "overflow", "hidden");
-
-		// hikeke用做背景。
-		background.add(hikeke);
-
-		setStyleName("KekesComposite");
 	}
 
 	static Stick oldhead = null;
 	static int oldPoint;
+	private Grid keke = null;
 
 	public void renderKekes(Stick head, Stick current) {
 		int numberOfNodes = 0;
@@ -56,12 +60,11 @@ public class KekesComposite extends Composite implements UiKeke {
 		}
 
 		// 如果头没变，说明
-		boolean changed = (oldhead != head);
-		oldhead = head;
 		int delta = oldPoint - numberToCurrentNodes;
 		oldPoint = numberToCurrentNodes;
 		
-		if (changed) {
+		if (oldhead != head) {
+			oldhead = head;
 			if( slide != null ) {
 				slide.cancel();
 				slide = null;
@@ -74,12 +77,12 @@ public class KekesComposite extends Composite implements UiKeke {
 			}
 
 			keke = new Grid(maxKeke + numberOfNodes, 1);
+			keke.getElement().getStyle().setZIndex(UiKeke.Sticks_INDEX);
 			keke.setWidth("100%");
 			keke.setHeight(maxKeke * kekeHeight + "px");
 			keke.setCellPadding(0);
 			keke.setCellSpacing(0);
 			keke.setBorderWidth(0);
-			// DOM.setStyleAttribute(keke.getElement(), "overflow", "hidden");
 
 			// 绘制前空格
 			int loop;
@@ -105,15 +108,17 @@ public class KekesComposite extends Composite implements UiKeke {
 		}
 		else
 		{
-			// TODO: FIXME:
-			// 如果连续按下键盘，会出错。
-			// 关闭键盘消息？
 			if( slide == null )
 				slide = new SlideAnimation(keke, (oldPoint+delta));
 			slide.cancel();
 			slide.setDelta(delta);
 			slide.run(400);
 		}
+		
+		if( current.hasKeyPad() == 1)
+			keyPad.show();
+		else
+			keyPad.hide();
 	}
 
 	private SlideAnimation slide;

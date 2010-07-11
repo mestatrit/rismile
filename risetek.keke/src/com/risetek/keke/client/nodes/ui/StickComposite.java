@@ -12,8 +12,7 @@ import com.risetek.keke.client.ui.UiKeke;
 
 public class StickComposite extends Composite {
 
-	// TODO: 个点的其它地方装饰。
-	Grid outgrid = new Grid(3, 3);
+	private final Grid outgrid = new Grid(3, 3);
 	DockPanel outPanel = new DockPanel();
 
 	public StickComposite(Stick node) {
@@ -68,7 +67,8 @@ public class StickComposite extends Composite {
 			Image img = new Image();
 			img.setResource(IconManage.getIcon(node.imgName));
 			outPanel.add(img, DockPanel.WEST);
-			outPanel.setCellWidth(img, "70px");
+			outPanel.setCellWidth(img, UiKeke.IconWidth+"px");
+			
 			outPanel.setCellHorizontalAlignment(img,
 					HasHorizontalAlignment.ALIGN_CENTER);
 			outPanel.setCellVerticalAlignment(img,
