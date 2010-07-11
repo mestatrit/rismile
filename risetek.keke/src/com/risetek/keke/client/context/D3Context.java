@@ -6,12 +6,8 @@ import java.util.Stack;
 import com.google.gwt.core.client.GWT;
 import com.risetek.keke.client.context.ClientEventBus.CallerEvent;
 import com.risetek.keke.client.context.ClientEventBus.CallerHandler;
-import com.risetek.keke.client.context.ClientEventBus.HIDCARDEvent;
-import com.risetek.keke.client.context.ClientEventBus.HIDCARDHandler;
 import com.risetek.keke.client.context.ClientEventBus.HIDControlEvent;
 import com.risetek.keke.client.context.ClientEventBus.HIDControlHandler;
-import com.risetek.keke.client.context.ClientEventBus.HIDNumberEvent;
-import com.risetek.keke.client.context.ClientEventBus.HIDNumberHandler;
 import com.risetek.keke.client.context.ClientEventBus.ViewChangedEvent;
 import com.risetek.keke.client.context.ClientEventBus.ViewChangedHandler;
 import com.risetek.keke.client.presenter.Presenter;
@@ -33,17 +29,13 @@ public class D3Context {
 	}
 
 	public static void addListener(D3Context context) {
-		ClientEventBus.INSTANCE.addHandler(context.cardhandler, HIDCARDEvent.TYPE);
 		ClientEventBus.INSTANCE.addHandler(context.viewchangedhandler,ViewChangedEvent.TYPE);
-		ClientEventBus.INSTANCE.addHandler(context.keyCodehandler, HIDNumberEvent.TYPE);
 		ClientEventBus.INSTANCE.addHandler(context.controlCodehandler,HIDControlEvent.TYPE);
 		ClientEventBus.INSTANCE.addHandler(context.callerhandler, CallerEvent.TYPE);
 	}
 
 	public static void removeListener(D3Context context) {
-		ClientEventBus.INSTANCE.removeHandler(context.cardhandler, HIDCARDEvent.TYPE);
 		ClientEventBus.INSTANCE.removeHandler(context.viewchangedhandler,ViewChangedEvent.TYPE);
-		ClientEventBus.INSTANCE.removeHandler(context.keyCodehandler, HIDNumberEvent.TYPE);
 		ClientEventBus.INSTANCE.removeHandler(context.controlCodehandler,HIDControlEvent.TYPE);
 		ClientEventBus.INSTANCE.removeHandler(context.callerhandler, CallerEvent.TYPE);
 	}
@@ -74,27 +66,11 @@ public class D3Context {
 		presenter.upDate(this);
 	}
 
-	HIDCARDHandler cardhandler = new HIDCARDHandler() {
-		@Override
-		public void onEvent(HIDCARDEvent event) {
-		}
-	};
-
 	ViewChangedHandler viewchangedhandler = new ViewChangedHandler() {
 
 		@Override
 		public void onEvent(ViewChangedEvent event) {
 			updateView();
-		}
-	};
-
-	HIDNumberHandler keyCodehandler = new HIDNumberHandler() {
-
-		@Override
-		public void onEvent(HIDNumberEvent event) {
-			Sticklet sticklet = getSticklet();
-			int code = event.getKeyCode();
-			sticklet.getCurrentNode().press(code);
 		}
 	};
 

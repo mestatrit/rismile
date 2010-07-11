@@ -30,7 +30,6 @@ public abstract class VStick extends Stick {
 		int state = super.rollback(context);
 		//作为一个虚节点，我们不能停留在这个节点，必须再rollback。
 		ClientEventBus.fireControlKey(ClientEventBus.CONTROL_SYSTEM_ROLLBACK);
-//		ClientEventBus.INSTANCE.fireEvent(new ClientEventBus.HIDControlEvent(ClientEventBus.CONTROL_SYSTEM_ENGAGE));
 		return state;
 	}
 	

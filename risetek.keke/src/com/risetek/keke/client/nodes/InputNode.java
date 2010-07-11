@@ -1,7 +1,10 @@
 package com.risetek.keke.client.nodes;
 
 import com.google.gwt.user.client.ui.Composite;
+import com.risetek.keke.client.context.ClientEventBus;
 import com.risetek.keke.client.context.D3Context;
+import com.risetek.keke.client.context.ClientEventBus.HIDNumberEvent;
+import com.risetek.keke.client.context.ClientEventBus.HIDNumberHandler;
 import com.risetek.keke.client.nodes.ui.InputComposite;
 import com.risetek.keke.client.sticklet.Sticklet;
 
@@ -23,26 +26,27 @@ public class InputNode extends Stick {
 	
 	@Override
 	public int enter(D3Context context) {
+		input = "";
+		press(-1);	// 用来更新显示。
+		ClientEventBus.INSTANCE.addHandler(keyCodehandler, HIDNumberEvent.TYPE);
 		return super.enter(context);
 	}
 	
-	@Override
 	public void press(int keyCode) {
+		if( keyCode >= 0 ) {
+			StringBuffer sb = new StringBuffer();
+			char c = "0123456789".charAt(keyCode);
+			sb.append(input);
+			sb.append(c);
+			input = sb.toString();
+		}
 		InputComposite myComposite = (InputComposite)getComposite();
-
-		StringBuffer sb = new StringBuffer();
-		char c = "0123456789".charAt(keyCode);
-		sb.append(input);
-		sb.append(c);
-		input = sb.toString();
 		myComposite.input.setText(input);
 	}
 
 	@Override
 	public int leave(D3Context context) {
-		input = "";
-		InputComposite myComposite = (InputComposite)getComposite();
-		myComposite.input.setText(input);
+		ClientEventBus.INSTANCE.removeHandler(keyCodehandler, HIDNumberEvent.TYPE);
 		return 0;
 	}
 
@@ -59,6 +63,11 @@ public class InputNode extends Stick {
 		// 取消原来那个输入数据。
 		Sticklet sticklet = context.getSticklet();
 		sticklet.ParamStack.pop();
+
+		input = "";
+		press(-1);	// 用来更新显示。
+		ClientEventBus.INSTANCE.addHandler(keyCodehandler, HIDNumberEvent.TYPE);
+
 		return super.rollback(context);
 	}
 	
@@ -66,4 +75,13 @@ public class InputNode extends Stick {
 	public int hasKeyPad() {
 		return 1;
 	}
+	
+	private final HIDNumberHandler keyCodehandler = new HIDNumberHandler() {
+		@Override
+		public void onEvent(HIDNumberEvent event) {
+			int code = event.getKeyCode();
+			press(code);
+		}
+	};
+	
 }

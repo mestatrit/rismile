@@ -77,10 +77,6 @@ public abstract class Stick {
 		return NODE_OK;
 	}
 	
-	public void press(int keyCode) {
-		
-	}
-	
 	public int rollback(D3Context context) {
 		LogRollback();
 		Sticklet sticklet = context.getSticklet();
