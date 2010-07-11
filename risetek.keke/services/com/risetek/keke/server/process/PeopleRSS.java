@@ -37,8 +37,7 @@ public class PeopleRSS {
 
 			NodeList nodelist = doc.getElementsByTagName("item");
 			int length = nodelist.getLength();
-			if (length > 5)
-				length = 5;
+			//if (length > 5)	length = 5;
 
 			String[][] sticklet = new String[length + 1][4];
 			sticklet[0][0] = length + "";
