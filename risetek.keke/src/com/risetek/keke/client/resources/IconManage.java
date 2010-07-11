@@ -86,16 +86,19 @@ public class IconManage {
 	static Random looker = new Random();
 	
 	public static ImageResource getIcon(String name) {
-		if( "<img/>".equals(name)) {
+		// TODO: FIXME: 这是临时措施。
+		name = name.replace("<img>", "");
+		name = name.replace("</img>", "");
+		name = name.replace("<img/>", "");
+
+		if( "".equals(name)) {
 			// 返回随机图标？
 			int size = INSTANCE.v.size();
 			size = looker.nextInt(size);
 			ImageResource i = (ImageResource) INSTANCE.v.values().toArray()[size];
 			return i;
 		}
-		// TODO: FIXME: 这是临时措施。
-		name = name.replace("<img>", "");
-		name = name.replace("</img>", "");
+
 		ImageResource i = INSTANCE.v.get(name);
 		if( i == null )
 			i = INSTANCE.v.get("20090218213212783");
