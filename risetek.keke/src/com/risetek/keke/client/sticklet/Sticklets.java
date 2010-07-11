@@ -25,30 +25,24 @@ public class Sticklets {
 	HashMap<String, Sticklet> stickletInstances = new HashMap<String, Sticklet>();
 
 	final static String[][] login = {
-			{ "2", "Named", "epay.local.login" },
+			{ "1", "Named", "epay.local.login" },
 			{ "1", "Promotion", "登录ePay", "20090218213158800" },
-			{ "0", "Cancel", "取消登录", "20090218213158872" },
 			{ "0", "Caller", "epay.local.system.login", "20090218213211612" }, };
 
 	private final static String[][] epay = {
 			{ "1", "Named", "epay.local.epay" },
 			{ "3", "SecurityCheck" },
-			{ "0", "Promotion", "服务创造价值", "20090218213211718" },
-			{ "0", "Stay", "观念决定出路", "20090218213212220" },
+			{ "0", "Stay", "服务订阅", "20090218213212220" },
+			{ "0", "Promotion", "个性设置", "20090218213211718" },
 			{ "1", "Logout", "退出登录", "20090218213212783" },
 			// TODO: 系统调用则意味着历史记录的存在，这里应该启动一个新的sticklet来运行。
 			{ "0", "Caller", "epay.local.demo", "20090218213213314" }, };
 
-	private final static String[][] demo = {
-			{ "7", "Named", "epay.local.demo" },
-			{ "1", "Promotion", "我的 ePay", "20090218213217243" },
-			{ "1", "Promotion", "新服务消息", "20090218213219741" },
+	private final static String[][] news = {
+			{ "3", "Named", "epay.local.news" },
+			{ "1", "Promotion", "cnBeta消息", "20090218213219741" },
 			{ "1", "Promotion", "人民网消息", "20090218213219741" },
 			{ "1", "Promotion", "我要帮助", "20090218213212220" },
-			{ "0", "Stay", "400-000-001 服务电话", "20090218213211718" },
-			{ "0", "Promotion", "测试点：没有子节点的执行会越界", "20090218213211718" },
-			{ "0", "Exit", "退出程序", "20090218213212783" },
-			{ "0", "Caller", "epay.local.epay", "20090218213213314" },
 			{ "1", "Param", "epay/news", "20090218213214862" },
 			{ "1", "Param", "epay/people", "20090218213214862" },
 			{ "1", "Param", "epay/help", "20090218213214862" },
@@ -59,6 +53,47 @@ public class Sticklets {
 			{ "1", "Promotion", "新闻由后台动态提取", "" },
 			{ "0", "RemoteRequest", "获取新信息中...", "" },
 			{ "0", "RemoteRequest", "获取新闻中...", "20090218213227509" },
+			};
+
+	private final static String[][] pay = {
+			{ "2", "Named", "epay.local.pay" },
+			{ "3", "Promotion", "支付", "" },
+			{ "1", "Promotion", "不予支付", "" },
+			{ "1", "Promotion", "工商行", "" },
+			{ "1", "Promotion", "中国银行", "" },
+			{ "1", "Promotion", "建设银行", "" },
+			{ "0", "Promotion", "该账单会消失", "" },
+			{ "0", "Stay", "谁来实现", "" },
+			{ "0", "Stay", "谁来实现", "" },
+			{ "0", "Stay", "谁来实现", "" },
+		};
+	
+	private final static String[][] bill = {
+			{ "1", "Named", "epay.local.bill" },
+			{ "3", "SecurityCheck" },
+			{ "1", "Promotion", "牙膏一只", "" },
+			{ "1", "Promotion", "牙刷一把", "" },
+			{ "1", "Promotion", "毛巾一张", "" },
+			{ "1", "Promotion", "单价 1.52", "" },
+			{ "1", "Promotion", "总价 1.52", "" },
+			{ "1", "Promotion", "单价 2.2", "" },
+			{ "1", "Promotion", "总价 2.2", "" },
+			{ "1", "Promotion", "单价 3.5", "" },
+			{ "1", "Promotion", "总价 3.5", "" },
+			};
+	
+	private final static String[][] demo = {
+			{ "6", "Named", "epay.local.demo" },
+			{ "1", "Promotion", "我的 ePay", "20090218213217243" },
+			{ "1", "Promotion", "账单支付", "" },
+			{ "1", "Promotion", "消息服务", "20090218213219741" },
+			{ "0", "Stay", "400-000-001 服务电话", "20090218213211718" },
+			{ "0", "Promotion", "测试点：没有子节点的执行会越界", "20090218213211718" },
+			{ "0", "Exit", "退出程序", "20090218213212783" },
+			{ "0", "Caller", "epay.local.epay", "" },
+			{ "1", "Caller", "epay.local.bill", "" },
+			{ "0", "Caller", "epay.local.news", "20090218213213314" },
+			{ "0", "Caller", "epay.local.pay", "" },
 	 		};
 	private final static String[][] gameover = {
 			{ "1", "Named", "epay.local.gameover" },
@@ -107,6 +142,9 @@ public class Sticklets {
 		registeStick(gameover);
 		registeStick(services_failed);
 		registeStick(syslogin);
+		registeStick(news);
+		registeStick(bill);
+		registeStick(pay);
 	}
 
 	public static Sticklet loadSticklet(String name) {
