@@ -126,17 +126,17 @@ public abstract class Stick {
 
 	public void LogEnter() {
 		String name = getClassName();
-		D3View.logger.logger.addItem("->"+name+ " "+ Promotion);
+		D3View.logger.Log("->"+name+ " "+ Promotion);
 	}
 
 	public void LogRollback() {
 		String name = getClassName();
-		D3View.logger.logger.addItem("<-- "+name+ " "+ Promotion);
+		D3View.logger.Log("<-- "+name+ " "+ Promotion);
 	}
 
 	public void LogFaild() {
 		String name = getClassName();
-		D3View.logger.logger.addItem("! "+name+ " " + Promotion);
+		D3View.logger.Log("! "+name+ " " + Promotion);
 	}
 
 
@@ -146,7 +146,7 @@ public abstract class Stick {
 		name = name.substring(30);
 		D3View.logger.logger.addItem("  "+name+ " action");
 		*/
-		D3View.logger.logger.addItem( "@ "+ Promotion);
+		D3View.logger.Log( "@ "+ Promotion);
 	}
 	
 	

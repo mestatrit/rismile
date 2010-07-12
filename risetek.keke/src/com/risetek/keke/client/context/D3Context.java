@@ -88,6 +88,6 @@ public class D3Context {
 
 	public static void Log(String message) {
 		GWT.log(message);
-		D3View.logger.logger.addItem(message);
+		D3View.logger.Log(message);
 	}
 }
