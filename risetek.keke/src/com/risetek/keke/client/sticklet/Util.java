@@ -18,7 +18,7 @@ public class Util {
 			String promotion = sticklet[loop][2] == null ? "" : sticklet[loop][2];
 			stick = stick.concat(promotion).concat("\">");
 			if( sticklet[loop][3] != null )
-				stick = stick.concat("<img>").concat(sticklet[loop][3]).concat("</img>");
+				stick = stick.concat("<p>").concat(sticklet[loop][3]).concat("</p>");
 			stick = stick.concat("</stick>");
 			xml = xml.concat(stick);
 		}

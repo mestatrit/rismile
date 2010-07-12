@@ -57,7 +57,11 @@ public abstract class Stick {
 				list = list.item(0).getChildNodes();
 				for( int loop =0; loop < list.getLength(); loop++ ) {
 					Node n = list.item(loop);
-					StickParams.put(n.getNodeName(), n.getAttributes().getNamedItem("v").getNodeValue());
+					Node valueNode = n.getAttributes().getNamedItem("v");
+					if( valueNode != null )
+						StickParams.put(n.getNodeName(), valueNode.getNodeValue());
+					else
+						StickParams.put(n.getNodeName(), "");
 				}
 			}
 		} catch (Exception e) {

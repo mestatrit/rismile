@@ -43,16 +43,19 @@ public class PeopleRSS {
 			sticklet[0][0] = length + "";
 			sticklet[0][1] = "Named";
 			sticklet[0][2] = "epay.remote.peopleRSS";
-			sticklet[0][3] = "";
+			sticklet[0][3] = "<img />";
 
 			for (int loop = 0; loop < length; loop++) {
 				Node nn = nodelist.item(loop);
 				NodeList m = nn.getChildNodes();
-				String title = m.item(2).getNextSibling().getFirstChild().getNodeValue();
+				Node cNode = m.item(2);
+
+				String title = cNode.getNextSibling().getFirstChild().getNodeValue();
+				String descript = m.item(3).getNextSibling().getFirstChild().getNodeValue();
 				sticklet[loop + 1][0] = "0";
 				sticklet[loop + 1][1] = "Stay";
 				sticklet[loop + 1][2] = title;
-				sticklet[loop + 1][3] = "";
+				sticklet[loop + 1][3] = "<img /><Descript v=\""+descript+"\" />";
 			}
 
 			reader.close();
