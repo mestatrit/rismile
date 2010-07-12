@@ -15,18 +15,18 @@ public class Login {
 			{ "1", "Param", "", "" },
 			{ "1", "Param", "", "" },
 			{ "3", "KVPair", "", "" },
-			{ "0", "Promotion", "", "20090218213217243" },
-			{ "0", "Promotion", "Risetek为您服务", "20090218213218178" },
-			{ "0", "Promotion", "NetFront先锋", "20090218213215625" }, };
+			{ "0", "Promotion", "", "<img v=\"20090218213217243\" />" },
+			{ "0", "Promotion", "Risetek为您服务", "<img v=\"20090218213218178\" />" },
+			{ "0", "Promotion", "NetFront先锋", "<img v=\"20090218213215625\" />" }, };
 
 	final static String[][] login_faild_invalid_username = {
 		{"1", "Named", "Login Failed invalid username", ""},
-		{"0", "Cancel", "用户不存在", "20090218213215625"},
+		{"0", "Cancel", "用户不存在", "<img v=\"20090218213215625\" />"},
 	};
 
 	final static String[][] login_faild_invalid_password = {
 			{"1", "Named", "Login Failed invalid password", ""},
-			{"0", "Cancel", "口令错误", "Error"},
+			{"0", "Cancel", "口令错误", "<img v=\"Error\" />"},
 	};
 	
 	

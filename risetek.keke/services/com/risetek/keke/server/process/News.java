@@ -49,12 +49,18 @@ public class News {
 
 			for (int loop = 0; loop < length; loop++) {
 				Node nn = nodelist.item(loop);
-				NodeList m = nn.getChildNodes();
-				String title = m.item(1).getFirstChild().getNodeValue();
+				Node fn = nn.getFirstChild();
 				sticklet[loop + 1][0] = "0";
 				sticklet[loop + 1][1] = "Stay";
-				sticklet[loop + 1][2] = title;
-				sticklet[loop + 1][3] = "";	//"20090218213218178";
+				while(fn != null) {
+					if( "title".equals(fn.getNodeName())) {
+						sticklet[loop + 1][2] = fn.getFirstChild().getNodeValue();
+					}
+					else if( "description".equals(fn.getNodeName())) {
+						sticklet[loop + 1][3] = "<img /><Descript v=\""+fn.getFirstChild().getNodeValue()+"\" />";
+					}
+					fn = fn.getNextSibling();
+				}
 			}
 
 			reader.close();
