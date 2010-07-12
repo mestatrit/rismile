@@ -10,7 +10,8 @@ import com.risetek.keke.client.nodes.ui.StickComposite;
 
 public class KekesComposite extends Composite implements UiKeke {
 
-	private KeyInputComposite keyPad;
+	public KeyInputComposite keyPad;
+	public TipsComposite tips;
 	
 	// 我们试图用这个作为背景。
 	private final AbsolutePanel background = new ePayBackground();
@@ -41,6 +42,7 @@ public class KekesComposite extends Composite implements UiKeke {
 	
 	public KekesComposite() {
 		keyPad = new KeyInputComposite(background);
+		tips = new TipsComposite(background);
 		initWidget(background);
 	}
 
@@ -114,11 +116,7 @@ public class KekesComposite extends Composite implements UiKeke {
 			slide.setDelta(delta);
 			slide.run(400);
 		}
-		
-		if( current.hasKeyPad() == 1)
-			keyPad.show();
-		else
-			keyPad.hide();
+
 	}
 
 	private SlideAnimation slide;

@@ -21,4 +21,5 @@ public class StayStick extends PromotionNode {
 		super.action(context);
 		return NODE_STAY;
 	}
+
 }

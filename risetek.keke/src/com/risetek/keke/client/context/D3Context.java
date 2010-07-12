@@ -90,4 +90,21 @@ public class D3Context {
 		GWT.log(message);
 		D3View.logger.Log(message);
 	}
+	
+	public void showKeyPad() {
+		presenter.showKeyPad(true);
+	}
+
+	public void hideKeyPad() {
+		presenter.showKeyPad(false);
+	}
+
+	public void showTips(String message) {
+		presenter.showTips(message);
+	}
+
+	public void hideTips() {
+		presenter.hideTips();
+	}
+
 }

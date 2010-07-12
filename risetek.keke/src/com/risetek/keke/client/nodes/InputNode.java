@@ -72,9 +72,15 @@ public class InputNode extends Stick {
 	}
 	
 	@Override
-	public int hasKeyPad() {
-		return 1;
+	public void onShow(D3Context context) {
+		context.showKeyPad();
 	}
+	
+	@Override
+	public void onHide(D3Context context) {
+		context.hideKeyPad();
+	}
+	
 	
 	private final HIDNumberHandler keyCodehandler = new HIDNumberHandler() {
 		@Override

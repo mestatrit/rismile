@@ -26,7 +26,7 @@ public class Sticklets {
 
 	final static String[][] login = {
 			{ "1", "Named", "epay.local.login" },
-			{ "1", "Promotion", "登录ePay", "20090218213158800" },
+			{ "1", "Promotion", "登录ePay", "<p><img v=\"20090218213158800\" /><Descript v=\"安全检测的需要\" /></p>" },
 			{ "0", "Caller", "epay.local.system.login", "20090218213211612" }, };
 
 	private final static String[][] epay = {
@@ -71,23 +71,17 @@ public class Sticklets {
 	private final static String[][] bill = {
 			{ "1", "Named", "epay.local.bill" },
 			{ "3", "SecurityCheck" },
-			{ "1", "Promotion", "牙膏一只", "" },
-			{ "1", "Promotion", "牙刷一把", "" },
-			{ "1", "Promotion", "毛巾一张", "" },
-			{ "1", "Promotion", "单价 1.52", "" },
-			{ "1", "Promotion", "总价 1.52", "" },
-			{ "1", "Promotion", "单价 2.2", "" },
-			{ "1", "Promotion", "总价 2.2", "" },
-			{ "1", "Promotion", "单价 3.5", "" },
-			{ "1", "Promotion", "总价 3.5", "" },
+			{ "0", "Promotion", "牙膏一只", "<p><Descript v=\"单价 1.52\r\n总价1.52\r\n\" /></p>" },
+			{ "0", "Promotion", "牙刷一把", "<p><Descript v=\"单价 2.52\r\n总价2.52\r\n\" /></p>" },
+			{ "0", "Promotion", "毛巾一张", "<p><Descript v=\"单价 3.52\r\n总价3.52\r\n\" /></p>" },
 			};
 	
 	private final static String[][] demo = {
 			{ "6", "Named", "epay.local.demo" },
-			{ "1", "Promotion", "我的 ePay", "20090218213217243" },
+			{ "1", "Promotion", "我的 ePay", "<p><img v=\"20090218213217243\" /><Descript v=\"欢迎使用Risetek服务\" /></p>" },
 			{ "1", "Promotion", "账单支付", "" },
 			{ "1", "Promotion", "消息服务", "20090218213219741" },
-			{ "0", "Stay", "400-000-001 服务电话", "20090218213211718" },
+			{ "0", "Stay", "400-000-001 服务电话", "<p><img v=\"20090218213211718\" /><Descript v=\"单价 3.52\r\n总价3.52\r\n\" /></p>" },
 			{ "0", "Promotion", "测试点：没有子节点的执行会越界", "20090218213211718" },
 			{ "0", "Exit", "退出程序", "20090218213212783" },
 			{ "0", "Caller", "epay.local.epay", "" },

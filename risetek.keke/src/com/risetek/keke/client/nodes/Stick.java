@@ -1,6 +1,13 @@
 package com.risetek.keke.client.nodes;
 
+import java.util.HashMap;
+
 import com.google.gwt.user.client.ui.Composite;
+import com.google.gwt.xml.client.Document;
+import com.google.gwt.xml.client.Node;
+import com.google.gwt.xml.client.NodeList;
+import com.google.gwt.xml.client.XMLParser;
+import com.google.gwt.xml.client.impl.DOMParseException;
 import com.risetek.keke.client.context.ClientEventBus;
 import com.risetek.keke.client.context.D3Context;
 import com.risetek.keke.client.resources.IconManage;
@@ -26,9 +33,7 @@ public abstract class Stick {
 
 	Composite composite = null;
 	
-	public int hasKeyPad() {
-		return 0;
-	}
+	HashMap<String, String> StickParams = new HashMap<String, String>();
 	
 	public Stick getChildren() {
 		return children;
@@ -40,10 +45,28 @@ public abstract class Stick {
 		this(promotion, IconManage.getDefault());
 	}
 
-	public Stick(String promotion, String imgName) {
+	public Stick(String promotion, String params) {
 		Ticker = getClass().getName().substring(30);
 		Promotion = promotion;
-		this.imgName = imgName;
+		imgName = params;
+
+		try {
+			Document doc = XMLParser.parse(params);
+			NodeList list = doc.getElementsByTagName("p");
+			if( list.getLength() > 0 ) {
+				list = list.item(0).getChildNodes();
+				for( int loop =0; loop < list.getLength(); loop++ ) {
+					Node n = list.item(loop);
+					StickParams.put(n.getNodeName(), n.getAttributes().getNamedItem("v").getNodeValue());
+				}
+			}
+		} catch (Exception e) {
+			// e.printStackTrace();
+		}
+		
+		imgName = StickParams.get("img");
+		if( imgName == null )
+			imgName = params;
 	}
 	
 
@@ -58,13 +81,14 @@ public abstract class Stick {
 		}
 		sticklet.setCurrentNode(this);
 
-		ViewChanged();
+		ViewChanged(context);
 		return NODE_STAY;
 	}
 	
-	public void ViewChanged() {
-		if( getComposite() != null )
+	public void ViewChanged(D3Context context) {
+		if( getComposite() != null ) {
 			ClientEventBus.INSTANCE.fireEvent(new ClientEventBus.ViewChangedEvent());
+		}
 	}
 	
 	public int leave(D3Context context) {
@@ -85,7 +109,7 @@ public abstract class Stick {
 			last.leave(context);
 		}
 		sticklet.setCurrentNode(this);
-		ViewChanged();
+		ViewChanged(context);
 		return NODE_STAY;
 	}
 
@@ -149,5 +173,9 @@ public abstract class Stick {
 		D3View.logger.Log( "@ "+ Promotion);
 	}
 	
-	
+	public void onShow(D3Context context) {
+	}
+
+	public void onHide(D3Context context) {
+	}
 }

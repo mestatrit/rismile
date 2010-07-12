@@ -14,6 +14,21 @@ public class Presenter {
 	
 	private KekesComposite view;
 	
+	public void showKeyPad(boolean onoff) {
+		if( onoff )
+			view.keyPad.show();
+		else
+			view.keyPad.hide();
+	}
+
+	public void showTips(String message) {
+			view.tips.show(message);
+	}
+
+	public void hideTips() {
+		view.tips.hide();
+}
+
 	public Presenter(KekesComposite view) {
 		this.view = view;
 	}
@@ -21,6 +36,8 @@ public class Presenter {
 	public void upDate(D3Context context ) {
 		Sticklet sticklet = context.getSticklet();
 		Stick head = sticklet.HistoryNodesStack.peek();
-		view.renderKekes( sticklet.getChildrenNode(head) , sticklet.getCurrentNode());
+		Stick current = sticklet.getCurrentNode();
+		view.renderKekes( sticklet.getChildrenNode(head) , current);
+		current.onShow(context);
 	}
 }

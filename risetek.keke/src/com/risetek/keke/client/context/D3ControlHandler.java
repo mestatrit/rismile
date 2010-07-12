@@ -15,12 +15,14 @@ public class D3ControlHandler implements ClientEventBus.HIDControlHandler{
 	public void onEvent(HIDControlEvent event) {
 		Sticklet sticklet = context.getSticklet();
 		Stick current = sticklet.getCurrentNode();
+		
 		int controlKey = event.getControlCode();
 		switch (controlKey) {
 
 		// --------------------- 键盘向下 -------------------------
 		case ClientEventBus.CONTROL_KEY_DOWN:
 			if (current.next != null) {
+				current.onHide(context);
 				current.next.enter(context);
 			}
 			break;
@@ -36,6 +38,7 @@ public class D3ControlHandler implements ClientEventBus.HIDControlHandler{
 				while (p.next != current)
 					p = p.next;
 
+				current.onHide(context);
 				p.enter(context);
 			} else
 				D3Context.Log("Fatal: broken move up history stack");
@@ -48,6 +51,7 @@ public class D3ControlHandler implements ClientEventBus.HIDControlHandler{
 				
 				Stick n = sticklet.HistoryNodesStack.pop();
 				// TODO: FIXME: 在logout后，还能回溯？
+				current.onHide(context);
 				if( n.rollback(context) == Stick.NODE_CANCEL ) {
 //					sticklet.HistoryNodesStack.push(n);
 //					sticklet.HistoryNodesStack.push(current);
@@ -110,6 +114,8 @@ public class D3ControlHandler implements ClientEventBus.HIDControlHandler{
 		sticklet.HistoryNodesStack.push(current);
 		int code;
 		// 我们这里决定widget的存在与否
+		current.onHide(context);
+
 		code = current.action(context);
 		if (code == Stick.NODE_EXIT) {
 			return code;
@@ -121,7 +127,7 @@ public class D3ControlHandler implements ClientEventBus.HIDControlHandler{
 			if( context.callerSticklets.size() > 1 ) {
 				sticklet.Clean();
 				context.callerSticklets.pop();
-				current.ViewChanged();
+				current.ViewChanged(context);
 			}
 			return code;
 		}
@@ -139,7 +145,7 @@ public class D3ControlHandler implements ClientEventBus.HIDControlHandler{
 					sticklet.Clean();
 					context.callerSticklets.pop();
 					ClientEventBus.fireControlKey(ClientEventBus.CONTROL_SYSTEM_ENGAGE);
-					current.ViewChanged();
+					current.ViewChanged(context);
 					return code;
 				} else {
 					D3Context.Log("Tail stick.");
