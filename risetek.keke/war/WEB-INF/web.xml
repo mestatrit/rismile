@@ -16,6 +16,16 @@
     <url-pattern>/risetek_keke/remotecall</url-pattern>
   </servlet-mapping>
 
+  <servlet>
+    <servlet-name>ePayRemoteDB</servlet-name>
+    <servlet-class>com.risetek.keke.server.RemoteDBImpl</servlet-class>
+  </servlet>
+  
+  <servlet-mapping>
+    <servlet-name>ePayRemoteDB</servlet-name>
+    <url-pattern>/risetek_keke/remotedb</url-pattern>
+  </servlet-mapping>
+
   <!-- Default page to serve -->
   <welcome-file-list>
     <welcome-file>Risetek_keke.html</welcome-file>
