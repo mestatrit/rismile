@@ -47,7 +47,7 @@ public class InputNode extends Stick {
 	@Override
 	public int leave(D3Context context) {
 		ClientEventBus.INSTANCE.removeHandler(keyCodehandler, HIDNumberEvent.TYPE);
-		return 0;
+		return super.leave(context);
 	}
 
 	@Override

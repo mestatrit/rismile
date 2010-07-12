@@ -22,7 +22,6 @@ public class D3ControlHandler implements ClientEventBus.HIDControlHandler{
 		// --------------------- 键盘向下 -------------------------
 		case ClientEventBus.CONTROL_KEY_DOWN:
 			if (current.next != null) {
-				current.onHide(context);
 				current.next.enter(context);
 			}
 			break;
@@ -38,7 +37,6 @@ public class D3ControlHandler implements ClientEventBus.HIDControlHandler{
 				while (p.next != current)
 					p = p.next;
 
-				current.onHide(context);
 				p.enter(context);
 			} else
 				D3Context.Log("Fatal: broken move up history stack");
@@ -51,7 +49,6 @@ public class D3ControlHandler implements ClientEventBus.HIDControlHandler{
 				
 				Stick n = sticklet.HistoryNodesStack.pop();
 				// TODO: FIXME: 在logout后，还能回溯？
-				current.onHide(context);
 				if( n.rollback(context) == Stick.NODE_CANCEL ) {
 //					sticklet.HistoryNodesStack.push(n);
 //					sticklet.HistoryNodesStack.push(current);
@@ -103,7 +100,7 @@ public class D3ControlHandler implements ClientEventBus.HIDControlHandler{
 	}
 	
 
-	public int engagecontrol(D3Context context) {
+	private int engagecontrol(D3Context context) {
 		Sticklet sticklet = context.getSticklet();
 		Stick current = sticklet.getCurrentNode();
 		
@@ -114,7 +111,6 @@ public class D3ControlHandler implements ClientEventBus.HIDControlHandler{
 		sticklet.HistoryNodesStack.push(current);
 		int code;
 		// 我们这里决定widget的存在与否
-		current.onHide(context);
 
 		code = current.action(context);
 		if (code == Stick.NODE_EXIT) {
@@ -135,8 +131,7 @@ public class D3ControlHandler implements ClientEventBus.HIDControlHandler{
 		if (code == Stick.NODE_OK) {
 			if (sticklet.getChildrenNode(current) != null) {
 
-				code = sticklet.getChildrenNode(current)
-						.enter(context);
+				code = sticklet.getChildrenNode(current).enter(context);
 				return code;
 			}
 			// 当前节点的children节点没有了，我们得查询其是否被调用CallerNode的sticklet环境。

@@ -1,6 +1,7 @@
 package com.risetek.keke.client.nodes;
 
 import com.google.gwt.user.client.ui.Composite;
+import com.risetek.keke.client.context.ClientEventBus;
 import com.risetek.keke.client.context.D3Context;
 import com.risetek.keke.client.nodes.ui.PromotionComposite;
 import com.risetek.keke.client.sticklet.Sticklet;
@@ -34,7 +35,10 @@ public class CallerNode extends Stick {
 
 	@Override
 	public int rollback(D3Context context) {
-		return super.rollback(context);
+		int state = super.rollback(context);
+		ClientEventBus.fireControlKey(ClientEventBus.CONTROL_SYSTEM_ROLLBACK);
+		return state;
+//		return super.rollback(context);
 	}
 	
 	@Override

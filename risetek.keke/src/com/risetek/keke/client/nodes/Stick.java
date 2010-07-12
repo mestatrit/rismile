@@ -7,7 +7,6 @@ import com.google.gwt.xml.client.Document;
 import com.google.gwt.xml.client.Node;
 import com.google.gwt.xml.client.NodeList;
 import com.google.gwt.xml.client.XMLParser;
-import com.google.gwt.xml.client.impl.DOMParseException;
 import com.risetek.keke.client.context.ClientEventBus;
 import com.risetek.keke.client.context.D3Context;
 import com.risetek.keke.client.resources.IconManage;
@@ -96,6 +95,7 @@ public abstract class Stick {
 	}
 	
 	public int leave(D3Context context) {
+		onHide(context);
 		return 0;
 	}
 	
