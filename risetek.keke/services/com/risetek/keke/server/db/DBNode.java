@@ -15,32 +15,20 @@ public class DBNode {
     private Long id;
 
     @Persistent
+    private Long StickletsID;
+
+    @Persistent
     private String nodeName;
+
+    @Persistent
+    private String imgName;
 
     @Persistent
     private Long nodeNameID;
     
-/*
-    @Persistent
-    private String lastName;
-
-    @Persistent
-    private Date hireDate;
-*/
-    @Persistent
-    private Long parentNode;
-    
-    @Persistent
-    private Long childrenNode;
-    
-    @Persistent
-    private Long brotherNode;
-
     @Persistent
     private Long versionNode;
     
-    @Persistent
-    private Long actionNode;
 
     public DBNode(String nodeName) {
         this.nodeName = nodeName;

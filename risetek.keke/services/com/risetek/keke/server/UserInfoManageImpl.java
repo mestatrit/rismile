@@ -27,7 +27,6 @@ import com.google.appengine.api.memcache.MemcacheService;
 import com.google.appengine.api.memcache.MemcacheServiceFactory;
 import com.risetek.keke.server.db.PMF;
 import com.risetek.keke.server.db.UserInfo;
-import com.risetek.keke.server.db.Util;
 import com.risetek.keke.server.process.Help;
 import com.risetek.keke.server.process.Login;
 import com.risetek.keke.server.process.News;
@@ -154,8 +153,6 @@ public class UserInfoManageImpl extends HttpServlet {
 		String id = Long.toString(userInfo.getId());
 		String value = userInfoToString(userInfo);
 		MemcacheService ms = MemcacheServiceFactory.getMemcacheService();
-		Expiration expiration = Expiration.byDeltaSeconds(Util.SESSION_MAX_LEFT);
-		ms.put(id, value, expiration);
 		lastLoginUserInfo = userInfo;
 	}
 

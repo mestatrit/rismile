@@ -40,8 +40,6 @@ public class UserInfo implements IsSerializable {
 	public UserInfo(){
 		this.name = "";
 		this.pass = "";
-		// FIXME:
-		this.competence = Util.USER_COMPETENCE_LOW;
 		this.lastLoginTime = new Date();
 		this.lastLoginAddress = "";
 	}
