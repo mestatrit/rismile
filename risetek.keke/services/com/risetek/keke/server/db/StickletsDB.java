@@ -1,5 +1,6 @@
 package com.risetek.keke.server.db;
 
+import java.io.StringWriter;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Vector;
@@ -11,9 +12,24 @@ import javax.jdo.annotations.IdentityType;
 import javax.jdo.annotations.PersistenceCapable;
 import javax.jdo.annotations.Persistent;
 import javax.jdo.annotations.PrimaryKey;
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.transform.OutputKeys;
+import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.dom.DOMSource;
+import javax.xml.transform.stream.StreamResult;
+
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
+import org.w3c.dom.Text;
 
 import com.google.appengine.api.datastore.Key;
 import com.google.appengine.api.datastore.KeyFactory;
+import com.risetek.keke.server.ServerUtil;
 
 @PersistenceCapable(identityType = IdentityType.APPLICATION)
 
@@ -138,6 +154,7 @@ public class StickletsDB {
 	}
 
 	public static String getStickletsXML() {
+/*
 		StringBuffer value = new StringBuffer("<?xml version=\"1.0\" encoding=\"utf-8\"?><ePay>");
 		List<StickletsDB> list = getSticklets();
 		for( int loop = 0; loop < list.size(); loop++ ) {
@@ -159,5 +176,66 @@ public class StickletsDB {
 		}
 		value.append("</ePay>");
 		return value.toString();
+*/
+		try {
+			DocumentBuilderFactory docBuilderFactory = 
+				DocumentBuilderFactory.newInstance();
+			DocumentBuilder docBuilder = docBuilderFactory.newDocumentBuilder();
+			Document doc = docBuilder.newDocument();
+			Element ePay = doc.createElement("ePay");
+			doc.appendChild(ePay);
+
+			List<StickletsDB> list = getSticklets();
+			for( int loop = 0; loop < list.size(); loop++ ) {
+				StickletsDB sticklets = list.get(loop);
+				
+				Element stick = doc.createElement("stick");
+				ePay.appendChild(stick);
+				stick.setAttribute("t", "Named");
+				stick.setAttribute("d", sticklets.dimention+"");
+				stick.setAttribute("p", sticklets.key.getName());
+				Element stickParam = doc.createElement("p");
+				stick.appendChild(stickParam);
+				Element stickParamImg = doc.createElement("img");
+				stickParamImg.setAttribute("v", "Named");
+				stickParam.appendChild(stickParamImg);
+				
+				List<flowSticks> flows = sticklets.flows;
+				for( int f = 0; f < flows.size(); f++ ) {
+					flowSticks fs = flows.get(f);
+					ePay.appendChild(createStickElement(doc, fs));
+				}
+			}
+			return ServerUtil.DocToString(doc);
+		} catch (ParserConfigurationException e) {
+			e.printStackTrace();
+		}
+		return null;
+
 	}
+	
+	static Element createStickElement(Document doc, flowSticks fs) {
+		Element stick = doc.createElement("stick");
+		stick.setAttribute("t", fs.stickletType);
+		stick.setAttribute("d", fs.dimention+"");
+		stick.setAttribute("p", fs.Promotion);
+		Element stickParam = doc.createElement("p");
+		stick.appendChild(stickParam);
+		stickParam.setTextContent(fs.Params);
+		return stick;
+	}
+	
 }
+
+
+
+
+
+
+
+
+
+
+
+
+

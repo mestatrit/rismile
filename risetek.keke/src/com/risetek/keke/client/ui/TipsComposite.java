@@ -72,7 +72,9 @@ public class TipsComposite extends Composite {
 
 		@Override
 		protected void onUpdate(double progress) {
-			background.setWidgetPosition(TipsComposite.this, 0, (int) (background.getOffsetHeight() - UiKeke.kekeHeight * UiKeke.TipsHeight * progress));
+//			background.setWidgetPosition(TipsComposite.this, 0, (int) (background.getOffsetHeight() - UiKeke.kekeHeight * UiKeke.TipsHeight * progress));
+			background.setWidgetPosition(TipsComposite.this, (int) (background.getOffsetWidth() * progress)
+					, (int) (background.getOffsetHeight() - UiKeke.kekeHeight * UiKeke.TipsHeight * 1));
 		}
 	}
 	
