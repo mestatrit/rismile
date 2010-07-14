@@ -6,7 +6,7 @@ import java.util.Vector;
 
 import javax.servlet.http.HttpServletResponse;
 
-import com.risetek.keke.client.sticklet.Util;
+import com.risetek.keke.server.db.StickletsDB;
 
 public class Help {
 
@@ -20,7 +20,7 @@ public class Help {
 		PrintWriter out;
 		try {
 			out = resp.getWriter();
-			String xml = Util.stickletToXML(news);
+			String xml = StickletsDB.getStickletsXML("epay.remote.help");//  Util.stickletToXML(news);
 			out.println(xml);
 			out.flush();
 		} catch (IOException e) {

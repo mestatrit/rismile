@@ -1,7 +1,5 @@
 package com.risetek.keke.server.db;
 
-import java.io.StringWriter;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Vector;
 
@@ -12,24 +10,10 @@ import javax.jdo.annotations.IdentityType;
 import javax.jdo.annotations.PersistenceCapable;
 import javax.jdo.annotations.Persistent;
 import javax.jdo.annotations.PrimaryKey;
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.ParserConfigurationException;
-import javax.xml.transform.OutputKeys;
-import javax.xml.transform.Transformer;
-import javax.xml.transform.TransformerFactory;
-import javax.xml.transform.dom.DOMSource;
-import javax.xml.transform.stream.StreamResult;
-
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
-import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
-import org.w3c.dom.Text;
 
 import com.google.appengine.api.datastore.Key;
 import com.google.appengine.api.datastore.KeyFactory;
-import com.risetek.keke.server.ServerUtil;
+import com.risetek.keke.client.sticklet.Util;
 
 @PersistenceCapable(identityType = IdentityType.APPLICATION)
 
@@ -39,6 +23,7 @@ public class StickletsDB {
 	static class flowSticks {
 		@PrimaryKey
 	    @Persistent(valueStrategy = IdGeneratorStrategy.IDENTITY)
+//	    @Unique;
 	    private Long id;
 
 		@Persistent
@@ -65,15 +50,9 @@ public class StickletsDB {
 		}
 	}
 	
-	final static String[][] news = {
-		{ "3", "Named", "epay.remote.help", "" },
-		{ "0", "Stay", "基础知识", "<img v=\"20090218213217243\" />" },
-		{ "0", "Stay", "怎么操作", "<img v=\"20090218213218178\" />" },
-		{ "0", "Stay", "该问谁？", "<img v=\"20090218213215625\" />" }, };
-	
 	static {
 //		deleteAll();
-		initDB3();
+		initDB2();
 	}
 	
 	private static void deleteAll() {
@@ -95,7 +74,7 @@ public class StickletsDB {
 	}
 
 	private static void initDB2() {
-		StickletsDB s = new StickletsDB("ppptest", 3);
+		StickletsDB s = new StickletsDB("epay.remote.help", 3);
 		s.flows.add(new flowSticks(0, "Stay", "基础知识", "<img v=\"20090218213217243\" />"));
 		s.flows.add(new flowSticks(0, "Stay", "怎么操作", "<img v=\"20090218213218178\" />"));
 		s.flows.add(new flowSticks(0, "Stay", "该问谁？", "<img v=\"20090218213215625\" />"));
@@ -154,77 +133,56 @@ public class StickletsDB {
 	}
 
 	public static String getStickletsXML() {
-/*
-		StringBuffer value = new StringBuffer("<?xml version=\"1.0\" encoding=\"utf-8\"?><ePay>");
 		List<StickletsDB> list = getSticklets();
+		String result = new String();
 		for( int loop = 0; loop < list.size(); loop++ ) {
 			StickletsDB sticklets = list.get(loop);
-			value.append("<stick t=\"Named\" d=\"").append(sticklets.dimention)
-				.append("\" p=\"").append(sticklets.key.getName()).append("\"><p><img v=\"Named\" /></p></stick>");
-			
 			List<flowSticks> flows = sticklets.flows;
-			for( int f = 0; f < flows.size(); f++ ) {
+			int arrayLength = flows.size()+1;
+			String[][] sticklet = new String[arrayLength][4];
+			
+			sticklet[0][0] = sticklets.dimention+"";
+			sticklet[0][1] = "Named";
+			sticklet[0][2] = sticklets.key.getName();
+			sticklet[0][3] = "<p><img v=\"Named\" /></p>";
+			
+			for( int f = 0; f < flows.size(); f++ ){
 				flowSticks fs = flows.get(f);
-				
-				value.append("<stick t=\""+fs.stickletType+"\" d=\"").append(fs.dimention)
-				.append("\" p=\"").append(fs.Promotion).append("\">");
-				if( fs.Params != null)
-					value.append("<p>"+fs.Params+"</p>");
-				value.append("</stick>");
+				sticklet[f+1][0] = fs.dimention+"";
+				sticklet[f+1][1] = fs.stickletType;
+				sticklet[f+1][2] = fs.Promotion;
+				sticklet[f+1][3] = fs.Params;
 			}
 			
+			result = result.concat(Util.stickletToXML(sticklet));
+			
 		}
-		value.append("</ePay>");
-		return value.toString();
-*/
-		try {
-			DocumentBuilderFactory docBuilderFactory = 
-				DocumentBuilderFactory.newInstance();
-			DocumentBuilder docBuilder = docBuilderFactory.newDocumentBuilder();
-			Document doc = docBuilder.newDocument();
-			Element ePay = doc.createElement("ePay");
-			doc.appendChild(ePay);
-
-			List<StickletsDB> list = getSticklets();
-			for( int loop = 0; loop < list.size(); loop++ ) {
-				StickletsDB sticklets = list.get(loop);
-				
-				Element stick = doc.createElement("stick");
-				ePay.appendChild(stick);
-				stick.setAttribute("t", "Named");
-				stick.setAttribute("d", sticklets.dimention+"");
-				stick.setAttribute("p", sticklets.key.getName());
-				Element stickParam = doc.createElement("p");
-				stick.appendChild(stickParam);
-				Element stickParamImg = doc.createElement("img");
-				stickParamImg.setAttribute("v", "Named");
-				stickParam.appendChild(stickParamImg);
-				
-				List<flowSticks> flows = sticklets.flows;
-				for( int f = 0; f < flows.size(); f++ ) {
-					flowSticks fs = flows.get(f);
-					ePay.appendChild(createStickElement(doc, fs));
-				}
-			}
-			return ServerUtil.DocToString(doc);
-		} catch (ParserConfigurationException e) {
-			e.printStackTrace();
-		}
-		return null;
-
+		return result;
 	}
 	
-	static Element createStickElement(Document doc, flowSticks fs) {
-		Element stick = doc.createElement("stick");
-		stick.setAttribute("t", fs.stickletType);
-		stick.setAttribute("d", fs.dimention+"");
-		stick.setAttribute("p", fs.Promotion);
-		Element stickParam = doc.createElement("p");
-		stick.appendChild(stickParam);
-		stickParam.setTextContent(fs.Params);
-		return stick;
+
+	public static String getStickletsXML(String name) {
+		StickletsDB sticklets = getSticklets(name);
+		List<flowSticks> flows = sticklets.flows;
+		int arrayLength = flows.size() + 1;
+		String[][] sticklet = new String[arrayLength][4];
+
+		sticklet[0][0] = sticklets.dimention + "";
+		sticklet[0][1] = "Named";
+		sticklet[0][2] = sticklets.key.getName();
+		sticklet[0][3] = "<p><img v=\"Named\" /></p>";
+
+		for (int f = 0; f < flows.size(); f++) {
+			flowSticks fs = flows.get(f);
+			sticklet[f + 1][0] = fs.dimention + "";
+			sticklet[f + 1][1] = fs.stickletType;
+			sticklet[f + 1][2] = fs.Promotion;
+			sticklet[f + 1][3] = fs.Params;
+		}
+
+		return Util.stickletToXML(sticklet);
 	}
-	
+
 }
 
 

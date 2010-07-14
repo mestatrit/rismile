@@ -1,14 +1,20 @@
 package com.risetek.keke.server;
 
+import java.io.IOException;
+import java.io.StringReader;
 import java.io.StringWriter;
-
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.OutputKeys;
 import javax.xml.transform.Transformer;
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
-
 import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.xml.sax.InputSource;
+import org.xml.sax.SAXException;
 
 public class ServerUtil {
 	public static String DocToString(Document doc) {
@@ -30,6 +36,26 @@ public class ServerUtil {
 			return strresult.getWriter().toString();
 		} catch (Exception e1) {
 			System.err.println("xml.tostring(document): " + e1);
+		}
+		return null;
+	}
+
+
+	public static Element StringtoXmlElement(String text) {
+		try {
+			DocumentBuilderFactory docBuilderFactory = 
+				DocumentBuilderFactory.newInstance();
+			DocumentBuilder docBuilder = docBuilderFactory.newDocumentBuilder();
+			InputSource is = new InputSource();
+			is.setCharacterStream(new StringReader(text));
+			Document doc = docBuilder.parse(is);
+			return doc.getDocumentElement();
+		} catch (ParserConfigurationException e) {
+			e.printStackTrace();
+		} catch (SAXException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
 		}
 		return null;
 	}
