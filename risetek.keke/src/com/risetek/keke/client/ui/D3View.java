@@ -3,6 +3,7 @@ package com.risetek.keke.client.ui;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.RootLayoutPanel;
 import com.google.gwt.user.client.ui.Widget;
 
@@ -15,7 +16,7 @@ public class D3View {
 	public static @UiField HistoryStackComposite history;
 
 	public D3View() {
-//		Window.enableScrolling(false);
+		Window.enableScrolling(false);
 		Widget outer = uiBinder.createAndBindUi(this);
 	    RootLayoutPanel root = RootLayoutPanel.get();
 	    root.add(outer);

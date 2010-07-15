@@ -84,7 +84,7 @@ public class D3Context {
 		}
 	};
 
-	HIDControlHandler controlCodehandler = new D3ControlHandler(this);
+	public HIDControlHandler controlCodehandler = new D3ControlHandler(this);
 
 	public static void Log(String message) {
 		GWT.log(message);

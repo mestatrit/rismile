@@ -38,6 +38,7 @@ public class RemoteRequestNode extends Stick {
 		
 		try {
 			RequestBuilder rqBuilder = new RequestBuilder(RequestBuilder.POST, "remotecall");
+			rqBuilder.setTimeoutMillis(1000);
 			GWT.log("Send Request:"+param);
 			rqBuilder.sendRequest(param, new RemoteResponse());
 		} catch (RequestException e) {

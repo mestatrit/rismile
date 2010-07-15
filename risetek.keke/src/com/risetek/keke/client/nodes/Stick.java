@@ -9,6 +9,7 @@ import com.google.gwt.xml.client.NodeList;
 import com.google.gwt.xml.client.XMLParser;
 import com.risetek.keke.client.context.ClientEventBus;
 import com.risetek.keke.client.context.D3Context;
+import com.risetek.keke.client.context.ClientEventBus.HIDControlEvent;
 import com.risetek.keke.client.resources.IconManage;
 import com.risetek.keke.client.sticklet.Sticklet;
 import com.risetek.keke.client.ui.D3View;
@@ -28,7 +29,7 @@ public abstract class Stick {
 	public Stick next;
 	public String Ticker;
 	public String Promotion;
-	public String imgName;
+	public String imgName = null;
 
 	Composite composite = null;
 	
@@ -47,27 +48,27 @@ public abstract class Stick {
 	public Stick(String promotion, String params) {
 		Ticker = getClass().getName().substring(30);
 		Promotion = promotion;
-		imgName = params;
-
-		try {
-			Document doc = XMLParser.parse(params);
-			NodeList list = doc.getElementsByTagName("p");
-			if( list.getLength() > 0 ) {
-				list = list.item(0).getChildNodes();
-				for( int loop =0; loop < list.getLength(); loop++ ) {
-					Node n = list.item(loop);
-					Node valueNode = n.getAttributes().getNamedItem("v");
-					if( valueNode != null )
-						StickParams.put(n.getNodeName(), valueNode.getNodeValue());
-					else
-						StickParams.put(n.getNodeName(), "");
+		if( params != null )
+		{
+			try {
+				Document doc = XMLParser.parse(params);
+				NodeList list = doc.getElementsByTagName("p");
+				if( list.getLength() > 0 ) {
+					list = list.item(0).getChildNodes();
+					for( int loop =0; loop < list.getLength(); loop++ ) {
+						Node n = list.item(loop);
+						Node valueNode = n.getAttributes().getNamedItem("v");
+						if( valueNode != null )
+							StickParams.put(n.getNodeName(), valueNode.getNodeValue());
+						else
+							StickParams.put(n.getNodeName(), "");
+					}
 				}
+			} catch (Exception e) {
+				// e.printStackTrace();
 			}
-		} catch (Exception e) {
-			// e.printStackTrace();
+			imgName = StickParams.get("img");
 		}
-		
-		imgName = StickParams.get("img");
 		if( imgName == null )
 			imgName = params;
 	}
@@ -76,6 +77,7 @@ public abstract class Stick {
 	public int enter(D3Context context) {
 		
 		LogEnter();
+		//ClientEventBus.INSTANCE.addHandler(context.controlCodehandler,HIDControlEvent.TYPE);
 		
 		Sticklet sticklet = context.getSticklet(); 
 		Stick last = sticklet.getCurrentNode();
@@ -83,7 +85,6 @@ public abstract class Stick {
 			last.leave(context);
 		}
 		sticklet.setCurrentNode(this);
-
 		ViewChanged(context);
 		return NODE_STAY;
 	}
@@ -95,6 +96,7 @@ public abstract class Stick {
 	}
 	
 	public int leave(D3Context context) {
+		//ClientEventBus.INSTANCE.removeHandler(context.controlCodehandler,HIDControlEvent.TYPE);
 		onHide(context);
 		return 0;
 	}

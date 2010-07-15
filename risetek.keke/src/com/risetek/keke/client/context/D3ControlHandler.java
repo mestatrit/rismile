@@ -129,8 +129,8 @@ public class D3ControlHandler implements ClientEventBus.HIDControlHandler{
 		}
 
 		if (code == Stick.NODE_OK) {
-			if (sticklet.getChildrenNode(current) != null) {
-
+			if (sticklet.getChildrenNode(current) != null)
+			{
 				code = sticklet.getChildrenNode(current).enter(context);
 				return code;
 			}

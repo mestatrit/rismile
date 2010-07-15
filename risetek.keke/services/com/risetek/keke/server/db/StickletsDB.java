@@ -52,7 +52,7 @@ public class StickletsDB {
 	
 	static {
 //		deleteAll();
-		initDB2();
+//		initDB2();
 	}
 	
 	private static void deleteAll() {
