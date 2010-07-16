@@ -16,7 +16,6 @@ public class UserNameModifyDialog extends CustomDialog {
 		// 修改宽度，以适应显示需要。
 		mainPanel.setWidth("380px");
 		// 宽度修改后需要重新定位显示位置。
-		center();
 		
 		label.setText("请输入新的用户名：");
 		Grid gridFrame = new Grid(2, 2);

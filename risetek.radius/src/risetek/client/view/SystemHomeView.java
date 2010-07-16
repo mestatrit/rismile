@@ -4,17 +4,19 @@ import risetek.client.control.ProduceHomeController;
 import risetek.client.model.ProduceData;
 
 import com.google.gwt.core.client.GWT;
-import com.google.gwt.dom.client.SpanElement;
 import com.google.gwt.resources.client.ClientBundle;
 import com.google.gwt.resources.client.ImageResource;
 import com.google.gwt.uibinder.client.UiBinder;
-import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.ui.Composite;
+import com.google.gwt.user.client.ui.Grid;
+import com.google.gwt.user.client.ui.HTML;
+import com.google.gwt.user.client.ui.HasVerticalAlignment;
 import com.google.gwt.user.client.ui.Widget;
 import com.risetek.rismile.client.Entry;
 import com.risetek.rismile.client.RismileContext;
 import com.risetek.rismile.client.RismileContext.RismileRuntimeHandler;
 import com.risetek.rismile.client.RismileContext.RuntimeEvent;
+import com.risetek.rismile.client.utils.PromptPanel;
 import com.risetek.rismile.client.view.IRisetekView;
 
 public class SystemHomeView extends Composite implements IRisetekView {
@@ -24,7 +26,7 @@ public class SystemHomeView extends Composite implements IRisetekView {
 
 			@Override
 			public void onRuntime(RuntimeEvent event) {
-				status.setInnerText(event.getResults());
+				status.setText(event.getResults());
 			}
 		});
 		
@@ -33,9 +35,9 @@ public class SystemHomeView extends Composite implements IRisetekView {
 	interface ProudceUiBinder extends UiBinder<Widget, SystemHomeView> {}
 	private static ProudceUiBinder uiBinder = GWT.create(ProudceUiBinder.class);
 	
-	@UiField SpanElement version;
-	@UiField SpanElement serial;
-	@UiField static SpanElement status;
+	HTML version = new HTML();
+	HTML serial = new HTML();
+	static HTML status = new HTML();
 
 	public interface Images extends ClientBundle  {
 		@Source("p2.jpg")		ImageResource  p2();
@@ -44,12 +46,51 @@ public class SystemHomeView extends Composite implements IRisetekView {
 		@Source("p5.jpg")		ImageResource  p5();
 	}
 
+	final Grid main = new Grid(1, 2);
+	
 	public SystemHomeView() {
+		main.setWidth("100%");
+		main.setHeight(Entry.SinkHeight);
+		main.setCellPadding(0);
+		main.setCellSpacing(0);
+		initWidget(main);
 		Widget w = uiBinder.createAndBindUi(this);
 		w.setHeight(Entry.SinkHeight);
-		initWidget(w);
+		main.setWidget(0, 0, w);
+		main.setWidget(0, 1, initPromptGrid());
+		main.getCellFormatter().setWidth(0, 0, "90%");
+		main.getCellFormatter().setWidth(0, 1, "100%");
 	}
 
+	private Widget initPromptGrid(){
+		Grid promptGrid = new Grid(1, 1);
+		promptGrid.setCellPadding(0);
+		promptGrid.setCellSpacing(0);
+		promptGrid.setHeight(Entry.SinkHeight);
+		promptGrid.setWidth("170px");
+		promptGrid.setWidget(0, 0, initDeviceStatus());
+		promptGrid.getCellFormatter().setVerticalAlignment(0, 0, HasVerticalAlignment.ALIGN_TOP);
+		promptGrid.getCellFormatter().setStyleName(0, 0, "prompt-border");
+		promptGrid.getCellFormatter().setHeight(0, 0, "100%");
+		return promptGrid;
+	}
+
+	private Widget initDeviceStatus(){
+		PromptPanel deviceStatus = new PromptPanel();
+		deviceStatus.setTitleText("设备状态");
+		Grid body = new Grid(8, 1);
+		body.setWidget(0, 0, new HTML("<strong>版本号：</strong>"));
+		body.setWidget(1, 0, version);
+		body.getCellFormatter().setHeight(2, 0, "10px");
+		body.setWidget(3, 0, new HTML("<strong>序列号：</strong>"));
+		body.setWidget(4, 0, serial);
+		body.getCellFormatter().setHeight(5, 0, "10px");
+		body.setWidget(6, 0, new HTML("<strong>已运行：</strong>"));
+		body.setWidget(7, 0, status);
+		deviceStatus.setBody(body);
+		return deviceStatus;
+	}
+	
 /*	
 	private final Grid table = new Grid(1,2);
 	private final Grid table2 = new Grid(5,1);
@@ -135,10 +176,10 @@ public class SystemHomeView extends Composite implements IRisetekView {
 */
 
 	public void render(ProduceData data) {
-		version.setInnerText(data.version);
-		serial.setInnerText(data.serial);
+		version.setText(data.version);
+		serial.setText(data.serial);
 
-		status.setInnerText(data.status);
+		status.setText(data.status);
 	}
 
 	public void onLoad() {
@@ -148,5 +189,11 @@ public class SystemHomeView extends Composite implements IRisetekView {
 	public void disablePrivate() {
 	}
 	public void enablePrivate() {
+	}
+
+	@Override
+	public void doAction(int keyCode) {
+		// TODO Auto-generated method stub
+		
 	}
 }

@@ -197,4 +197,9 @@ public class RadiusBlackController extends AController {
 		return view;
 	}
 
+	@Override
+	public void doAction(int keyCode) {
+		view.doAction(keyCode);
+	}
+
 }

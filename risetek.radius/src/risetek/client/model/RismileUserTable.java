@@ -23,7 +23,7 @@ public class RismileUserTable extends RismileTable {
 		
 		setSum(Integer.parseInt(sum));
 		NodeList users = entryElement.getElementsByTagName("rowid");
-		String data[][] = new String[users.getLength()][7];
+		String data[][] = new String[users.getLength()][9];
 		int j = 0;
 		for(;j<users.getLength();j++ )
 		{
@@ -33,8 +33,10 @@ public class RismileUserTable extends RismileTable {
 			data[j][2] = XMLDataParse.getElementText( logElement, "USER" );
 			data[j][3] = "****";
 			data[j][4] = IPConvert.longString2IPString(XMLDataParse.getElementText( logElement, "ADDRESS" ));
-			data[j][5] = XMLDataParse.getElementText( logElement, "NOTE" );
+			data[j][5] = "10.0.0.100";
 			data[j][6] = XMLDataParse.getElementText( logElement, "STATUS" );
+			data[j][7] = "08:00-19:00";
+			data[j][8] = XMLDataParse.getElementText( logElement, "NOTE" );
 		}
 		setData(data);
 	}

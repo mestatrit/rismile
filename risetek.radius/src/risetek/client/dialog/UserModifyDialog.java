@@ -4,15 +4,17 @@ import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.Widget;
 import com.risetek.rismile.client.dialog.CustomDialog;
 
-public class UserNoteModifyDialog extends CustomDialog {
+public class UserModifyDialog extends CustomDialog {
 	public TextBox note = new TextBox();
 
 	public String rowid;
-	public UserNoteModifyDialog() {
-		label.setText("请输入新备注：");
-		note.setWidth("260px");
+	public String errMessage;
+	public UserModifyDialog(String title, int width, String errMessage) {
+		label.setText(title);
+		note.setWidth(Integer.toString(width) + "px");
 		note.setTabIndex(1);
 		mainPanel.add(note);
+		this.errMessage = errMessage;
 	}
 
 	public void show(String tips_id, String tips_value){
@@ -32,7 +34,7 @@ public class UserNoteModifyDialog extends CustomDialog {
 	public boolean isValid()
 	{
 		if (null == note.getText()) {
-			setMessage("备注不能为空");
+			setMessage(errMessage);
 			note.setFocus(true);
 			return false;
 		}

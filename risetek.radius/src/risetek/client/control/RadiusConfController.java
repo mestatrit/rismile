@@ -18,7 +18,6 @@ import com.risetek.rismile.client.utils.MessageConsole;
 import com.risetek.rismile.client.utils.SysLog;
 import com.risetek.rismile.client.view.IRisetekView;
 
-
 public class RadiusConfController extends AController {
 	private RadiusConfController(){}
 	
@@ -178,5 +177,11 @@ public class RadiusConfController extends AController {
 	@Override
 	public IRisetekView getView() {
 		return view;
+	}
+
+
+	@Override
+	public void doAction(int keyCode) {
+		view.doAction(keyCode);
 	}
 }

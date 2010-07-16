@@ -1,13 +1,17 @@
 package risetek.client.control;
 
+import java.util.ArrayList;
+
 import risetek.client.dialog.UserAddDialog;
 import risetek.client.dialog.UserDelDialog;
 import risetek.client.dialog.UserFilterDialog;
 import risetek.client.dialog.UserImsiModifyDialog;
 import risetek.client.dialog.UserIpModifyDialog;
+import risetek.client.dialog.UserLoginTimeModifyDialog;
 import risetek.client.dialog.UserNameModifyDialog;
 import risetek.client.dialog.UserNoteModifyDialog;
 import risetek.client.dialog.UserPasswordModifyDialog;
+import risetek.client.dialog.UserStatusModifyDialog;
 import risetek.client.model.RismileUserTable;
 import risetek.client.view.UserView;
 
@@ -25,7 +29,9 @@ import com.risetek.rismile.client.http.RequestFactory;
 import com.risetek.rismile.client.utils.IPConvert;
 import com.risetek.rismile.client.utils.MessageConsole;
 import com.risetek.rismile.client.utils.SysLog;
+import com.risetek.rismile.client.utils.Utils;
 import com.risetek.rismile.client.view.IRisetekView;
+import com.risetek.rismile.client.view.RismileTableView;
 import com.risetek.rismile.client.view.NavBar.NavEvent;
 import com.risetek.rismile.client.view.NavBar.NavHandler;
 
@@ -117,12 +123,24 @@ public class RadiusUserController extends AController {
 		remoteRequest.get(modifyForm, query, callback);
 	}
 
+	public static void modifySecondIp(String rowID, String ip, RequestCallback callback) {
+		remoteRequest.get(modifyForm, null, callback);
+	}
+	
 	public static void modifyPassword(String rowID, String password,
 			RequestCallback callback) {
 		String query = "function=moduser&id=" + rowID + "&password=" + password;
 		remoteRequest.get(modifyForm, query, callback);
 	}
 
+	public static void modifyStatus(String rowID, String status, RequestCallback callback) {
+		remoteRequest.get(modifyForm, null, callback);
+	}
+	
+	public static void modifyLoginTime(String rowID, String status, RequestCallback callback) {
+		remoteRequest.get(modifyForm, null, callback);
+	}
+	
 	public static void modifyNote(String rowID, String note,
 			RequestCallback callback)
 	{
@@ -147,8 +165,21 @@ public class RadiusUserController extends AController {
             
 			// 在第一列中的是数据的内部序号，我们的操作都针对这个号码。
 			String rowid = table.getText(row, 0);
+			int index = 0;
+//			if(RismileTableView.columnsIndex.size()==Utils.RISMILE_TABLE_MAX_COLUMN_COUNT){
+				index = RismileTableView.columnsIndex.get(col);
+//			} else {
+//				index = col;
+//			}
+//			String tisp_value = INSTANCE.data.getData()[row][col];
 			String tisp_value = table.getText(row, col);
-			switch (col) {
+			if(tisp_value.length() == 1){
+				int tvalue = (int)tisp_value.charAt(0);
+				if(tvalue == 160){
+					tisp_value = "";
+				}
+			}
+			switch (index) {
 			case 0:
 				// 选择了删除用户。
 				UserDelControl del_control = new UserDelControl();
@@ -185,6 +216,27 @@ public class RadiusUserController extends AController {
 				ip_control.dialog.show(rowid, tisp_value);
 				break;
 			case 5:
+				// 修改第二分配地址
+				UserNoteModifyControl sip_control = new UserNoteModifyControl();
+				sip_control.dialog.submit.setText("修改");
+				sip_control.dialog.submit.addClickHandler(sip_control);
+				sip_control.dialog.show(rowid, tisp_value);
+				break;
+			case 6:
+				// 修改用户级别
+				UserStatusModifyControl status_control = new UserStatusModifyControl();
+				status_control.dialog.submit.setText("修改");
+				status_control.dialog.submit.addClickHandler(status_control);
+				status_control.dialog.show(rowid, tisp_value);
+				break;
+			case 7:
+				// 修改登录时段
+				UserLoginTimeModifyControl loginTime_control = new UserLoginTimeModifyControl();
+				loginTime_control.dialog.submit.setText("修改");
+				loginTime_control.dialog.submit.addClickHandler(loginTime_control);
+				loginTime_control.dialog.show(rowid, tisp_value);
+				break;
+			case 8:
 				// 修改用户备注
 				UserNoteModifyControl note_control = new UserNoteModifyControl();
 				note_control.dialog.submit.setText("修改");
@@ -285,7 +337,67 @@ public class RadiusUserController extends AController {
 			}
 		}
 
+		// ----------------- 修改第二分配地址
+		public class UserSecondModifyControl extends DialogControl implements ClickHandler {
+			public UserIpModifyDialog dialog = new UserIpModifyDialog();
+			
+			@Override
+			protected CustomDialog getDialog() {
+				return dialog;
+			}
+
+			@Override
+			public void onClick(ClickEvent event) {
+				if( !dialog.isValid()){
+					return;
+				}
+				SysLog.log(dialog.newValueBox.getText());
+				modifySecondIp(dialog.rowid, dialog.newValueBox.getText(), myCaller);
+			}
+			
+		}
 	
+		// ----------------- 修改用户级别
+		public class UserStatusModifyControl extends DialogControl implements ClickHandler {
+			public UserStatusModifyDialog dialog = new UserStatusModifyDialog();
+			
+			@Override
+			protected CustomDialog getDialog() {
+				return dialog;
+			}
+
+			@Override
+			public void onClick(ClickEvent event) {
+				if(!dialog.isValid()){
+					return;
+				}
+				dialog.submit.setEnabled(false);
+				int index = dialog.status.getSelectedIndex();
+				modifyStatus(dialog.rowid, dialog.status.getValue(index), myCaller);
+			}
+			
+		}
+		
+		// ----------------- 修改用户登录时段
+		public class UserLoginTimeModifyControl extends DialogControl implements ClickHandler {
+			public UserLoginTimeModifyDialog dialog = new UserLoginTimeModifyDialog();
+
+			@Override
+			protected CustomDialog getDialog() {
+				return dialog;
+			}
+
+			@Override
+			public void onClick(ClickEvent event) {
+				if(!dialog.isValid()){
+					return;
+				}
+				dialog.submit.setEnabled(false);
+				modifyLoginTime(dialog.rowid, dialog.getTime(), myCaller);
+			}
+			
+		}
+		
 		// ----------------- 修改用户备注
 		public class UserNoteModifyControl extends DialogControl implements ClickHandler {
 			public UserNoteModifyDialog dialog = new UserNoteModifyDialog();
@@ -391,15 +503,27 @@ public class RadiusUserController extends AController {
 		}
 	}
 
-	public RismileUserTable getTable() {
-		return data;
-	}
-	
-	public static class refreshAction implements ClickHandler {
+	//----------------刷新界面
+	public static class RefreshAction implements ClickHandler {
+
 		@Override
 		public void onClick(ClickEvent event) {
+			ArrayList<Integer> temp = null;
+			temp = Utils.maoPao(RismileTableView.columnsIndex);
+			String[] gridTitle = new String[RismileTableView.columnsIndex.size()];
+			for(int i=0;i<gridTitle.length;i++){
+				int index = temp.get(i);
+				gridTitle[i] = UserView.columns[index];
+			}
+			INSTANCE.view.initGridTitle(gridTitle);
+			RismileTableView.columnsIndex = Utils.maoPao(RismileTableView.columnsIndex);
 			load();
 		}
+		
+	}
+	
+	public RismileUserTable getTable() {
+		return data;
 	}
 	
 	@Override
@@ -415,5 +539,10 @@ public class RadiusUserController extends AController {
 	@Override
 	public IRisetekView getView() {
 		return view;
+	}
+
+	@Override
+	public void doAction(int keyCode) {
+		view.doAction(keyCode);
 	}
 }

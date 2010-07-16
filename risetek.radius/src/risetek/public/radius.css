@@ -4,7 +4,7 @@
 }
 
 .radius-config .title {
-	text-indent: 1em;
+	text-indent: 10px;
 	padding-top: 4px;
 	padding-bottom: 4px;
 	font-size: larger;
@@ -13,6 +13,7 @@
 	border-bottom:1px solid #2a8ebf;
 	text-align: left;
 	background: url(images/blue.gif) repeat-x top left;
+	height: 24px;
 }
 
 .radius-config .conf-table {
@@ -31,12 +32,11 @@
 	padding-left: 3px;
     padding-bottom: 2px;
 	vertical-align: middle;
-	text-align: center;
 }
 
 .radius-config .gwt-Button {
 	height: 25px;
-	width: 8em;
+	width: 9em;
 }
 
 .radius-config .conf-version {
@@ -44,6 +44,35 @@
 	margin-bottom: 1mm;
 }
 
+.rismiletable .table td.start {
+	border-width: 1px 0px 0px 0px;
+	text-overflow: ellipsis;
+	overflow: hidden;
+}
+
+.rismiletable .table td.mid {
+	border-width: 1px 0px 0px 1px;
+	text-overflow: ellipsis;
+	overflow: hidden;
+}
+
+.rismiletable .table td.end {
+	border-width: 1px 0px 0px 1px;
+	text-overflow: ellipsis;
+	overflow: hidden;
+}
+
+.rismiletable .table td.laststart {
+	border-width: 1px 0px 0px 0px;
+}
+
+.rismiletable .table td.lastmid {
+	border-width: 1px 0px 0px 1px;
+}
+
+.rismiletable .table td.lastend {
+	border-width: 1px 0px 0px 1px;
+}
 
 .rismiletable .table td.uid {
 	margin-right: 40px;
