@@ -1,0 +1,23 @@
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
+	xmlns:g="urn:import:com.google.gwt.user.client.ui" xmlns:rismile="urn:import:com.risetek.rismile.client.utils">
+	<ui:style>
+		.important {
+			font-weight: bold;
+		}
+	</ui:style>
+		<g:HTMLPanel>
+			<TABLE class="rismile" align="center" width="1000">
+				<TR>
+					<TD>
+						<g:VerticalPanel ui:field="panel"></g:VerticalPanel>
+					</TD>
+				</TR>
+				<TR>
+					<TD class="copyright">
+						<small>&copy; 2002-2010  成都中联信通科技有限公司</small>
+					</TD>
+				</TR>
+			</TABLE>
+		</g:HTMLPanel>
+</ui:UiBinder> 
