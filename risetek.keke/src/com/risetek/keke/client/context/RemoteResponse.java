@@ -12,18 +12,23 @@ public class RemoteResponse implements RequestCallback {
 	@Override
 	public void onError(Request request, Throwable exception) {
 		D3Context.Log("Remote request:" + "error.");
-		Sticklet s = Sticklets.loadSticklet("epay.local.services.failed");
-		D3Context.CallSticklet(s);
+		ClientEventBus.INSTANCE.fireEvent(
+				new ClientEventBus.ResponseEvent(Sticklets.INSTANCE.stickletSources.get("epay.local.services.failed")));
 	}
 
 	@Override
 	public void onResponseReceived(Request request, Response response) {
-		D3Context.Log("Remote: "+response.getText());
-		String[][] a = Util.xmlToSticklet(response.getText());
-		// TODO: 我们应该想办法把Sticklets或者其原文作为参数传递到RemoteRequest的下一个Stick上去。
-		// 这有利于分解RemoteRequest的enter和action两个步骤，实现规范性。
-		Sticklet s = Sticklets.loadSticklet(a);
-		D3Context.CallSticklet(s);
+		//D3Context.Log("Remote: "+response.getText());
+		int status = response.getStatusCode();
+		if( status == 200 ) {
+			String[][] a = Util.xmlToSticklet(response.getText());
+			ClientEventBus.INSTANCE.fireEvent(new ClientEventBus.ResponseEvent(a));
+		}
+		else
+		{
+			ClientEventBus.INSTANCE.fireEvent(
+					new ClientEventBus.ResponseEvent(Sticklets.INSTANCE.stickletSources.get("epay.local.services.failed")));
+		}
 	}
 
 }

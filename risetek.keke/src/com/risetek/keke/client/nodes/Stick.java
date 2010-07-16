@@ -9,9 +9,11 @@ import com.google.gwt.xml.client.NodeList;
 import com.google.gwt.xml.client.XMLParser;
 import com.risetek.keke.client.context.ClientEventBus;
 import com.risetek.keke.client.context.D3Context;
+import com.risetek.keke.client.context.D3ControlHandler;
 import com.risetek.keke.client.context.ClientEventBus.HIDControlEvent;
 import com.risetek.keke.client.resources.IconManage;
 import com.risetek.keke.client.sticklet.Sticklet;
+import com.risetek.keke.client.sticklet.Sticklets;
 import com.risetek.keke.client.ui.D3View;
 
 /*
@@ -73,12 +75,11 @@ public abstract class Stick {
 			imgName = params;
 	}
 	
-
+	D3ControlHandler controlCodehandler;
+	
 	public int enter(D3Context context) {
 		
 		LogEnter();
-		//ClientEventBus.INSTANCE.addHandler(context.controlCodehandler,HIDControlEvent.TYPE);
-		
 		Sticklet sticklet = context.getSticklet(); 
 		Stick last = sticklet.getCurrentNode();
 		if( last != null ){
@@ -96,7 +97,6 @@ public abstract class Stick {
 	}
 	
 	public int leave(D3Context context) {
-		//ClientEventBus.INSTANCE.removeHandler(context.controlCodehandler,HIDControlEvent.TYPE);
 		onHide(context);
 		return 0;
 	}
@@ -176,12 +176,17 @@ public abstract class Stick {
 		name = name.substring(30);
 		D3View.logger.logger.addItem("  "+name+ " action");
 		*/
-		D3View.logger.Log( "@ "+ Promotion);
+		D3View.logger.Log( "Action: "+ Promotion);
 	}
 	
 	public void onShow(D3Context context) {
 	}
 
 	public void onHide(D3Context context) {
+	}
+	
+	public void RemoteResponse(String[][] sticklet_src) {
+		Sticklet s = Sticklets.loadSticklet(sticklet_src);
+		D3Context.CallSticklet(s);
 	}
 }

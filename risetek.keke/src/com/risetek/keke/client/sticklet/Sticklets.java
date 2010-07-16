@@ -15,13 +15,14 @@ import com.risetek.keke.client.nodes.ParamStick;
 import com.risetek.keke.client.nodes.PasswordNode;
 import com.risetek.keke.client.nodes.PromotionNode;
 import com.risetek.keke.client.nodes.RemoteRequestNode;
+import com.risetek.keke.client.nodes.RequestResponseStick;
 import com.risetek.keke.client.nodes.SecurityCheckNode;
 import com.risetek.keke.client.nodes.StayStick;
 import com.risetek.keke.client.nodes.Stick;
 
 public class Sticklets {
 
-	private final HashMap<String, String[][]> stickletSources = new HashMap<String, String[][]>();
+	public final HashMap<String, String[][]> stickletSources = new HashMap<String, String[][]>();
 	HashMap<String, Sticklet> stickletInstances = new HashMap<String, Sticklet>();
 
 	final static String[][] login = {
@@ -48,11 +49,14 @@ public class Sticklets {
 			{ "1", "Param", "epay/help", "20090218213214862" },
 			{ "1", "Promotion", "消息动态来源cnbeta", "" },
 			{ "1", "Promotion", "新闻动态来源人民网", "" },
-			{ "0", "RemoteRequest", "获取帮助信息...", "20090218213227509" },
+			{ "1", "RemoteRequest", "获取帮助信息...", "20090218213227509" },
 			{ "1", "Promotion", "消息由后台动态提取", "" },
 			{ "1", "Promotion", "新闻由后台动态提取", "" },
-			{ "0", "RemoteRequest", "获取新信息中...", "" },
-			{ "0", "RemoteRequest", "获取新闻中...", "20090218213227509" },
+			{ "0", "RequestResponse", "获取新信息中...", "" },
+			{ "1", "RemoteRequest", "获取新信息中...", "" },
+			{ "1", "RemoteRequest", "获取新闻中...", "20090218213227509" },
+			{ "0", "RequestResponse", "获取新信息中...", "" },
+			{ "0", "RequestResponse", "获取新信息中...", "" },
 			};
 
 	private final static String[][] pay = {
@@ -71,9 +75,9 @@ public class Sticklets {
 	private final static String[][] bill = {
 			{ "1", "Named", "epay.local.bill" },
 			{ "3", "SecurityCheck" },
-			{ "0", "Promotion", "牙膏一只", "<p><Descript v=\"单价 1.52\r\n总价1.52\r\n\" /></p>" },
-			{ "0", "Promotion", "牙刷一把", "<p><Descript v=\"单价 2.52\r\n总价2.52\r\n\" /></p>" },
-			{ "0", "Promotion", "毛巾一张", "<p><Descript v=\"单价 3.52\r\n总价3.52\r\n\" /></p>" },
+			{ "0", "Promotion", "牙膏一只", "<p><img v=\"20090218213217243\" /><p><Descript v=\"单价 1.52\r\n总价1.52\r\n\" /></p>" },
+			{ "0", "Promotion", "牙刷一把", "<p><img v=\"20090218213214862\" /><p><Descript v=\"单价 2.52\r\n总价2.52\r\n\" /></p>" },
+			{ "0", "Promotion", "毛巾一张", "<p><img v=\"20090218213211718\" /><p><Descript v=\"单价 3.52\r\n总价3.52\r\n\" /></p>" },
 			};
 	
 	private final static String[][] demo = {
@@ -81,7 +85,7 @@ public class Sticklets {
 			{ "1", "Promotion", "我的 ePay", "<p><img v=\"20090218213217243\" /><Descript v=\"欢迎使用Risetek服务\" /></p>" },
 			{ "1", "Promotion", "账单支付", "" },
 			{ "1", "Promotion", "消息服务", "20090218213219741" },
-			{ "0", "Stay", "400-000-001 服务电话", "<p><img v=\"20090218213211718\" /><Descript v=\"单价 3.52\r\n总价3.52\r\n\" /></p>" },
+			{ "0", "Stay", "400-000-001 服务电话", "<p><img v=\"20090218213211718\" /><Descript v=\"Netfront为您服务\" /></p>" },
 			{ "0", "Promotion", "测试点：没有子节点的执行会越界", "20090218213211718" },
 			{ "0", "Exit", "退出程序", "20090218213212783" },
 			{ "0", "Caller", "epay.local.epay", "" },
@@ -112,7 +116,9 @@ public class Sticklets {
 			{ "1", "Input", "输入用户名称", "20090218213222671" },
 			{ "1", "Password", "输入登录密码", "20090218213227180" },
 			{ "1", "Param", "epay/login", "20090218213214862" },
-			{ "0", "RemoteRequest", "登录ePay中...", "20090218213227509" }, };
+			{ "1", "RemoteRequest", "登录ePay中...", "20090218213227509" },
+			{ "0", "RequestResponse", "获取新信息中...", "" },
+			};
 	
 	/*
 	 * 注册名称与源。
@@ -185,6 +191,8 @@ public class Sticklets {
 			node = new PasswordNode(nodeDesc[2]);
 		else if ("RemoteRequest".equals(nodeDesc[1]))
 			node = new RemoteRequestNode(nodeDesc[2]);
+		else if ("RequestResponse".equals(nodeDesc[1]))
+			node = new RequestResponseStick(nodeDesc[2]);
 		else if ("Param".equals(nodeDesc[1]))
 			node = new ParamStick(nodeDesc[2]);
 		else if ("Logout".equals(nodeDesc[1]))

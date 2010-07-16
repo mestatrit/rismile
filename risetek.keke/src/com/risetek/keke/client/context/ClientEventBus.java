@@ -244,12 +244,12 @@ public class ClientEventBus {
 	}
 
 	// 处理 RemoteRequestResponse事件
-	public interface ResponseHandler extends EventHandler {
+	public interface RemoteResponseHandler extends EventHandler {
 		void onEvent(ResponseEvent event);
 	}
 	
-	public static class ResponseEvent extends GwtEvent<ResponseHandler> {
-		public static Type<ResponseHandler> TYPE = new Type<ResponseHandler>();
+	public static class ResponseEvent extends GwtEvent<RemoteResponseHandler> {
+		public static Type<RemoteResponseHandler> TYPE = new Type<RemoteResponseHandler>();
 
 		private String[][] sticklet_src;
 		public ResponseEvent(String[][] src) {
@@ -261,12 +261,12 @@ public class ClientEventBus {
 		}
 		
 		@Override
-		public final Type<ResponseHandler> getAssociatedType() {
+		public final Type<RemoteResponseHandler> getAssociatedType() {
 			return TYPE;
 		}
 
 		@Override
-		protected void dispatch(ResponseHandler handler) {
+		protected void dispatch(RemoteResponseHandler handler) {
 			handler.onEvent(this);
 		}
 	}

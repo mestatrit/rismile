@@ -8,6 +8,8 @@ import com.risetek.keke.client.context.ClientEventBus.CallerEvent;
 import com.risetek.keke.client.context.ClientEventBus.CallerHandler;
 import com.risetek.keke.client.context.ClientEventBus.HIDControlEvent;
 import com.risetek.keke.client.context.ClientEventBus.HIDControlHandler;
+import com.risetek.keke.client.context.ClientEventBus.RemoteResponseHandler;
+import com.risetek.keke.client.context.ClientEventBus.ResponseEvent;
 import com.risetek.keke.client.context.ClientEventBus.ViewChangedEvent;
 import com.risetek.keke.client.context.ClientEventBus.ViewChangedHandler;
 import com.risetek.keke.client.presenter.Presenter;
@@ -32,12 +34,14 @@ public class D3Context {
 		ClientEventBus.INSTANCE.addHandler(context.viewchangedhandler,ViewChangedEvent.TYPE);
 		ClientEventBus.INSTANCE.addHandler(context.controlCodehandler,HIDControlEvent.TYPE);
 		ClientEventBus.INSTANCE.addHandler(context.callerhandler, CallerEvent.TYPE);
+		ClientEventBus.INSTANCE.addHandler(context.responsehandle, ResponseEvent.TYPE);
 	}
 
 	public static void removeListener(D3Context context) {
 		ClientEventBus.INSTANCE.removeHandler(context.viewchangedhandler,ViewChangedEvent.TYPE);
 		ClientEventBus.INSTANCE.removeHandler(context.controlCodehandler,HIDControlEvent.TYPE);
 		ClientEventBus.INSTANCE.removeHandler(context.callerhandler, CallerEvent.TYPE);
+		ClientEventBus.INSTANCE.removeHandler(context.responsehandle, ResponseEvent.TYPE);
 	}
 	
 	
@@ -107,4 +111,24 @@ public class D3Context {
 		presenter.hideTips();
 	}
 
+	class IRemoteResponseHandler implements RemoteResponseHandler {
+
+		private D3Context context;
+		public IRemoteResponseHandler(D3Context context) {
+			this.context = context;
+		}
+
+		
+		@Override
+		public void onEvent(ResponseEvent event) {
+			// 这有利于分解RemoteRequest的enter和action两个步骤，实现规范性。
+			context.getSticklet().getCurrentNode().RemoteResponse(event.getSticklet_src());
+			//Sticklet s = Sticklets.loadSticklet(event.getSticklet_src());
+			//D3Context.CallSticklet(s);
+		}
+		
+	}
+	
+	RemoteResponseHandler responsehandle = new IRemoteResponseHandler(this);
+	
 }
