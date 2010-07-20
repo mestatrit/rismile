@@ -7,6 +7,7 @@ import javax.jdo.annotations.PersistenceCapable;
 import javax.jdo.annotations.Persistent;
 import javax.jdo.annotations.PrimaryKey;
 
+import com.google.appengine.api.datastore.Blob;
 import com.google.appengine.api.datastore.Key;
 import com.google.appengine.api.datastore.KeyFactory;
 import com.google.gwt.user.client.rpc.IsSerializable;
@@ -19,15 +20,11 @@ public class Icon implements IsSerializable {
 	@SuppressWarnings({ "unused"})
     private Key key;
 	
-	@SuppressWarnings("unused")
 	@Persistent
-	private String name;
-	
-	@Persistent
-	private byte[] image;
+	private Blob image;
 
 	public Icon(String name, byte[] image) {
-		this.name = name;
+    	key = KeyFactory.createKey(Icon.class.getSimpleName(), name);
 		this.setImage(image);
 	}
 	
@@ -48,10 +45,10 @@ public class Icon implements IsSerializable {
 	}
 
 	public void setImage(byte[] image) {
-		this.image = image;
+		this.image = new Blob(image);
 	}
 
 	public byte[] getImage() {
-		return image;
+		return image.getBytes();
 	}
 }
