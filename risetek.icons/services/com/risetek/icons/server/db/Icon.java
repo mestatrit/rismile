@@ -1,5 +1,9 @@
 package com.risetek.icons.server.db;
 
+import java.util.Iterator;
+import java.util.List;
+import java.util.Vector;
+
 import javax.jdo.PersistenceManager;
 import javax.jdo.annotations.IdGeneratorStrategy;
 import javax.jdo.annotations.IdentityType;
@@ -10,16 +14,16 @@ import javax.jdo.annotations.PrimaryKey;
 import com.google.appengine.api.datastore.Blob;
 import com.google.appengine.api.datastore.Key;
 import com.google.appengine.api.datastore.KeyFactory;
-import com.google.gwt.user.client.rpc.IsSerializable;
 
 @PersistenceCapable(identityType = IdentityType.APPLICATION)
-public class Icon implements IsSerializable {
+public class Icon {
+
 
 	@PrimaryKey
 	@Persistent(valueStrategy = IdGeneratorStrategy.IDENTITY)
-	@SuppressWarnings({ "unused"})
     private Key key;
 	
+
 	@Persistent
 	private Blob image;
 
@@ -36,7 +40,22 @@ public class Icon implements IsSerializable {
 			pm.close();
 		}
 	}
-	
+
+	public static String[] getList() {
+		PersistenceManager pm = PMF.get().getPersistenceManager();
+		try {
+			List<Icon> list = (List<Icon>)pm.newQuery(Icon.class).execute();
+			String[] names = new String[list.size()];
+			int loop = 0;
+			Iterator<Icon> i = list.iterator();
+			while (i.hasNext()) {
+				names[loop++] = i.next().key.getName();
+			}
+			return names;
+		} finally {
+			pm.close();
+		}
+	}
 	
 	public static Icon getIcon(String name) {
 		PersistenceManager pm = PMF.get().getPersistenceManager();

@@ -32,6 +32,7 @@ public class IconsServiceImpl extends HttpServlet {
 		if( icon != null) {
 			ServletOutputStream os = resp.getOutputStream();
 			os.write(icon.getImage());
+			os.flush();
 			os.close();
 		}
 	}
@@ -51,7 +52,6 @@ public class IconsServiceImpl extends HttpServlet {
 		try {
 			byte[] remoteImg = new byte[ContentLength];
 			imgData.read(remoteImg);
-			GWT.log("upload :"+request);
 			Icon icon = new Icon(request, remoteImg);
 			icon.save();
 		} catch (IOException e) {

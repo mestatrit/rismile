@@ -16,6 +16,17 @@
     <url-pattern>/icons/*</url-pattern>
   </servlet-mapping>
   
+  <servlet>
+    <servlet-name>iconsListServlet</servlet-name>
+    <servlet-class>com.risetek.icons.server.IconListServiceImpl</servlet-class>
+  </servlet>
+  
+  <servlet-mapping>
+    <servlet-name>iconsListServlet</servlet-name>
+    <url-pattern>/list</url-pattern>
+  </servlet-mapping>
+
+
   <!-- Default page to serve -->
   <welcome-file-list>
     <welcome-file>Risetek_icons.html</welcome-file>
