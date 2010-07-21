@@ -22,7 +22,6 @@ import com.google.gwt.user.client.ui.FormPanel.SubmitHandler;
 
 public class Icons extends Composite {
 
-	private final DockLayoutPanel outer = new DockLayoutPanel(Unit.PX);
 	private final FileUpload fileUpload = new FileUpload();
 	private Button upload = new Button("开始上传文件");
 	private final FormPanel formPanel = new FormPanel();
@@ -31,10 +30,6 @@ public class Icons extends Composite {
 	private final HTML status = new HTML(" ");
 
 	public Icons() {
-		outer.setHeight("100%");
-		outer.setWidth("100%");
-		outer.addNorth(new HTML("WHAT IS THIS"), 20);
-		
 		fileUpload.setName("file1");
 		//upload.setWidth("210px");
 		//upload.setHeight("40px");
@@ -75,9 +70,7 @@ public class Icons extends Composite {
 		vpOuter.setVerticalAlignment(HasVerticalAlignment.ALIGN_MIDDLE);
 		vpOuter.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_CENTER);
 		vpOuter.add(vp);
-		outer.add(vpOuter);
-
-		initWidget(outer);
+		initWidget(vpOuter);
 	}
 
 }

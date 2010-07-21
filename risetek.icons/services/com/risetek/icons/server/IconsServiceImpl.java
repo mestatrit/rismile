@@ -7,19 +7,12 @@ import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-/*
-import java.util.Map;
-import com.google.appengine.api.blobstore.BlobKey;
-import com.google.appengine.api.blobstore.BlobstoreService;
-import com.google.appengine.api.blobstore.BlobstoreServiceFactory;
-*/
-import com.google.gwt.core.client.GWT;
 import com.risetek.icons.server.db.Icon;
+import java.util.logging.Logger;
 
 public class IconsServiceImpl extends HttpServlet {
-	//private BlobstoreService blobstoreService = BlobstoreServiceFactory.getBlobstoreService();
 	private static final long serialVersionUID = -5841554439548932384L;
-
+	private static final Logger log = Logger.getLogger(IconsServiceImpl.class.getName());	
 	// 获取图像。
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
@@ -27,7 +20,7 @@ public class IconsServiceImpl extends HttpServlet {
 		String request = req.getRequestURI().substring(7);	// Skip /icons/
 		resp.setCharacterEncoding("UTF-8");
 		resp.setContentType("image/png");
-		GWT.log("query:"+request);
+		log.info("query:"+request);
 		Icon icon = Icon.getIcon(request);
 		if( icon != null) {
 			ServletOutputStream os = resp.getOutputStream();
@@ -41,17 +34,21 @@ public class IconsServiceImpl extends HttpServlet {
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
-		/*
-		Map<String, BlobKey> blobs = blobstoreService.getUploadedBlobs(req);
-		BlobKey blobKey = blobs.get("file1");
-		blobstoreService.
-		*/
+
+		//ServletFileUpload upload = new ServletFileUpload();
+		resp.setContentType("text/plain");
+	      
 		String request = req.getRequestURI().substring(7);	// Skip /icons/
+		log.info("upload:"+request);
 		int ContentLength = req.getContentLength();
 		InputStream imgData =  req.getInputStream();
 		try {
 			byte[] remoteImg = new byte[ContentLength];
-			imgData.read(remoteImg);
+			while( imgData.available() < ContentLength ) {
+				Thread.yield();
+			}
+			int len = 0;
+			len = imgData.read(remoteImg);
 			Icon icon = new Icon(request, remoteImg);
 			icon.save();
 		} catch (IOException e) {
@@ -59,7 +56,6 @@ public class IconsServiceImpl extends HttpServlet {
 		} finally {
 			imgData.close();
 		}
-
 	}
 
 
