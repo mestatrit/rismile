@@ -5,21 +5,22 @@ import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Button;
+import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.DockLayoutPanel;
 import com.google.gwt.user.client.ui.FileUpload;
 import com.google.gwt.user.client.ui.FormPanel;
-import com.google.gwt.user.client.ui.Grid;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.HasHorizontalAlignment;
 import com.google.gwt.user.client.ui.HasVerticalAlignment;
 import com.google.gwt.user.client.ui.RootLayoutPanel;
+import com.google.gwt.user.client.ui.SimplePanel;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.FormPanel.SubmitCompleteEvent;
 import com.google.gwt.user.client.ui.FormPanel.SubmitCompleteHandler;
 import com.google.gwt.user.client.ui.FormPanel.SubmitEvent;
 import com.google.gwt.user.client.ui.FormPanel.SubmitHandler;
 
-public class Icons {
+public class Icons extends Composite {
 
 	private final DockLayoutPanel outer = new DockLayoutPanel(Unit.PX);
 	private final FileUpload fileUpload = new FileUpload();
@@ -30,8 +31,6 @@ public class Icons {
 	private final HTML status = new HTML(" ");
 
 	public Icons() {
-		Window.enableScrolling(false);
-		RootLayoutPanel root = RootLayoutPanel.get();
 		outer.setHeight("100%");
 		outer.setWidth("100%");
 		outer.addNorth(new HTML("WHAT IS THIS"), 20);
@@ -51,11 +50,7 @@ public class Icons {
 		formPanel.setMethod(FormPanel.METHOD_POST);
 		formPanel.setEncoding(FormPanel.ENCODING_MULTIPART);
 
-		Grid gridFrame = new Grid(1, 2);
-		//gridFrame.setWidget(0, 0, new Label("程序：", false));
-		gridFrame.setWidget(0, 1, fileUpload);
-
-		formPanel.add(gridFrame);
+		formPanel.add(fileUpload);
 		formPanel.addSubmitHandler(new SubmitHandler() {
 			public void onSubmit(SubmitEvent event) {
 				status.setHTML("开始上传...");
@@ -67,7 +62,7 @@ public class Icons {
 				status.setHTML(event.getResults());
 			}
 		});
-
+		vp.setBorderWidth(1);
 		vp.add(formPanel);
 		vp.add(upload);
 		vp.add(status);
@@ -75,11 +70,14 @@ public class Icons {
 		vp.setVerticalAlignment(HasVerticalAlignment.ALIGN_MIDDLE);
 		vp.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_CENTER);
 
+		vpOuter.setBorderWidth(1);
 		vpOuter.setSize("100%", "100%");
 		vpOuter.setVerticalAlignment(HasVerticalAlignment.ALIGN_MIDDLE);
 		vpOuter.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_CENTER);
 		vpOuter.add(vp);
 		outer.add(vpOuter);
-		root.add(outer);
+
+		initWidget(outer);
 	}
+
 }
