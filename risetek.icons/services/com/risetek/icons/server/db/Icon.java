@@ -1,5 +1,6 @@
 package com.risetek.icons.server.db;
 
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Vector;
@@ -28,7 +29,7 @@ public class Icon {
 	private Blob image;
 
 	public Icon(String name, byte[] image) {
-    	key = KeyFactory.createKey(Icon.class.getSimpleName(), name);
+    	setKey(KeyFactory.createKey(Icon.class.getSimpleName(), name));
 		this.setImage(image);
 	}
 	
@@ -41,17 +42,19 @@ public class Icon {
 		}
 	}
 
-	public static String[] getList() {
+	public static List<Icon> getList() {
 		PersistenceManager pm = PMF.get().getPersistenceManager();
 		try {
 			List<Icon> list = (List<Icon>)pm.newQuery(Icon.class).execute();
-			String[] names = new String[list.size()];
-			int loop = 0;
+			ArrayList<Icon> alist = new ArrayList<Icon>();
+//			String[] names = new String[list.size()];
+//			int loop = 0;
 			Iterator<Icon> i = list.iterator();
 			while (i.hasNext()) {
-				names[loop++] = i.next().key.getName();
+//				names[loop++] = i.next().key.getName();
+				alist.add(i.next());
 			}
-			return names;
+			return alist;
 		} finally {
 			pm.close();
 		}
@@ -69,5 +72,13 @@ public class Icon {
 
 	public byte[] getImage() {
 		return image.getBytes();
+	}
+
+	public void setKey(Key key) {
+		this.key = key;
+	}
+
+	public Key getKey() {
+		return key;
 	}
 }
