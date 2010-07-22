@@ -7,7 +7,16 @@ import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import org.apache.commons.fileupload.FileItemIterator;
+import org.apache.commons.fileupload.FileItemStream;
+import org.apache.commons.fileupload.FileUploadException;
+import org.apache.commons.fileupload.servlet.ServletFileUpload;
+import org.apache.commons.io.IOUtils;
+
 import com.risetek.icons.server.db.Icon;
+
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class IconsServiceImpl extends HttpServlet {
@@ -35,28 +44,21 @@ public class IconsServiceImpl extends HttpServlet {
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
 
-		//ServletFileUpload upload = new ServletFileUpload();
-		resp.setContentType("text/plain");
-	      
 		String request = req.getRequestURI().substring(7);	// Skip /icons/
 		log.info("upload:"+request);
-		int ContentLength = req.getContentLength();
-		InputStream imgData =  req.getInputStream();
+
+		ServletFileUpload upload = new ServletFileUpload(); 
 		try {
-			byte[] remoteImg = new byte[ContentLength];
-			while( imgData.available() < ContentLength ) {
-				Thread.yield();
+			FileItemIterator iterator = upload.getItemIterator(req);
+			while (iterator.hasNext()) {
+				FileItemStream item = iterator.next();
+				InputStream stream = item.openStream();
+				byte[] remoteImg = IOUtils.toByteArray(stream);
+				Icon icon = new Icon(request, remoteImg);
+				icon.save();
 			}
-			int len = 0;
-			len = imgData.read(remoteImg);
-			Icon icon = new Icon(request, remoteImg);
-			icon.save();
-		} catch (IOException e) {
-			e.printStackTrace();
-		} finally {
-			imgData.close();
+		} catch (FileUploadException e1) {
+			log.log(Level.WARNING, e1.toString());
 		}
 	}
-
-
 }

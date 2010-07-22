@@ -19,8 +19,8 @@ public class Risetek_icons implements EntryPoint {
 	 */
 	public void onModuleLoad() {
 	
-		Icons icon = new Icons();
-		//IconList icon = new IconList();
+		//Icons icon = new Icons();
+		IconList icon = new IconList();
 		Window.enableScrolling(false);
 		RootLayoutPanel root = RootLayoutPanel.get();
 
