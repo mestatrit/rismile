@@ -63,9 +63,10 @@ public class IconList extends Composite {
 						Image eyes = new Image();
 						eyes.setUrl("data:image/png;base64," + image);
 					
-						Grid tip = new Grid(1,2);
-						tip.setWidget(0, 0, new HTML(name));
-						tip.setWidget(0, 1, eyes);
+						Grid tip = new Grid(2,1);
+						tip.setBorderWidth(1);
+						tip.setWidget(0, 0, eyes);
+						tip.setWidget(1, 0, new HTML(name));
 						flows.add(tip);
 					}
 					
