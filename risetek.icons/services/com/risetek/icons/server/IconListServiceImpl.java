@@ -10,6 +10,10 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.google.appengine.api.images.Image;
+import com.google.appengine.api.images.ImagesService;
+import com.google.appengine.api.images.ImagesServiceFactory;
+import com.google.appengine.api.images.Transform;
 import com.google.appengine.repackaged.com.google.common.util.Base64;
 import com.risetek.icons.server.db.Icon;
 
@@ -29,7 +33,13 @@ public class IconListServiceImpl extends HttpServlet {
 		while (i.hasNext()) {
 			Icon icon = i.next();
 			write.write("<icon name=\""+icon.getKey().getName()+"\">");
-			write.write(Base64.encode(icon.getImage()));
+			byte[] remoteImg = icon.getImage();
+			ImagesService imagesService = ImagesServiceFactory.getImagesService();
+	        Image oldImage = ImagesServiceFactory.makeImage(remoteImg);
+	        Transform resize = ImagesServiceFactory.makeResize(32, 32);
+	        Image newImage = imagesService.applyTransform(resize, oldImage, ImagesService.OutputEncoding.PNG);
+	        byte[] newImageData = newImage.getImageData();
+			write.write(Base64.encode(newImageData));
 			write.write("</icon>");
 		}
 		write.write("</icons>");

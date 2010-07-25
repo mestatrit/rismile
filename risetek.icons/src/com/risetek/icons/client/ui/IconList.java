@@ -6,7 +6,6 @@ import com.google.gwt.http.client.RequestException;
 import com.google.gwt.http.client.Response;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Composite;
-import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.Grid;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.HasHorizontalAlignment;
@@ -19,17 +18,18 @@ import com.google.gwt.xml.client.NodeList;
 import com.google.gwt.xml.client.XMLParser;
 
 public class IconList extends Composite {
-
+	private final int NumH = 5;
+	private final int NumV = 7;
 	private final VerticalPanel vpOuter = new VerticalPanel();
-	private final FlowPanel flows = new FlowPanel();
+	private final Grid flows = new Grid(NumV, NumH);
 
 	public IconList() {
+		//setSize("100%", "100%");
 		vpOuter.setBorderWidth(1);
 		vpOuter.setSize("100%", "100%");
 		vpOuter.setVerticalAlignment(HasVerticalAlignment.ALIGN_MIDDLE);
 		vpOuter.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_CENTER);
-		flows.setHeight("100%");
-		flows.setWidth("100%");
+		flows.setBorderWidth(1);
 		vpOuter.add(flows);
 		initWidget(vpOuter);
 	}
@@ -56,18 +56,18 @@ public class IconList extends Composite {
 					}
 					Document doc = XMLParser.parse(xml);
 					NodeList list = doc.getElementsByTagName("icon");
-					for(int loop=0; loop < list.getLength(); loop++) {
+					for(int loop=0; loop < list.getLength() && loop < (NumH*NumV); loop++) {
 						Node node = list.item(loop);
 						String name = getStickAttribute(node,"name");
 						String image = node.getFirstChild().getNodeValue();
 						Image eyes = new Image();
 						eyes.setUrl("data:image/png;base64," + image);
-					
 						Grid tip = new Grid(2,1);
-						tip.setBorderWidth(1);
 						tip.setWidget(0, 0, eyes);
 						tip.setWidget(1, 0, new HTML(name));
-						flows.add(tip);
+						int h = loop / NumH;
+						int v = loop % NumH;
+						flows.setWidget(h, v, tip);
 					}
 					
 					

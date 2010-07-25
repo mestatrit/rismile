@@ -3,6 +3,8 @@ package com.risetek.icons.server;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.PrintWriter;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.servlet.ServletException;
 import javax.servlet.ServletOutputStream;
@@ -18,9 +20,6 @@ import org.apache.commons.io.IOUtils;
 
 import com.risetek.icons.server.db.Icon;
 
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
 public class IconsServiceImpl extends HttpServlet {
 	private static final long serialVersionUID = -5841554439548932384L;
 	private static final Logger log = Logger.getLogger(IconsServiceImpl.class.getName());	
@@ -28,6 +27,7 @@ public class IconsServiceImpl extends HttpServlet {
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
+
 		String request = req.getRequestURI().substring(7);	// Skip /icons/
 		resp.setCharacterEncoding("UTF-8");
 		resp.setContentType("image/png");
@@ -52,7 +52,9 @@ public class IconsServiceImpl extends HttpServlet {
 			FileItemIterator iterator = upload.getItemIterator(req);
 			while (iterator.hasNext()) {
 				FileItemStream item = iterator.next();
-				String fileName = item.getName().replace("\\","/");
+				String fileName = item.getName();
+				log.log(Level.INFO, "upload:"+fileName);
+				fileName = fileName.replace("\\","/");
 				fileName = fileName.replace("/icons/", "");
 				fileName = fileName.substring(fileName.lastIndexOf("/")+1);
 				InputStream stream = item.openStream();
