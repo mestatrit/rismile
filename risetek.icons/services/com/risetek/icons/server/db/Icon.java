@@ -3,7 +3,6 @@ package com.risetek.icons.server.db;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Vector;
 
 import javax.jdo.PersistenceManager;
 import javax.jdo.annotations.IdGeneratorStrategy;
@@ -47,11 +46,8 @@ public class Icon {
 		try {
 			List<Icon> list = (List<Icon>)pm.newQuery(Icon.class).execute();
 			ArrayList<Icon> alist = new ArrayList<Icon>();
-//			String[] names = new String[list.size()];
-//			int loop = 0;
 			Iterator<Icon> i = list.iterator();
 			while (i.hasNext()) {
-//				names[loop++] = i.next().key.getName();
 				alist.add(i.next());
 			}
 			return alist;
