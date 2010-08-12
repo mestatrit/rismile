@@ -26,6 +26,15 @@
     <url-pattern>/list</url-pattern>
   </servlet-mapping>
 
+  <servlet>
+    <servlet-name>iconsScriptServlet</servlet-name>
+    <servlet-class>com.risetek.icons.server.IconScriptServiceImpl</servlet-class>
+  </servlet>
+  
+  <servlet-mapping>
+    <servlet-name>iconsScriptServlet</servlet-name>
+    <url-pattern>/crossdomain</url-pattern>
+  </servlet-mapping>
 
   <!-- Default page to serve -->
   <welcome-file-list>
