@@ -3,8 +3,10 @@
 <module rename-to='scada'>
 	<inherits name='com.google.gwt.user.User'/>
 	<inherits name="com.google.gwt.xml.XML"/>
-	<inherits name="com.google.gwt.maps.GoogleMaps" />
 	<inherits name='com.google.gwt.user.theme.standard.Standard'/>
 	<entry-point class='com.risetek.scada.client.Scada'/>
+<!-- 
+	<inherits name="com.google.gwt.maps.GoogleMaps" />
 	<script src="http://maps.google.com/maps?gwt=1&amp;file=api&amp;v=2&amp;key=ABQIAAAAffzADgF9URxy1JuLiKIo3hT2a4JCoXS4gPJDtguPAGRk19jv4hR0ctGJCK9tzjGhP7GPNL-ZMph6IA" />
+ -->
 </module>

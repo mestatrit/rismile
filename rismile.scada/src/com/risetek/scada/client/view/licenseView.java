@@ -12,11 +12,13 @@ import com.risetek.scada.client.Entry;
 
 public class licenseView extends Composite {
 
-	private final Grid table = new Grid(2,1);
+	private final Grid table = new Grid(4,1);
 	TextBox userLabel = new TextBox();
 	TextBox serialLabel = new TextBox();
 	private final VerticalPanel frame = new VerticalPanel();
 	private final HTML code = new HTML("LOOK");
+	private final HTML codeLan = new HTML("LAN");
+	private final HTML codeGprs = new HTML("GPRS");
 
 	
 	private class createPoints implements ClickHandler {
@@ -29,9 +31,13 @@ public class licenseView extends Composite {
 				String Serial = serialLabel.getText().trim();
 				if( Serial.length() == 12 )
 				{
-				String scode = numberOfUsers + serialLabel.getText().trim() + numberOfUsers;
-				MD5 m = new MD5();
-				code.setText("["+scode+"]   CODE:   " + m.calcMD5(scode).substring(0, 18));
+					String scode = numberOfUsers + serialLabel.getText().trim() + numberOfUsers;
+					String scodeLan = "LAN" + serialLabel.getText().trim();
+					String scodeGprs = "GPRS" + serialLabel.getText().trim();
+					MD5 m = new MD5();
+					code.setText("["+scode+"]   CODE:   " + m.calcMD5(scode).substring(0, 18));
+					codeLan.setText("["+scodeLan+"]   CODE:   " + m.calcMD5(scodeLan).substring(0, 18));
+					codeGprs.setText("["+scodeGprs+"]   CODE:   " + m.calcMD5(scodeGprs).substring(0, 18));
 				}
 				else
 					code.setText("错误的序列号输入");
@@ -54,11 +60,10 @@ public class licenseView extends Composite {
 		pppGrid.setWidget(0, 3, serialLabel);
 		pppGrid.setWidget(0, 4, new Button("生成号码", new createPoints()));
 		
-		table.setWidget(1, 0, code);
-
-		
-		
 		table.setWidget(0, 0, pppGrid);
+		table.setWidget(1, 0, code);
+		table.setWidget(2, 0, codeLan);
+		table.setWidget(3, 0, codeGprs);
 		
 		frame.add(table);
 		frame.setWidth("100%");		

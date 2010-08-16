@@ -6,9 +6,9 @@ public class Scada extends Entry {
 	public void loadSinks() {
 		Entry.SinkHeight = "500px";
 		list.addSink(RisetekHomeSink.init());
-		list.addSink(dataPointsSink.init());
-		list.addSink(cameraSink.init());
-		list.addSink(mapsSink.init());
+		//list.addSink(dataPointsSink.init());
+		//list.addSink(cameraSink.init());
+		//list.addSink(mapsSink.init());
 		list.addSink(licenseSink.init());
 	}
 }
