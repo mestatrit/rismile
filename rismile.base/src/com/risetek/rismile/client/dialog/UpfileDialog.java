@@ -6,15 +6,16 @@ import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.FileUpload;
 import com.google.gwt.user.client.ui.FormPanel;
+import com.google.gwt.user.client.ui.FormPanel.SubmitCompleteEvent;
+import com.google.gwt.user.client.ui.FormPanel.SubmitCompleteHandler;
+import com.google.gwt.user.client.ui.FormPanel.SubmitEvent;
+import com.google.gwt.user.client.ui.FormPanel.SubmitHandler;
 import com.google.gwt.user.client.ui.Grid;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
-import com.google.gwt.user.client.ui.FormPanel.SubmitCompleteEvent;
-import com.google.gwt.user.client.ui.FormPanel.SubmitCompleteHandler;
-import com.google.gwt.user.client.ui.FormPanel.SubmitEvent;
-import com.google.gwt.user.client.ui.FormPanel.SubmitHandler;
+import com.risetek.rismile.client.conf.UIConfig;
 
 public class UpfileDialog extends CustomDialog {
 
@@ -29,6 +30,8 @@ public class UpfileDialog extends CustomDialog {
 	public UpfileDialog()
 	{
 		fileUpload.setName("file1");
+		fileUpload.setWidth("210px");
+		fileUpload.setHeight("25px");
 
 		setText("升级程序");
 		VerticalPanel vp = new VerticalPanel();
@@ -41,8 +44,8 @@ public class UpfileDialog extends CustomDialog {
 		
 //		gridFrame.setWidget(2, 1, upload);
 		upload.setTabIndex(1);
-		upload.setWidth("210px");
-		upload.setHeight("40px");
+		upload.setWidth("180px");
+		upload.setHeight("25px");
 		upload.addClickHandler(new ClickHandler(){
 			public void onClick(ClickEvent event) {
 				if( fileUpload.getFilename().length() != 0 )
@@ -72,16 +75,16 @@ public class UpfileDialog extends CustomDialog {
 		});
 
 		vp.add(formPanel);
+		vp.add(new HTML("请谨慎使用该功能!"));
 		vp.add(upload);
 		
-		vp.add(new HTML("请谨慎使用该功能!"));
+		status.getElement().getStyle().setColor(UIConfig.InformationLabel);
 		
-		status.addStyleName("info-Label");
 		vp.add(status);
 		mainPanel.add(vp);
 	}
 	public Widget getFirstTabIndex() {
-		return null;
+		return fileUpload;
 	}
 	
 	public boolean isValid() {

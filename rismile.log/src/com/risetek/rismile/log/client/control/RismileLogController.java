@@ -60,6 +60,8 @@ public class RismileLogController extends AController {
 
 	public static void load(){
 		MessageConsole.setText("提取运行记录数据");
+		if( INSTANCE.data.autoRefresh )
+			INSTANCE.data.setOffset(0);
 		String query = "lpage="+INSTANCE.data.getLimit()+"&offset="+INSTANCE.data.getOffset()+"&like="+INSTANCE.data.message_filer;
 		remoteRequest.get(loadForm, query, RemoteCaller);
 	}
@@ -139,6 +141,11 @@ public class RismileLogController extends AController {
 	@Override
 	public IRisetekView getView() {
 		return view;
+	}
+
+	@Override
+	public void doAction(int keyCode, boolean alt) {
+		view.ProcessControlKey(keyCode,alt);
 	}
 
 }

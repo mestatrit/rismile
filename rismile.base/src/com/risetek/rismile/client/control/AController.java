@@ -8,5 +8,7 @@ public abstract class AController {
 	public abstract void enablePrivate();
 	
 	public abstract IRisetekView getView();
+	
+	public abstract void doAction(int keyCode, boolean alt);
 
 }

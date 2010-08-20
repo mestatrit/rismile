@@ -56,4 +56,10 @@ public class ProduceHomeController extends AController {
 	public IRisetekView getView() {
 		return view;
 	}
+
+	@Override
+	public void doAction(int keyCode, boolean alt) {
+		// TODO Auto-generated method stub
+		
+	}
 }

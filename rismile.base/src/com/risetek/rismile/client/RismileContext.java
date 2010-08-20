@@ -10,12 +10,6 @@ public class RismileContext {
 
 	private RismileContext(){}
 	
-	public enum OEM {
-		risetek, tongfa
-	};
-
-	public static OEM OEMFlag = OEM.risetek;
-
 	HandlerManager RisetekHandleManager = new HandlerManager(this);
 
 	public static void fireEvent(GwtEvent<?> event) {

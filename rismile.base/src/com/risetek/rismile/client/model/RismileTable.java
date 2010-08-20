@@ -1,40 +1,47 @@
 package com.risetek.rismile.client.model;
 
+import com.google.gwt.xml.client.NodeList;
+import com.risetek.rismile.client.view.NavBar.DIR;
+
 
 public abstract class RismileTable {
 
+	public NodeList nodes;
+	
 	public RismileTable(boolean dir) {
 		ASC = dir;
 	}
 	
-	public void moveDir(int dir) {
+	public void moveDir(DIR dir) {
 		switch(dir)
 		{
-		case 0:
+		// GoFirst
+		case FIRST:
 			if( ASC )
 				offset = 0;
 			else
 				offset = sum - limit;
 				
 			break;
-		case 1:
-			if( !ASC )
-				offset = offset - limit;
-			else
-				offset = offset + limit;
-			break;
-		case 2:
+		case PREV:
 			if( ASC )
 				offset = offset - limit;
 			else
 				offset = offset + limit;
+			break;
+		case NEXT:
+			if( ASC )
+				offset = offset + limit;
+			else
+				offset = offset - limit;
 
 			break;
-		case 3:
-			if( !ASC )
-				offset = 0;
-			else
+		case LAST:
+			// Go last.
+			if( ASC )
 				offset = sum - limit;
+			else
+				offset = 0;
 			break;
 		default:
 			break;
@@ -43,7 +50,6 @@ public abstract class RismileTable {
 			offset = 0;
 	}
 	
-	private String data[][];
 	private int offset;
 	private int limit;
 	private int sum;
@@ -58,10 +64,6 @@ public abstract class RismileTable {
 		this.limit = limit;
 	}
 
-	public void setData(String data[][]) {
-		this.data = data;
-	}
-
 	public void setOffset(int offset) {
 		if (offset > 0)
 			this.offset = offset;
@@ -71,10 +73,6 @@ public abstract class RismileTable {
 
 	public void setSum(int sum) {
 		this.sum = sum;
-	}
-
-	public String[][] getData() {
-		return data;
 	}
 
 	public int getOffset() {

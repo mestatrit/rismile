@@ -21,6 +21,7 @@ public class PrivateDialog extends CustomDialog {
 		
 		pwdBox.setTabIndex(1);
 		mainPanel.add(gridFrame);
+		this.setSize("274px", "168px");
 	}
 	public void show()
 	{
@@ -43,7 +44,6 @@ public class PrivateDialog extends CustomDialog {
 			setMessage(check);
 			return false;
 		}
-		
 		return true;
 	}
 }

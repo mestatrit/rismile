@@ -10,7 +10,7 @@
 		}
 		
 		.sys-intro {
-			font-size: 17pt;
+			font-size: 20px;
 			text-align: left;
 			white-space: nowrap;
 		}
@@ -53,47 +53,62 @@
 						</TR>
 					</TABLE>
 				</TD>
-				<TD ALIGN="CENTER" height="100%">
-					<TABLE HEIGHT="100%" WIDTH="95%" border="0px">
-						<TR>
-							<TD ALIGN="right">
-								<SPAN class="{style.info-table}">
-								版本号：<span ui:field="version" />
-								</SPAN>
-								&nbsp;
-								<SPAN class="{style.info-table}">
-									序列号：<span ui:field="serial" />
-								</SPAN>
-							</TD>
-						</TR>
-						<TR>
-							<TD>
-								<DIV class='{style.sys-introH}'>成都中联信通科技有限公司</DIV>
-								<DIV class='{style.sys-introH}'>专网认证服务器</DIV>
-							</TD>
-						</TR>
-						<TR>
-							<TD>
-								<ul class='{style.sys-intro}'>
-									<li>行业无线专网中完成鉴权、授权和审计功能</li>
-									<li>实现设备号、用户名、密码和固定地址四绑定功能</li>
-									<li>支持PAP，CHAP认证方式</li>
-									<li>采用高性能网络专用处理器</li>
-									<li>支持最大10000个用户</li>
-									<li>平均认证时间约500毫秒</li>
-									<li>超过一万条日志记录</li>
-									<li>快速热备份切换</li>
-								</ul>
-							</TD>
-						</TR>
-						<TR>
-							<TD>
-								<DIV ALIGN="right">
-									<span ui:field="status" />
-								</DIV>
-							</TD>
-						</TR>
-					</TABLE>
+				<td width="20"></td>
+				<TD ALIGN="CENTER" valign="top" height="100%">
+					<table width="100%" border="0" cellpadding="0" cellspacing="0">
+						<tr>
+							<td height="20"></td>
+						</tr>
+						<tr>
+							<td height="45" class='{style.sys-introH}'>成都中联信通科技有限公司</td>
+						</tr>
+						<tr>
+							<td height="45" class='{style.sys-introH}'>专网认证服务器</td>
+						</tr>
+						<tr>
+							<td height="20"></td>
+						</tr>
+						<tr>
+							<td height="35" class='{style.sys-intro}'>
+								<li>行业无线专网中完成鉴权、授权和审计功能</li>
+							</td>
+						</tr>
+						<tr>
+							<td height="35" class='{style.sys-intro}'>
+								<li>实现设备号、用户名、密码和固定地址四绑定功能</li>
+							</td>
+						</tr>
+						<tr>
+							<td height="35" class='{style.sys-intro}'>
+								<li>支持PAP，CHAP认证方式</li>
+							</td>
+						</tr>
+						<tr>
+							<td height="35" class='{style.sys-intro}'>
+								<li>采用高性能网络专用处理器</li>
+							</td>
+						</tr>
+						<tr>
+							<td height="35" class='{style.sys-intro}'>
+								<li>支持最大10000个用户</li>
+							</td>
+						</tr>
+						<tr>
+							<td height="35" class='{style.sys-intro}'>
+								<li>平均认证时间约300毫秒</li>
+							</td>
+						</tr>
+						<tr>
+							<td height="35" class='{style.sys-intro}'>
+								<li>超过一万条日志记录</li>
+							</td>
+						</tr>
+						<tr>
+							<td height="35" class='{style.sys-intro}'>
+								<li>快速热备份切换</li>
+							</td>
+						</tr>
+					</table>
 				</TD>
 			</TR>
 		</TABLE>

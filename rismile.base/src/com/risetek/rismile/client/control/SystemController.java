@@ -380,4 +380,9 @@ public class SystemController extends AController {
 	public IRisetekView getView() {
 		return view;
 	}
+
+	@Override
+	public void doAction(int keyCode, boolean alt) {
+		view.ProcessControlKey(keyCode, alt);
+	}
 }

@@ -43,7 +43,7 @@ public class SinkList extends Composite {
 	}
 
 	private HorizontalPanel list = new HorizontalPanel();
-	private ArrayList<SinkInfo> sinks = new ArrayList<SinkInfo>();
+	public ArrayList<SinkInfo> sinks = new ArrayList<SinkInfo>();
 
 	private int selectedSink = -1;
 
@@ -102,6 +102,15 @@ public class SinkList extends Composite {
 			}
 		}
 	}
+	
+	public SinkInfo getSinkSelection(){
+		if(selectedSink != -1){
+			return sinks.get(selectedSink);
+		} else {
+			return sinks.get(0);
+		}
+	}
+	
 
 	private void colorSink(int index, boolean on) {
 		String color = "";
@@ -136,10 +145,4 @@ public class SinkList extends Composite {
 
 		colorSink(index, selected);
 	}
-	
-	// TODO: FIXME: urgly
-	public void addWidget(Widget w){
-		list.add(w);
-	}
-
 }

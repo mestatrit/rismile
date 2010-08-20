@@ -12,38 +12,51 @@ import com.google.gwt.xml.client.XMLParser;
 import com.risetek.rismile.client.RismileContext;
 import com.risetek.rismile.client.RismileContext.HeartbeatEvent;
 import com.risetek.rismile.client.RismileContext.RuntimeEvent;
+import com.risetek.rismile.client.conf.UIConfig;
 
 public class Heartbeat implements RequestCallback {
 	private static RequestBuilder hb_Builder;
 	private static Timer hbTimer;
 
+	public static int networkspeed = (UIConfig.NETWORKSPEED_UP + UIConfig.NETWORKSPEED_LOW) / 2;
+	
 	static Heartbeat response = new Heartbeat();
 
-	public static void startHeartbeat() {
+	public static synchronized void startHeartbeat() {
 		hb_Builder = new RequestBuilder(RequestBuilder.POST, "forms/hb");
-		hb_Builder.setTimeoutMillis(1000);
-
-		hbTimer = new Timer() {
-			public void run() {
-				try {
-					hb_Builder.sendRequest("code=code", response);
-					RismileContext.fireEvent(new HeartbeatEvent("连接设备..."));
-
-				} catch (RequestException e) {
-					e.printStackTrace();
+		hb_Builder.setTimeoutMillis(networkspeed);
+		if( null == hbTimer ) {
+			hbTimer = new Timer() {
+				public void run() {
+					try {
+						hb_Builder.sendRequest("code=code", response);
+						RismileContext.fireEvent(new HeartbeatEvent("连接设备..."));
+	
+					} catch (RequestException e) {
+						e.printStackTrace();
+					}
 				}
-			}
-		};
-		hbTimer.schedule(1000);
+			};
+		}
+//		hbTimer.schedule(1000);
+		hbTimer.cancel();
+		hbTimer.run();
 	}
 
 	public void onError(Request request, Throwable exception) {
 		RismileContext.fireEvent(new HeartbeatEvent("设备未响应！"));
-		hbTimer.schedule(5000);
+		networkspeed += UIConfig.NETWORKSPEED_DELTA;
+		if( networkspeed > UIConfig.NETWORKSPEED_UP )
+			networkspeed = UIConfig.NETWORKSPEED_UP;
+		hbTimer.schedule(1000);
 	}
 
 	public void onResponseReceived(Request request, Response response) {
-		if (response.getStatusCode() != 12029) {
+		networkspeed -= UIConfig.NETWORKSPEED_DELTA;
+		if( networkspeed < UIConfig.NETWORKSPEED_LOW )
+			networkspeed = UIConfig.NETWORKSPEED_LOW;
+		
+		if (response.getStatusCode() == 200) {
 			Document xmldoc = XMLParser.parse(response.getText());
 			com.google.gwt.xml.client.Element customerElement = xmldoc
 					.getDocumentElement();
@@ -54,7 +67,7 @@ public class Heartbeat implements RequestCallback {
 				if (nopass != null && nopass.item(0) != null) {
 					String nopassword = nopass.item(0).getFirstChild()
 							.getNodeValue();
-					MessageConsole.setHbText(nopassword);
+					RismileContext.fireEvent(new HeartbeatEvent(nopassword));
 				} else {
 					RismileContext.fireEvent(new HeartbeatEvent("网络正常！"));
 				}
@@ -64,12 +77,13 @@ public class Heartbeat implements RequestCallback {
 			}
 			
 			String runtime = XMLDataParse.getElementText(customerElement, "run_time");
-			RismileContext.fireEvent(new RuntimeEvent(runtime));
+			if( ! "".equalsIgnoreCase(runtime) )
+				RismileContext.fireEvent(new RuntimeEvent(runtime));
 			
-			hbTimer.schedule(20000);
+			hbTimer.schedule(20000 - ((networkspeed - UIConfig.NETWORKSPEED_LOW) * 4));
 		} else {
 			RismileContext.fireEvent(new HeartbeatEvent("设备响应异常！"));
-			hbTimer.schedule(5000);
+			hbTimer.schedule(1000);
 		}
 	}
 

@@ -8,8 +8,6 @@ import com.risetek.rismile.client.utils.XMLDataParse;
 
 public class ProduceData {
 	
-	//private String date;
-	//private String time;
 	public String version;
 	public String status;
 	public String serial;

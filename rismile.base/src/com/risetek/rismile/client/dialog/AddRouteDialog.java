@@ -40,10 +40,10 @@ public class AddRouteDialog extends CustomDialog {
 
 	public void show(){
 		setText("添加路由");
+		super.show();
 		if(null != destBox){
 			destBox.setFocus(true);
 		}
-		super.show();
 	}
 	
 	public Widget getFirstTabIndex() {

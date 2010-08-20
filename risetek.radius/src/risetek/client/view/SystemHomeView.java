@@ -4,39 +4,35 @@ import risetek.client.control.ProduceHomeController;
 import risetek.client.model.ProduceData;
 
 import com.google.gwt.core.client.GWT;
-import com.google.gwt.dom.client.SpanElement;
+import com.google.gwt.dom.client.Style;
+import com.google.gwt.dom.client.Style.BorderStyle;
+import com.google.gwt.dom.client.Style.Overflow;
+import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.resources.client.ClientBundle;
 import com.google.gwt.resources.client.ImageResource;
 import com.google.gwt.uibinder.client.UiBinder;
-import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.ui.Composite;
+import com.google.gwt.user.client.ui.DockPanel;
+import com.google.gwt.user.client.ui.Grid;
+import com.google.gwt.user.client.ui.HasHorizontalAlignment;
+import com.google.gwt.user.client.ui.HasVerticalAlignment;
+import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
-import com.risetek.rismile.client.Entry;
 import com.risetek.rismile.client.RismileContext;
 import com.risetek.rismile.client.RismileContext.RismileRuntimeHandler;
 import com.risetek.rismile.client.RismileContext.RuntimeEvent;
+import com.risetek.rismile.client.ui.Stick;
+import com.risetek.rismile.client.utils.Heartbeat;
 import com.risetek.rismile.client.view.IRisetekView;
+import com.risetek.rismile.client.view.ViewComposite;
 
-public class SystemHomeView extends Composite implements IRisetekView {
+public class SystemHomeView extends ViewComposite implements IRisetekView {
 
-	static {
-		RismileContext.addRunTimeHandler(new RismileRuntimeHandler(){
-
-			@Override
-			public void onRuntime(RuntimeEvent event) {
-				status.setInnerText(event.getResults());
-			}
-		});
-		
-	}
-	
 	interface ProudceUiBinder extends UiBinder<Widget, SystemHomeView> {}
 	private static ProudceUiBinder uiBinder = GWT.create(ProudceUiBinder.class);
 	
-	@UiField SpanElement version;
-	@UiField SpanElement serial;
-	@UiField static SpanElement status;
-
+	private final SystemHomeSider sider = new SystemHomeSider();
+	
 	public interface Images extends ClientBundle  {
 		@Source("p2.jpg")		ImageResource  p2();
 		@Source("p3.jpg")		ImageResource  p3();
@@ -46,107 +42,118 @@ public class SystemHomeView extends Composite implements IRisetekView {
 
 	public SystemHomeView() {
 		Widget w = uiBinder.createAndBindUi(this);
-		w.setHeight(Entry.SinkHeight);
-		initWidget(w);
+		w.setWidth("100%");
+		w.setHeight("100%");
+		addLeftSide(w);
+		addRightSide(sider);
 	}
-
-/*	
-	private final Grid table = new Grid(1,2);
-	private final Grid table2 = new Grid(5,1);
-	private final Grid table1 = new Grid(4,1);
-	private final Grid serial = new Grid(1, 1);
-	private final Grid version = new Grid(1, 1);
-	private final static Grid status = new Grid(1, 2);
-
-	private final HTML title = (RismileContext.OEMFlag == RismileContext.OEM.risetek) ? 
-			new HTML("<DIV>成都中联信通科技有限公司</DIV><DIV>专网认证服务器</DIV>" )
-			: new HTML("<DIV>四川通发电信股份有限公司</DIV><DIV>专网认证服务器</DIV>");
-	private final HTML feature = new HTML("<ul>"
-			+ "<li>行业无线专网中完成认证授权功能</li>"
-			+ "<li>实现设备号、用户名、密码和固定地址四绑定</li>"
-			+ "<li>支持PAP，CHAP认证方式</li>"
-			+ "<li>支持最大10000个用户</li>"
-			+ "<li>采用高性能网络专用处理器</li>"
-			+ "<li>平均认证时间约500毫秒</li>"
-			+ "<li>超过一万条日志记录</li>"
-			+ "<li>快速热备份切换</li>" + "</ul>");
-
-	public interface Resources extends ClientBundle {
-		final static Resources INSTANCE = GWT.create(Resources.class);
-		
-		@Source("p2.jpg")
-		ImageResource p2();
-		@Source("p3.jpg")
-		ImageResource p3();
-		@Source("p4.jpg")
-		ImageResource p4();
-		@Source("p5.jpg")
-		ImageResource p5();
-	}
-	
-	public SystemHomeView() {
-		version.setStyleName("info-table");
-		serial.setStyleName("info-table");
-		title.setStyleName("sys-introH");
-		feature.setStyleName("sys-intro");
-		// serial.setWidth("100%");
-		// for debug layout.
-//		table.setBorderWidth(1);
-//		table2.setBorderWidth(1);
-		//table1.setBorderWidth(1);
-
-		table.setWidth("90%");
-		table2.setHeight("100%");
-		table2.setWidth("100%");
-		// table2.setCellPadding(10);
-
-		table1.setStyleName("images-table");
-		table1.setHeight("100%");
-		table1.setWidth("100%");
-		// table3.setCellPadding(14);
-		//table1.setWidget(0, 0, serial);
-		table1.setWidget(0, 0, new Image(Resources.INSTANCE.p2()));
-		table1.setWidget(1, 0, new Image(Resources.INSTANCE.p5()));
-		table1.setWidget(2, 0, new Image(Resources.INSTANCE.p4()));
-		table1.setWidget(3, 0, new Image(Resources.INSTANCE.p3()));
-
-		table2.setWidth("100%");
-		table2.setHeight("100%");
-		table2.getCellFormatter().setHorizontalAlignment(0,0,HasHorizontalAlignment.ALIGN_RIGHT);
-		table2.getCellFormatter().setHorizontalAlignment(1,0,HasHorizontalAlignment.ALIGN_RIGHT);
-
-		table2.getCellFormatter().setHorizontalAlignment(2,0,HasHorizontalAlignment.ALIGN_LEFT);
-		table2.getCellFormatter().setHorizontalAlignment(3,0,HasHorizontalAlignment.ALIGN_LEFT);
-		
-		table2.getCellFormatter().setHorizontalAlignment(4,0,HasHorizontalAlignment.ALIGN_RIGHT);
-		table2.setWidget(0, 0, version);
-		table2.setWidget(1, 0, serial);
-		table2.setWidget(2, 0, title);
-		table2.setWidget(3, 0, feature);
-		table2.setWidget(4, 0, status);
-
-		table.setWidget(0, 0, table1);
-		table.setWidget(0, 1, table2);
-
-		table.setHeight(Entry.SinkHeight);
-		initWidget(table);
-		setStyleName("radius-config");
-	}
-*/
 
 	public void render(ProduceData data) {
-		version.setInnerText(data.version);
-		serial.setInnerText(data.serial);
-
-		status.setInnerText(data.status);
-	}
-
-	public void onLoad() {
-		ProduceHomeController.load();
+		sider.render(data);
 	}
 
 	public void disablePrivate() {
+		// Nothing to do.
 	}
 	public void enablePrivate() {
+		// Nothing to do.
 	}
+
+	@Override
+	public void ProcessControlKey(int keyCode, boolean alt) {
+		// Nothing to do.
+	}
+
+	private class systemTips extends Grid {
+		public systemTips(String title) {
+			//setBorderWidth(1);
+			resize(2, 1);
+			setWidth("100%");
+			setText(0, 0, title);
+			setCellPadding(0);
+			setCellSpacing(3);
+			getCellFormatter().setHorizontalAlignment(0, 0, HasHorizontalAlignment.ALIGN_LEFT);
+			getCellFormatter().setHorizontalAlignment(1, 0, HasHorizontalAlignment.ALIGN_CENTER);
+			Style  style = getElement().getStyle();
+			style.setBorderColor("#dce7f7");
+			style.setBorderStyle(BorderStyle.SOLID);
+			style.setBorderWidth(1, Unit.PX);
+			
+			style = getCellFormatter().getElement(0, 0).getStyle();
+			style.setFontSize(12, Unit.PX);
+
+			style = getCellFormatter().getElement(1, 0).getStyle();
+			style.setFontSize(9, Unit.PX);
+			style.setOverflow(Overflow.HIDDEN);
+		}
+		public void setTips(String tips) {
+			setText(1, 0, tips);
+		}
+	}
+	
+	private class SystemHomeSider extends Composite {
+
+		private final systemTips version = new systemTips("版本号:");
+		private final systemTips serial = new systemTips("序列号:");
+		private systemTips status;	// = new systemTips("已运行:");
+
+		public SystemHomeSider() {
+			final DockPanel dockpanel = new DockPanel();
+			final VerticalPanel northpanel = new VerticalPanel();
+			northpanel.setHeight("120px");
+			northpanel.setSpacing(3);
+			northpanel.setWidth("100%");
+			northpanel.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_CENTER);
+			northpanel.setVerticalAlignment(HasVerticalAlignment.ALIGN_TOP);
+
+			final VerticalPanel southpanel = new VerticalPanel();
+			southpanel.setHeight("100%");
+			southpanel.setVerticalAlignment(HasVerticalAlignment.ALIGN_BOTTOM);
+
+			initWidget(dockpanel);
+
+			//dpanel.setBorderWidth(1);
+			dockpanel.add(northpanel, DockPanel.NORTH);
+			dockpanel.add(southpanel, DockPanel.SOUTH);
+			dockpanel.setCellVerticalAlignment(southpanel, HasVerticalAlignment.ALIGN_BOTTOM);
+
+			northpanel.add(version);
+			northpanel.add(serial);
+			
+			//spanel.add(new Stick("info", "操作提示："));
+			southpanel.add(new Stick("info", "左右方向键能用来选择功能标签。"));
+			southpanel.add(new Stick("info", "Alt+L 能快捷访问特权登录按钮。"));
+			southpanel.add(new Stick("info", "弹出的对话框，能用ESC键快速关闭。"));
+			southpanel.add(new Stick("info", "未进入特权模式，您只能查看设备配置和运行情况。"));
+			southpanel.add(new Stick("info", "特权登录后，您能修改、设置设备的配置信息。"));
+//			southpanel.add(new Stick("info", "为系统安全，特权登录的口令只能通过管理员用控制台命令完成。"));
+	
+			dockpanel.setHeight("100%");
+			
+			// 触发新的心跳，加速运行时间的提取。
+			Heartbeat.startHeartbeat();
+			
+			RismileContext.addRunTimeHandler(new RismileRuntimeHandler(){
+				@Override
+				public void onRuntime(RuntimeEvent event) {
+					if( status == null ) {
+						status = new systemTips("已运行:");
+						northpanel.add(status);
+					}
+					status.setTips(event.getResults());
+				}
+			});
+		
+		}
+
+		public void render(ProduceData data) {
+			version.setTips(data.version);
+			serial.setTips(data.serial);
+		}
+
+		public void onLoad() {
+			ProduceHomeController.load();
+		}
+	}
+
 }
