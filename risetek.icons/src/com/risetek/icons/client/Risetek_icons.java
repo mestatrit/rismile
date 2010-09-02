@@ -4,6 +4,7 @@ import libfeeder.client.LibFeeder;
 
 import com.risetek.icons.client.ui.IconUpSink;
 import com.risetek.icons.client.ui.IconsSink;
+import com.risetek.icons.client.ui.TreeSink;
 
 /**
  * Entry point classes define <code>onModuleLoad()</code>.
@@ -15,5 +16,6 @@ public class Risetek_icons extends LibFeeder {
 	public void loadSinks() {
 		LibFeeder.list.addSink(IconsSink.init());
 		LibFeeder.list.addSink(IconUpSink.init());
+		LibFeeder.list.addSink(TreeSink.init());
 	}
 }

@@ -9,7 +9,7 @@ public class IconsSink extends Sink {
 	public static final String Tag = "ICONSLIST";
 	
 	public static SinkInfo init() {
-		return new SinkInfo(Tag, "ICONSLIST", "ͼ���б�") {
+		return new SinkInfo(Tag, "图标管理", "图标管理") {
 			@Override
 			public Sink createInstance() {
 				return new IconsSink();
