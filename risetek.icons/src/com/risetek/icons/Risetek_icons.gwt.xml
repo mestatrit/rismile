@@ -6,6 +6,5 @@
   <inherits name="libfeeder.LibFeeder"/>
   <inherits name='com.google.gwt.user.theme.standard.Standard'/>
   <entry-point class='com.risetek.icons.client.Risetek_icons'/>
-  <!-- Specify the paths for translatable code                    -->
   <source path='client'/>
 </module>

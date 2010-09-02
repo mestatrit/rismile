@@ -43,7 +43,7 @@ public class IconList extends Composite {
 
 				@Override
 				public void onError(Request request, Throwable exception) {
-					Window.alert("è¿œç«¯æœåŠ¡é”™è¯¯");
+					Window.alert("»ñÈ¡Í¼±êÊ§°Ü¡£");
 				}
 
 				@Override
