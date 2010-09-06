@@ -31,11 +31,12 @@ public class IconScriptServiceImpl extends HttpServlet {
 		resp.setHeader("Pragma","no-cache");
 		PrintWriter write = resp.getWriter();
 		String callback = req.getParameter("callback");
+		String iconName = req.getParameter("icons");
+		Icon icon = Icon.getIcon(iconName);
+
 		write.write(callback+"(\"<?xml version='1.0' encoding='utf-8'?><icons>");
-		List<Icon> list = Icon.getList();
-		Iterator<Icon> i = list.iterator();
-		while (i.hasNext()) {
-			Icon icon = i.next();
+		if( icon != null )
+		{
 			write.write("<icon name='"+icon.getKey().getName()+"'>");
 			byte[] remoteImg = icon.getImage();
 			ImagesService imagesService = ImagesServiceFactory.getImagesService();

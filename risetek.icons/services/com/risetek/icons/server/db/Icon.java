@@ -43,9 +43,9 @@ public class Icon {
 
 	public static List<Icon> getList() {
 		PersistenceManager pm = PMF.get().getPersistenceManager();
+		ArrayList<Icon> alist = new ArrayList<Icon>();
 		try {
 			List<Icon> list = (List<Icon>)pm.newQuery(Icon.class).execute();
-			ArrayList<Icon> alist = new ArrayList<Icon>();
 			Iterator<Icon> i = list.iterator();
 			while (i.hasNext()) {
 				alist.add(i.next());
@@ -57,9 +57,16 @@ public class Icon {
 	}
 	
 	public static Icon getIcon(String name) {
-		PersistenceManager pm = PMF.get().getPersistenceManager();
-    	Key key = KeyFactory.createKey(Icon.class.getSimpleName(), name);
-    	return pm.getObjectById(Icon.class, key);
+		Icon icon = null;
+		
+		try {
+			PersistenceManager pm = PMF.get().getPersistenceManager();
+			Key key = KeyFactory.createKey(Icon.class.getSimpleName(), name+".png");
+			icon = pm.getObjectById(Icon.class, key);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+    	return icon;
 	}
 
 	public void setImage(byte[] image) {

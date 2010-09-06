@@ -29,18 +29,20 @@ public class IconListServiceImpl extends HttpServlet {
 		PrintWriter write = resp.getWriter();
 		write.write("<?xml version=\"1.0\" encoding=\"utf-8\"?><icons>");
 		List<Icon> list = Icon.getList();
-		Iterator<Icon> i = list.iterator();
-		while (i.hasNext()) {
-			Icon icon = i.next();
-			write.write("<icon name=\""+icon.getKey().getName()+"\">");
-			byte[] remoteImg = icon.getImage();
-			ImagesService imagesService = ImagesServiceFactory.getImagesService();
-	        Image oldImage = ImagesServiceFactory.makeImage(remoteImg);
-	        Transform resize = ImagesServiceFactory.makeResize(32, 32);
-	        Image newImage = imagesService.applyTransform(resize, oldImage, ImagesService.OutputEncoding.PNG);
-	        byte[] newImageData = newImage.getImageData();
-			write.write(Base64.encode(newImageData));
-			write.write("</icon>");
+		if( list != null ) {
+			Iterator<Icon> i = list.iterator();
+			while (i.hasNext()) {
+				Icon icon = i.next();
+				write.write("<icon name=\""+icon.getKey().getName()+"\">");
+				byte[] remoteImg = icon.getImage();
+				ImagesService imagesService = ImagesServiceFactory.getImagesService();
+		        Image oldImage = ImagesServiceFactory.makeImage(remoteImg);
+		        Transform resize = ImagesServiceFactory.makeResize(32, 32);
+		        Image newImage = imagesService.applyTransform(resize, oldImage, ImagesService.OutputEncoding.PNG);
+		        byte[] newImageData = newImage.getImageData();
+				write.write(Base64.encode(newImageData));
+				write.write("</icon>");
+			}
 		}
 		write.write("</icons>");
 		write.flush();
