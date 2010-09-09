@@ -5,6 +5,7 @@ import java.util.Iterator;
 import java.util.List;
 
 import javax.jdo.PersistenceManager;
+import javax.jdo.Query;
 import javax.jdo.annotations.IdGeneratorStrategy;
 import javax.jdo.annotations.IdentityType;
 import javax.jdo.annotations.PersistenceCapable;
@@ -51,6 +52,7 @@ public class TreedIcons {
 		PersistenceManager pm = PMF.get().getPersistenceManager();
 		try {
 			List<TreedIcons> list = (List<TreedIcons>)pm.newQuery(TreedIcons.class).execute();
+			// 由于数据库会关闭，所以要拷贝一份列表。
 			ArrayList<TreedIcons> alist = new ArrayList<TreedIcons>();
 			Iterator<TreedIcons> i = list.iterator();
 			while (i.hasNext()) {
@@ -62,6 +64,25 @@ public class TreedIcons {
 		}
 	}
 	
+	public static List<TreedIcons> getIconNullList() {
+		PersistenceManager pm = PMF.get().getPersistenceManager();
+		try {
+			Query query = pm.newQuery(TreedIcons.class);
+			query.setFilter("image == null");
+			List<TreedIcons> list = (List<TreedIcons>)query.execute();
+			// 由于数据库会关闭，所以要拷贝一份列表。
+			ArrayList<TreedIcons> alist = new ArrayList<TreedIcons>();
+			Iterator<TreedIcons> i = list.iterator();
+			while (i.hasNext()) {
+				alist.add(i.next());
+			}
+			return alist;
+		} finally {
+			pm.close();
+		}
+	}
+	
+	
 	public static TreedIcons getIcon(String name) {
 		PersistenceManager pm = PMF.get().getPersistenceManager();
     	Key key = KeyFactory.createKey(TreedIcons.class.getSimpleName(), name);
@@ -70,6 +91,8 @@ public class TreedIcons {
 			icon = pm.getObjectById(TreedIcons.class, key);
 		} catch (Exception e) {
 			e.printStackTrace();
+		} finally {
+			pm.close();
 		}
     	if( icon == null ) {
     		icon = new TreedIcons(name);

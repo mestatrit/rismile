@@ -2,6 +2,7 @@ package com.risetek.icons.server;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.logging.Logger;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -16,6 +17,7 @@ import com.google.appengine.repackaged.com.google.common.util.Base64;
 import com.risetek.icons.server.db.TreedIcons;
 
 public class RESTfulIconServiceImpl extends HttpServlet {
+	private static final Logger log = Logger.getLogger(RESTfulIconServiceImpl.class.getName());	
 
 	private static final long serialVersionUID = -1718754673082828661L;
 
@@ -60,5 +62,4 @@ public class RESTfulIconServiceImpl extends HttpServlet {
 		write.flush();
 		write.close();
 	}
-
 }
