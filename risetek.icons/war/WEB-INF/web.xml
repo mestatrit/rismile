@@ -33,6 +33,17 @@
   
   <servlet-mapping>
     <servlet-name>iconsScriptServlet</servlet-name>
+    <url-pattern>/oldcrossdomain</url-pattern>
+  </servlet-mapping>
+
+
+  <servlet>
+    <servlet-name>iconsRESTServlet</servlet-name>
+    <servlet-class>com.risetek.icons.server.RESTfulIconServiceImpl</servlet-class>
+  </servlet>
+  
+  <servlet-mapping>
+    <servlet-name>iconsRESTServlet</servlet-name>
     <url-pattern>/crossdomain</url-pattern>
   </servlet-mapping>
 
