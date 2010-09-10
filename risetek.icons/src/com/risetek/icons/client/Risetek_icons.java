@@ -15,8 +15,8 @@ public class Risetek_icons extends LibFeeder {
 
 	@Override
 	public void loadSinks() {
-		LibFeeder.list.addSink(IconsSink.init());
-		LibFeeder.list.addSink(IconUpSink.init());
+//		LibFeeder.list.addSink(IconsSink.init());
+//		LibFeeder.list.addSink(IconUpSink.init());
 		LibFeeder.list.addSink(TreeSink.init());
 		LibFeeder.list.addSink(TreeUpSink.init());
 	}

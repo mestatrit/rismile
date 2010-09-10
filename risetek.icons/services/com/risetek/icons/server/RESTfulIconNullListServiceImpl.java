@@ -18,6 +18,11 @@ import org.apache.commons.fileupload.FileUploadException;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
 import org.apache.commons.io.IOUtils;
 
+import com.google.appengine.api.images.Image;
+import com.google.appengine.api.images.ImagesService;
+import com.google.appengine.api.images.ImagesServiceFactory;
+import com.google.appengine.api.images.Transform;
+import com.google.appengine.repackaged.com.google.common.util.Base64;
 import com.risetek.icons.server.db.TreedIcons;
 
 public class RESTfulIconNullListServiceImpl extends HttpServlet {
@@ -39,11 +44,10 @@ public class RESTfulIconNullListServiceImpl extends HttpServlet {
 		if( callback != null )
 			write.write(callback+"(\"");
 			
-		write.write("<?xml version='1.0' encoding='utf-8'?><icons>");
-		List<TreedIcons> icons = TreedIcons.getIconNullList();
-		for( TreedIcons icon:icons)
-			write.write("<icon name='"+icon.getKey().getName()+"'/>");
-		write.write("</icons>");
+		if( req.getRequestURI().contains("imglist"))
+			doGetImgList(write);
+		else
+			doGetNullList(write);
 		
 		if( callback != null )
 			write.write("\")");
@@ -52,7 +56,31 @@ public class RESTfulIconNullListServiceImpl extends HttpServlet {
 		write.close();
 	}
 
-
+	private void doGetNullList(PrintWriter write) {
+		write.write("<?xml version='1.0' encoding='utf-8'?><icons>");
+		List<TreedIcons> icons = TreedIcons.getIconNullList();
+		for( TreedIcons icon:icons)
+			write.write("<icon name='"+icon.getKey().getName()+"'/>");
+		write.write("</icons>");
+	}
+	
+	private void doGetImgList(PrintWriter write) {
+		write.write("<?xml version='1.0' encoding='utf-8'?><icons>");
+		List<TreedIcons> icons = TreedIcons.getIconList();
+		for( TreedIcons icon:icons) {
+			byte[] img = icon.getImage();
+			ImagesService imagesService = ImagesServiceFactory.getImagesService();
+	        Image oldImage = ImagesServiceFactory.makeImage(img);
+	        Transform resize = ImagesServiceFactory.makeResize(32, 32);
+	        Image newImage = imagesService.applyTransform(resize, oldImage, ImagesService.OutputEncoding.PNG);
+	        byte[] newImageData = newImage.getImageData();
+			write.write("<icon name='"+icon.getKey().getName()+"'>");
+			write.write(Base64.encode(newImageData));
+			write.write("</icon>");
+		}
+		write.write("</icons>");
+	}
+	
 	// 上传图像
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp)

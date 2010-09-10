@@ -57,6 +57,10 @@
     <url-pattern>/nulllist/*</url-pattern>
   </servlet-mapping>
 
+  <servlet-mapping>
+    <servlet-name>NULLListServlet</servlet-name>
+    <url-pattern>/imglist</url-pattern>
+  </servlet-mapping>
 
 
   <!-- Default page to serve -->

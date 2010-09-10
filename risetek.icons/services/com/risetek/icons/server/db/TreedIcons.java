@@ -81,6 +81,24 @@ public class TreedIcons {
 			pm.close();
 		}
 	}
+
+	public static List<TreedIcons> getIconList() {
+		PersistenceManager pm = PMF.get().getPersistenceManager();
+		try {
+			Query query = pm.newQuery(TreedIcons.class);
+			query.setFilter("image != null");
+			List<TreedIcons> list = (List<TreedIcons>)query.execute();
+			// 由于数据库会关闭，所以要拷贝一份列表。
+			ArrayList<TreedIcons> alist = new ArrayList<TreedIcons>();
+			Iterator<TreedIcons> i = list.iterator();
+			while (i.hasNext()) {
+				alist.add(i.next());
+			}
+			return alist;
+		} finally {
+			pm.close();
+		}
+	}
 	
 	
 	public static TreedIcons getIcon(String name) {

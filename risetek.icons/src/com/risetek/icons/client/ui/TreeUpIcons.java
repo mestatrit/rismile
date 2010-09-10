@@ -117,6 +117,7 @@ public class TreeUpIcons extends Composite {
 			formPanel.addSubmitCompleteHandler(new SubmitCompleteHandler() {
 				public void onSubmitComplete(SubmitCompleteEvent event) {
 					status.setHTML(event.getResults());
+					vpOuter.remove(UploadComposite.this);
 				}
 			});
 			vp.setBorderWidth(1);

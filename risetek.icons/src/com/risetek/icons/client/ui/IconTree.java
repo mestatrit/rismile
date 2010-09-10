@@ -37,13 +37,13 @@ public class IconTree extends Composite {
 	@Override
 	protected void onLoad() {
 		try {
-			RequestBuilder rqBuilder = new RequestBuilder(RequestBuilder.GET, "/list");
+			RequestBuilder rqBuilder = new RequestBuilder(RequestBuilder.GET, "/imglist");
 			//rqBuilder.setTimeoutMillis(1000);
 			rqBuilder.sendRequest("", new RequestCallback(){
 
 				@Override
 				public void onError(Request request, Throwable exception) {
-					Window.alert("»ñÈ¡Í¼±êÊ§°Ü¡£");
+					Window.alert("æå–å›¾ç‰‡é”™è¯¯ã€‚");
 				}
 
 				@Override
