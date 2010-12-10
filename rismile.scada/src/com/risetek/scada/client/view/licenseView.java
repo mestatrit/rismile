@@ -21,7 +21,7 @@ public class licenseView extends Composite {
 	private final HTML codeLan = new HTML("LAN");
 	private final HTML codeGprs = new HTML("GPRS");
 	*/
-	private final Grid result = new Grid(5,2);
+	private final Grid result = new Grid(6,3);
 	
 	private class createPoints implements ClickHandler {
 
@@ -34,27 +34,31 @@ public class licenseView extends Composite {
 				if( Serial.length() == 12 )
 				{
 					String scode = numberOfUsers + serialLabel.getText().trim() + numberOfUsers;
-/*
-					String scodeLan = "LAN" + serialLabel.getText().trim();
-					String scodeGprs = "GPRS" + serialLabel.getText().trim();
-*/					
 					String P15 = scode + "P15";
 					String P13 = scode + "P13";
 					String D15 = scode + "D15";
 					String D13 = scode + "D13";
 					MD5 m = new MD5();
 					
-					/*
-					code.setText("["+scode+"]   CODE:   " + m.calcMD5(scode).substring(0, 18));
-					codeLan.setText("["+scodeLan+"]   CODE:   " + m.calcMD5(scodeLan).substring(0, 18));
-					codeGprs.setText("["+scodeGprs+"]   CODE:   " + m.calcMD5(scodeGprs).substring(0, 18));
-					*/
-					
-					result.setText(0,1, m.calcMD5(scode).substring(0, 18));
-					result.setText(1,1, m.calcMD5(P15).substring(0, 18));
-					result.setText(2,1, m.calcMD5(P13).substring(0, 18));
-					result.setText(3,1, m.calcMD5(D15).substring(0, 18));
-					result.setText(4,1, m.calcMD5(D13).substring(0, 18));
+					result.setText(1,1, m.calcMD5(scode).substring(0, 18));
+					result.setText(2,1, m.calcMD5(P15).substring(0, 18));
+					result.setText(3,1, m.calcMD5(P13).substring(0, 18));
+					result.setText(4,1, m.calcMD5(D15).substring(0, 18));
+					result.setText(5,1, m.calcMD5(D13).substring(0, 18));
+
+// 加后缀密码接入				
+					scode = numberOfUsers + serialLabel.getText().trim() +"Risetek"+ numberOfUsers;
+					P15 = scode + "P15";
+					P13 = scode + "P13";
+					D15 = scode + "D15";
+					D13 = scode + "D13";
+					m = new MD5();
+					result.setText(1,2, m.calcMD5(scode).substring(0, 18));
+					result.setText(2,2, m.calcMD5(P15).substring(0, 18));
+					result.setText(3,2, m.calcMD5(P13).substring(0, 18));
+					result.setText(4,2, m.calcMD5(D15).substring(0, 18));
+					result.setText(5,2, m.calcMD5(D13).substring(0, 18));
+				
 				}
 				else
 					code.setText("错误的序列号输入");
@@ -83,11 +87,18 @@ public class licenseView extends Composite {
 		result.setCellPadding(3);
 		result.getColumnFormatter().setWidth(0, "180px");
 
-		result.setText(0, 0, "全功能");
-		result.setText(1, 0, "只许可 CDMA (15位)");
-		result.setText(2, 0, "只许可 GPRS (13位)");
-		result.setText(3, 0, "  拒绝 CDMA (15位)");
-		result.setText(4, 0, "  拒绝 GPRS (13位)");
+		result.getCellFormatter().setWidth(0, 0, "30%");
+		result.getCellFormatter().setWidth(0, 1, "40%");
+		result.getCellFormatter().setWidth(0, 2, "40%");
+		result.setText(0, 0, "权限");
+		result.setText(0, 1, "全接入");
+		result.setText(0, 2, "后缀接入");
+		
+		result.setText(1, 0, "全功能");
+		result.setText(2, 0, "只许可 CDMA (15位)");
+		result.setText(3, 0, "只许可 GPRS (13位)");
+		result.setText(4, 0, "拒绝 CDMA (15位)");
+		result.setText(5, 0, "拒绝 GPRS (13位)");
 		
 		table.setWidget(0, 0, pppGrid);
 		table.setWidget(1, 0, code);
