@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="gb2312"?><Risetek>
+<ASSERT />
+<rowid>1<AssertLevel>1</AssertLevel><IMSI>000000000000500</IMSI><USER>dummy2</USER><ADDRESS>167772161</ADDRESS><NOTE></NOTE><STATUS>1</STATUS><InputOctets>NULL</InputOctets><OutputOctets>NULL</OutputOctets></rowid>
+<rowid>2<AssertLevel>1</AssertLevel><IMSI>000000000000500</IMSI><USER>USER0005@risetek.com</USER><ADDRESS>167772162</ADDRESS><NOTE>房子</NOTE><STATUS>0</STATUS><InputOctets>10</InputOctets><OutputOctets>10</OutputOctets></rowid>
+<rowid>5<AssertLevel>1</AssertLevel><IMSI>000000000000200</IMSI><USER>USER0002@risetek.com</USER><ADDRESS>167772165</ADDRESS><NOTE>汉字</NOTE><STATUS>0</STATUS><InputOctets>10</InputOctets><OutputOctets>10</OutputOctets></rowid>
+<CONTROL>CONTROL<TOTAL>3</TOTAL><OFFSET>0</OFFSET></CONTROL></Risetek>

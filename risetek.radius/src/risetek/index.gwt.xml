@@ -1,0 +1,7 @@
+<module rename-to='rismile'>
+	<inherits name="com.google.gwt.user.theme.standard.Standard"/>
+	<inherits name='com.google.gwt.user.User'/>
+	<inherits name="com.risetek.rismile.base" />
+	<inherits name="com.risetek.rismile.log.log" />
+	<entry-point class='risetek.client.index'/>
+</module>
