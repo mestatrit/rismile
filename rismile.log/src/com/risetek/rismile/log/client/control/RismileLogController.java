@@ -7,21 +7,21 @@ import com.google.gwt.http.client.RequestCallback;
 import com.google.gwt.http.client.Response;
 import com.google.gwt.user.client.Window;
 import com.risetek.rismile.client.control.AController;
+import com.risetek.rismile.client.dialog.FilterDialog;
 import com.risetek.rismile.client.http.RequestFactory;
 import com.risetek.rismile.client.utils.MessageConsole;
 import com.risetek.rismile.client.view.IRisetekView;
 import com.risetek.rismile.client.view.NavBar.NavEvent;
 import com.risetek.rismile.client.view.NavBar.NavHandler;
 import com.risetek.rismile.log.client.model.RismileLogTable;
-import com.risetek.rismile.log.client.view.LogFilterDialog;
 import com.risetek.rismile.log.client.view.RismileLogView;
 
 public class RismileLogController extends AController {
 
 	public static RismileLogController INSTANCE = new RismileLogController(); 
-	private static RequestFactory remoteRequest = new RequestFactory();
-	private final static String loadForm = "SqlLogMessageXML";
-	private final static String emptyForm = "clearlog";
+	private static RequestFactory remoteRequest = new RequestFactory("log/");
+	private final static String loadForm = "info/";
+	private final static String emptyForm = "delete/";
 
 	// 视图实体。
 	public final RismileLogView view = new RismileLogView();
@@ -60,8 +60,13 @@ public class RismileLogController extends AController {
 
 	public static void load(){
 		MessageConsole.setText("提取运行记录数据");
-		String query = "lpage="+INSTANCE.data.getLimit()+"&offset="+INSTANCE.data.getOffset()+"&like="+INSTANCE.data.message_filer;
-		remoteRequest.get(loadForm, query, RemoteCaller);
+		if( INSTANCE.data.autoRefresh )
+			INSTANCE.data.setOffset(0);
+		String RESTful = INSTANCE.data.getLimit()+"/"+INSTANCE.data.getOffset();
+		if( !"".equalsIgnoreCase(INSTANCE.data.filer)) {
+			RESTful += "/" + INSTANCE.data.filer;
+		}
+		remoteRequest.get(loadForm + RESTful, null, RemoteCaller);
 	}
 	
 	public static class AutoRefreshClick implements ClickHandler {
@@ -75,10 +80,12 @@ public class RismileLogController extends AController {
 
 	public static class ClearLogAction implements ClickHandler , RequestCallback {
 
+		@Override
 		public void onError(Request request, Throwable exception) {
 			RemoteCaller.onError(request, exception);
 		}
 
+		@Override
 		public void onResponseReceived(Request request, Response response) {
 			INSTANCE.view.clearButton.setEnabled(true);
 			load();
@@ -88,7 +95,7 @@ public class RismileLogController extends AController {
 		public void onClick(ClickEvent event) {
 			if (Window.confirm("是否要清除日志?")) {
 				INSTANCE.view.clearButton.setEnabled(false);
-				remoteRequest.get(emptyForm, null, this);
+				remoteRequest.DELETE(emptyForm, null, ClearLogAction.this);
 			}
 		}
 	}
@@ -106,16 +113,16 @@ public class RismileLogController extends AController {
 		}
 
 		public class control implements ClickHandler {
-			public LogFilterDialog dialog = new LogFilterDialog();
+			public FilterDialog dialog = new FilterDialog();
 
 			@Override
 			public void onClick(ClickEvent event) {
 				if (dialog.isValid()) {
-					INSTANCE.data.message_filer = dialog.filter.getText();
+					INSTANCE.data.filer = dialog.filter.getText();
 					// 查询条件变更，需要归位。
 					INSTANCE.data.setOffset(0);
 					dialog.hide();
-					if(!("".equalsIgnoreCase(INSTANCE.data.message_filer)))
+					if(!("".equalsIgnoreCase(INSTANCE.data.filer)))
 						INSTANCE.view.setBannerTips("记录信息被过滤");
 					else
 						INSTANCE.view.setBannerTips("");
@@ -139,6 +146,11 @@ public class RismileLogController extends AController {
 	@Override
 	public IRisetekView getView() {
 		return view;
+	}
+
+	@Override
+	public void doAction(int keyCode, boolean alt) {
+		view.ProcessControlKey(keyCode,alt);
 	}
 
 }

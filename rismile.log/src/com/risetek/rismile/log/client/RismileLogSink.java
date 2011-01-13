@@ -8,8 +8,9 @@ public class RismileLogSink extends Sink {
 	public static final String Tag = "Log";
 
 	public static SinkInfo init() {
-		return new SinkInfo(Tag, "记录", "系统运行记录."){
-		      public Sink createInstance() {
+		return new SinkInfo(Tag, "运行记录", "系统运行记录."){
+		      @Override
+			public Sink createInstance() {
 		          return new RismileLogSink();
 		        }
 		};
