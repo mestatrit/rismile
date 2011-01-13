@@ -1,0 +1,11 @@
+<module rename-to='rismile'>
+	<inherits name="com.google.gwt.user.theme.standard.Standard"/>
+	<inherits name="com.google.gwt.http.HTTP"/>
+	<inherits name="com.google.gwt.xml.XML"/>
+	<inherits name="com.google.gwt.user.User"/>
+    <stylesheet src="rismile.css" />
+    
+<!-- Google analytics js built into build so we can call immediately on load -->
+	<script src="http://www.google-analytics.com/ga.js" />    
+    
+</module>

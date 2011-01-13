@@ -1,0 +1,159 @@
+
+.rismile .gwt-Button {
+	height: 25px;
+	width: 10em;
+}
+
+.rismile .SinkList {
+  font-size: 10pt;
+  color: white;
+}
+
+.rismile .SinkList .ks-External {
+  color: crimson;
+  border-bottom: 1px solid white;
+  cursor: pointer;
+  cursor: hand;
+}
+
+.rismile .SinkList .gwt-Image {
+  position: relative;
+  top: 0px;
+}
+
+.rismile .SinkList .ks-SinkItem a {
+  text-decoration: none;
+  color: white;
+}
+
+.rismile .SinkList .ks-FirstSinkItem a {
+  text-decoration: none;
+  color: white;
+}
+
+.rismile .SinkList .ks-SinkItem {
+  background: #c6cab7;
+  border-bottom: 1px solid white;
+  cursor: pointer;
+  cursor: hand;
+  padding: 4px;
+  padding-left: 16px;
+  padding-right: 16px;
+  margin-right: 3px;
+}
+
+.rismile .SinkList .ks-SinkItem-selected {
+  background: #c6cab7;
+  padding: 4px;
+  padding-left: 16px;
+  padding-right: 16px;
+  margin-right: 3px;
+}
+
+.rismile .SinkList .ks-SinkItem-selected a {
+  text-decoration: none;
+  color: white;
+}
+
+
+.rismile .SinkList .ks-FirstSinkItem {
+  background: #c6cab7 url(corner.gif) no-repeat top left;
+  border-bottom: 1px solid white;
+  cursor: pointer;
+  cursor: hand;
+  padding: 4px;
+  padding-left: 16px;
+  padding-right: 16px;
+  margin-right: 3px;
+}
+
+.rismile .SinkList .ks-FirstSinkItem-selected {
+  background: #c3d9ff url(corner.gif) no-repeat top left;
+  padding: 4px;
+  padding-left: 16px;
+  padding-right: 16px;
+  margin-right: 3px;
+}
+
+.rismile .SinkList .ks-FirstSinkItem-selected a {
+  text-decoration: none;
+  color: white;
+}
+
+.rismile .system .gray {
+	border-top: 1px solid #2a8ebf;
+}
+	
+.rismile .system .gray table {
+	cellspacing:2px;
+	cellpading:2px;
+	margin-top: 1cm;
+	border: 1px solid #999;
+	background-color: white;
+	border-collapse: collapse;
+}
+
+.rismile .system .gray table td {
+	border:solid #999;
+	border-width:1px 1px 1px 1px;
+	padding:3px;
+}
+
+.rismile .system .gray table .head {
+	font-weight: bold;
+	background: #F4F7FB;
+}
+
+.rismile .system .manage {
+	border-top: 1px solid #2a8ebf;
+}
+
+.rismile .system .manage table {
+	margin-top: 1cm;
+ 	vertical-align: middle;
+	text-align: center;
+}
+
+.rismile .system .manage table td {
+	padding:10px;
+}
+/*
+.rismile .system .stacktitle  {
+	border-top: 1px;
+	border-bottom:0px;
+	border-left:0px;
+	border-right:0px;
+	cursor: pointer;
+}
+
+.rismile .system .stacktitle-head  {
+	border-top: 0px;
+}
+*/
+
+.rismile .Stack_Title {
+	background: url(blue.gif) repeat-x top left;
+}
+
+.rismile .rismiletable .toolbar {
+	border-top: 0px;
+	border-left: 0px;
+	border-right: 0px;
+	border-bottom: 1px;
+	background: url(blue.gif) repeat-x top left;
+}
+
+.rismile .rismiletable .table td {
+	border:solid #8abeef;
+	border-width:1px 1px 0px 0px;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+	overflow: hidden;
+}
+
+.rismile .rismiletable .table td.backIcons {
+	background: url(litter.png);
+	background-position: center; 
+	background-repeat: no-repeat; 
+}
+
